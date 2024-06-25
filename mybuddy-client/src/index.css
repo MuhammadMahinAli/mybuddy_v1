@@ -1,0 +1,515 @@
+@import "react-big-calendar/lib/css/react-big-calendar.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+}
+.cal {
+  color: #4164f0;
+}
+.gray600 {
+  color: #5a6370;
+}
+.gray500 {
+  color: #6b7280;
+}
+.rectangle {
+  border-radius: 13px;
+  background: linear-gradient(125.26deg, #d9d9d9, #efefef 55.46%, #fcfcfc);
+  box-shadow: 5px 5px 10px rgba(119, 118, 118, 0.25), 5px 5px 16px -1px #b9b9b9;
+  box-sizing: border-box;
+  border: 1px solid white;
+}
+.rectangle-bg {
+  border-radius: 10px 0px 0px 10px;
+  background: linear-gradient(125.26deg, #d9d9d9, #efefef 55.46%, #fcfcfc);
+  box-shadow: 5px 5px 10px rgba(119, 118, 118, 0.25), 5px 5px 16px -1px #b9b9b9;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+}
+
+.rectangle-box {
+  border-radius: 10px;
+  background: linear-gradient(125.26deg, #d9d9d9, #efefef 55.46%, #fcfcfc);
+  box-shadow: 5px 5px 10px rgba(119, 118, 118, 0.25), 5px 5px 16px -1px #b9b9b9;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  box-shadow: 5px 5px 10px rgba(119, 118, 118, 0.25), 5px 5px 16px -1px #b9b9b9;
+  box-sizing: border-box;
+  border: 1px solid white;
+  cursor: pointer;
+}
+.rectangle-box-hover {
+  border-radius: 13px;
+  box-shadow: inset -1px -1px 10px rgba(192, 191, 191, 0.25),
+    inset -1px -1px 1px -1px #b9b9b9;
+  box-sizing: border-box;
+  border: 1px solid white;
+  cursor: pointer;
+  background: linear-gradient(125.26deg, #d9d9d9, #efefef 55.46%, #fcfcfc);
+}
+.rectangle-box-bg {
+  background: linear-gradient(125.26deg, #d9d9d9, #efefef 55.46%, #fcfcfc);
+}
+.heart-rectangle {
+  border-radius: 13px;
+  background: linear-gradient(125.26deg, #d9d9d9, #efefef 55.46%, #fcfcfc);
+  box-shadow: 5px 5px 10px rgba(186, 183, 183, 0.25), 5px 5px 16px -1px #b9b9b9;
+  box-sizing: border-box;
+  border: 2px solid white;
+}
+
+.rectangle:hover {
+  background: rgb(71, 71, 71);
+}
+
+.graish {
+  color: rgb(78, 78, 78);
+}
+.blue {
+  color: #5076ff;
+}
+@layer components {
+  .gradient-border {
+    @apply relative;
+    overflow: hidden;
+  }
+  .gradient-border::before {
+    content: "";
+    @apply absolute inset-0 z-[-1];
+    background: linear-gradient(
+      to right,
+      #35eed8 10%,
+      #4164f0 30%,
+      #dd7bff 90%
+    );
+    border-radius: inherit;
+  }
+}
+
+.show-content {
+  background: linear-gradient(to right, #e4ecf7 0%, #f3f6f8 100%);
+}
+.hide-content {
+  background: linear-gradient(to right, #e4ecf7 0%, #f3f6f8 100%);
+}
+
+/* index.css */
+.white-inset-shadow {
+  box-shadow: inset 0 -2px 3px 9px #fff, inset 2px 3px 14px, inset -2px 3px 9px #fff, inset 0 2px 14px ;
+}
+.custom-shadow {
+  background-color: #e6f3f3;
+  box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25),
+    -2px -2px 20px 5px rgba(255, 255, 255, 0.5),
+    -10px -10px 55px 26px rgba(255, 255, 255, 0.2),
+    17px 17px 38px rgba(0, 0, 0, 0.31);
+}
+.gradient-background {
+  background: linear-gradient(
+    to top right,
+    rgba(221, 220, 220, 0.44) 10%,
+    rgba(147, 186, 211, 0.64) 90%
+  );
+}
+.custom-event {
+  box-shadow: 5px 5px 10px rgba(119, 118, 118, 0.25), 5px 5px 16px -1px #b9b9b9 !important;
+}
+
+/* dark mood */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 64px;
+  height: 30px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e2e2e2;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  border-radius: 20px;
+  left: 3px;
+  bottom: 2px;
+  z-index: 2;
+  background-color: #838daa;
+  transition: 0.4s;
+}
+
+.input:checked + .slider:before {
+  background-color: #fff; /* Blue color */
+}
+
+.sun svg {
+  position: absolute;
+  top: 4px;
+  left: 36px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+
+.moon svg {
+  fill: #ffffff;
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+
+/* .switch:hover */
+.sun svg {
+  animation: rotate 15s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* .switch:hover */
+.moon svg {
+  animation: tilt 5s linear infinite;
+}
+
+@keyframes tilt {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.input:checked + .slider {
+  background-color: #4c4c4c;
+}
+
+.input:focus + .slider {
+  box-shadow: 0 0 1px #183153;
+}
+
+.input:checked + .slider:before {
+  transform: translateX(30px);
+}
+
+.dark .sun svg {
+  fill: linear-gradient(
+    180deg,
+    #4eebff,
+    #aa62f9 64%,
+    #f857ff,
+    #65f7c9,
+    #2adba4
+  ); /* Color for dark mode */ /* Default color for light mode */
+}
+
+/* For dark mode */
+.sun {
+  fill: #4eebff;
+}
+
+.gradient {
+  fill: linear-gradient(180deg, #4eebff, #aa62f9 64%, #f857ff);
+}
+
+/* Default light mode */
+body:not(.dark) .noti {
+  fill: gray; /* Light mode color */
+}
+
+/* Dark mode */
+body.dark .noti {
+  fill: url(#notiGradient); /* Dark mode gradient */
+}
+body:not(.dark) .noti {
+  fill: gray; /* Light mode color */
+}
+
+/* Dark mode */
+body.dark .noti {
+  fill: url(#notiGradient); /* Dark mode gradient */
+}
+
+.swiper-button-next:after {
+  padding-left: 35px !important;
+}
+.swiper-button-prev:after {
+  padding-right: 35px !important;
+}
+
+/* In your CSS file or within a <style> tag in your component */
+.mySwiper .swiper-button-next:after,
+.mySwiper .swiper-button-prev:after {
+  font-size: 15px !important;
+}
+
+.PostBtn {
+  position: relative;
+  display: inline-block;
+  border: none;
+  border-radius: 50px;
+  background: none;
+  padding: 15px 35px;
+  margin: 10px 0px;
+}
+
+.PostBtn p {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  color: #fff;
+  z-index: 1;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-decoration: none;
+  overflow: hidden;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(15px);
+  font-size: 12px;
+}
+
+.PostBtn:hover p {
+  letter-spacing: 3px;
+}
+
+.PostBtn p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+  transform: skewX(40deg) translateX(0);
+  transition: all 0.5s ease-out;
+}
+
+.PostBtn:hover p::before {
+  transform: skewX(40deg) translateX(200%);
+}
+
+.PostBtn::before,
+.PostBtn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 10px;
+  border-radius: 10px;
+  background: #1eff45;
+  transition: all 0.4s ease-in-out;
+  transition-delay: 0s;
+}
+
+.PostBtn::before {
+  bottom: -5px;
+}
+
+.PostBtn::after {
+  top: -5px;
+}
+
+.PostBtn:hover::before,
+.PostBtn:hover::after {
+  height: 50%;
+  width: 80%;
+  border-radius: 30px;
+  transition-delay: 0.3s;
+}
+
+.PostBtn:hover::before {
+  bottom: 0;
+}
+
+.PostBtn:hover::after {
+  top: 0;
+}
+
+.PostBtn:nth-child(2)::before,
+.PostBtn:nth-child(2)::after {
+  background: #1eff45;
+  box-shadow: 0 0 5px #1eff45, 0 0 15px #1eff45, 0 0 30px #1eff45,
+    0 0 60px #1eff45;
+}
+
+/* .btn:nth-child(2)::before,
+.btn:nth-child(2)::after {
+  background: #2bd2ff;
+  box-shadow: 
+    0 0 5px #2bd2ff,
+    0 0 15px #2bd2ff,
+    0 0 30px #2bd2ff,
+    0 0 60px #2bd2ff
+} */
+
+/* .btn:nth-child(3)::before,
+.btn:nth-child(3)::after {
+  background: #1eff45;
+  box-shadow: 
+    0 0 5px #1eff45,
+    0 0 15px #1eff45,
+    0 0 30px #1eff45,
+    0 0 60px #1eff45
+} */
+
+/* .btn:nth-child(4)::before,
+.btn:nth-child(4)::after {
+  background: #fffa65;
+  box-shadow: 
+    0 0 5px #fffa65,
+    0 0 15px #fffa65,
+    0 0 30px #fffa65,
+    0 0 60px #fffa65
+} */
+.pdf-container{
+  width: 250px;
+}
+@media screen and (min-device-width: 640px) and (max-device-width: 768px) {
+  .PostBtn {
+    padding: 25px 65px;
+    margin: 30px 0px;
+  }
+  .PostBtn p {
+    font-size: 19px;
+  }
+
+  .PostBtn::before,
+  .PostBtn::after {
+    width: 30px;
+    height: 10px;
+  }
+}
+@media screen and (min-device-width: 769px) and (max-device-width: 1024px) {
+  .PostBtn {
+    padding: 25px 65px;
+    margin: 15px 0px;
+  }
+  .PostBtn p {
+    font-size: 20px;
+  }
+
+  .PostBtn::before,
+  .PostBtn::after {
+    width: 30px;
+    height: 10px;
+  }
+  .pdf-container{
+    width: 450px;
+    height: 300px;
+  }
+}
+@media screen and (min-device-width: 1025px) and (max-device-width: 1920px) {
+  .PostBtn {
+    padding: 20px 55px;
+    margin: 30px 0px;
+  }
+  .PostBtn p {
+    font-size: 17px;
+  }
+
+  .PostBtn::before,
+  .PostBtn::after {
+    width: 30px;
+    height: 10px;
+  }
+  .pdf-container{
+    width:600px;
+    height: 350px; 
+  }
+}
+
+.sidebar {
+  /* Your sidebar styles */
+  transition: transform 0.7s ease; /* Transition on transform property */
+}
+
+.sidebar-open {
+  transform: translateX(-100%); /* Move the sidebar to the left */
+}
+
+.open {
+  animation: 3s ease-in 1s;
+}
+
+.sidebar-list a .box1 .box2 svg {
+  fill: #838DAA
+}
+ .sidebar-list a  .sidebar-text{
+ color: #4c4c4d
+}
+
+.sidebar-list a:hover .box1 .box2 svg {
+  fill: #2adba4;
+}
+.sidebar-list a:hover .sidebar-text{
+ color: #2adba4;
+}
+
+.gridl{
+  display: grid;
+  grid-column: 4 !important;
+  gap: 50px;
+}
+ /* Hide scrollbar for Chrome, Safari, and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge, and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}

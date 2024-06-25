@@ -1,0 +1,40 @@
+
+[
+{
+       "user": "60d5ecb4b796f2350821e8e7",
+       "projectName": "My Buddy Project",
+       "description": "A project to help users manage their tasks and projects.",
+       "documents": [
+         "path/to/document1.pdf"
+       ],
+       "pdfFiles": [
+         "path/to/pdfFile1.pdf"
+       ],
+       "images": [
+         "path/to/image1.jpg"
+       ],
+       "videoUrl": "https://example.com/video.mp4",
+  
+    "tasks": [
+       {
+         "title": "Task 1",
+         "description": "Complete the project setup."
+       },
+       {
+         "title": "Task 2",
+         "description": "Develop the frontend interface."
+       }
+    ],
+    "projectJoinRequests": [
+       {
+         "requestedBy": "65fbb36e7e9b4321a5b95ebe", 
+         "requestedTo": "66010268e9b5ed13591ff997", 
+         "status": "Pending"
+       },
+       {
+         "requestedBy": "65fbbe624f02820277968e8d", 
+         "requestedTo": "66010268e9b5ed13591ff997", 
+         "status": "Accepted"
+       }
+    ]
+   }]

@@ -1,0 +1,467 @@
+/* @media screen and (min-device-width: 1024px) and (max-device-width: 1920px) { */
+.newestBtn,
+.popularBtn,
+.activeBtn {
+  padding: 20px 55px;
+  margin: 10px 0px;
+}
+.postProjectBtn,
+.profileFriendRequestBtn,
+.joinBtn {
+  padding: 20px 75px;
+  margin: 10px 0px;
+}
+
+.friendRequestBtn,.seeAllPostBtn, .viewMoreBlueBtn  {
+  padding: 20px 85px;
+  margin: 0px 0px;
+}
+ .createPostGreenBtn {
+  padding: 15px 65px;
+  margin: 0px 0px;
+}
+
+.credintialBtn {
+  padding: 20px 145px;
+  margin: 0px 0px;
+}
+
+
+/*  */
+
+.detailsRedBtn,
+.detailsYellowBtn,
+.detailsBlueBtn {
+  width: 100%;
+  height: 40px;
+}
+
+.newestBtn,
+.popularBtn,
+.credintialBtn,
+.seeAllPostBtn,
+.viewMoreBlueBtn,
+.profileFriendRequestBtn,
+.updateCoverBtn,
+.updateCoverBtn,
+.activeBtn,
+.postProjectBtn,
+.friendRequestBtn,
+.createPostGreenBtn,
+.detailsRedBtn,
+.detailsYellowBtn,
+.detailsBlueBtn,
+.joinBtn {
+  position: relative;
+  display: inline-block;
+  border: none;
+  border-radius: 50px;
+  background: none;
+}
+
+.newestBtn p,
+.popularBtn p,
+.credintialBtn p,
+.seeAllPostBtn p,
+.profileFriendRequestBtn p,
+.updateCoverBtn p,
+.activeBtn p,
+.postProjectBtn p,
+.friendRequestBtn p,
+
+.detailsRedBtn p,
+.detailsYellowBtn p,
+.detailsBlueBtn p,
+.viewMoreBlueBtn p,
+.joinBtn p {
+  font-size: 15px;
+}
+.updateCoverBtn p,.credintialBtn p, .createPostGreenBtn p {
+  font-size: 10px;
+  text-align: center;
+  
+}
+
+.newestBtn p,
+.popularBtn p,
+.credintialBtn p,
+.seeAllPostBtn p,
+.viewMoreBlueBtn p,
+.profileFriendRequestBtn p,
+.updateCoverBtn p,
+.updateCoverBtn p,
+.activeBtn p,
+.postProjectBtn p,
+.friendRequestBtn p,
+.createPostGreenBtn p,
+.detailsRedBtn p,
+.detailsYellowBtn p,
+.detailsBlueBtn p,
+.joinBtn p {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  color: #fff;
+  z-index: 1;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-decoration: none;
+  overflow: hidden;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(15px);
+}
+
+.newestBtn:hover p,
+.popularBtn:hover p,
+.credintialBtn:hover p,
+.seeAllPostBtn:hover p,
+.profileFriendRequestBtn:hover p,
+.viewMoreBlueBtn:hover p,
+.updateCoverBtn p,
+.activeBtn:hover p,
+.postProjectBtn:hover p,
+.friendRequestBtn:hover p,
+.createPostGreenBtn:hover p,
+.detailsRedBtn:hover p,
+.detailsYellowBtn:hover p,
+.detailsBlueBtn:hover p,
+.joinBtn:hover p {
+  letter-spacing: 3px;
+}
+
+.newestBtn p::before,
+.popularBtn p::before,
+.credintialBtn p::before,
+.seeAllPostBtn p::before,
+.viewMoreBlueBtn p::before,
+.profileFriendRequestBtn p::before,
+.updateCoverBtn p::before,
+.activeBtn p::before,
+.postProjectBtn p::before,
+.friendRequestBtn p::before,
+.createPostGreenBtn p::before,
+.detailsRedBtn p::before,
+.detailsYellowBtn p::before,
+.detailsBlueBtn p::before,
+.joinBtn p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+  transform: skewX(40deg) translateX(0);
+  transition: all 0.5s ease-out;
+}
+
+.newestBtn:hover p::before,
+.popularBtn:hover p::before,
+.credintialBtn:hover p::before,
+.seeAllPostBtn:hover p::before,
+.viewMoreBlueBtn:hover p::before,
+.profileFriendRequestBtn:hover p::before,
+.updateCoverBtn:hover p::before,
+.activeBtn:hover p::before,
+.postProjectBtn:hover p::before,
+.friendRequestBtn:hover p::before,
+.createPostGreenBtn:hover p::before,
+.detailsRedBtn:hover p::before,
+.detailsYellowBtn:hover p::before,
+.detailsBlueBtn:hover p::before,
+.joinBtn:hover p::before {
+  transform: skewX(40deg) translateX(200%);
+}
+
+.newestBtn::before,
+.newestBtn::after {
+  background: #ff381e;
+  width: 25px;
+}
+
+.postProjectBtn::before,
+.postProjectBtn::after {
+  background: #2adba4;
+  width: 35px;
+}
+.friendRequestBtn::before,
+.friendRequestBtn::after,
+.createPostGreenBtn::before,
+.createPostGreenBtn::after,
+.profileFriendRequestBtn::before,
+.profileFriendRequestBtn::after {
+  background: #1eff45;
+  width: 35px;
+}
+.detailsBlueBtn::before,
+.detailsBlueBtn::after ,
+.viewMoreBlueBtn::before,
+.viewMoreBlueBtn::after {
+  background: #4285f4;
+  width: 35px;
+}
+.detailsRedBtn::before,
+.detailsRedBtn::after,
+.joinBtn::before,
+.joinBtn::after {
+  background: #f64b4b;
+  width: 35px;
+}
+.detailsYellowBtn::before,
+.detailsYellowBtn::after {
+  background: #dcf02c;
+  width: 35px;
+}
+
+.newestBtn::before,
+.newestBtn::after,
+.popularBtn::before,
+.popularBtn::after,
+.credintialBtn::before,
+.credintialBtn::after,
+.seeAllPostBtn::before,
+.seeAllPostBtn::after,
+.viewMoreBlueBtn::before,
+.viewMoreBlueBtn::after,
+.profileFriendRequestBtn::before,
+.profileFriendRequestBtn::after,
+.updateCoverBtn::before,
+.updateCoverBtn::after,
+.activeBtn::before,
+.activeBtn::after,
+.postProjectBtn::before,
+.postProjectBtn::after,
+.friendRequestBtn::before,
+.friendRequestBtn::after,
+.createPostGreenBtn::before,
+.createPostGreenBtn::after,
+.detailsRedBtn::before,
+.detailsRedBtn::after,
+.detailsYellowBtn::before,
+.detailsYellowBtn::after,
+.detailsBlueBtn::before,
+.detailsBlueBtn::after,
+.joinBtn::before,
+.joinBtn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 10px;
+  border-radius: 10px;
+  transition: all 0.4s ease-in-out;
+  transition-delay: 0s;
+}
+
+.newestBtn::before,
+.popularBtn::before,
+.credintialBtn::before,
+.seeAllPostBtn::before,
+.viewMoreBlueBtn::before,
+.profileFriendRequestBtn::before,
+.updateCoverBtn::before,
+.activeBtn::before,
+.postProjectBtn::before,
+.friendRequestBtn::before,
+.createPostGreenBtn::before,
+.detailsRedBtn::before,
+.detailsYellowBtn::before,
+.detailsBlueBtn::before,
+.joinBtn::before {
+  bottom: -5px;
+}
+
+.newestBtn::after,
+.popularBtn::after,
+.credintialBtn::after,
+.seeAllPostBtn::after,
+.viewMoreBlueBtn::after,
+.profileFriendRequestBtn::after,
+.updateCoverBtn:after,
+.activeBtn::after,
+.postProjectBtn::after,
+.friendRequestBtn::after,
+.createPostGreenBtn::after,
+.detailsRedBtn::after,
+.detailsYellowBtn::after,
+.detailsBlueBtn::after,
+.joinBtn::after {
+  top: -5px;
+}
+
+.newestBtn:hover::before,
+.newestBtn:hover::after,
+.popularBtn:hover::before,
+.popularBtn:hover::after,
+.credintialBtn:hover::before,
+.credintialBtn:hover::after,
+.seeAllPostBtn:hover::before,
+.seeAllPostBtn:hover::after,
+.viewMoreBlueBtn:hover::before,
+.viewMoreBlueBtn:hover::after,
+.profileFriendRequestBtn:hover::before,
+.profileFriendRequestBtn:hover::after,
+.updateCoverBtn:hover::before,
+.updateCoverBtn:hover::after,
+.activeBtn:hover::before,
+.activeBtn:hover::after,
+.postProjectBtn:hover::before,
+.postProjectBtn:hover::after,
+.friendRequestBtn:hover::before,
+.friendRequestBtn:hover::after,
+.createPostGreenBtn:hover::before,
+.createPostGreenBtn:hover::after,
+.detailsRedBtn:hover::before,
+.detailsRedBtn:hover::after,
+.detailsYellowBtn:hover::before,
+.detailsYellowBtn:hover::after,
+.detailsBlueBtn:hover::before,
+.detailsBlueBtn:hover::after,
+.joinBtn:hover::before,
+.joinBtn:hover::after {
+  height: 50%;
+  width: 80%;
+  border-radius: 30px;
+  transition-delay: 0.3s;
+}
+
+.newestBtn:hover::before,
+.popularBtn:hover::before,
+.credintialBtn:hover::before,
+.seeAllPostBtn:hover::before,
+.viewMoreBlueBtn:hover::before,
+.profileFriendRequestBtn:hover::before,
+.updateCoverBtn:hover::before,
+.activeBtn:hover::before,
+.postProjectBtn:hover::before,
+.friendRequestBtn:hover::before,
+.createPostGreenBtn:hover::before,
+.detailsRedBtn:hover::before,
+.detailsYellowBtn:hover::before,
+.detailsBlueBtn:hover::before,
+.joinBtn:hover::before {
+  bottom: 0;
+}
+
+.newestBtn:hover::after,
+.popularBtn:hover::after,
+.credintialBtn:hover::after,
+.seeAllPostBtn:hover::after,
+.viewMoreBlueBtn:hover::after,
+.profileFriendRequestBtn:hover::after,
+.updateCoverBtn:hover::after,
+.activeBtn:hover::after,
+.postProjectBtn:hover::after,
+.friendRequestBtn:hover::after,
+.createPostGreenBtn:hover::after,
+.detailsRedBtn:hover::after,
+.detailsYellowBtn:hover::after,
+.detailsBlueBtn:hover::after,
+.viewMoreBlueBtn:hover::after,
+.viewMoreBlueBtn:hover::after,
+.joinBtn:hover::after {
+  top: 0;
+}
+
+.newestBtn:nth-child(1)::before,
+.newestBtn:nth-child(1)::after,
+.joinBtn:nth-child(1)::before,
+.joinBtn:nth-child(1)::after {
+  background: #ff381e;
+  box-shadow: 0 0 5px #ff381e, 0 0 15px #ff381e, 0 0 30px #ff381e,
+    0 0 60px #ff381e;
+}
+
+.postProjectBtn:nth-child(3)::before,
+.postProjectBtn:nth-child(3)::after {
+  background: #2adba4;
+  box-shadow: 0 0 5px #2adba4, 0 0 15px #2adba4, 0 0 30px #2adba4,
+    0 0 60px #2adba4;
+}
+
+.friendRequestBtn:nth-child(2)::before,
+.friendRequestBtn:nth-child(2)::after,
+.createPostGreenBtn:nth-child(2)::before,
+.createPostGreenBtn:nth-child(2)::after,
+.profileFriendRequestBtn:nth-child(2)::before,
+.profileFriendRequestBtn:nth-child(2)::after {
+  background: #1eff45;
+  box-shadow: 0 0 5px #1eff45, 0 0 15px #1eff45, 0 0 30px #1eff45,
+    0 0 60px #1eff45;
+}
+
+.viewMoreBlueBtn:nth-child(3)::before,
+.detailsBlueBtn:nth-child(3)::after ,
+.viewMoreBlueBtn:nth-child(3)::before,
+.viewMoreBlueBtn:nth-child(3)::after {
+  background: #4285f4;
+  box-shadow: 0 0 5px #4285f4, 0 0 15px #4285f4, 0 0 30px #4285f4,
+    0 0 60px #4285f4;
+}
+.detailsYellowBtn:nth-child(3)::before,
+.detailsYellowBtn:nth-child(3)::after {
+  background: #ffd83a;
+  box-shadow: 0 0 5px #ffd83a, 0 0 15px #ffd83a, 0 0 30px #ffd83a,
+    0 0 60px #ffd83a;
+}
+.detailsRedBtn:nth-child(3)::before,
+.detailsRedBtn:nth-child(3)::after {
+  background: #f64b4b;
+  box-shadow: 0 0 5px #f64b4b, 0 0 15px #f64b4b, 0 0 30px #f64b4b,
+    0 0 60px #f64b4b;
+}
+
+/* } */
+
+/* ////////////////// */
+@media screen and (min-device-width: 1024px) and (max-device-width: 1279px) {
+  .profileFriendRequestBtn {
+    padding: 20px 55px;
+    margin: 10px 0px;
+  }
+  .updateCoverBtn {
+    padding: 20px 95px;
+    margin: 0px 0px;
+    
+  }
+
+  .createPostGreenBtn p {
+    font-size: 15px;
+    
+  }
+  .createPostGreenBtn {
+    padding: 20px 85px;
+    margin: 0px 0px;
+  }
+  
+}
+@media screen and (min-device-width: 1280px) and (max-device-width: 1920px) {
+  .profileFriendRequestBtn {
+    padding: 20px 75px;
+    margin: 10px 0px;
+  }
+  .updateCoverBtn {
+    padding: 20px 95px;
+    margin: 0px 0px;
+  }
+  .createPostGreenBtn p {
+    font-size: 15px;
+    
+  }
+  .createPostGreenBtn {
+    padding: 20px 85px;
+    margin: 0px 0px;
+  }
+  
+}

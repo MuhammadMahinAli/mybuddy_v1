@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "title": "Explosion of Betelgeuse Star",
+    "start": "2024-03-03T05:30:02",
+    "end": "2024-03-03T06:30:00",
+    "color": "#e7b2b4"
+  },
+  {
+    "id": 2,
+    "title": "Explosion of Betelgeuse Star",
+    "start": "2024-03-03T07:30:02",
+    "end": "2024-03-03T10:30:00",
+    "color": "#e7b2b4"
+  }
+]
+

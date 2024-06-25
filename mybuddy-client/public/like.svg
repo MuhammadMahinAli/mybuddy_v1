@@ -1,0 +1,39 @@
+<svg width="104" height="99" viewBox="0 0 104 99" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g filter="url(#filter0_dd_91_1944)">
+<rect x="10" y="10" width="74" height="69" rx="13" fill="url(#paint0_linear_91_1944)"/>
+<rect x="11" y="11" width="72" height="67" rx="12" stroke="url(#paint1_linear_91_1944)" stroke-width="2"/>
+</g>
+<rect x="26.0869" y="21.6949" width="42.8986" height="46.7797" fill="url(#pattern0)"/>
+<defs>
+<filter id="filter0_dd_91_1944" x="0" y="0" width="104" height="99" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1" operator="erode" in="SourceAlpha" result="effect1_dropShadow_91_1944"/>
+<feOffset dx="5" dy="5"/>
+<feGaussianBlur stdDeviation="8"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.725065 0 0 0 0 0.725065 0 0 0 0 0.725065 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_91_1944"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="5" dy="5"/>
+<feGaussianBlur stdDeviation="5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.729167 0 0 0 0 0.717014 0 0 0 0 0.717014 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="effect1_dropShadow_91_1944" result="effect2_dropShadow_91_1944"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_91_1944" result="shape"/>
+</filter>
+<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_91_1944" transform="matrix(0.0109047 0 0 0.01 -0.0452359 0)"/>
+</pattern>
+<linearGradient id="paint0_linear_91_1944" x1="14.5439" y1="17.0408" x2="88.4751" y2="73.098" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D9D9D9"/>
+<stop offset="0.554577" stop-color="#F0F0F0"/>
+<stop offset="1" stop-color="#FCFCFC"/>
+</linearGradient>
+<linearGradient id="paint1_linear_91_1944" x1="10" y1="19.1531" x2="88.1913" y2="72.9028" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#8B8B8B" stop-opacity="0"/>
+</linearGradient>
+<image id="image0_91_1944" width="100" height="100" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEXklEQVR4nO3dP2xNURwH8NcmRDDYiFgsCMJgMQiJaM9pkS6a2CxieP39XgeJ2l7EqKXVoRODVcKGpDVIJCQViyYiRKI1iEHQkqD6les1Erzqvff89c7vm5ylkfblfu65737Pde+tVCQSiUQikUgkkoquoVsRZjQDTcasIkwoRo9sKk9RS2P8NhThesdprBEYx9E5MH6hMO4eOIFVghIJiG6g3KzX0S4okYDoDKUP/QISEwjjU1cftghKJCC6Me4ISFwg0DXsE5SYQAi3BSQmEAZUP7YKSkwghHMCEhfIi0oFbYISCYhujO0CEhGIYpwUkJhACFcEJC6QhwISEYhmvBQQCzlQxVorIIQ5AbEQxThpaYa8FxAbIIQHlmbIEwExTEcNOy3Njuy095aAmM+OS9ZACBcExCC9daxUhLe2QDTjmIAYRNdw3CJGNjYJiAkIY9zi4WpGMAzSQdisCN8tzo6rAmI2O85bPVwRegWkZOp1tGvGtEWMbz39WCcgJaMIh23ODkW4JxgGUYQblg9XZwWkZA7WsF4zvloFqWGXgJSMZgxYPlzN/JfX0lUflCa8srpnLrGBughdzT8F2hTjmevP4GUQ5jRjSjOGs/W4wiBWz2qWH9PNPkN3FfuDb0gXOyFjXjNGs6Wg/DOE8cnnh2y6UxCuhd54TmEIE7lRNONpSJCefqxThM+hN5oHlMv5QAi3Q4JoQjX0xvICwphXVezIM0PGQoIowuPQG8sjysU8M+RsSBAdwYbyNvJcSnZw7UFAeIkZQviY55C1V0DgZWdUjHfLgnRXsUFA4AtkclmQny3Z42lnkxmKZAZhKLoukjDIQu47g312kYRBBnNh+O4iKYIowsSeU1iRH8RjF0kQZKwQhu8ukiDIcCEM310kQZCFXGtYobpIgiDIvdIbooukCKIZUwVB/HWRJEGoxB1cvrpIiiAqzxpWqC6SKMhkmRnipYukCKLzrmGF6CIJgiyUerqdry6SIMhgpUx8dZGUQFTRNawQXSQhkDEDDH9dJCGQYSMMX10kIZCFwmtYIbpIQiAosYblv4ukBKLLrGH57iJJgZDhU4h8dJGkQBizRiA+ukhiIFNGID66SGIgI4Yg7rtIKiCK8N34tNdHF0kFRDNGjTF8dJFEQMYL3Vdos4sowhdFOHOoDxuzkd3enP0sRRDVeGhOsZs8HXSRgSL3nLcwyPNSt0Hb7iLZrPjzdyzOlKRAFGO+k7DNOkjRLiIgsLvCa6GLDBT5Hvrr33L4vTuiImjeRRa/wAfkSx0/3w7nBsRhF2mCj1YZivDBDYjDLtLKINrVE7RdXhdpcZAhNyAOr4u0KohqPPnHzauVXF4X+fNvKcb90BszmpXdENdF/sKvYVf2OokINqjJGDf+Lz//Dto04Y2vB5h1EnbnfZF9hIepEccYjWjGUUV4bROjk6GX+ntHTmG1ZrAmPPL9ULWCYzY7m8q+wOV1fBKJRCKRSCQSiUQikVRaLD8ATGsg7br3VbkAAAAASUVORK5CYII="/>
+</defs>
+</svg>
