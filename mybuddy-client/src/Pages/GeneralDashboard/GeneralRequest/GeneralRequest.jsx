@@ -13,7 +13,7 @@ const GeneralRequest = () => {
 
 //   const fetchClientSecret = async () => {
 //     try {
-//       const response = await fetch('http://localhost:8000/api/v1/payment/create-payment-intent', {
+//       const response = await fetch('http://3.80.196.219/api/v1/payment/create-payment-intent', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',

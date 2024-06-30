@@ -5,7 +5,6 @@ import Feed from "../Pages/Feed/Feed";
 import ProjectDetails from "../Pages/ProjectDetails/ProjectDetails";
 import GDashboard from "../Pages/GeneralDashboard/GDashboard/GDashboard";
 import GeneralLayout from "../Layout/GeneralLayout";
-import GeneralRequest from "../Pages/GeneralDashboard/GeneralRequest/GeneralRequest";
 import GeneralFriendRequest from "../Pages/GeneralDashboard/GeneralFriendRequest/GeneralFriendRequest";
 import GeneralAllProject from "../Pages/GeneralDashboard/GeneralAllProject/GeneralAllProject";
 import AddProject from "../Pages/GeneralDashboard/GeneralAddProject/AddProject";
@@ -72,7 +71,7 @@ const router = createBrowserRouter([
            {
                 path:"/user/profile/:id",
                 element:<UserProfileVM/>,
-                // loader:fetch({params})=>`https://localhost:8000/api/v1/member/getUserById/${params.id}`)
+                
 
             },
            {

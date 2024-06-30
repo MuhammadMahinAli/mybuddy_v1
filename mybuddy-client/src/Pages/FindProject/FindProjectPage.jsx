@@ -26,7 +26,7 @@ const FindProjectPage = () => {
   const fetchClientSecret = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8000/api/v1/payment/create-payment-intent",
+        "http://3.80.196.219/api/v1/payment/create-payment-intent",
         {
           method: "POST",
           headers: {
