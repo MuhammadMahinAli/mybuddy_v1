@@ -4,7 +4,7 @@ import config from "./config/index.js";
 // import {server, socketConnection} from "./socket.js";
 
 // const server = createServer(app);
-const port = config.port || 8000;
+const port =  80;
 
 //uncaught exception handle
 process.on("uncaughtException", (err) => {
