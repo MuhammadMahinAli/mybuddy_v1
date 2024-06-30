@@ -1,0 +1,62 @@
+ [
+  {
+    "email": "user1@example.com",
+    "password": "password1",
+    "name": {
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "phoneNumber": "1234567890",
+    "address": "123 Main St",
+    "country": "USA",
+    "profession": "Software Engineer",
+    "profilePic": "profile_pic_url_1",
+    "coverPic": "cover_pic_url_1",
+    "role": "User",
+    "skills": ["JavaScript", "React", "Node.js"],
+    "interests": "Reading, Hiking",
+    "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "facebook": "https://www.facebook.com/user1",
+    "github": "https://github.com/user1",
+    "portfolio": "https://user1.portfolio.com",
+    "linkedIn": "https://www.linkedin.com/in/user1",
+    "twitter": "https://twitter.com/user1",
+    "projects": [
+      {
+        "projectName": "Project One",
+        "creationDate": "2024-03-17",
+        "fundAmount": "$10000",
+        "documents": ["document_url_1", "document_url_2"],
+        "pdfFiles": ["pdf_url_1", "pdf_url_2"],
+        "images": ["https://i.ibb.co/vBZCCnw/project1.png", "https://i.ibb.co/vBZCCnw/project1.png", "https://i.ibb.co/vBZCCnw/project1.png"],
+        "videoUrl": "video_url_1"
+      },
+      {
+        "projectName": "Project two",
+        "creationDate": "2024-03-17",
+        "fundAmount": "$10000",
+        "documents": ["document_url_1", "document_url_2"],
+        "pdfFiles": ["pdf_url_1", "pdf_url_2"],
+        "images": ["https://i.ibb.co/vBZCCnw/project1.png", "https://i.ibb.co/vBZCCnw/project1.png", "https://i.ibb.co/vBZCCnw/project1.png"],
+        "videoUrl": "video_url_1"
+      },
+      {
+        "projectName": "Project three",
+        "creationDate": "2024-03-17",
+        "fundAmount": "$10000",
+        "documents": ["document_url_1", "document_url_2"],
+        "pdfFiles": ["pdf_url_1", "pdf_url_2"],
+        "images": ["https://i.ibb.co/vBZCCnw/project1.png", "https://i.ibb.co/vBZCCnw/project1.png", "https://i.ibb.co/vBZCCnw/project1.png"],
+        "videoUrl": "video_url_1"
+      }
+    ],
+    "certification": [{
+      "orgonizationName": "Organization A",
+      "field": "Technology",
+      "issueDate": "2023-01-01",
+      "credentials": "Credential A"
+    }]
+  }
+
+]
+
