@@ -8,10 +8,10 @@ const corsOptions = {
   origin: 'https://researchbdy.com/', 
   optionsSuccessStatus: 200,
 };
-app.use(cors(corsOptions));
+console.log(corsOptions);
 const app = express();
 //
-app.use(cors());
+app.use(cors(corsOptions));
 const bodyParserLimit = '100mb';
 //parser
 app.use(express.json({limit:bodyParserLimit}));
