@@ -1,5 +1,4 @@
 import twitter from "../../assets/user-profile/x.png";
-import google from "../../assets/home/google.png";
 import active from "../../assets/home/active.png";
 import whiteBorder from "../../assets/home/p-border.png";
 import linkedIn from "../../assets/home/linkedIn.png";

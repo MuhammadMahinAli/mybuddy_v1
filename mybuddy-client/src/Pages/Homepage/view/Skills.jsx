@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import DynamicProjectSkillSection from "../../../common/DynamicSkillSecrion/DynamicProjectSkillSection";
-import DynamicSkillSection from "../../../common/DynamicSkillSecrion/DynamicSkillSection";
-
 const Skills = ({skillArray, theme,openComponent,i}) => {
   useEffect(() => {
     console.log("Rendering Image component at index:", i);

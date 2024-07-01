@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useAuthCheck } from "../../utils/useAuthCheck";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import navicon from "../../assets/navbar/navicon.png";
 import searchIcon from "../../assets/navbar/searchicon.png";
 import darkSearchIcon from "../../assets/home/dark-search-btn.png";
 import activeDark from "../../assets/home/active-dark.png";
@@ -14,7 +13,6 @@ import active from "../../assets/home/active.png";
 import { setTheme } from "../../features/theme/themeSlice";
 import NotificationIcon from "../../icons/NotificationIcon";
 import Hamburger from "../../icons/Hamburger";
-import PeoplesIcon from "../../icons/PeoplesIcon";
 import MessageIcon1 from "../../icons/MessageIcon1";
 import MessageIcon2 from "../../icons/MessageIcon2";
 import UsersIcon from "../../icons/usersIcon";
@@ -23,12 +21,6 @@ import SearchIcon from "../../icons/SearchIcon";
 import Sidebar from "../Sidebar/Sidebar";
 import FindDropdown from "./FindDropdown";
 import { Menu } from "@headlessui/react";
-import HoveredText from "../../icons/HoveredText";
-import VideoIcon from "../../icons/VideoIcon";
-import DashboardIcon from "../../icons/DashboardIcon";
-import ResearcherIcon from "../../icons/ResearcherIcon";
-import FeedIcon from "../../icons/FeedIcon";
-import ProjectIcon from "../../icons/ProjectIcon";
 import MiniSidebar from "./MiniSidebar";
 import ProfileTab from "./ProfileTab";
 import { AuthContext } from "../../Context/UserContext";
@@ -40,8 +32,10 @@ const Navbar = ({
   openSidebar,
   theme,
 }) => {
-  const{singleUser} = useContext(AuthContext)
-  const userImage = singleUser?.data?.profilePic ?  singleUser?.data?.profilePic  : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+  const { singleUser } = useContext(AuthContext);
+  const userImage = singleUser?.data?.profilePic
+    ? singleUser?.data?.profilePic
+    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
   const { logout: originalLogout } = useAuthCheck();
   const [openProfile, setOpenProfile] = useState(false);
   const { user } = useSelector((state) => state.auth);
@@ -73,7 +67,6 @@ const Navbar = ({
       }, 2500);
     }
   };
-
 
   // const theme = useSelector((state) => state.theme.theme);
   const dispatch = useDispatch();
@@ -114,22 +107,23 @@ const Navbar = ({
           </div>
 
           <ul
-            className={`flex items-center hidden space-x-8 lg:flex lg:py-5 ${
+            className={`relative flex items-center hidden space-x-8 lg:flex lg:py-5 ${
               theme === "light" ? "text-gray-500" : "text-white"
             }`}
           >
-            <li className="">
+            <li className="absolute top-1-left-0">
               {openSidebar === false && (
-                <a
-                  href="/"
-                  className="text-[18px] font-medium tracking-wide  transition-colors duration-200 hover:text-deep-purple-accent-400"
-                >
-                  Logo
+                <a href="/">
+                  <img
+                    className="h-16 w-16 lg:p-2  rounded-lg"
+                    src="/logo.png"
+                    alt=""
+                  />
                 </a>
               )}
             </li>
 
-            <li>
+            <li className="pl-12">
               <a
                 href="/"
                 className="text-[18px] font-medium tracking-wide  transition-colors duration-200 hover:text-deep-purple-accent-400"
@@ -324,7 +318,7 @@ const Navbar = ({
 
       {openSidebar && (
         <Sidebar
-        user={user}
+          user={user}
           openSidebar={openSidebar}
           toggleSidebar={toggleSidebar}
           theme={theme}

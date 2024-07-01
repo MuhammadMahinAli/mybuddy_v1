@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import pdfPreview from '../../assets/home/pdf-image.jpg';
 import MediaIcon from "../../icons/MediaIcon";
 import ArticleIcon from "../../icons/ArticleIcon";

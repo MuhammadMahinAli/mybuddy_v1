@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import profile from '../../assets/project1.png';
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/UserContext";

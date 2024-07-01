@@ -32,7 +32,7 @@ export const experienceApi = apiSlice.injectEndpoints({
     }),
   }),
 });
-//useGetSingleUserExperienceQuery,useUpdateExperienceMutation
+
 
 export const { useAddExperienceMutation,useGetUserExperienceQuery,useUpdateExperienceMutation   } = experienceApi;
 

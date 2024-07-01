@@ -141,12 +141,3 @@ const GeneralDashboardNavbar = () => {
   );
 };
 export default GeneralDashboardNavbar;
-//   const Idle = () => {
-//     return (
-//       <div className="w-full relative h-[45px]">
-//         <div className="absolute h-full w-full top-[0%] right-[0%] bottom-[0%] left-[0%] rounded-xl bg-aliceblue shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]" />
-//       </div>
-//     );
-//   };
-
-//   export default Idle;

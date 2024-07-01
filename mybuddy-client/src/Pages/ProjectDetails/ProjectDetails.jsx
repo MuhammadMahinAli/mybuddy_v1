@@ -1,13 +1,10 @@
 import light from "../../assets/light1.png";
-import man from "../../assets/dummy.png";
-import man1 from "../../assets/people1.png";
 import read from "../../assets/read.png";
 import fund from "../../assets/fund2.png";
 import readLess from "../../assets/readless.png";
 import circle from "../../assets/circle.png";
 import qr from "../../assets/qr.png";
 import gdrive from "../../assets/gdrive.png";
-import des from "../../assets/heroImg.png";
 import doc from "../../assets/doc.png";
 import pdf from "../../assets/pdf.png";
 import ytube from "../../assets/youtube.png";
@@ -19,9 +16,8 @@ import ImageSlider from "./ImageSlider";
 import ProjectDescription from "./ProjectDescription";
 import OpenPdf from "./OpenPdf";
 import OpenDocx from "./OpenDocx";
-import { Link } from "react-router-dom";
 import TaskTable from "./TaskTable";
-import { useCreateProjectJoinRequestMutation, useGetAllProjectByRequestedByQuery } from "../../features/projectJoinRequest/projectJoinRequestApi";
+import { useCreateProjectJoinRequestMutation } from "../../features/projectJoinRequest/projectJoinRequestApi";
 import Swal from "sweetalert2";
 
 const ProjectDetails = () => {

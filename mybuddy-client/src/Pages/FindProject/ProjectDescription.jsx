@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "../GeneralDashboard/GeneralAddProject/editor.css";
 import "react-quill/dist/quill.core.css";
 import PropTypes from "prop-types";

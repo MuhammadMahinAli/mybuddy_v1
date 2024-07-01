@@ -2,17 +2,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../common/Navbar/Navbar";
-import { useAuthCheck } from "../utils/useAuthCheck";
 import { useEffect } from "react";
-import SunIcon from "../icons/SunIcon";
-import { useDispatch, useSelector } from "react-redux";
-import Sidebar from "../common/Sidebar/Sidebar";
+import { useSelector } from "react-redux";
 import RightSidebar from "../Pages/Homepage/RightSidebar";
 import Loading from "../Pages/Loading/Loading";
 import BottomNavbar from "../common/BottomNavbar/BottomNavbar";
-import { useGetSingleUserQuery } from "../features/auth/authApi";
-import { useGetSingleUserPostQuery } from "../features/post/postApi";
-import { useGetAllProjectByUserQuery } from "../features/project/projectApi";
 
 const HomepageLayout = ({singleUser}) => {
   let [isOpen, setIsOpen] = useState(true);
@@ -20,10 +14,6 @@ const HomepageLayout = ({singleUser}) => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-
-
-
 
 
    //console.log("userpost",getUserPost);
@@ -120,63 +110,5 @@ const HomepageLayout = ({singleUser}) => {
     </>
   );
 };
-
-// import { Outlet, useNavigate } from "react-router-dom";
-// import Navbar from "../common/Navbar/Navbar";
-// import { useAuthCheck } from "../utils/useAuthCheck";
-// import { useEffect, useState } from "react";
-// import SunIcon from "../icons/SunIcon";
-// import { useDispatch, useSelector } from "react-redux";
-// import Sidebar from "../common/Sidebar/Sidebar";
-// import RightSidebar from "../Pages/Homepage/RightSidebar";
-
-// const HomepageLayout = () => {
-//   const authChecked = useAuthCheck();
-// const theme = useSelector((state) => state.theme.theme);
-// const [openSidebar, setOpenSidebar] = useState(false);
-// const [isLoading, setIsLoading] = useState(false);
-// const navigate = useNavigate();
-
-// const handleSidebarLinkClick = (path) => {
-//   setIsLoading(true);
-//   navigate(path);
-//   setTimeout(() => {
-//     setIsLoading(false);
-//   }, 500);
-// };
-
-// const toggleSidebar = () => {
-//   setOpenSidebar(!openSidebar);
-// };
-
-//   return (
-//     <>
-//       {!authChecked ? (
-//         <div>Checking Authentication....</div>
-//       ) : (
-//         <>
-//           <div
-//             className={`bg-no-repeat bg-cover min-h-screen ${
-//               theme === "light" ? "bg-[#eaecef]" : "bg-[#070c12]"
-//             }`}
-//           >
-//             <Navbar
-//               handleSidebarLinkClick={handleSidebarLinkClick}
-//               toggleSidebar={toggleSidebar}
-//               openSidebar={openSidebar}
-//               theme={theme}
-//             />
-//             <div
-//               className={`z-0 lg:space-x-7 xl:space-x-10 2xl:space-x-14 flex justify-center items-center md:items-center  lg:items-start  pt-8 md:py-10 3xl:py-14`}
-//             >
-//               <Outlet />
-//               <RightSidebar openSidebar={openSidebar} theme={theme} />
-//             </div>
-//           </div>
-//         </>
-//       )}
-//     </>
-//   );
-// };
 
 export default HomepageLayout;

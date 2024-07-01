@@ -1,11 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 import { useUpdateFriendRequestStatusMutation } from "../../../features/friend/friendApi";
 import Swal from "sweetalert2";
 
 const GeneralFriendRequest = () => {
   const { getFriendRequest } = useContext(AuthContext);
-  //console.log(getFriendRequest?.data);
   const [updateFriendRequestStatus] = useUpdateFriendRequestStatusMutation();
 
   const handleUpdateStatusAccept = (e, index) => {

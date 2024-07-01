@@ -189,10 +189,3 @@ const MobileNavbar = ({ activeTab, toggleTab, theme }) => {
 
 export default MobileNavbar;
 
-// <div className="flex flex-col items-center py-2">
-// <div className="w-5 md:w-7 h-[4px] md:h-[5px] shadow-[0px_0px_5px_#0cfc34,_0px_0px_15px_#0cfc34,_0px_0px_30px_#0cfc34,_0px_0px_60px_#0cfc34] rounded-3xs bg-[#1eff45] rounded-t-xl blur-[1px]" />
-// <p className="text-sm rounded-2xl py-1 md:py-3 px-4 md:px-7 tracking-wide text-white font-bold shadow-[-2px_-2px_100px_rgba(255,_255,_255,_0.1)_inset,_2px_2px_100px_rgba(66,_66,_66,_0.1)_inset] [backdrop-filter:blur(50px)]  box-border">
-//   FRIEND REQUEST
-// </p>
-// <div className="w-5 md:w-7 h-[4px] md:h-[5px] shadow-[0px_0px_5px_#1eff45,_0px_0px_15px_#1eff45,_0px_0px_30px_#1eff45,_0px_0px_60px_#1eff45] rounded-3xs bg-[#1eff45] rounded-b-xl blur-[1px]" />
-// </div>

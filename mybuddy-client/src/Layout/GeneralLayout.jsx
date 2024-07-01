@@ -2,20 +2,10 @@ import { Outlet } from "react-router-dom";
 import GeneralSideBar from "../common/GeneralSidebar/GeneralSideBar";
 import GeneralDashboardNavbar from "../common/Navbar/GeneralDashboardNavbar";
 import { useAuthCheck } from "../utils/useAuthCheck";
-import { useSelector } from "react-redux";
-import { useGetSingleUserQuery } from "../features/auth/authApi";
 
 const GeneralLayout = () => {
   const authChecked = useAuthCheck();
-  // const { user } = useSelector((state) => state.auth);
-  // const id = user?._id
-  // const {
-  //   data: singleUser,
-  //   isLoading: isFetchingUser,
-  //   error,
-  // } = useGetSingleUserQuery(id);
-  // const userData = singleUser?.data
-  // console.log(userData);
+
   return (
     <>
     {!authChecked ? (

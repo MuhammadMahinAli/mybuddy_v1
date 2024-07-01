@@ -15,7 +15,6 @@ import bulmaLogo from "../../assets/skill-icons/bulma.svg";
 import webpackLogo from "../../assets/skill-icons/webpack.svg";
 import vueJsLogo from "../../assets/skill-icons/vuejs-original-wordmark.svg";
 import pugLogo from "../../assets/skill-icons/pig.svg";
-//import emberLogo from "../../assets/skill-icons/";
 import tsLogo from "../../assets/skill-icons/typescript-original.svg";
 import javaLogo from "../../assets/skill-icons/java-original.svg";
 import phpLogo from "../../assets/skill-icons/php-original.svg";
@@ -91,7 +90,6 @@ import seleniumLogo from "../../assets/skill-icons/selenium-logo.svg";
 import bashLogo from "../../assets/skill-icons/gnu_bash-icon.svg";
 import mysqlLogo from "../../assets/skill-icons/mysql-original-wordmark.svg";
 import hiveLogo from "../../assets/skill-icons/hive.svg";
-import invisionLogo from "../../assets/skill-icons/invisionapp-icon.svg";
 import rustLogo from "../../assets/skill-icons/rust.svg";
 import awsLogo from "../../assets/skill-icons/amazonwebservices-original-wordmark.svg";
 import mongodbLogo from "../../assets/skill-icons/mongodb-original-wordmark.svg";
@@ -141,9 +139,7 @@ import scllyLogo from "../../assets/skill-icons/scullyio-icon.svg";
 import arduinoLogo from "../../assets/skill-icons/ardunio.svg";
 import xdLogo from "../../assets/skill-icons/adobe-xd.svg";
 import matlabLogo from "../../assets/skill-icons/Matlab_Logo.svg";
-//import Logo from "../../assets/skill-icons";
 
-//import Logo from "../../assets/skill-icons";
 
 const DynamicSkillSection = ({ theme, allSkill}) => {
   const skillArray =  allSkill[0]?.skillArray;

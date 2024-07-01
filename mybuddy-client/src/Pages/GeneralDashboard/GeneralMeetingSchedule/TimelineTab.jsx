@@ -6,7 +6,6 @@ import "./calender.css";
 import PropTypes from "prop-types";
 import "react-calendar/dist/Calendar.css";
 import SmallCalender from "./SmallCalender";
-//import SmallCalender from "./SmallCalender";
 const localizer = momentLocalizer(moment);
 
 const TimelineTab = () => {

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import FeedIcon from '../../icons/FeedIcon';
 import HoveredText from '../../icons/HoveredText';
 import ResearcherIcon from '../../icons/ResearcherIcon';

@@ -19,10 +19,6 @@ const FindDropdown = ({ theme }) => {
           theme === "light" ? "bg-white" : "bg-[#63666a]"
         } absolute right-0 mt-4 w-44  origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none`}
       >
-        {/* <div className='absolute -top-1 right-10'>
-          <Triangle/>
-          </div> */}
-
         <div className="px-1 py-1 ">
           <Menu.Item>
             {({ active }) => (

@@ -15,7 +15,6 @@ import bulmaLogo from "../../assets/skill-icons/bulma.svg";
 import webpackLogo from "../../assets/skill-icons/webpack.svg";
 import vueJsLogo from "../../assets/skill-icons/vuejs-original-wordmark.svg";
 import pugLogo from "../../assets/skill-icons/pig.svg";
-//import emberLogo from "../../assets/skill-icons/";
 import tsLogo from "../../assets/skill-icons/typescript-original.svg";
 import javaLogo from "../../assets/skill-icons/java-original.svg";
 import phpLogo from "../../assets/skill-icons/php-original.svg";
@@ -141,9 +140,7 @@ import scllyLogo from "../../assets/skill-icons/scullyio-icon.svg";
 import arduinoLogo from "../../assets/skill-icons/ardunio.svg";
 import xdLogo from "../../assets/skill-icons/adobe-xd.svg";
 import matlabLogo from "../../assets/skill-icons/Matlab_Logo.svg";
-//import Logo from "../../assets/skill-icons";
 
-//import Logo from "../../assets/skill-icons";
 
 const DynamicProjectSkillSection = ({ theme, skillArray }) => {
   console.log("sk",skillArray);

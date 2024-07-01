@@ -13,9 +13,8 @@ const experienceSlice = createSlice({
     addExperience: (state, action) => {
       state.experience.push(action.payload);
     },
-    // ... other reducers
  },
- // If you're using RTK Query, you would define endpoints here
+
 });
 
 export const { addExperience } = experienceSlice.actions;

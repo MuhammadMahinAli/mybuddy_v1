@@ -1,10 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
-import { useGetSingleUserQuery } from "../../features/auth/authApi";
-import { useState,useEffect, useContext, } from "react";
-import { useAuthCheck } from "../../utils/useAuthCheck";
-import Swal from "sweetalert2";
+import {  useContext, } from "react";
 import { AuthContext } from "../../Context/UserContext";
 const DekstopSidebar = ({
   handleCreateProject,

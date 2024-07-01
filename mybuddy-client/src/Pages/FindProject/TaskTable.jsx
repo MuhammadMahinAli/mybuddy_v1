@@ -1,13 +1,10 @@
 import { Fragment, useState } from "react";
 import man from "../../assets/dummy.png";
-import man1 from "../../assets/people1.png";
 import "../GeneralDashboard/GeneralAddProject/editor.css";
 import { Dialog, Transition } from "@headlessui/react";
-import ProjectIcon from "../../icons/ProjectIcon";
-import { useSelector } from "react-redux";
 import ProjectIcon1 from "../../icons/ProjectIcon1";
 
-const TaskTable = ({ tasks, selectedTasks, setSelectedTasks, theme }) => {
+const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
   const [checkedStates, setCheckedStates] = useState(tasks?.map(() => false));
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(null);
   const [isOpen, setIsOpen] = useState(false);

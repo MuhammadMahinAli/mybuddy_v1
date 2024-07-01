@@ -140,14 +140,3 @@ const SocialTab = ({theme}) => {
 };
 
 export default SocialTab;
-//<div className="flex justify-center items-center cursor-pointer h-10 md:h-20">
-//          <div className="rectangle-bg flex justify-center items-center h-11 w-14 md:h-16 md:w-14">
-//            <img className="h-7 md:h-10" src="/github.svg" />
-//          </div>
-//
-//          <div className="  rounded-r-lg bg-gradient-to-r from-[#35eed8] from-10% via-[#4164f0] via-30% to-[#DD7BFF] to-90% h-11 w-60 md:h-16 md:w-80">
-//            <p className="m-[1px] pt-2 md:pt-4 gray500 rounded-r-lg  bg-[#e3f1fb]  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[41px] md:h-[61px]">
-//              @summenurfatema
-//            </p>
-//          </div>
-//        </div>

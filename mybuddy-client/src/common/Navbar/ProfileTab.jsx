@@ -1,5 +1,4 @@
 import darkBorder from "../../assets/home/dark-border.png";
-import whiteBorder from "../../assets/home/white-border.png";
 import { useSelector } from "react-redux";
 
 const ProfileTab = ({ openProfile, logout }) => {

@@ -1,8 +1,7 @@
 import { MdOutlineEmail } from "react-icons/md";
 import { GoEyeClosed } from "react-icons/go";
-import heroImg from "../../assets/object.png";
-import { useContext, useEffect, useState } from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useContext,  useState } from "react";
+import { AiOutlineEye } from "react-icons/ai";
 import { useLoginMutation } from "../../features/auth/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
