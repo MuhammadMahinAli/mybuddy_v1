@@ -56,7 +56,7 @@ const SignUp = () => {
         } else if (!passValid) {
           alert("Oops!", `Password is not valid`, "error");
         } else {
-          const data = await apiFetch(`http://3.80.196.219/api/v1/user/sign-up`, "POST", formData);
+          const data = await apiFetch(`http://ec2-3-80-196-219.compute-1.amazonaws.com/api/v1/user/sign-up`, "POST", formData);
           if (!data?.success) {
             console.log(data);
             alert("Ooops!", `Something Went wrong`, "error");

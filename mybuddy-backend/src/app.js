@@ -6,10 +6,17 @@ import {globalErrorHandler} from "./app/middlewars/gloalErrorHandler.js";
 
 
 const app = express();
+
+const corsOptions = {
+  origin: 'https://sparkling-alfajores-4cc19c.netlify.app', // Update with your actual Netlify domain
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 //
-app.use(cors());
+//app.use(cors());
 const bodyParserLimit = '100mb';
-//parser
+//parser 
 app.use(express.json({limit:bodyParserLimit}));
 app.use(express.urlencoded({extended: true,limit:bodyParserLimit}));
 
