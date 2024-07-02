@@ -4,14 +4,10 @@ import httpStatus from "http-status";
 import router from "./app/routes/index.js";
 import {globalErrorHandler} from "./app/middlewars/gloalErrorHandler.js";
 
-const corsOptions = {
-  origin: 'https://researchbdy.com/', 
-  optionsSuccessStatus: 200,
-};
-console.log(corsOptions);
+
 const app = express();
 //
-app.use(cors(corsOptions));
+app.use(cors());
 const bodyParserLimit = '100mb';
 //parser
 app.use(express.json({limit:bodyParserLimit}));
