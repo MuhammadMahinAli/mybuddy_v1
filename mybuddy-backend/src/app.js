@@ -9,7 +9,7 @@ const app = express();
 
 const corsOptions = {
   origin: 'https://researchbdy.com/', // Update with your actual Netlify domain
-  credientials:true
+  credentials:true
 };
 
 app.use(cors(corsOptions));
