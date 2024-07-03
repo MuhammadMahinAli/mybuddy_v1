@@ -8,7 +8,7 @@ import {globalErrorHandler} from "./app/middlewars/gloalErrorHandler.js";
 const app = express();
 
 const corsOptions = {
-  origin: 'https://researchbdy.com/', // Update with your actual Netlify domain
+  origin: 'https://sparkling-alfajores-4cc19c.netlify.app/',
   credentials:true
 };
 
