@@ -8,7 +8,7 @@ import {globalErrorHandler} from "./app/middlewars/gloalErrorHandler.js";
 const app = express();
 
 const corsOptions = {
-  origin: 'https://sparkling-alfajores-4cc19c.netlify.app/',
+  origin: 'https://researchbdy.com/',
   credentials:true
 };
 
