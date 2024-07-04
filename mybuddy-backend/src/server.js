@@ -6,7 +6,7 @@ import config from "./config/index.js";
 // const server = createServer(app);
 // const port =  process.env.PORT || 8000 ;
 
-const port = 443;
+const port = 80;
 
 //uncaught exception handle
 process.on("uncaughtException", (err) => {
