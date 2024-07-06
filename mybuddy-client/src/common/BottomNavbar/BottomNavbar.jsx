@@ -27,17 +27,17 @@ const BottomNavbar = ({ theme }) => {
         {/* left */}
         <ul className="flex items-center space-x-14">
           <li>
-            <a href="/">
+            <a href="/home">
               {" "}
-              <BtmHomeIcon theme={theme} isPageActive={isPageActive("/")} />
+              <BtmHomeIcon theme={theme} isPageActive={isPageActive("/home")} />
             </a>
           </li>
           <li>
-            <a href="/user/profile">
+            <a href="/find/researcher">
               {" "}
               <BtmResearcherIcon
                 theme={theme}
-                isPageActive={isPageActive("/user/profile")}
+                isPageActive={isPageActive("/find/researcher")}
               />
             </a>
           </li>
@@ -56,7 +56,9 @@ const BottomNavbar = ({ theme }) => {
                 : "bg-[#554a52] bg-cover bg-no-repeat"
             } h-12 w-12 rounded-full flex justify-center items-center`}
           >
-            <FaPlus className=" text-xl text-white" />
+            <a href="/home">
+              <FaPlus className=" text-xl text-white" />
+            </a>
           </div>
         </div>
         {/* right */}
@@ -70,11 +72,11 @@ const BottomNavbar = ({ theme }) => {
             </a>
           </li>
           <li>
-            <a href="/find/researcher">
+            <a href="/dashboard">
               {" "}
               <BtmDashboardIcon
                 theme={theme}
-                isPageActive={isPageActive("/find/researcher")}
+                isPageActive={isPageActive("/dashboard")}
               />
             </a>
           </li>

@@ -90,7 +90,7 @@ const Login = () => {
 
         // social
           addSocialInfo(infoData);
-         navigate('/');
+         navigate("/user/edit-profile");
        } else {
          // Handle unexpected response format
          Swal.fire({

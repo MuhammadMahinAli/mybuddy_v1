@@ -182,10 +182,10 @@ setUserData(singleUser);
           icon: "success",
           text: "Logged out successfully!",
         });
-        navigate("/");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2500);
+        navigate("/home");
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2500);
       }
     };
   return (

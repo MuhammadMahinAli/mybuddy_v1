@@ -184,7 +184,7 @@ const Posts = ({ theme }) => {
             theme === "light"
               ? "bg-white"
               : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover"
-          } shadow-[-1px_0px_56px_-6px_rgba(134,134,134,0.25)] rounded-[10px] w-[240px] xs:w-[280px] sm:w-[350px] md:w-[600px] lg:w-[500px] xl:w-[670px] 2xl:w-[750px] 3xl:w-[800px]`}
+          } shadow-[-1px_0px_56px_-6px_rgba(134,134,134,0.25)] rounded-[10px] w-[270px] xs:w-[280px] sm:w-[350px] md:w-[600px] lg:w-[500px] xl:w-[670px] 2xl:w-[750px] 3xl:w-[800px]`}
         >
           <ul className="flex justify-between items-center">
             <li
@@ -195,9 +195,15 @@ const Posts = ({ theme }) => {
             >
               <MediaIcon theme={theme} />
               <p
-                className={`text-[14px] md:text-[18px] ${
-                  theme === "light" ? "text-gray-500" : "text-white"
-                }`}
+               className={`text-[14px] md:text-[18px] ${
+                theme === "light" 
+                  ? mediaTab 
+                    ? "text-[#2adba4]" 
+                    : "text-gray-500" 
+                  : mediaTab 
+                  ? "text-[#2adba4]" 
+                  : "text-white"
+              }`}
               >
                 Media
               </p>
@@ -211,7 +217,13 @@ const Posts = ({ theme }) => {
               <ProjectIcon theme={theme} />
               <p
                 className={`text-[14px] md:text-[18px] ${
-                  theme === "light" ? "text-gray-500" : "text-white"
+                  theme === "light" 
+                    ? projectTab 
+                      ? "text-[#2adba4]" 
+                      : "text-gray-500" 
+                    : projectTab 
+                    ? "text-[#2adba4]" 
+                    : "text-white"
                 }`}
               >
                 Project
@@ -225,9 +237,15 @@ const Posts = ({ theme }) => {
             >
               <ArticleIcon theme={theme} />
               <p
-                className={`text-[14px] md:text-[18px] ${
-                  theme === "light" ? "text-gray-500" : "text-white"
-                }`}
+               className={`text-[14px] md:text-[18px] ${
+                theme === "light" 
+                  ? articleTab
+                    ? "text-[#2adba4]" 
+                    : "text-gray-500" 
+                  : articleTab
+                  ? "text-[#2adba4]" 
+                  : "text-white"
+              }`}
               >
                 Article
               </p>

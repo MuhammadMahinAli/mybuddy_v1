@@ -61,10 +61,10 @@ const Navbar = ({
         icon: "success",
         text: "Logged out successfully!",
       });
-      navigate("/");
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
+      navigate("/home");
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 2500);
     }
   };
 
@@ -113,7 +113,7 @@ const Navbar = ({
           >
             <li className="absolute top-1-left-0">
               {openSidebar === false && (
-                <a href="/">
+                <a   href={ singleUser ? "/home" : "/"} >
                   <img
                     className="h-16 w-16 lg:p-2  rounded-lg"
                     src="/logo.png"
@@ -125,7 +125,7 @@ const Navbar = ({
 
             <li className="pl-12">
               <a
-                href="/"
+                href="/home"
                 className="text-[18px] font-medium tracking-wide  transition-colors duration-200 hover:text-deep-purple-accent-400"
               >
                 Home
@@ -297,7 +297,7 @@ const Navbar = ({
             }`}
           >
             <a
-              href="/"
+              href="/home"
               className={`${
                 theme === "light" ? "bg-[#2adba4]" : "bg-[#525252]"
               } h-[49px] md:h-[71px]  3xl:h-[71px] flex justify-center items-center px-1 md:px-0  md:w-[80px]`}

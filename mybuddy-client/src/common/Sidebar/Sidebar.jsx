@@ -19,7 +19,7 @@ const Sidebar = ({
     <div>
       <div
         data-aos="fade-right"
-        data-aos-duration="1000"
+        data-aos-duration="600"
         className="absolute top-0 z-40 "
       >
         {openSidebar && (
@@ -40,7 +40,9 @@ const Sidebar = ({
                   openSidebar === false && "hidden"
                 }`}
               >
+                <a href="/home">
                <img className="h-[32px] w-[30px] md:h-12 md:w-[46px] rounded-lg" src='/logo.png' alt=''/>
+               </a>
               </h1>
               {/* mbl tab */}
 
@@ -60,13 +62,13 @@ const Sidebar = ({
             >
                   <li className='sidebar-list'>
                 <a
-                  href="/"
+                  href="/home"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer box1 [border:none]">
                     <div
                       className={`${
-                        isPageActive("/") || theme === "light"
+                        isPageActive("/home") || theme === "light"
                           ? "shadow-[1px_3px_24px_#fff_inset]"
                           : "shadow-[1px_3px_24px_rgba(170,_170,_170,_0.45)_inset]"
                       } box2 py-2 px-3 shadow-[1px_3px_24px_#fff_inset] rounded-[5px]`}

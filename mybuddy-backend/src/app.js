@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended: true,limit:bodyParserLimit}));
 app.use("/api/v1", router); 
 //
 app.get("/", (req, res) => {
-  res.send("Server is Listening..");
+  res.send("Server is Listening...");
 });
 
 //global error handle

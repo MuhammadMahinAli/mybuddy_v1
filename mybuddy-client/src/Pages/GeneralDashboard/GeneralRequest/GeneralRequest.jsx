@@ -13,7 +13,7 @@ const GeneralRequest = () => {
 
 //   const fetchClientSecret = async () => {
 //     try {
-//       const response = await fetch('http://ec2-18-213-245-65.compute-1.amazonaws.com/api/v1/payment/create-payment-intent', {
+//       const response = await fetch('http://localhost:3000/api/v1/payment/create-payment-intent', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',

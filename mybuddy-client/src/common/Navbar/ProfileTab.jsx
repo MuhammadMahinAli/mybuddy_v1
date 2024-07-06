@@ -1,9 +1,16 @@
+import { useContext } from "react";
 import darkBorder from "../../assets/home/dark-border.png";
 import { useSelector } from "react-redux";
+import { AuthContext } from "../../Context/UserContext";
 
 const ProfileTab = ({ openProfile, logout }) => {
   const theme = useSelector((state) => state.theme.theme);
   const { user } = useSelector((state) => state.auth);
+  const{singleUser} = useContext(AuthContext);
+  const userName = singleUser
+    && singleUser?.data?.name?.firstName + " " + singleUser?.data?.name?.lastName;
+  const userRole = singleUser
+    && singleUser?.data?.role;
   const signOut=()=>{
     logout()
 
@@ -11,7 +18,7 @@ const ProfileTab = ({ openProfile, logout }) => {
   return (
     <div
       data-aos={openProfile === true ? "fade-up" : "fade-down"}
-      data-aos-duration="800"
+      data-aos-duration="600"
       className="absolute z-50 top-14 right-5 md:top-20 md:right-10 lg:right-10 3xl:right-16 shadow-2xl w-56 py-3 px-[3px] rounded-lg bg-white"
     >
       {/* profile and button */}
@@ -34,8 +41,8 @@ const ProfileTab = ({ openProfile, logout }) => {
           </div>
 
           <div>
-            <p className="text-[13px] font-medium ">Lorem ipsum dol.</p>
-            <p className="text-[12px] text-gray-500">Lorem ipsum dol.</p>
+            <p className="text-[13px] font-medium ">{userName}</p>
+            <p className="text-[12px] text-gray-500">{userRole}</p>
           </div>
         </div>
         <a href={user? "/user/edit-profile":"/login"}>

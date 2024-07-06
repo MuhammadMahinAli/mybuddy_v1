@@ -5,6 +5,10 @@
   padding: 20px 55px;
   margin: 10px 0px;
 }
+
+.newBtn{
+  padding: 15px 50px ;
+}
 .postProjectBtn,
 .profileFriendRequestBtn,
 .joinBtn {
@@ -37,6 +41,7 @@
 }
 
 .newestBtn,
+.newBtn,
 .popularBtn,
 .credintialBtn,
 .seeAllPostBtn,
@@ -60,6 +65,7 @@
 }
 
 .newestBtn p,
+.newBtn p,
 .popularBtn p,
 .credintialBtn p,
 .seeAllPostBtn p,
@@ -83,6 +89,7 @@
 }
 
 .newestBtn p,
+.newBtn p,
 .popularBtn p,
 .credintialBtn p,
 .seeAllPostBtn p,
@@ -123,6 +130,7 @@
 }
 
 .newestBtn:hover p,
+.newBtn:hover p,
 .popularBtn:hover p,
 .credintialBtn:hover p,
 .seeAllPostBtn:hover p,
@@ -141,6 +149,7 @@
 }
 
 .newestBtn p::before,
+.newBtn p::before,
 .popularBtn p::before,
 .credintialBtn p::before,
 .seeAllPostBtn p::before,
@@ -167,6 +176,7 @@
 }
 
 .newestBtn:hover p::before,
+.newBtn:hover p::before,
 .popularBtn:hover p::before,
 .credintialBtn:hover p::before,
 .seeAllPostBtn:hover p::before,
@@ -194,6 +204,11 @@
 .postProjectBtn::after {
   background: #2adba4;
   width: 35px;
+}
+.newBtn::before,
+.newBtn::after {
+  background: #2adba4;
+  width: 25px;
 }
 .friendRequestBtn::before,
 .friendRequestBtn::after,
@@ -226,6 +241,8 @@
 
 .newestBtn::before,
 .newestBtn::after,
+.newBtn::before,
+.newBtn::after,
 .popularBtn::before,
 .popularBtn::after,
 .credintialBtn::before,
@@ -265,6 +282,7 @@
 }
 
 .newestBtn::before,
+.newBtn::before,
 .popularBtn::before,
 .credintialBtn::before,
 .seeAllPostBtn::before,
@@ -283,6 +301,7 @@
 }
 
 .newestBtn::after,
+.newBtn::after,
 .popularBtn::after,
 .credintialBtn::after,
 .seeAllPostBtn::after,
@@ -302,6 +321,8 @@
 
 .newestBtn:hover::before,
 .newestBtn:hover::after,
+.newBtn:hover::before,
+.newBtn:hover::after,
 .popularBtn:hover::before,
 .popularBtn:hover::after,
 .credintialBtn:hover::before,
@@ -337,6 +358,7 @@
 }
 
 .newestBtn:hover::before,
+.newBtn:hover::before,
 .popularBtn:hover::before,
 .credintialBtn:hover::before,
 .seeAllPostBtn:hover::before,
@@ -355,6 +377,7 @@
 }
 
 .newestBtn:hover::after,
+.newBtn:hover::after,
 .popularBtn:hover::after,
 .credintialBtn:hover::after,
 .seeAllPostBtn:hover::after,
@@ -385,6 +408,12 @@
 
 .postProjectBtn:nth-child(3)::before,
 .postProjectBtn:nth-child(3)::after {
+  background: #2adba4;
+  box-shadow: 0 0 5px #2adba4, 0 0 15px #2adba4, 0 0 30px #2adba4,
+    0 0 60px #2adba4;
+}
+.newBtn:nth-child(3)::before,
+.newBtn:nth-child(3)::after {
   background: #2adba4;
   box-shadow: 0 0 5px #2adba4, 0 0 15px #2adba4, 0 0 30px #2adba4,
     0 0 60px #2adba4;

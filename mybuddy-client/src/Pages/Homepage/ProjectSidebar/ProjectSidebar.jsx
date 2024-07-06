@@ -21,7 +21,7 @@ const ProjectSidebar = ({
       <ul
         className={`w-[35px] sm:w-[40px] md:w-[50px] lg:w-[60px] 3xl:w-[70px] border ${
           theme === "light" ? "bg-white" : "bg-[#3a565b]"
-        } flex flex-col items-center justify-center py-6 md:py-12 shadow-2xl rounded-full space-y-6 lg:space-y-7 absolute top-[49%] sm:top-[65%] md:top-[47%] 3xl:top-[45%] left-0 z-50`}
+        } flex flex-col items-center justify-center py-4 sm:py-6 md:py-12 shadow-2xl rounded-full space-y-3 sm:space-y-6 lg:space-y-7 absolute top-[58%] sm:top-[65%] md:top-[47%] 3xl:top-[45%] left-0 z-50`}
       >
         <li className="relative">
           <div

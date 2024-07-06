@@ -8,7 +8,7 @@ const GeneralDashboardNavbar = () => {
     <div className="px-2 py-5 mx-auto sm:max-w-xl md:max-w-full bg-tr md:px-8 lg:px-8 gray500">
       <div className="relative flex items-center justify-between">
         <a
-          href="/"
+          href="/home"
           aria-label="Company"
           title="Company"
           className="inline-flex items-center"
@@ -22,7 +22,7 @@ const GeneralDashboardNavbar = () => {
         </a>
         <ul className="flex items-center hidden space-x-8 lg:flex">
           <li>
-            <Link to="/">
+            <Link to="/home">
               <p className="px-4 py-[5px] text-[18px] font-semibold rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
                 Home
               </p>
@@ -75,7 +75,7 @@ const GeneralDashboardNavbar = () => {
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <a
-                      href="/"
+                      href="/home"
                       aria-label="Company"
                       title="Company"
                       className="inline-flex items-center"
@@ -108,7 +108,7 @@ const GeneralDashboardNavbar = () => {
                   <ul className="space-y-4">
                     <li>
                       <a
-                        href="/"
+                        href="/home"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         Home
@@ -116,7 +116,7 @@ const GeneralDashboardNavbar = () => {
                     </li>
                     <li>
                       <a
-                        href="/"
+                        href="/home"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         General
@@ -124,7 +124,7 @@ const GeneralDashboardNavbar = () => {
                     </li>
                     <li>
                       <a
-                        href="/"
+                        href="/home"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         Academic

@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../common/Navbar/Navbar";
 import { useEffect } from "react";
@@ -7,16 +7,20 @@ import { useSelector } from "react-redux";
 import RightSidebar from "../Pages/Homepage/RightSidebar";
 import Loading from "../Pages/Loading/Loading";
 import BottomNavbar from "../common/BottomNavbar/BottomNavbar";
+import Login from "../Pages/Login/Login";
+import { AuthContext } from "../Context/UserContext";
 
-const HomepageLayout = ({singleUser}) => {
+const HomepageLayout = () => {
   let [isOpen, setIsOpen] = useState(true);
+  const { singleUser } = useContext(AuthContext);
   const theme = useSelector((state) => state.theme.theme);
+  // const { user } = useSelector((state) => state.auth);
+  // console.log(user);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-
-   //console.log("userpost",getUserPost);
+  //console.log("userpost",getUserPost);
   const handleSidebarLinkClick = (path) => {
     setIsLoading(true);
     navigate(path);
@@ -41,12 +45,13 @@ const HomepageLayout = ({singleUser}) => {
     }, 1000);
   }, []);
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
+
           <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={closeModal}>
               <Transition.Child
@@ -61,7 +66,9 @@ const HomepageLayout = ({singleUser}) => {
                 <div className="fixed inset-0" />
               </Transition.Child>
 
-              <div className="fixed inset-0 overflow-y-auto">
+              <div className={`${
+                    theme === "light" ? "bg-[#eaecef]" : "bg-[#070c12]"
+                  } fixed inset-0 overflow-y-auto`}>
                 <div
                   className={`${
                     theme === "light" ? "bg-[#eaecef]" : "bg-[#070c12]"
@@ -97,7 +104,7 @@ const HomepageLayout = ({singleUser}) => {
                             theme={theme}
                           />
                         </div>
-                        <BottomNavbar theme={theme}/>
+                        <BottomNavbar theme={theme} />
                       </div>
                     </Dialog.Panel>
                   </Transition.Child>
@@ -106,9 +113,9 @@ const HomepageLayout = ({singleUser}) => {
             </Dialog>
           </Transition>
         </>
-      )}
-    </>
-  );
+      ) 
+
+  
 };
 
 export default HomepageLayout;

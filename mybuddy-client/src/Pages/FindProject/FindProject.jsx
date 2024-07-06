@@ -23,6 +23,7 @@ import { IoIosArrowDown, IoIosArrowUp, IoLogoYoutube } from "react-icons/io";
 import feedWhiteBorder from "../../assets/home/feed-w-b.png";
 import feedDarkBorder from "../../assets/home/feed-d-b.png";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from '../Loading/Loading'
 
 const FindProject = ({
   amounts,
@@ -112,9 +113,12 @@ const FindProject = ({
     setShowDocuments(true);
   };
   console.log(projects);
+  if(isLoading){
+    return <Loading/>
+  }
   return (
     <>
-      <div className=" py-1 w-10/12 sm:w-full">
+      <div className=" py-1 w-12/12 sm:w-full">
         <div className="mx-3 md:mx-6 3xl:mx-20 my-5 p-3 xl:p-3 space-y-5 ">
           <>
             {projects?.map((project, i) => (

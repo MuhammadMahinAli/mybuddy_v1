@@ -9,22 +9,33 @@ import "../../styles/buttonStyle.css";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/UserContext";
 
-const RightSidebar = ({
-  theme,
-}) => {
-  const{singleUser,getUserPost,getAllProjectByUser,getAcceptedFriendRequest,getSingleUserSocialInfo} = useContext(AuthContext)
+const RightSidebar = ({ theme }) => {
+  const {
+    singleUser,
+    getUserPost,
+    getAllProjectByUser,
+    getAcceptedFriendRequest,
+    getSingleUserSocialInfo,
+  } = useContext(AuthContext);
   const userName = singleUser
     ? singleUser?.data?.name?.firstName + " " + singleUser?.data?.name?.lastName
     : "Welcome Guest !";
-  const userPostNumber = singleUser ? getUserPost?.data?.length :"0" ;
-  const userProjectNumber = singleUser ? getAllProjectByUser?.data?.length :"0";
-  const userTotalFriend = singleUser ? getAcceptedFriendRequest?.data?.length :"0";
+  const userPostNumber = singleUser ? getUserPost?.data?.length : "0";
+  const userProjectNumber = singleUser
+    ? getAllProjectByUser?.data?.length
+    : "0";
+  const userTotalFriend = singleUser
+    ? getAcceptedFriendRequest?.data?.length
+    : "0";
+  const userCoverPic = singleUser?.data?.coverPic;
   const socialInfo = getSingleUserSocialInfo?.data[0];
   const currentTwitter = socialInfo?.twitter;
   const currentGithub = socialInfo?.github;
-  const currentLinkedIn = socialInfo?.linkedIn;       
-  const currentFacebook= socialInfo?.facebook 
-  const userImage = singleUser?.data?.profilePic ?  singleUser?.data?.profilePic  : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+  const currentLinkedIn = socialInfo?.linkedIn;
+  const currentFacebook = socialInfo?.facebook;
+  const userImage = singleUser?.data?.profilePic
+    ? singleUser?.data?.profilePic
+    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
 
   console.log(userPostNumber);
 
@@ -45,23 +56,30 @@ const RightSidebar = ({
           } shadow-[-1px_0px_56px_-6px_rgba(134,_134,_134,_0.25)] rounded-[15px] lg:w-[370px] xl:w-[400px] 2xl:w-[380px]`}
         >
           <div
-            className={`${
-              theme === "light" ? "bg-[#2adba4]" : "bg-transparent"
-            } h-20 w-full  rounded-t-[15px]`}
+            className={`h-24 w-full rounded-t-[15px] ${
+              userCoverPic
+                ? `bg-cover bg-center`
+                : theme === "light"
+                ? "bg-[#2adba4]"
+                : "bg-transparent"
+            }`}
+            style={{
+              backgroundImage: userCoverPic ? `url(${userCoverPic})` : "none",
+            }}
           />
           <div className="flex flex-col justify-center items-center py-4">
             <div className="flex flex-col justify-center items-center relative">
               <img
                 src={userImage}
-                className="h-[100px] w-[110px] -mt-16 rounded-full p-[8px] "
+                className="h-[100px] w-[100px] -mt-16 rounded-full p-[8px] "
               />
-            
-                <img
-                  className="w-8 lg:w-32 xl:w-36 absolute -top-16 right-[12px] md:right-0"
-               src={whiteBorder}
-                  alt="dashedborder"
-                />
-          
+
+              <img
+                className="w-8 lg:w-32 xl:w-36 absolute -top-16 right-[12px] md:right-0"
+                src={whiteBorder}
+                alt="dashedborder"
+              />
+
               <img className="w-6 -mt-5 z-10" src={active} alt="active" />
             </div>
             <p
@@ -80,18 +98,44 @@ const RightSidebar = ({
             </p>
 
             <div className="flex py-7 space-x-2">
-              <a target="blank"  href={singleUser ? `https://twitter.com/${currentTwitter}` : "/login"}>
-              <img className="h-12 pr-1" src={twitter} alt="" />
+              <a
+                target="blank"
+                href={
+                  singleUser
+                    ? `https://twitter.com/${currentTwitter}`
+                    : "/login"
+                }
+              >
+                <img className="h-12 pr-1" src={twitter} alt="" />
               </a>
-              <a target="blank"  href={singleUser ? `https://facebook.com/${currentFacebook}` : "/login"}>
-              <img className="h-12" src={facebook} alt="" />
+              <a
+                target="blank"
+                href={
+                  singleUser
+                    ? `https://facebook.com/${currentFacebook}`
+                    : "/login"
+                }
+              >
+                <img className="h-12" src={facebook} alt="" />
               </a>
               {/* <img className="h-12" src={google} alt="" /> */}
-              <a target="blank"  href={singleUser ? `https://linkedin.com/in/${currentLinkedIn}` : "/login"}>
-              <img className="h-[55px]" src={linkedIn} alt="" />
+              <a
+                target="blank"
+                href={
+                  singleUser
+                    ? `https://linkedin.com/in/${currentLinkedIn}`
+                    : "/login"
+                }
+              >
+                <img className="h-[55px]" src={linkedIn} alt="" />
               </a>
-              <a target="blank"  href={singleUser ? `https://github.com/${currentGithub}` : "/login"}>
-              <img className="h-14" src={github} alt="" />
+              <a
+                target="blank"
+                href={
+                  singleUser ? `https://github.com/${currentGithub}` : "/login"
+                }
+              >
+                <img className="h-14" src={github} alt="" />
               </a>
             </div>
 
