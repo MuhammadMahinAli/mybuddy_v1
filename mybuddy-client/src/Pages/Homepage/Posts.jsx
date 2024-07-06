@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import pdfPreview from '../../assets/home/pdf-image.jpg';
+import pdfPreview from "../../assets/home/pdf-image.jpg";
 import MediaIcon from "../../icons/MediaIcon";
 import ArticleIcon from "../../icons/ArticleIcon";
 import ProjectIcon from "../../icons/ProjectIcon";
@@ -14,6 +14,8 @@ import { useCreatePostMutation } from "../../features/post/postApi";
 import { useSelector } from "react-redux";
 import { IoIosCloseCircle } from "react-icons/io";
 import Swal from "sweetalert2";
+import PostMediaIcon from "../../icons/PostMediaIcon";
+import PostProjectIcon from "../../icons/PostProjectIcon";
 
 const Posts = ({ theme }) => {
   const navigate = useNavigate();
@@ -98,14 +100,14 @@ const Posts = ({ theme }) => {
       technicalRecommendations: recommendations,
     }));
   };
-  
+
   const updateTeamMember = (members) => {
     setFormData((prevState) => ({
       ...prevState,
-      teamMembers: members, 
+      teamMembers: members,
     }));
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
@@ -121,7 +123,7 @@ const Posts = ({ theme }) => {
       return;
     }
     const postData = {
-     ...formData,
+      ...formData,
       postedBy: user._id,
     };
     console.log("form", postData);
@@ -133,16 +135,14 @@ const Posts = ({ theme }) => {
       comments: [],
       pdf: "",
     });
-
   };
-
 
   useEffect(() => {
     if (!responseData?.status) {
       console.log(responseData?.message);
     }
     if (responseError?.data) {
-       console.log(responseError.data);
+      console.log(responseError.data);
     }
     if (responseData?.success && responseData?.data) {
       console.log(responseData);
@@ -193,17 +193,17 @@ const Posts = ({ theme }) => {
                 mediaTab ? "border-b-4 border-b-[#2adba4]" : "border-b-2"
               } flex items-center justify-center space-x-2 border-r-2 py-4 w-full text-center font-medium cursor-pointer`}
             >
-              <MediaIcon theme={theme} />
+              <PostMediaIcon theme={theme} mediaTab={mediaTab} />
               <p
-               className={`text-[14px] md:text-[18px] ${
-                theme === "light" 
-                  ? mediaTab 
-                    ? "text-[#2adba4]" 
-                    : "text-gray-500" 
-                  : mediaTab 
-                  ? "text-[#2adba4]" 
-                  : "text-white"
-              }`}
+                className={`text-[14px] md:text-[18px] ${
+                  theme === "light"
+                    ? mediaTab
+                      ? "text-[#2adba4]"
+                      : "text-gray-500"
+                    : mediaTab
+                    ? "text-[#2adba4]"
+                    : "text-white"
+                }`}
               >
                 Media
               </p>
@@ -214,15 +214,15 @@ const Posts = ({ theme }) => {
                 projectTab ? "border-b-4 border-b-[#2adba4]" : "border-b-2"
               } flex items-center justify-center space-x-2 border-r-2 py-4 w-full text-center font-medium cursor-pointer`}
             >
-              <ProjectIcon theme={theme} />
+              <PostProjectIcon theme={theme} projectTab={projectTab} />
               <p
                 className={`text-[14px] md:text-[18px] ${
-                  theme === "light" 
-                    ? projectTab 
-                      ? "text-[#2adba4]" 
-                      : "text-gray-500" 
-                    : projectTab 
-                    ? "text-[#2adba4]" 
+                  theme === "light"
+                    ? projectTab
+                      ? "text-[#2adba4]"
+                      : "text-gray-500"
+                    : projectTab
+                    ? "text-[#2adba4]"
                     : "text-white"
                 }`}
               >
@@ -235,17 +235,17 @@ const Posts = ({ theme }) => {
                 articleTab ? "border-b-4 border-b-[#2adba4]" : "border-b-2"
               } flex items-center justify-center space-x-2 py-4 w-full text-center font-medium cursor-pointer`}
             >
-              <ArticleIcon theme={theme} />
+              <ArticleIcon theme={theme} articleTab={articleTab} />
               <p
-               className={`text-[14px] md:text-[18px] ${
-                theme === "light" 
-                  ? articleTab
-                    ? "text-[#2adba4]" 
-                    : "text-gray-500" 
-                  : articleTab
-                  ? "text-[#2adba4]" 
-                  : "text-white"
-              }`}
+                className={`text-[14px] md:text-[18px] ${
+                  theme === "light"
+                    ? articleTab
+                      ? "text-[#2adba4]"
+                      : "text-gray-500"
+                    : articleTab
+                    ? "text-[#2adba4]"
+                    : "text-white"
+                }`}
               >
                 Article
               </p>
@@ -306,27 +306,38 @@ const Posts = ({ theme }) => {
                 </>
               )}
               {/* preview image */}
-               {formData?.image && ( 
+              {formData?.image && (
                 <div className="relative  bg-gray-300 rounded-lg h-7 w-10 md:h-14 md:w-28 lg:ml-4">
-                  <div onClick={handleRemoveImage} className="bg-gray-200 absolute -top-2 -right-3 rounded-full">
-                  <IoIosCloseCircle  className="text-[18px] md:text-[22px] cursor-pointer" />
+                  <div
+                    onClick={handleRemoveImage}
+                    className="bg-gray-200 absolute -top-2 -right-3 rounded-full"
+                  >
+                    <IoIosCloseCircle className="text-[18px] md:text-[22px] cursor-pointer" />
                   </div>
-                  <img src={formData?.image} className="h-7 w-10 md:h-14 md:w-full border border-gray-400 shadow-xl rounded-lg" />
+                  <img
+                    src={formData?.image}
+                    className="h-7 w-10 md:h-14 md:w-full border border-gray-400 shadow-xl rounded-lg"
+                  />
                 </div>
-             )} 
+              )}
               {/* preview pdf */}
-               {formData?.pdf && ( 
+              {formData?.pdf && (
                 <div className="relative bg-gray-300 rounded-lg h-10 w-10 md:h-14 md:w-14 lg:ml-4">
-                  <div onClick={handleRemovePdf} className="bg-gray-200 absolute -top-2 -right-3 rounded-full">
-                  <IoIosCloseCircle  className="text-[18px] md:text-[22px] cursor-pointer" />
+                  <div
+                    onClick={handleRemovePdf}
+                    className="bg-gray-200 absolute -top-2 -right-3 rounded-full"
+                  >
+                    <IoIosCloseCircle className="text-[18px] md:text-[22px] cursor-pointer" />
                   </div>
-                  <img src={pdfPreview} className="h-10 w-10  md:h-14 md:w-full border border-gray-400 shadow-xl rounded-lg" />
+                  <img
+                    src={pdfPreview}
+                    className="h-10 w-10  md:h-14 md:w-full border border-gray-400 shadow-xl rounded-lg"
+                  />
                 </div>
-             )} 
+              )}
             </div>
-         
+
             {theme === "light" ? (
-           
               <button
                 onClick={handleSubmit}
                 className="my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
@@ -338,9 +349,8 @@ const Posts = ({ theme }) => {
                 <p>Post</p>
               </button>
             )}
-       
           </div>
-          
+
           {isOpen && (
             <TechnicalRecommendationModal
               technicalRecommendations={formData.technicalRecommendations}
@@ -350,11 +360,10 @@ const Posts = ({ theme }) => {
             />
           )}
           <TeamMemberModal
-  isTeamOpen={isTeamOpen}
-  closeTeamModal={closeTeamModal}
-  updatedTeamMembers={updateTeamMember}
-/>
-
+            isTeamOpen={isTeamOpen}
+            closeTeamModal={closeTeamModal}
+            updatedTeamMembers={updateTeamMember}
+          />
         </div>
       </div>
     </div>
