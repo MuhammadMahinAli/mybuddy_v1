@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import xMark from "../../../assets/xmark.png";
-import rightMark from '../../../assets/checkmark.png'
+import rightMark from "../../../assets/checkmark.png";
 import { useContext, useState } from "react";
 import ViewTaskDetails from "./ViewTaskDetails";
 import { useUpdateJoinRequestStatusMutation } from "../../../features/projectJoinRequest/projectJoinRequestApi";
@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../../Context/UserContext";
 
 const GeneralRequestRecieve = () => {
-    const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const [selectedRequestIndex, setSelectedRequestIndex] = useState(null);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -16,7 +16,7 @@ const GeneralRequestRecieve = () => {
   // const { data: allRequest, isLoading: isFetchingRequest } =
   //   useGetAllProjectByRequestedByQuery(user?._id);
   // console.log(allRequest);
-  const {allRecieveRequest} = useContext(AuthContext);
+  const { allRecieveRequest } = useContext(AuthContext);
 
   function closeModal() {
     setIsOpenModal(false);
@@ -37,13 +37,13 @@ const GeneralRequestRecieve = () => {
     const selectedTask = allRecieveRequest?.data[index];
     if (selectedTask) {
       Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "Do you really want to accept the request?",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Accept it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Accept it!",
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Accepted";
@@ -65,7 +65,6 @@ const GeneralRequestRecieve = () => {
               console.error(error);
             });
         }
-        
       });
     } else {
       console.log("No task found for the selected index.");
@@ -77,13 +76,13 @@ const GeneralRequestRecieve = () => {
     const selectedTask = allRecieveRequest?.data[index];
     if (selectedTask) {
       Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "Do you really want to reject the request?",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Reject it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Reject it!",
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Rejected";
@@ -111,11 +110,9 @@ const GeneralRequestRecieve = () => {
     }
   };
 
-  
-
-console.log('l',allRecieveRequest?.data);
-    return (
-        <>
+  console.log("l", allRecieveRequest?.data);
+  return (
+    <>
       {allRecieveRequest?.data?.length === 0 ? (
         <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not recieved any request yet.`}</p>
       ) : (
@@ -149,7 +146,10 @@ console.log('l',allRecieveRequest?.data);
             >
               <div className="flex flex-col md:flex-row justify-center items-center space-x-2 text-[16px] md:text-lg   border-r-2  text-center w-4/12 md:w-3/12 lg:w-3/12">
                 <img
-                  src={request?.requestedTo?.profilePic || "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"}
+                  src={
+                    request?.requestedTo?.profilePic ||
+                    "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                  }
                   className="w-8 h-8 md:w-10 md:h-10 rounded-full"
                   alt=""
                 />
@@ -159,7 +159,7 @@ console.log('l',allRecieveRequest?.data);
                 </p>
               </div>
               <div className="capitalize text-[16px] md:text-[18px] hidden md:block  border-r-2  text-center md:w-2/12 lg:w-2/12">
-                {request?.projectId?.projectName.slice(0,6)}..
+                {request?.projectId?.projectName.slice(0, 6)}..
               </div>
               <div className="text-[16px] md:text-lg   border-r-2  text-center w-4/12 md:w-2/12 lg:w-2/12">
                 Task {request?.tasks?.length}
@@ -174,7 +174,9 @@ console.log('l',allRecieveRequest?.data);
               {isOpenModal && (
                 <ViewTaskDetails
                   isOpenModal={isOpenModal}
-                  tasks={allRecieveRequest?.data[selectedRequestIndex]?.tasks || []}
+                  tasks={
+                    allRecieveRequest?.data[selectedRequestIndex]?.tasks || []
+                  }
                   closeModal={closeModal}
                 />
               )}
@@ -199,13 +201,13 @@ console.log('l',allRecieveRequest?.data);
                 ) : (
                   <p onClick={handleWalletClick}>Wallet</p>
                 )} */}
-<img
-                    onClick={(e) => handleUpdateStatusAccept(e, i)}
-                    src={rightMark}
-                    className="h-5 md:h-7"
-                  />
                 <img
-                  onClick={(e) => handleUpdateStatusReject(e,i)}
+                  onClick={(e) => handleUpdateStatusAccept(e, i)}
+                  src={rightMark}
+                  className="h-5 md:h-7"
+                />
+                <img
+                  onClick={(e) => handleUpdateStatusReject(e, i)}
                   src={xMark}
                   className="h-5 md:h-7"
                 />
@@ -222,7 +224,7 @@ console.log('l',allRecieveRequest?.data);
         </div>
       )}
     </>
-    );
+  );
 };
 
 export default GeneralRequestRecieve;

@@ -1,6 +1,7 @@
 import httpStatus from "http-status";
 import {ApiError} from "../../../handleError/apiError.js";
 import {Member} from "./member.model.js";
+import { FriendRequest } from "../friendRqst/friendRequest.model.js";
 
 // create user / signUp user
 export const createMemberService = async (userInfo) => {
@@ -144,3 +145,30 @@ export const updateMemberInfoService = async (userId, data) => {
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
   }
 };
+
+//////////////////////////////////////////////
+// export const getExcludedFriendsService = async (memberId) => {
+//   // Fetch friend requests where the member is either the requester or the requestee
+//   const friendRequests = await FriendRequest.find({
+//     $or: [
+//       { requestedBy: memberId },
+//       { requestedTo: memberId }
+//     ]
+//   });
+
+//   // Separate friend requests based on status
+//   const acceptedOrPendingIds = new Set();
+//   friendRequests.forEach(request => {
+//     if (request.status === 'Accepted' || request.status === 'Pending') {
+//       acceptedOrPendingIds.add(request.requestedBy.toString());
+//       acceptedOrPendingIds.add(request.requestedTo.toString());
+//     }
+//   });
+
+//   // Fetch all members excluding those in acceptedOrPendingIds
+//   const members = await Member.find({
+//     _id: { $nin: Array.from(acceptedOrPendingIds) }
+//   });
+
+//   return members;
+// };

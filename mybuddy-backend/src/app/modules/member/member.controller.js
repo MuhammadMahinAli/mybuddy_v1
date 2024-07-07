@@ -95,3 +95,16 @@ export const updateMemberInfoController = catchAsync(async (req, res) => {
     data: updatedMember,
   });
 });
+
+//////////////////
+
+
+// export const getExcludedFriends = async (req, res) => {
+//   try {
+//     const { memberId } = req.params;
+//     const excludedMembers = await getExcludedFriendsService(memberId);
+//     res.status(200).json(excludedMembers);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };

@@ -61,7 +61,7 @@ const Navbar = ({
         icon: "success",
         text: "Logged out successfully!",
       });
-      navigate("/home");
+      navigate("/");
       // setTimeout(() => {
       //   window.location.reload();
       // }, 2500);

@@ -13,7 +13,7 @@ import Loading from "../Loading/Loading";
 import { Link } from "react-router-dom";
 import TeamMember from "./view/TeamMember";
 
-const ViewPosts = ({ theme }) => {
+const ViewPosts = ({ theme,active }) => {
   const [openComponent, setOpenComponent] = useState({});
   const {
     data: allPosts,
@@ -124,19 +124,7 @@ const ViewPosts = ({ theme }) => {
                         } hidden sm:block capitalize text-[14px] md:text-[15px] lg:text-[18px] font-semibold`}
                       >
                         {post?.postedBy?.name?.firstName}{" "}
-                        {post?.postedBy?.name?.lastName}. 3rd+
-                      </p>
-                      <img
-                        className="w-5 hidden  md:block"
-                        src={active}
-                        alt="active"
-                      />
-                      <p
-                        className={`${
-                          theme === "light" ? "graish" : "text-white"
-                        } capitalize text-[15px] lg:text-[18px] hidden  md:block`}
-                      >
-                        posted in group
+                        {post?.postedBy?.name?.lastName}
                       </p>
                     </div>
                     <p
@@ -144,7 +132,7 @@ const ViewPosts = ({ theme }) => {
                         theme === "light" ? "graish" : "text-white"
                       } hidden  md:block capitalize text-[14px] lg:text-[15px]`}
                     >
-                      top 4% on try hackme cyber security researcher &...
+                      {post?.postedBy?.role}
                     </p>
                   </div>
                 </div>

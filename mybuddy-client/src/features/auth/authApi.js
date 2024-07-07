@@ -66,7 +66,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     getAllUsers: builder.query({
       query: () => ({
-        url: "/user/allUsers",
+        url: "/member/getAll",
         method: "GET",
       }),
       providesTags: ["Member"],

@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useGetSingleUserQuery, useUpdateCoverPicMutation, useUpdateProfilePicMutation, useUpdateUserInfoMutation } from "../features/auth/authApi";
+import { useGetAllUsersQuery, useGetSingleUserQuery, useUpdateCoverPicMutation, useUpdateProfilePicMutation, useUpdateUserInfoMutation } from "../features/auth/authApi";
 import { useSelector } from "react-redux";
 import { useGetSingleUserPostQuery } from "../features/post/postApi";
 import { useGetAllProjectByUserQuery } from "../features/project/projectApi";
@@ -50,6 +50,16 @@ const UserContext = ({ children }) => {
     isLoading: isFetchingUser,
     error: userError,
   } = useGetSingleUserQuery(userId, { skip: !userId });
+
+  //-------------- get all user
+  const {
+    data: getAllUsers,
+    isLoading: isFetchingAllUsers,
+    error: allUserError,
+  } = useGetAllUsersQuery(userId, { skip: !userId });
+
+
+
 
   //-------------- get each user's post
   const {
@@ -210,6 +220,7 @@ const UserContext = ({ children }) => {
   useEffect(() => {
     if (
       isFetchingUser ||
+      isFetchingAllUsers ||
       isFetchingPost ||
       isFetchingProject ||
       isFetchingSkill ||
@@ -231,7 +242,7 @@ const UserContext = ({ children }) => {
       isFetchingRecievePJRequest ||
       isFatchingCreateNewRequest ||
       isFetchingGetFriendRequest ||
-      isFetchingAcceptedFriendRequest
+      isFetchingAcceptedFriendRequest 
     ) {
       setLoading(true);
     } else {
@@ -239,6 +250,7 @@ const UserContext = ({ children }) => {
     }
   }, [
     isFetchingUser,
+    isFetchingAllUsers,
     isFetchingPost,
     isFetchingProject,
     isFetchingSkill,
@@ -267,6 +279,7 @@ const UserContext = ({ children }) => {
   useEffect(() => {
     if (
       userError ||
+      allUserError ||
       postError ||
       projectError ||
       skillError ||
@@ -290,6 +303,7 @@ const UserContext = ({ children }) => {
     ) {
       console.error("Error fetching user data:", {
         userError,
+        allUserError,
         postError,
         projectError,
         skillError,
@@ -315,6 +329,7 @@ const UserContext = ({ children }) => {
     }
   }, [
     userError,
+    allUserError,
     postError,
     projectError,
     skillError,
@@ -345,6 +360,7 @@ const UserContext = ({ children }) => {
   const shareableData = {
     loading,
     user,
+    getAllUsers,
     setLoading,
     darkMode,
     setDarkMode,

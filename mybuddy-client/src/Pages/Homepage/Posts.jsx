@@ -187,7 +187,7 @@ const Posts = ({ theme }) => {
           } shadow-[-1px_0px_56px_-6px_rgba(134,134,134,0.25)] rounded-[10px] w-[270px] xs:w-[280px] sm:w-[350px] md:w-[600px] lg:w-[500px] xl:w-[670px] 2xl:w-[750px] 3xl:w-[800px]`}
         >
           <ul className="flex justify-between items-center">
-            <li
+            {/* <li
               onClick={toggleMedia}
               className={`${
                 mediaTab ? "border-b-4 border-b-[#2adba4]" : "border-b-2"
@@ -207,8 +207,8 @@ const Posts = ({ theme }) => {
               >
                 Media
               </p>
-            </li>
-            <li
+            </li> */}
+            {/* <li
               onClick={toggleProject}
               className={`${
                 projectTab ? "border-b-4 border-b-[#2adba4]" : "border-b-2"
@@ -228,8 +228,90 @@ const Posts = ({ theme }) => {
               >
                 Project
               </p>
+            </li> */}
+            <li
+              onClick={toggleMedia}
+              className={`relative flex items-center justify-center space-x-2 py-4 w-full text-center font-medium cursor-pointer ${
+                theme === "dark"
+                  ? mediaTab
+                    ? "before:absolute before:bottom-0 before:left-0 before:h-[4px] before:w-full before:bg-gradient-to-r before:from-[#4EEBFF] before:from-10% before:via-[#AA62F9] before:via-30% before:to-[#F857FF] before:to-90% border-l-2 border-r-2 border-white"
+                    : "border-b-2 border-r-2 border-white"
+                  : mediaTab
+                  ? "border-b-4 border-b-[#2adba4] border-l-2 border-r-2 border-white"
+                  : "border-b-2 border-l-2 border-r-2 border-white"
+              }`}
+            >
+              <PostMediaIcon theme={theme} mediaTab={mediaTab} />
+              <p
+                className={`text-[14px] md:text-[18px] ${
+                  theme === "light"
+                    ? mediaTab
+                      ? "text-[#2adba4]"
+                      : "text-gray-500"
+                    : mediaTab
+                    ? "bg-gradient-to-r from-[#4EEBFF] from-15% via-[#AA62F9] via-50% to-[#F857FF] to-60% text-transparent bg-clip-text"
+                    : "text-white"
+                }`}
+              >
+                Media
+              </p>
             </li>
             <li
+              onClick={toggleProject}
+              className={`relative flex items-center justify-center space-x-2 py-4 w-full text-center font-medium cursor-pointer ${
+                theme === "dark"
+                  ? projectTab
+                    ? "before:absolute before:bottom-0 before:left-0 before:h-[4px] before:w-full before:bg-gradient-to-r before:from-[#4EEBFF] before:from-10% before:via-[#AA62F9] before:via-30% before:to-[#F857FF] before:to-90% border-l-2 border-r-2 border-white"
+                    : "border-b-2 border-r-2 border-white"
+                  : projectTab
+                  ? "border-b-4 border-b-[#2adba4] border-l-2 border-r-2 border-white"
+                  : "border-b-2 border-l-2 border-r-2 border-white"
+              }`}
+            >
+              <PostProjectIcon theme={theme} projectTab={projectTab} />
+              <p
+                className={`text-[14px] md:text-[18px] ${
+                  theme === "light"
+                    ? projectTab
+                      ? "text-[#2adba4]"
+                      : "text-gray-500"
+                    : projectTab
+                    ? "bg-gradient-to-r from-[#4EEBFF] from-15% via-[#AA62F9] via-50% to-[#F857FF] to-60% text-transparent bg-clip-text"
+                    : "text-white"
+                }`}
+              >
+                Project
+              </p>
+            </li>
+            <li
+              onClick={toggleArticle}
+              className={`relative flex items-center justify-center space-x-2 py-4 w-full text-center font-medium cursor-pointer ${
+                theme === "dark"
+                  ? articleTab
+                    ? "before:absolute before:bottom-0 before:left-0 before:h-[4px] before:w-full before:bg-gradient-to-r before:from-[#4EEBFF] before:from-10% before:via-[#AA62F9] before:via-30% before:to-[#F857FF] before:to-90% border-l-2 border-r-2 border-white"
+                    : "border-b-2 border-r-2 border-white"
+                  : articleTab
+                  ? "border-b-4 border-b-[#2adba4] border-l-2 border-r-2 border-white"
+                  : "border-b-2 border-l-2 border-r-2 border-white"
+              }`}
+            >
+              <ArticleIcon theme={theme} articleTab={articleTab} />
+              <p
+                className={`text-[14px] md:text-[18px] ${
+                  theme === "light"
+                    ? articleTab
+                      ? "text-[#2adba4]"
+                      : "text-gray-500"
+                    : articleTab
+                    ? "bg-gradient-to-r from-[#4EEBFF] from-15% via-[#AA62F9] via-50% to-[#F857FF] to-60% text-transparent bg-clip-text"
+                    : "text-white"
+                }`}
+              >
+                Article
+              </p>
+            </li>
+
+            {/* <li
               onClick={toggleArticle}
               className={`${
                 articleTab ? "border-b-4 border-b-[#2adba4]" : "border-b-2"
@@ -249,7 +331,7 @@ const Posts = ({ theme }) => {
               >
                 Article
               </p>
-            </li>
+            </li> */}
           </ul>
           <textarea
             name="description"
