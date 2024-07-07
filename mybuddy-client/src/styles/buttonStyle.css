@@ -197,7 +197,7 @@
 .newestBtn::before,
 .newestBtn::after {
   background: #ff381e;
-  width: 25px;
+  width: 35px;
 }
 
 .postProjectBtn::before,
@@ -208,7 +208,7 @@
 .newBtn::before,
 .newBtn::after {
   background: #2adba4;
-  width: 25px;
+  width: 29px;
 }
 .friendRequestBtn::before,
 .friendRequestBtn::after,

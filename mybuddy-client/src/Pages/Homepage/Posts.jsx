@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import pdfPreview from "../../assets/home/pdf-image.jpg";
 import MediaIcon from "../../icons/MediaIcon";
 import ArticleIcon from "../../icons/ArticleIcon";
-import ProjectIcon from "../../icons/ProjectIcon";
 import TechnicalIcon from "../../icons/TechnicalIcon";
 import TeamMemberIcon from "../../icons/TeamMemberIcon";
 import PdfIcon from "../../icons/PdfIcon";
@@ -234,11 +233,11 @@ const Posts = ({ theme }) => {
               className={`relative flex items-center justify-center space-x-2 py-4 w-full text-center font-medium cursor-pointer ${
                 theme === "dark"
                   ? mediaTab
-                    ? "before:absolute before:bottom-0 before:left-0 before:h-[4px] before:w-full before:bg-gradient-to-r before:from-[#4EEBFF] before:from-10% before:via-[#AA62F9] before:via-30% before:to-[#F857FF] before:to-90% border-l-2 border-r-2 border-white"
+                    ? "before:absolute before:bottom-0 before:left-0 before:h-[4px] before:w-full before:bg-gradient-to-r before:from-[#4EEBFF] before:from-10% before:via-[#AA62F9] before:via-30% before:to-[#F857FF] before:to-90% border-l-0 border-r-2 border-white"
                     : "border-b-2 border-r-2 border-white"
                   : mediaTab
                   ? "border-b-4 border-b-[#2adba4] border-l-2 border-r-2 border-white"
-                  : "border-b-2 border-l-2 border-r-2 border-white"
+                  : "border-b-2  border-r-2 border-gray-300"
               }`}
             >
               <PostMediaIcon theme={theme} mediaTab={mediaTab} />
@@ -265,7 +264,7 @@ const Posts = ({ theme }) => {
                     : "border-b-2 border-r-2 border-white"
                   : projectTab
                   ? "border-b-4 border-b-[#2adba4] border-l-2 border-r-2 border-white"
-                  : "border-b-2 border-l-2 border-r-2 border-white"
+                  : "border-b-2 border-l-2 border-r-2 border-gray-300"
               }`}
             >
               <PostProjectIcon theme={theme} projectTab={projectTab} />
@@ -288,11 +287,11 @@ const Posts = ({ theme }) => {
               className={`relative flex items-center justify-center space-x-2 py-4 w-full text-center font-medium cursor-pointer ${
                 theme === "dark"
                   ? articleTab
-                    ? "before:absolute before:bottom-0 before:left-0 before:h-[4px] before:w-full before:bg-gradient-to-r before:from-[#4EEBFF] before:from-10% before:via-[#AA62F9] before:via-30% before:to-[#F857FF] before:to-90% border-l-2 border-r-2 border-white"
-                    : "border-b-2 border-r-2 border-white"
+                    ? "before:absolute before:bottom-0 before:left-0 before:h-[4px] before:w-full before:bg-gradient-to-r before:from-[#4EEBFF] before:from-10% before:via-[#AA62F9] before:via-30% before:to-[#F857FF] before:to-90% border-l-0 border-r-0 border-white"
+                    : "border-b-2 border-r-0 border-white"
                   : articleTab
                   ? "border-b-4 border-b-[#2adba4] border-l-2 border-r-2 border-white"
-                  : "border-b-2 border-l-2 border-r-2 border-white"
+                  : "border-b-2 border-l-2 border- border-gray-300"
               }`}
             >
               <ArticleIcon theme={theme} articleTab={articleTab} />
@@ -353,10 +352,10 @@ const Posts = ({ theme }) => {
               {projectTab && (
                 <>
                   <button type="button" onClick={() => setIsTeamOpen(true)}>
-                    <TeamMemberIcon />
+                    <TeamMemberIcon theme={theme} />
                   </button>
                   <button type="button" onClick={() => setIsOpen(true)}>
-                    <TechnicalIcon />
+                    <TechnicalIcon theme={theme} />
                   </button>
                   <label htmlFor="media">
                     <MediaIcon theme={theme} />

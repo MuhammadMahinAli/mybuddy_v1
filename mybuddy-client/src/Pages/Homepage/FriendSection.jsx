@@ -1,22 +1,26 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/UserContext";
+import whiteBorder from "../../assets/home/p-border.png";
+import darkBorder from "../../assets/home/dark-border.png";
 import { Link } from "react-router-dom";
 
 const FriendSection = ({ theme }) => {
   const { getAllUsers, getAcceptedFriendRequest, getFriendRequest } =
     useContext(AuthContext);
+  const [randomUsers, setRandomUsers] = useState([]);
+  const [suggestionTab, setSuggestionTab] = useState(true);
+  const [friendTab, setFriendTab] = useState(false);
+  const [requestTab, setRequestTab] = useState(false);
+
   const suggestedUsers = getAllUsers?.data;
   const allFriends = getAcceptedFriendRequest?.data;
   const recievedRequest = getFriendRequest?.data;
 
-  console.log("all", recievedRequest);
   const getRandomUsers = (count) => {
     if (!suggestedUsers) return [];
     const shuffled = [...suggestedUsers]?.sort(() => 0.5 - Math.random());
     return shuffled?.slice(0, count);
   };
-
-  const [randomUsers, setRandomUsers] = useState([]);
 
   useEffect(() => {
     if (suggestedUsers) {
@@ -26,7 +30,21 @@ const FriendSection = ({ theme }) => {
   }, [suggestedUsers]);
   console.log(randomUsers);
 
-  //
+  const toggleSuggestion = () => {
+    setSuggestionTab(true);
+    setFriendTab(false);
+    setRequestTab(false);
+  };
+  const toggleFriend = () => {
+    setSuggestionTab(false);
+    setFriendTab(true);
+    setRequestTab(false);
+  };
+  const toggleRequest = () => {
+    setSuggestionTab(false);
+    setFriendTab(false);
+    setRequestTab(true);
+  };
 
   return (
     <div
@@ -83,80 +101,231 @@ const FriendSection = ({ theme }) => {
           <div className="flex justify-between items-center py-5 space-x-1">
             {/* 1 */}
             {theme === "light" ? (
-              <button className="my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg text-white font-normal shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)]">
-                Newest
+              <button
+                onClick={toggleSuggestion}
+                className={`${ suggestionTab === true ? "text-white [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)] shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)]":"border border-gray-500"} my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg font-normal rounded-[10px]`}
+              >
+                Suggestion
               </button>
             ) : (
-              <button className="newestBtn">
-                <p>Newest</p>
+              <button
+                onClick={toggleSuggestion}
+                className={`${
+                  suggestionTab === true ? "newestBtn" : "popularBtn"
+                }`}
+              >
+                <p>Suggestion</p>
               </button>
             )}
 
             {/* 2 */}
             {theme === "light" ? (
-              <button className="my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg graish font-normal  rounded-[10px] border border-gray-500">
-                Popular
+              <button
+                onClick={toggleFriend}
+                className={`${ friendTab === true ? "text-white [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)] shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)]":"border border-gray-500"} my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg font-normal rounded-[10px]`}
+              >
+                Friends
               </button>
             ) : (
-              <button className="popularBtn">
-                <p>Popular</p>
+              <button
+                onClick={toggleFriend}
+                className={`${friendTab === true ? "newestBtn" : "popularBtn"}`}
+              >
+                <p>Friends</p>
               </button>
             )}
             {/* 3 */}
             {theme === "light" ? (
-              <button className="my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg graish font-normal  rounded-[10px] border border-gray-500">
-                Active
+              <button
+                onClick={toggleRequest}
+                className={`${ requestTab === true ? "text-white [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)] shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)]":"border border-gray-500"} my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg font-normal rounded-[10px]`}
+              >
+                Request
               </button>
             ) : (
-              <button className="activeBtn">
-                <p>Active</p>
+              <button
+                onClick={toggleRequest}
+                className={`${
+                  requestTab === true ? "newestBtn" : "popularBtn"
+                }`}
+              >
+                <p>Request</p>
               </button>
             )}
           </div>
-          {/* all user */}
-          <ul className="space-y-6">
-            {recievedRequest?.slice(0, 3).map((user, i) => (
-              <li key={i} className="flex justify-between items-center">
-                {/* lrft */}
-                <div className="flex items-center space-x-3">
-                  <img
-                    src={
-                      user?.profilePic
-                        ? user?.requestedBy?.profilePic
-                        : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
-                    }
-                    className={` ${
-                      theme === "light" ? "border-gray-500" : "border-white"
-                    } h-12 w-12 rounded-full border-[3px] p-1 border-dashed  `}
-                  />
-                  <div>
-                    <p
-                      className={`${
-                        theme === "light" ? "text-gray-500" : "text-white"
-                      } text-lg font-medium capitalize pt-b `}
-                    >
-                      {user?.requestedBy?.name?.firstName}{" "}
-                      {user?.requestedBy?.name?.lastName}
-                    </p>
-                  </div>
-                </div>
-                <Link to={`/user/profile/${user?.requestedBy?._id}`}>
-                  {/* right */}
-                  {theme === "light" ? (
-                    <button className="my-3  lg:px-4 lg:py-1 text-[16px] md:text-lg graish font-normal  rounded-[10px] border border-gray-500">
-                      Profile
-                    </button>
-                  ) : (
-                    <button className="popularBtn">
-                      <p>Profile</p>
-                    </button>
-                  )}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          {allFriends?.length === 0 &&  <p className="text-gray-600 lg:text-[18px] pb-5 font-medium text-center lg:text-start pt-7">{`You've no friends yet.`}</p>}
-          {recievedRequest?.length === 0 &&  <p className="text-gray-600 lg:text-[18px] pb-5 font-medium text-center lg:text-start pt-7">{`You've not recieved any request yet.`}</p>}
+
+          {/* suggestion */}
+          <>
+            {suggestionTab && (
+              <>
+                <ul className="space-y-6">
+                  {randomUsers?.map((user, i) => (
+                    <li key={i} className="flex justify-between items-center">
+                      {/* lrft */}
+                      <div className="flex items-center space-x-3">
+                        <div className="flex flex-col justify-center items-center relative">
+                          <img
+                            src={
+                              user?.profilePic
+                                ? user?.profilePic
+                                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                            }
+                            className={`h-[54px] w-[54px] rounded-full p-[5px] `}
+                          />
+                          <img
+                            className="w-16 lg:w-32 xl:w-36 absolute"
+                            src={theme === "light" ? darkBorder : whiteBorder}
+                            alt="dashedborder"
+                          />
+                        </div>
+                        <div>
+                          <p
+                            className={`${
+                              theme === "light" ? "text-gray-500" : "text-white"
+                            } text-lg font-medium capitalize pt-b `}
+                          >
+                            {user?.name?.firstName} {user?.name?.lastName}
+                          </p>
+                        </div>
+                      </div>
+                      <Link to={`/user/profile/${user?._id}`}>
+                        {/* right */}
+                        {theme === "light" ? (
+                          <button className="my-3  lg:px-4 lg:py-1 text-[16px] md:text-lg graish font-normal  rounded-[10px] border border-gray-500">
+                            Profile
+                          </button>
+                        ) : (
+                          <button className="popularBtn">
+                            <p>Profile</p>
+                          </button>
+                        )}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </>
+          {/* friends */}
+          <>
+            {friendTab && (
+              <>
+                <ul className="space-y-6">
+                  {allFriends?.slice(0, 3).map((user, i) => (
+                    <li key={i} className="flex justify-between items-center">
+                      {/* lrft */}
+                      <div className="flex items-center space-x-3">
+                      <div className="flex flex-col justify-center items-center relative">
+                        <img
+                          src={
+                            user?.profilePic
+                              ? user?.requestedBy?.profilePic
+                              : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                          }
+                          className={` h-[54px] w-[54px]  rounded-full p-[6px] `}
+                        />
+                        <img
+                            className="w-16 lg:w-32 xl:w-36 absolute"
+                            src={theme === "light" ? darkBorder : whiteBorder}
+                            alt="dashedborder"
+                          />
+                        </div>
+                        <div>
+                          <p
+                            className={`${
+                              theme === "light" ? "text-gray-500" : "text-white"
+                            } text-lg font-medium capitalize pt-b `}
+                          >
+                            {user?.requestedBy?.name?.firstName}{" "}
+                            {user?.requestedBy?.name?.lastName}
+                          </p>
+                        </div>
+                      </div>
+                      <Link to={`/user/profile/${user?.requestedBy?._id}`}>
+                        {/* right */}
+                        {theme === "light" ? (
+                          <button className="my-3  lg:px-4 lg:py-1 text-[16px] md:text-lg graish font-normal  rounded-[10px] border border-gray-500">
+                            Profile
+                          </button>
+                        ) : (
+                          <button className="popularBtn">
+                            <p>Profile</p>
+                          </button>
+                        )}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                {allFriends?.length === 0 && (
+                  <p
+                    className={`${
+                      theme === "light" ? "text-gray-600" : "text-white"
+                    } lg:text-[18px] pb-5 font-medium text-center pt-3`}
+                  >{`You've no friends yet.`}</p>
+                )}
+              </>
+            )}
+          </>
+          {/* request */}
+          <>
+            {requestTab && (
+              <>
+                <ul className="space-y-6">
+                  {recievedRequest?.slice(0, 3).map((user, i) => (
+                    <li key={i} className="flex justify-between items-center">
+                      {/* lrft */}
+                      <div className="flex items-center space-x-3">
+                      <div className="flex flex-col justify-center items-center relative">
+                        <img
+                          src={
+                            user?.profilePic
+                              ? user?.requestedBy?.profilePic
+                              : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                          }
+                          className={`h-[54px] w-[54px] rounded-full p-[5px]  `}
+                        />
+                        <img
+                            className="w-16 lg:w-32 xl:w-36 absolute"
+                            src={theme === "light" ? darkBorder : whiteBorder}
+                            alt="dashedborder"
+                          />
+                        </div>
+                        <div>
+                          <p
+                            className={`${
+                              theme === "light" ? "text-gray-500" : "text-white"
+                            } text-lg font-medium capitalize pt-b `}
+                          >
+                            {user?.requestedBy?.name?.firstName}{" "}
+                            {user?.requestedBy?.name?.lastName}
+                          </p>
+                        </div>
+                      </div>
+                      <Link to={`/dashboard/friend-request`}>
+                        {/* right */}
+                        {theme === "light" ? (
+                          <button className="my-3  lg:px-4 lg:py-1 text-[16px] md:text-lg graish font-normal  rounded-[10px] border border-gray-500">
+                            Dashboard
+                          </button>
+                        ) : (
+                          <button className="popularBtn">
+                            <p>Dashboard</p>
+                          </button>
+                        )}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                {recievedRequest?.length === 0 && (
+                  <p
+                    className={`${
+                      theme === "light" ? "text-gray-600" : "text-white"
+                    } lg:text-[18px] pb-5 font-medium text-center pt-3`}
+                  >{`You've not recieved any request yet.`}</p>
+                )}
+              </>
+            )}
+          </>
         </div>
       </div>
     </div>

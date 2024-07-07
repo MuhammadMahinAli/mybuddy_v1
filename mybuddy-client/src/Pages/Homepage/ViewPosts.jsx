@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import whiteBorder from "../../assets/home/p-border.png";
 import darkBorder from "../../assets/home/dark-border.png";
-import active from "../../assets/home/active.png";
 import Image from "./view/Image";
 import Skills from "./view/Skills";
 import { useGetAllPostQuery } from "../../features/post/postApi";

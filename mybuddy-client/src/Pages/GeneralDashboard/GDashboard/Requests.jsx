@@ -6,8 +6,8 @@ import Swal from "sweetalert2";
 
 
 const Requests = () => {
-  const [openFriendRequest, setOpenFriendRequest] = useState(false);
-  const [openProjectRequest, setOpenProjectRequest] = useState(true);
+  const [openFriendRequest, setOpenFriendRequest] = useState(true);
+  const [openProjectRequest, setOpenProjectRequest] = useState(false);
   const {  getFriendRequest, allRecieveRequest } =
     useContext(AuthContext);
 
@@ -207,16 +207,16 @@ const Requests = () => {
       </h1>
       <div className="my-5 flex items-center space-x-1 md:space-x-5">
         <button
-          onClick={toggleProjectRequest}
-          className="text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#d4e3ed] shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9] cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  hover:shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9_inset] box-border border-[2px] border-solid border-white px-2 py-1 md:px-4 md:py-2 flex justify-center items-center"
-        >
-          Project
-        </button>
-        <button
           onClick={toggleFriendRequest}
           className="text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#d4e3ed] shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9] cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  hover:shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9_inset] box-border border-[2px] border-solid border-white px-2 py-1 md:px-4 md:py-2 flex justify-center items-center"
         >
           Friend
+        </button>
+        <button
+          onClick={toggleProjectRequest}
+          className="text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#d4e3ed] shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9] cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  hover:shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9_inset] box-border border-[2px] border-solid border-white px-2 py-1 md:px-4 md:py-2 flex justify-center items-center"
+        >
+          Project
         </button>
         <button className="text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#d4e3ed] shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9] cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  hover:shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9_inset] box-border border-[2px] border-solid border-white px-2 py-1 md:px-4 md:py-2 flex justify-center items-center">
           Fund
@@ -229,7 +229,7 @@ const Requests = () => {
       {/* projects */}
       {openProjectRequest  && (
         <>
-          {projectRequests?.slice(0, 2).map((r, i) => (
+          {/* {projectRequests?.slice(0, 2).map((r, i) => (
             <div
               key={i}
               className="w-12/12 3xl:w-9/12 md:space-x-5 p-5 flex flex-col md:flex-row  justify-between rounded-[25px] bg-skyblue shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] overflow-hidden"
@@ -274,10 +274,12 @@ const Requests = () => {
                 </button>
               </div>
             </div>
-          ))}
-          {projectRequests?.length === 0 && (
+          ))} quests?.length === 0 && (
             <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not recieved any project request.`}</p>
-          )}
+          )}*/}
+     
+            <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not recieved any project request.`}</p>
+      
         </>
       )}
 

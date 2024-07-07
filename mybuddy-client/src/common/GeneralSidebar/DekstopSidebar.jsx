@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import {  useContext, } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../Context/UserContext";
 const DekstopSidebar = ({
   handleCreateProject,
@@ -24,10 +24,12 @@ const DekstopSidebar = ({
   openRequestOption,
   setOpenRequestOption,
   userData,
-  logout
+  logout,
 }) => {
-  const{singleUser} = useContext(AuthContext);
-  const userImage = singleUser?.data?.profilePic ?  singleUser?.data?.profilePic  : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+  const { singleUser } = useContext(AuthContext);
+  const userImage = singleUser?.data?.profilePic
+    ? singleUser?.data?.profilePic
+    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
   return (
     <div className="hidden lg:flex py-4 flex-col justify-center items-center space-y-12 lg:w-[270px]  xl:w-3/12  rounded-[33px] bg-[#f3f6f8] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
       <div
@@ -60,9 +62,11 @@ const DekstopSidebar = ({
             ></div>
 
             <Link
-            to="/dashboard/all-projects"
+              to="/dashboard/all-projects"
               className={`${
-                openProject === true ? "bg-[#f3f6f8] rounded-l-2xl py-2" : "bg-[#e4ecf7] py-3"
+                openProject === true
+                  ? "bg-[#f3f6f8] rounded-l-2xl py-2"
+                  : "bg-[#e4ecf7] py-3"
               } flex relative lg:space-x-2 xl:space-x-4  items-center  lg:pl-5 xl:pl-3`}
             >
               <img src="/project2.svg" className="h-7" />
@@ -82,7 +86,7 @@ const DekstopSidebar = ({
               openRequestOption === true ? "show-content" : "hide-content"
             } border-b  cursor-pointer  relative  mt-3 lg:-right-[7px] xl:-right-[11px] 2xl:-right-[16px] 3xl:-right-[23px]`}
           >
-           <div
+            <div
               className={`${
                 !openRequest && "hidden"
               } bg-[#e4ecf7] h-5 rounded-br-[60px]`}
@@ -90,37 +94,37 @@ const DekstopSidebar = ({
 
             <Link
               to="/dashboard/sent-request"
-              
               className={`${
                 openRequestOption === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
                   : "bg-[#e4ecf7] py-3"
               } flex relative space-x-4 rounded-l-[40px] it items-start  pl-4 `}
             >
-              <img  src="/rqst.svg" className="h-5 mt-1" />
-              <div  onClick={() => { handleRequest();  }}>
-                <p onClick={() => setOpenRequestOption(!openRequestOption)} className=" lg:text-[18px] xl:text-[22px] font-medium gray600">
+              <img src="/rqst.svg" className="h-5 mt-1" />
+              <div
+                onClick={() => {
+                  handleRequest();
+                }}
+              >
+                <p
+                  onClick={() => setOpenRequestOption(!openRequestOption)}
+                  className=" lg:text-[18px] xl:text-[22px] font-medium gray600"
+                >
                   Request
                 </p>
                 {openRequestOption && (
                   <div className="pl-3 space-y-[1px] pt-1">
                     <p className="lg:text-[16px] 3xl:text-[19px] font-normal gray600">
-                    <Link to="/dashboard/sent-request">
-                      Sent
-                    </Link>
+                      <Link to="/dashboard/sent-request">Sent</Link>
                     </p>
                     <p className="lg:text-[16px] 3xl:text-[19px] font-normal gray600">
-                    <Link to="/dashboard/recieve-request">
-                      Recieve
-                    </Link>
+                      <Link to="/dashboard/recieve-request">Recieve</Link>
                     </p>
-                    
-                    
                   </div>
                 )}
               </div>
               <img
-              onClick={() => setOpenRequestOption(!openRequestOption)}
+                onClick={() => setOpenRequestOption(!openRequestOption)}
                 src="/down-arrow.svg"
                 className={`${
                   openRequestOption ? "right-5 top-4" : " right-5 top-6"
@@ -149,14 +153,16 @@ const DekstopSidebar = ({
             ></div>
 
             <Link
-            to="/dashboard/create-projects"
+              to="/dashboard/create-projects"
               className={`${
-                openCreateProject === true ? "bg-[#f3f6f8] rounded-l-2xl py-2" : "bg-[#e4ecf7] py-3"
+                openCreateProject === true
+                  ? "bg-[#f3f6f8] rounded-l-2xl py-2"
+                  : "bg-[#e4ecf7] py-3"
               } flex space-x-3 items-center pl-3 lg:pr-14`}
             >
               <img src="/video.svg" className="h-4" />
               <p className="lg:text-[18px] xl:text-[22px] font-medium text-xl gray600 xl:pr-5">
-                Create Project  
+                Create Project
               </p>
             </Link>
 
@@ -184,9 +190,11 @@ const DekstopSidebar = ({
             ></div>
 
             <Link
-            to="/dashboard/fund-proposal"
+              to="/dashboard/fund-proposal"
               className={`${
-                openFund === true ? "bg-[#f3f6f8] rounded-l-2xl py-2" : "bg-[#e4ecf7] border-b border-white py-3"
+                openFund === true
+                  ? "bg-[#f3f6f8] rounded-l-2xl py-2"
+                  : "bg-[#e4ecf7] border-b border-white py-3"
               } flex relative lg:space-x-2 xl:space-x-4  items-center  lg:pl-5 xl:pl-3`}
             >
               <img src="/fund2.svg" className="h-7" />
@@ -246,9 +254,11 @@ const DekstopSidebar = ({
             ></div>
 
             <Link
-            to="/dashboard/meeting-schedule"
+              to="/dashboard/meeting-schedule"
               className={`${
-                openMeet === true ? "bg-[#f3f6f8] rounded-l-2xl py-2" : "bg-[#e4ecf7] py-3"
+                openMeet === true
+                  ? "bg-[#f3f6f8] rounded-l-2xl py-2"
+                  : "bg-[#e4ecf7] py-3"
               } flex space-x-3 items-center pl-3 pr-4`}
             >
               <img src="/video.svg" className="h-4" />
@@ -266,30 +276,29 @@ const DekstopSidebar = ({
         </ul>
       </div>
       {/* bottom */}
-    <a href='/user/edit-profile'
+      <a
+        href="/user/edit-profile"
         className={`${
           openProfile === true ? "bg-[#dce2ea]" : "bg-[#e4ecf7] py-4 "
-        } flex flex-col justify-center items-center relative rounded-[15px] py-2 lg:px-[66px] xl:px-[75px] 3xl:px-[90px]    shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]`}
+        } flex flex-col justify-center items-center relative rounded-[15px] py-2 lg:px-[75px] xl:px-[94px] 3xl:px-[100px]    shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]`}
       >
-        
-
-      
-        <img
-          src={userImage}
-          className="h-16 w-16 -mt-10 rounded-full"
-        />
-        <p className="lg:text-[18px] xl:text-[22px]  font-medium gray600 text-center pb-5 capitalize">
-    
-        {userData?.data?.name?.firstName} {userData?.data?.name?.lastName}
-        </p>
-        </a>
+        <img src={userImage} className="h-16 w-16 -mt-10 rounded-full" />
+        <div>
+          <p className="lg:text-[16px] xl:text-[20px]  font-medium gray600 text-center capitalize">
+            {userData?.data?.name?.firstName}
+          </p>
+          <p className="lg:text-[16px] xl:text-[20px]  font-medium gray600 text-center pb-5 capitalize">
+            {userData?.data?.name?.lastName}
+          </p>
+        </div>
+      </a>
       {/* setting logout */}
       <div className="space-y-3">
         <div
-        onClick={handleSetting}
+          onClick={handleSetting}
           className={`${
             openSetting === true ? "bg-[#dce2ea]" : "bg-[#e4ecf7] py-4"
-          } flex justify-evenly relative space-x-14 rounded-[20px] items-center py-2 lg:px-[41px] xl:px-14 3xl:px-[70px] mt-5  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[71.2px]`}
+          } flex justify-evenly relative space-x-14 rounded-[20px] items-center py-2 lg:px-[41px] xl:px-16 3xl:px-[70px] mt-5  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[71.2px]`}
         >
           <img src="/setting.svg" className="h-8" />
           <p className="lg:text-[18px] xl:text-[22px]  font-medium gray600 relative -left-5">
@@ -297,7 +306,7 @@ const DekstopSidebar = ({
           </p>
         </div>
         <div
-        onClick={logout}
+          onClick={logout}
           className={`${
             openDashboard === true ? "bg-[#dce2ea]" : "bg-[#e4ecf7] py-4"
           } flex justify-around relative space-x-14 cursor-pointer rounded-[20px] items-center py-2 lg:px-[41px] xl:px-14 3xl:px-[70px]  mt-5  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[71.2px]`}

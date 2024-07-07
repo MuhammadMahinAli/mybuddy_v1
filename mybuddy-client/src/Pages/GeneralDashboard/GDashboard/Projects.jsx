@@ -24,7 +24,8 @@ const Projects = () => {
       <h1 className="gray600 text-[20px] lg:text-[28px] pb-5 font-bold">
         PROJECTS
       </h1>
-      <div className="flex flex-col md:flex-row space-y-5 md:space-y-0  md:space-x-7 lg:space-x-4 xl:space-x-7 3xl:space-x-14 md:items-center">
+      <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not posted any project yet.`}</p>
+      {/* <div className="flex flex-col md:flex-row space-y-5 md:space-y-0  md:space-x-7 lg:space-x-4 xl:space-x-7 3xl:space-x-14 md:items-center">
         {projects?.length > 0 ? (
           projects?.slice(0, 3).map((p, i) => (
             <>
@@ -43,7 +44,6 @@ const Projects = () => {
                 <p className="text-xl font-semibold py-3">
                   {p.projectName.slice(0, 10)}...
                 </p>
-                {/* <div dangerouslySetInnerHTML={{ __html: p?.description.slice(0,100)}} /> */}
                 <button className="py-1 w-full font-medium rounded-[10px] bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
                   Details
                 </button>
@@ -58,7 +58,7 @@ const Projects = () => {
         ) : (
           <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not posted any project yet.`}</p>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
