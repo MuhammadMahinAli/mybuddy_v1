@@ -1,15 +1,52 @@
 import httpStatus from "http-status";
 import {ApiError} from "../../../handleError/apiError.js";
 import {Member} from "./member.model.js";
-import { FriendRequest } from "../friendRqst/friendRequest.model.js";
+import crypto from 'crypto';
+import { sendEmail } from "../../../utils/emaillService.js";
 
 // create user / signUp user
+// export const createMemberService = async (userInfo) => {
+//   const result = (await Member.create(userInfo)).toObject();
+//   if (!result) {
+//     throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create user");
+//   }
+//   const {password, ...newUser} = result;
+//   return newUser;
+// };
 export const createMemberService = async (userInfo) => {
+  const verificationToken = crypto.randomBytes(32).toString('hex');
+  userInfo.verificationToken = verificationToken;
+
   const result = (await Member.create(userInfo)).toObject();
   if (!result) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create user");
   }
-  const {password, ...newUser} = result;
+  const { password, ...newUser } = result;
+  console.log(result);
+
+  const verificationUrl = `http://localhost:5173/verify-email?token=${verificationToken}`;
+
+  // Send verification email
+  // await sendEmail({
+  //   to: newUser.email,
+  //   subject: 'Verify your email',
+  //   html: `<p>Please verify your email by clicking the link below:</p><a href="${verificationUrl}">Verify Email</a>`,
+  // });
+
+  await sendEmail({
+    to: newUser.email,
+    subject: 'Verify Your Email Address',
+    html: `
+      <p className='capitalize font-bold'>Dear ${newUser.name.firstName} ${newUser.name.lastName},</p>
+      <p>Thank you for signing up with us! We're excited to have you on board. To ensure the security and activation of your account, please verify your email address.</p>
+      <p>To get started, click the link below:</p>
+      <p><a className='font-semibold' href="${verificationUrl}">Verify Your Email</a></p>
+      <p>If you did not sign up for this account, please ignore this email.</p>
+      <p className='font-bold'>Best regards,</p>
+      <p className='font-bold'>The Research Buddy Team</p>
+    `,
+  });
+
   return newUser;
 };
 
@@ -81,33 +118,6 @@ export const updateMemberCoverPicService = async (userId, data) => {
 };
 
 //--------------- update user info
-// export const updateMemberInfoService = async (userId, data) => {
-//   try {
-//     const member = await Member.findById(userId);
-//     if (!member) {
-//       throw new ApiError(httpStatus.NOT_FOUND, "Member not found");
-//     }
-//     const updatedMember = await Member.findByIdAndUpdate(
-//       userId,
-//       { $set: { firstName: data.name.firstName } },
-//       { $set: { lastName: data.name.lastName } },
-//       { $set: { role: data.role } },
-//       { $set: { about: data.about } },
-//       { $set: { phoneNumber: data.phoneNumber } },
-//       { $set: { address: data.address } },
-//       { $set: { country: data.country } },
-//       { new: true }
-//     );
-
-//     if (!updatedMember) {
-//       throw new ApiError(httpStatus.BAD_REQUEST, "Failed to update user information");
-//     }
-
-//     return updatedMember;
-//   } catch (error) {
-//     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
-//   }
-// };
 
 export const updateMemberInfoService = async (userId, data) => {
   try {
@@ -146,29 +156,3 @@ export const updateMemberInfoService = async (userId, data) => {
   }
 };
 
-//////////////////////////////////////////////
-// export const getExcludedFriendsService = async (memberId) => {
-//   // Fetch friend requests where the member is either the requester or the requestee
-//   const friendRequests = await FriendRequest.find({
-//     $or: [
-//       { requestedBy: memberId },
-//       { requestedTo: memberId }
-//     ]
-//   });
-
-//   // Separate friend requests based on status
-//   const acceptedOrPendingIds = new Set();
-//   friendRequests.forEach(request => {
-//     if (request.status === 'Accepted' || request.status === 'Pending') {
-//       acceptedOrPendingIds.add(request.requestedBy.toString());
-//       acceptedOrPendingIds.add(request.requestedTo.toString());
-//     }
-//   });
-
-//   // Fetch all members excluding those in acceptedOrPendingIds
-//   const members = await Member.find({
-//     _id: { $nin: Array.from(acceptedOrPendingIds) }
-//   });
-
-//   return members;
-// };

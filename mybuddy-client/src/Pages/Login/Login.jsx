@@ -54,27 +54,7 @@ const Login = () => {
     setPasswordType("password");
   };
 
-  // Handle form submission
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   login(formData);
-  // };
-  // useEffect(() => {
 
-  //   if (responseData?.success && responseData?.data) {
-  //     console.log(responseData);
-  //     Swal.fire("You have been logged in successfully!");
-  //     navigate('/');
-  //   }
-  //   else{
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Oops...",
-  //       text: "Please enter correct Email/Password!",
-  //       footer: '<a href="#">Why do I have this issue?</a>'
-  //     });
-  //   }
-  // }, [responseData, responseError]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

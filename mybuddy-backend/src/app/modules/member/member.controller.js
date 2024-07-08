@@ -2,6 +2,8 @@ import {createMemberService,getAllMemberService,getSingleMember,updateMemberCove
 import {catchAsync} from "../../../utils/catchAsync.js";
 import {sendResponse} from "../../../utils/sendResponse.js";
 import httpStatus from "http-status";
+import { Member } from "./member.model.js";
+import { ApiError } from "../../../handleError/apiError.js";
 
 //------create an user
 export const createMember= catchAsync(async (req, res, next) => {
@@ -15,6 +17,69 @@ export const createMember= catchAsync(async (req, res, next) => {
     data: newMember,
   });
 });
+
+export const verifyEmail = catchAsync(async (req, res, next) => {
+  const { token } = req.query;
+
+  const user = await Member.findOne({ verificationToken: token });
+
+  // Moved the initial response outside of the conditional block
+  if (!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid or expired verification token');
+  }
+
+
+
+  user.emailVerified = true;
+  //user.verificationToken = undefined;
+  await user.save();
+
+  const userDetails = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    emailVerified: user.emailVerified,
+    // Include any other user fields you want to send in the response
+  };
+
+  // Send the final response after all operations are completed
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Email verified successfully!',
+    data:userDetails
+  });
+});
+
+// export const verifyEmail = catchAsync(async (req, res, next) => {
+//   const { token } = req.query;
+
+//   const user = await Member.findOne({ verificationToken: token });
+
+//   if (!user) {
+//          throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid or expired verification token');
+//        }
+
+//   // Update the user document to reflect email verification
+//   user.emailVerified = true;
+//   user.verificationToken = undefined;
+//   await user.save();
+
+//   // Prepare the user data to send in the response
+//   const userDetails = {
+//     firstName: user.firstName,
+//     lastName: user.lastName,
+//     email: user.email,
+//     emailVerified: user.emailVerified,
+//     // Include any other user fields you want to send in the response
+//   };
+
+//   // Send a response indicating the email has been verified successfully, along with the user details
+//   return res.status(httpStatus.OK).json({
+//     success: true,
+//     message: 'Email verified successfully!',
+//     userDetails: userDetails, // Include user details in the response
+//   });
 
 //-------get all users
 export const getAllMembers = catchAsync(async (req, res) => {

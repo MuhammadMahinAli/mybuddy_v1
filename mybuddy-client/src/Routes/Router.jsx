@@ -23,6 +23,8 @@ import UserProfileEM from "../Pages/UserProfile/EditMode/UserProfileEM";
 import GeneralRequestSent from "../Pages/GeneralDashboard/GeneralRequest/GeneralRequestSent";
 import GeneralRequestRecieve from "../Pages/GeneralDashboard/GeneralRequest/GeneralRequestRecieve";
 import Academic from "../Pages/AcademicPage/Academic";
+import EmailVarification from "../Pages/Email/EmailVarification";
+import VerificationSuccess from "../Pages/Email/VerificationSuccess";
 
 const router = createBrowserRouter([
   {
@@ -130,6 +132,14 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path: "/verify-your-email",
+    element: <EmailVarification />,
+  },
+  {
+    path: "/verify-email",
+    element: <VerificationSuccess />,
   },
   {
     path: "/try",

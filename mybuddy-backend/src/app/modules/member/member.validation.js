@@ -34,6 +34,8 @@ export const createMemberZodSchema = z.object({
       profilePic: z.string().optional(),
       coverPic: z.string().optional(),
       about: z.string().optional(),
+      emailVerified:z.boolean().default(false),
+      verificationToken:z.string().optional(),
      
     })
     .strict(),

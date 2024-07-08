@@ -21,6 +21,7 @@
     "@syncfusion/ej2-react-calendars": "^24.2.5",
     "@syncfusion/ej2-react-schedule": "^24.2.4",
     "aos": "^2.3.4",
+    "axios": "^1.7.2",
     "pdfjs-dist": "^3.11.174",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
