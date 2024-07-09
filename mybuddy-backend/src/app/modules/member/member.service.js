@@ -22,33 +22,56 @@ export const createMemberService = async (userInfo) => {
     throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create user");
   }
   const { password, ...newUser } = result;
-  console.log(result);
 
-  const verificationUrl = `http://localhost:5173/verify-email?token=${verificationToken}`;
+
+  const verificationUrl = `http://localhost:5173/verified-email/${verificationToken}`;
 
   // Send verification email
-  // await sendEmail({
-  //   to: newUser.email,
-  //   subject: 'Verify your email',
-  //   html: `<p>Please verify your email by clicking the link below:</p><a href="${verificationUrl}">Verify Email</a>`,
-  // });
-
   await sendEmail({
     to: newUser.email,
     subject: 'Verify Your Email Address',
     html: `
-      <p className='capitalize font-bold'>Dear ${newUser.name.firstName} ${newUser.name.lastName},</p>
+      <p>Dear ${newUser.name.firstName} ${newUser.name.lastName},</p>
       <p>Thank you for signing up with us! We're excited to have you on board. To ensure the security and activation of your account, please verify your email address.</p>
       <p>To get started, click the link below:</p>
       <p><a className='font-semibold' href="${verificationUrl}">Verify Your Email</a></p>
       <p>If you did not sign up for this account, please ignore this email.</p>
-      <p className='font-bold'>Best regards,</p>
-      <p className='font-bold'>The Research Buddy Team</p>
+      <p>Best regards,</p>
+      <p>The Research Buddy Team</p>
     `,
   });
 
   return newUser;
 };
+
+// verify token
+
+// export const verifyEmailService = async (token) => {
+//   const user = await Member.findOne({ verificationToken: token });
+//   return user;
+// };
+export const verifyEmailService = async (token) => {
+  const user = await Member.findOne({ verificationToken: token });
+  if (!user) {
+    throw new Error('Invalid or expired verification token');
+  }
+
+  user.emailVerified = true;
+  user.verificationToken = undefined;
+  await user.save();
+
+  const userDetails = {
+    firstName: user.name.firstName,
+    lastName: user.name.lastName,
+    phoneNumber: user.phoneNumber,
+    email: user.email,
+  };
+
+  return userDetails;
+};
+
+
+
 
 ///get all users
 export const getAllMemberService = async () => {

@@ -10,9 +10,9 @@ import httpStatus from "http-status";
 //------create an user
 export const createNewPost = catchAsync(async (req, res, next) => {
   const data = req.body;
-  console.log(data);
+  //console.log(data);
   const newPost = await createPost(data);
-  console.log(newPost);
+  //console.log(newPost);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

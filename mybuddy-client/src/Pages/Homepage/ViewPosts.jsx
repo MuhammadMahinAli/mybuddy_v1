@@ -70,6 +70,7 @@ const ViewPosts = ({ theme,active }) => {
   }
 
   const posts = allPosts.data;
+  console.log(posts);
 
   return (
     <div className="space-y-3 py-3">
@@ -166,7 +167,7 @@ const ViewPosts = ({ theme,active }) => {
                 {post?.technicalRecommendations.length > 0 && (
                   <div className="flex justify-center items-center ">
                     {openComponent[i] === "image" && post?.image && (
-                      <Image image={post?.image} />
+                      <Image image={post?.image} technicalRecommendations={post?.technicalRecommendation} teamMembers={post?.teamMembers} />
                     )}
                     {openComponent[i] === "skill" &&
                       post?.technicalRecommendations.length > 0 && (
@@ -187,7 +188,7 @@ const ViewPosts = ({ theme,active }) => {
                   </div>
                 )}
               </div>
-              {post?.technicalRecommendations.length > 0 &&
+              {/* {post?.technicalRecommendations.length > 0 &&
                 post?.teamMembers?.length > 0 && (
                   <ProjectSidebar
                     theme={theme}
@@ -196,7 +197,23 @@ const ViewPosts = ({ theme,active }) => {
                     toggleSkill={() => toggleComponent(i, "skill")}
                     toggleTeam={() => toggleComponent(i, "team")}
                   />
-                )}
+                )} */}
+                {(
+  post?.technicalRecommendations.length > 0 ||
+  post?.teamMembers?.length > 0
+
+) && (
+  <ProjectSidebar
+    theme={theme}
+    description={post?.description}
+    teamMembers={post?.teamMembers}
+    technicalRecommendations={post?.technicalRecommendations}
+    openComponent={openComponent[i]}
+    toggleImage={() => toggleComponent(i, "image")}
+    toggleSkill={() => toggleComponent(i, "skill")}
+    toggleTeam={() => toggleComponent(i, "team")}
+  />
+)}
               {post?.technicalRecommendations.length === 0 &&
                 post?.pdf === "" && (
                   <div className="w-[400px] 3xl:w-[500px]">

@@ -1,5 +1,4 @@
 const TeamMember = ({ teamMembers, openComponen }) => {
-  console.log(teamMembers[0]?.member?.name?.firstName);
   const bgColors = [
     "#fff3c4",
     "#e0ebf6",

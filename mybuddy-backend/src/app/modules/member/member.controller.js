@@ -1,4 +1,4 @@
-import {createMemberService,getAllMemberService,getSingleMember,updateMemberCoverPicService,updateMemberInfoService,updateMemberProfilePicService,updateMemberService} from "./member.service.js";
+import {createMemberService,getAllMemberService,getSingleMember,updateMemberCoverPicService,updateMemberInfoService,updateMemberProfilePicService,updateMemberService, verifyEmailService} from "./member.service.js";
 import {catchAsync} from "../../../utils/catchAsync.js";
 import {sendResponse} from "../../../utils/sendResponse.js";
 import httpStatus from "http-status";
@@ -18,68 +18,72 @@ export const createMember= catchAsync(async (req, res, next) => {
   });
 });
 
-export const verifyEmail = catchAsync(async (req, res, next) => {
-  const { token } = req.query;
-
-  const user = await Member.findOne({ verificationToken: token });
-
-  // Moved the initial response outside of the conditional block
-  if (!user) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid or expired verification token');
-  }
-
-
-
-  user.emailVerified = true;
-  //user.verificationToken = undefined;
-  await user.save();
-
-  const userDetails = {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    emailVerified: user.emailVerified,
-    // Include any other user fields you want to send in the response
-  };
-
-  // Send the final response after all operations are completed
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Email verified successfully!',
-    data:userDetails
-  });
-});
-
 // export const verifyEmail = catchAsync(async (req, res, next) => {
 //   const { token } = req.query;
-
+//   console.log('Token from request:', token);
 //   const user = await Member.findOne({ verificationToken: token });
-
 //   if (!user) {
-//          throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid or expired verification token');
-//        }
+//     throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid or expired verification token');
+//   }
 
-//   // Update the user document to reflect email verification
 //   user.emailVerified = true;
 //   user.verificationToken = undefined;
 //   await user.save();
 
-//   // Prepare the user data to send in the response
 //   const userDetails = {
 //     firstName: user.firstName,
 //     lastName: user.lastName,
+//     phoneNumber: user.phoneNumber,
 //     email: user.email,
 //     emailVerified: user.emailVerified,
-//     // Include any other user fields you want to send in the response
 //   };
 
-//   // Send a response indicating the email has been verified successfully, along with the user details
-//   return res.status(httpStatus.OK).json({
+//   res.status(httpStatus.OK).json({
 //     success: true,
 //     message: 'Email verified successfully!',
-//     userDetails: userDetails, // Include user details in the response
+//     data: userDetails,
 //   });
+// });
+
+
+// export const verifyEmail = catchAsync(async (req, res, next) => {
+//  // Log received token
+
+//   const token = req.params.token;
+
+//   const user = await verifyEmailService(token);
+
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Token holder retrieved successfully!",
+//     data: user,
+//   });
+  
+// });
+export const verifyEmail = catchAsync(async (req, res, next) => {
+  const { token } = req.query;
+  //console.log('Received token:', token); // Log received token
+
+  try {
+    const userDetails = await verifyEmailService(token);
+
+    res.status(200).json({
+      success: true,
+      message: 'Email verified successfully!',
+      data: userDetails,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+      errorMessages: [{ path: '', message: error.message }],
+    });
+  }
+});
+
+
+
 
 //-------get all users
 export const getAllMembers = catchAsync(async (req, res) => {

@@ -25,6 +25,7 @@ import GeneralRequestRecieve from "../Pages/GeneralDashboard/GeneralRequest/Gene
 import Academic from "../Pages/AcademicPage/Academic";
 import EmailVarification from "../Pages/Email/EmailVarification";
 import VerificationSuccess from "../Pages/Email/VerificationSuccess";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/home",
-        element: <Homepage />,
+        element: <PrivateRoute><Homepage /> </PrivateRoute> ,
       },
 
       {
@@ -138,9 +139,10 @@ const router = createBrowserRouter([
     element: <EmailVarification />,
   },
   {
-    path: "/verify-email",
+    path: "/verified-email/:token",
     element: <VerificationSuccess />,
   },
+ 
   {
     path: "/try",
     element: <Try />,

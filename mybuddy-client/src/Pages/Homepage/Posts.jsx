@@ -79,6 +79,7 @@ const Posts = ({ theme }) => {
   // teamMembers: [],
   const [formData, setFormData] = useState({
     description: "",
+    image: "",
     technicalRecommendations: [],
     teamMembers: [],
     comments: [],
@@ -121,6 +122,30 @@ const Posts = ({ theme }) => {
       });
       return;
     }
+
+    const fileInput = document.getElementById("mediaa");
+    if (projectTab === true) {
+      let missingItems = [];
+
+      if (!fileInput.files.length) {
+        missingItems.push("Image");
+      }
+      if (formData?.teamMembers.length === 0) {
+        missingItems.push("Team Members");
+      }
+      if (formData?.technicalRecommendations.length === 0) {
+        missingItems.push("Technical Recommendations");
+      }
+
+      if (missingItems.length > 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "Oops !",
+          text: `You Must've To Add ${missingItems.join(" , ")}.`,
+        });
+        return;
+      }
+    }
     const postData = {
       ...formData,
       postedBy: user._id,
@@ -129,8 +154,8 @@ const Posts = ({ theme }) => {
     createPost(postData);
     setFormData({
       description: "",
-      technicalRecommendations: [],
       image: "",
+      technicalRecommendations: [],
       comments: [],
       pdf: "",
     });
@@ -357,9 +382,18 @@ const Posts = ({ theme }) => {
                   <button type="button" onClick={() => setIsOpen(true)}>
                     <TechnicalIcon theme={theme} />
                   </button>
-                  <label htmlFor="media">
+                  <label htmlFor="mediaa">
                     <MediaIcon theme={theme} />
                   </label>
+                  <input
+                    className="hidden"
+                    type="file"
+                    name="file"
+                    id="mediaa"
+                    required
+                    onChange={handlePreviewImage}
+                    accept="image/*"
+                  />
                 </>
               )}
               <input

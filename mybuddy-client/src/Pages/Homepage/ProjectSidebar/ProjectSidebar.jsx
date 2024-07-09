@@ -6,6 +6,9 @@ import TeamIcon from "../../../icons/Project/TeamIcon";
 
 const ProjectSidebar = ({
   theme,
+  teamMembers,
+  description,
+  technicalRecommendations,
   openComponent,
   toggleImage,
   toggleSkill,
@@ -23,7 +26,8 @@ const ProjectSidebar = ({
           theme === "light" ? "bg-white" : "bg-[#3a565b]"
         } flex flex-col items-center justify-center py-4 sm:py-6 md:py-12 shadow-2xl rounded-full space-y-3 sm:space-y-6 lg:space-y-7 absolute top-[58%] sm:top-[65%] md:top-[47%] 3xl:top-[45%] left-0 z-50`}
       >
-        <li className="relative">
+        
+          <li className="relative">
           <div
             className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
             onMouseEnter={() => setOpenImage(true)}
@@ -50,7 +54,11 @@ const ProjectSidebar = ({
             </div>
           )}
         </li>
-        <li className="relative">
+        
+     
+        {
+          technicalRecommendations?.length > 0 && 
+          <li className="relative">
           <div
             className="flex items-center justify-center cursor-pointer [border:none] box1 p-0 rounded-xl"
             onMouseEnter={() => setOpenTechnicalRecommendation(true)}
@@ -77,6 +85,8 @@ const ProjectSidebar = ({
             </div>
           )}
         </li>
+        }
+            {teamMembers?.length > 0 &&
         <li className="relative">
           <div
             className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
@@ -84,27 +94,29 @@ const ProjectSidebar = ({
             onMouseLeave={() => setOpenTeam(false)}
           >
               {/* onClick={toggleTeam} shadow-[1px_3px_24px_rgba(170,_170,_170,_0.45)_inset] */}
-            <div
-            onClick={toggleTeam}
-              className={`${
-                openComponent === "team" || theme === "light"
-                  ? ""
-                  : ""
-              }`}
-            >
-              <TeamIcon
-                theme={theme}
-                openComponent={openComponent}
-                openTeam={openTeam}
-              />
-            </div>
+     
+              <div
+              onClick={toggleTeam}
+                className={`${
+                  openComponent === "team" || theme === "light"
+                    ? ""
+                    : ""
+                }`}
+              >
+                <TeamIcon
+                  theme={theme}
+                  openComponent={openComponent}
+                  openTeam={openTeam}
+                />
+              </div>
+          
           </div>
           {openTeam && (
             <div className="absolute left-12 -top-4 z-50">
               <HoveredText text={"Team Member"} theme={theme} />
             </div>
           )}
-        </li>
+        </li>}
       </ul>
     </div>
   );

@@ -94,8 +94,14 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["SingleMember"],
     }),
+    verifyEmail: builder.query({
+      query: (token) => ({
+        url: `/member/verify-email?token=${token}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
- export const {useLoginMutation,useSignUpMutation,useUpdateCoverPicMutation, useUpdateUserInfoMutation,useUpdateProfilePicMutation,useGetAllUsersQuery,useGetFilteredUsersQuery,useGetSingleUserQuery,useDeleteUserMutation} = authApi;
+ export const {useLoginMutation,useSignUpMutation,useUpdateCoverPicMutation, useUpdateUserInfoMutation,useUpdateProfilePicMutation,useGetAllUsersQuery,useGetFilteredUsersQuery,useGetSingleUserQuery,useDeleteUserMutation,  useVerifyEmailQuery} = authApi;
 
