@@ -87,7 +87,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                     } `}
                   >
                     <p className="m-[1px] pt-2 md:pt-4 text-[15px] md:text-[20px] xl:text-[24px] font-semibold text-start">
-                      Update Your Social Info
+                      Add Your Social Info
                     </p>
                     <div
                       data-aos="fade-down"
@@ -127,7 +127,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                                 theme === "light"
                                   ? "bg-[#cae4f4] graish"
                                   : "bg-[#204057] text-white"
-                              } m-[1px] pl-2 md:pt-4  rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                              } m-[1px] pl-2 md:pt-4 outline-none rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                             />
                           </div>
                         </div>
@@ -154,7 +154,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                                 theme === "light"
                                   ? "bg-[#b3e4f8] graish"
                                   : "bg-[#1f546d] text-white"
-                              } m-[1px] pl-2 md:pt-4 rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                              } m-[1px] pl-2 md:pt-4 outline-none rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                             />
                           </div>
                         </div>
@@ -181,7 +181,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                                 theme === "light"
                                   ? "bg-[#c4dfee] graish"
                                   : "bg-[#15384c] text-white"
-                              } m-[2px] pl-2 md:pt-4 rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                              } m-[2px] pl-2 md:pt-4 outline-none rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                             />
                           </div>
                         </div>
@@ -208,7 +208,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                                 theme === "light"
                                   ? "bg-[#ffd0d1] graish"
                                   : "bg-[#593739] text-white"
-                              } m-[1px] pl-2 md:pt-4 rounded-r-lg w-full md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                              } m-[1px] pl-2 md:pt-4 outline-none rounded-r-lg w-full md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                             />
                           </div>
                         </div>
@@ -244,7 +244,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                                 theme === "light"
                                   ? "bg-[#ced4ff] graish"
                                   : "bg-[#323859] text-white"
-                              } m-[2px] pl-2 md:pt-4 rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                              } m-[2px] pl-2 md:pt-4 outline-none rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                             />
                           </div>
                         </div>
@@ -271,7 +271,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                                 theme === "light"
                                   ? "bg-[#ffd0d1] graish"
                                   : "bg-[#593739] text-white"
-                              } m-[1px] pl-2 md:pt-4 rounded-r-lg w-full md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                              } m-[1px] pl-2 md:pt-4 outline-none rounded-r-lg w-full md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                             />
                           </div>
                         </div>
@@ -298,7 +298,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                                 theme === "light"
                                   ? "bg-[#ffd0d1] graish"
                                   : "bg-[#593739] text-white"
-                              } m-[1px] pl-2 md:pt-4 rounded-r-lg w-full md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                              } m-[1px] pl-2 md:pt-4 outline-none rounded-r-lg w-full md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                             />
                           </div>
                         </div>
@@ -325,7 +325,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                                 theme === "light"
                                   ? "bg-[#ffd0d1] graish"
                                   : "bg-[#593739] text-white"
-                              } m-[1px] pl-2 md:pt-4 rounded-r-lg w-full md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                              } m-[1px] pl-2 md:pt-4 outline-none rounded-r-lg w-full md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                             />
                           </div>
                         </div>
@@ -341,7 +341,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#3b5998] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="h-7 w-7" src={fb} alt="" />
+                              <img className="p-1 w-7" src={fb} alt="" />
                             </div>
 
                             <textarea
@@ -352,7 +352,7 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                                 theme === "light"
                                   ? "bg-[#ffd0d1] graish"
                                   : "bg-[#593739] text-white"
-                              } m-[1px] pl-2 md:pt-4 rounded-r-lg w-full md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                              } m-[1px] pl-2 md:pt-4 outline-none rounded-r-lg w-full md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                             />
                           </div>
                         </div>

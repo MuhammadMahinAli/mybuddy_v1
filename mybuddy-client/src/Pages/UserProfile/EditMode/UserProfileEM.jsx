@@ -175,15 +175,21 @@ const UserProfileEM = () => {
         } relative h-[180px] md:h-[250px]`}
       >
         {/* Cover picture */}
-        {currentCover ||
+        {/* {currentCover ||
           (previewCoverImage !== "" && (
             <img
               src={currentCover ? currentCover : previewCoverImage}
               alt="Cover Photo"
               className="h-[180px] md:h-[250px] w-full object-cover z-0 p-[0px] "
             />
-          ))}
-
+          ))} */}
+        {currentCover || previewCoverImage ? (
+          <img
+            src={previewCoverImage || currentCover}
+            alt="Cover Photo"
+            className="h-[180px] md:h-[250px] w-full object-cover z-0 p-[0px]"
+          />
+        ) : null}
         {/* upload button for mobile */}
         <div className="absolute w-full top-5">
           <div className="w-full flex justify-between items-center lg:hidden pt-5 px-5 md:px-10 ">
@@ -263,7 +269,7 @@ const UserProfileEM = () => {
         <div
           className={`${
             theme !== "light" &&
-            "p-[1px] bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90%  rounded-3xl w-full md:w-11/12 lg:w-9/12 mx-0 md:mx-7 lg:mx-[100px] xl:mx-36"
+            "p-[1px] bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9]  relative  via-30% to-[#F857FF] to-90%  rounded-3xl w-full md:w-11/12 lg:w-9/12 mx-0 md:mx-7 lg:mx-[100px] xl:mx-36 "
           }`}
         >
           <div

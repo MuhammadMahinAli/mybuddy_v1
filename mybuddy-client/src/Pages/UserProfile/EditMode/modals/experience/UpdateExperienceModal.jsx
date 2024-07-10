@@ -347,6 +347,7 @@ const UpdateExperienceModal = ({ theme, isOpenUpdateExperience, closeUpdateExper
       console.error("Error updating experience:", error);
     }
   };
+  console.log(formData);
 
   return (
     <Transition appear show={isOpenUpdateExperience} as={Fragment}>
@@ -485,7 +486,7 @@ const UpdateExperienceModal = ({ theme, isOpenUpdateExperience, closeUpdateExper
                             >
                               <option value="On-site">On-site</option>
                               <option value="Remote">Remote</option>
-                              <option value="Hybrid">Hybrid</option>
+                              <option value="Hybride">Hybrid</option>
                             </select>
                           </div>
                         </div>
@@ -505,7 +506,7 @@ const UpdateExperienceModal = ({ theme, isOpenUpdateExperience, closeUpdateExper
                               <option value="Full-time Employee">Full-time Employee</option>
                               <option value="Part-time Employee">Part-time Employee</option>
                               <option value="Self-Employed">Self-Employed</option>
-                              <option value="Freelancer">Freelancer</option>
+                              <option value="Temporary Employee">Temporary Employee</option>
                               <option value="Internship">Internship</option>
                             </select>
                           </div>

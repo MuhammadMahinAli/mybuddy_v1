@@ -383,7 +383,7 @@ const UpdateSocialInfoModal = ({
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#3b5998] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="h-7 w-7" src={fb} alt="" />
+                              <img className="p-1 w-7" src={fb} alt="" />
                             </div>
 
                             <textarea

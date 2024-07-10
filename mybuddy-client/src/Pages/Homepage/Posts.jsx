@@ -371,10 +371,13 @@ const Posts = ({ theme }) => {
                     >
                       <IoIosCloseCircle className="text-[18px] md:text-[22px] cursor-pointer" />
                     </div>
+              
                     <img
                       src={formData?.image}
                       className="h-7 w-10 md:h-14 md:w-full border border-gray-400 shadow-xl rounded-lg"
                     />
+                
+                   
                   </div>
                 )}
                 {/* preview pdf */}

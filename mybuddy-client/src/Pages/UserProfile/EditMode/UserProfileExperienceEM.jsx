@@ -28,32 +28,11 @@ const UserProfileExperienceEM = () => {
     setIsOpenUpdateExperience(true);
   };
 
-  // company selection
-  const [selectedCompany, setSelectedCompany] = useState("");
+  console.log(getUserExperience?.data?.length);
 
-  const handleChange = (e) => {
-    setSelectedCompany(e.target.value);
-    console.log("Selected Company:", e.target.value); // Optional: Log the selected value
-  };
 
   return (
     <>
-    {/* <div
-              className={`${
-                theme === "light"
-                  ? "bg-[#edfaff]"
-                  : "bg-[url('/bluish-bg.png')] bg-no-repeat bg-cover"
-              } flex justify-between items-center px-4 py-3 rounded-xl`}
-            > */}
-              {/* <div>
-              
-                <p className="text-lg md:text-xl xl:text-2xl font-normal grish">
-                  KWS
-                </p>
-              </div> */}
-           
-              {/* <UploadIcon2 theme={theme} />
-            </div> */}
       {/* for mobile tab */}
       <div
         className={`${

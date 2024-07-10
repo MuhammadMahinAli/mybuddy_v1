@@ -14,11 +14,11 @@ const GeneralDashboardNavbar = () => {
           className="inline-flex items-center"
         >
           <div className="hidden lg:block px-2 py-2 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
-            <img src="/hambrgr2.svg" className="h-4" />
+            <img src="/logo.png" className="w-8" />
           </div>
-          <span className="ml-2 text-2xl font-bold tracking-wide uppercase">
+          {/* <span className="ml-2 text-2xl font-bold tracking-wide uppercase">
             LOGO
-          </span>
+          </span> */}
         </a>
         <ul className="flex items-center hidden space-x-8 lg:flex">
           <li>
