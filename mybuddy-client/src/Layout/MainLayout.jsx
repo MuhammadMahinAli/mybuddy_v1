@@ -1,4 +1,4 @@
-import { Outlet} from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../common/Navbar/Navbar";
 import { useAuthCheck } from "../utils/useAuthCheck";
 import { useEffect, useState } from "react";
@@ -11,6 +11,8 @@ import BottomNavbar from "../common/BottomNavbar/BottomNavbar";
 const MainLayout = () => {
   const authChecked = useAuthCheck();
   const theme = useSelector((state) => state.theme.theme);
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const [openSidebar, setOpenSidebar] = useState(false);
   let [isOpen, setIsOpen] = useState(true);
 
@@ -28,6 +30,12 @@ const MainLayout = () => {
       setIsLoading(false);
     }, 1500);
   }, []);
+
+  if (!user) {
+    navigate("/");
+    return;
+  }
+
   return (
     <>
       {!authChecked ? (
@@ -86,7 +94,7 @@ const MainLayout = () => {
                                 <Outlet />
                               </div>
                             </div>
-                            <BottomNavbar theme={theme}/>
+                            <BottomNavbar theme={theme} />
                           </div>
                         </Dialog.Panel>
                       </Transition.Child>

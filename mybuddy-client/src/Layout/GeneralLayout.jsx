@@ -1,10 +1,19 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import GeneralSideBar from "../common/GeneralSidebar/GeneralSideBar";
 import GeneralDashboardNavbar from "../common/Navbar/GeneralDashboardNavbar";
 import { useAuthCheck } from "../utils/useAuthCheck";
+import { useSelector } from "react-redux";
 
 const GeneralLayout = () => {
   const authChecked = useAuthCheck();
+  
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  if (!user) {
+    navigate("/");
+    return;
+  }
 
   return (
     <>

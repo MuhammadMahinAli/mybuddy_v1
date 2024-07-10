@@ -1,10 +1,6 @@
 import { useSelector } from "react-redux";
 import whiteBorder from "../../../assets/user-profile/profile-white-border.png";
 import darkBorder from "../../../assets/user-profile/profile-dark-border.png";
-import xIcon from "../../../assets/user-profile/x.png";
-import googleIcon from "../../../assets/user-profile/google.png";
-import githubIcon from "../../../assets/user-profile/github.png";
-import linkedinIcon from "../../../assets/user-profile/linkedin.png";
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
 import CameraIcon from "../../../icons/CameraIcon";
 import BackButton from "../../../icons/BackButton";
@@ -42,7 +38,9 @@ const UserProfileEM = () => {
     ? getAllProjectByUser?.data?.length
     : "0";
   const id = user?._id;
-  const userRole = singleUser?.data?.role ? singleUser?.data?.role : "Add your role";
+  const userRole = singleUser?.data?.role
+    ? singleUser?.data?.role
+    : "Add your role";
   const userPhoneNumber = singleUser?.data?.phoneNumber
     ? singleUser?.data?.phoneNumber
     : "Add your phone number";
@@ -55,13 +53,13 @@ const UserProfileEM = () => {
   const userAbout = singleUser?.data?.about
     ? singleUser?.data?.about
     : "Add your bio.";
-  const userFriend =  getAcceptedFriendRequest?.data?.length;
+  const userFriend = getAcceptedFriendRequest?.data?.length;
 
   console.log(getAcceptedFriendRequest);
 
   // update cover
   const [coverImage, setCoverImage] = useState(null);
-  const [previewCoveImage, setPreviewCoverImage] = useState("");
+  const [previewCoverImage, setPreviewCoverImage] = useState("");
 
   const handleUpdateCoverImage = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -177,19 +175,20 @@ const UserProfileEM = () => {
         } relative h-[180px] md:h-[250px]`}
       >
         {/* Cover picture */}
-        {currentCover && (
-          <img
-            src={currentCover}
-            alt="Cover Photo"
-            className="h-[180px] md:h-[250px] w-full object-cover z-0 p-[0px] "
-          />
-        )}
+        {currentCover ||
+          (previewCoverImage !== "" && (
+            <img
+              src={currentCover ? currentCover : previewCoverImage}
+              alt="Cover Photo"
+              className="h-[180px] md:h-[250px] w-full object-cover z-0 p-[0px] "
+            />
+          ))}
 
         {/* upload button for mobile */}
         <div className="absolute w-full top-5">
           <div className="w-full flex justify-between items-center lg:hidden pt-5 px-5 md:px-10 ">
             <BackButton />
-            {previewCoveImage === "" ? (
+            {previewCoverImage === "" ? (
               <label htmlFor="coverImageInput">
                 <UpdateButton />
               </label>
@@ -211,7 +210,7 @@ const UserProfileEM = () => {
         {/* upload button for dekstop */}
         {theme === "light" ? (
           <div className="hidden lg:block p-[2px] rounded-[13px] bg-gradient-to-l from-[rgb(42,219,164)] to-[#69f9cc] float-right absolute right-1 bottom-5 lg:mr-1 3xl:mr-4">
-            {previewCoveImage === "" ? (
+            {previewCoverImage === "" ? (
               <button className="flex items-center space-x-1 lg:text-sm  rounded-[13px] font-semibold graish lg:px-1 lg:py-1 xl:px-4 xl:py-2 bg-gray-400">
                 <label htmlFor="coverImageInput">
                   <div className="flex space-x-1">
@@ -236,7 +235,7 @@ const UserProfileEM = () => {
           </div>
         ) : (
           <>
-            {previewCoveImage === "" ? (
+            {previewCoverImage === "" ? (
               <button className="hidden lg:block updateCoverBtn float-right absolute -top-56 right-5">
                 <label htmlFor="coverImageInput">
                   <p>
@@ -298,20 +297,24 @@ const UserProfileEM = () => {
                   </label>
                 ) : (
                   <button
-                    className={`${theme === 'light' ? "bg-[#efefef] text-gray-500":"bg-[#3e4246] text-white"} absolute top-12 -right-2 md:top-20 lg:top-24  md:-right-[1px] lg:-right-[3px] xl:-right-[4px] 2xl:right-[0px] 3xl:top-24 3xl:-right-[1px] 5xl:right-[0px]  rounded-full`}
+                    className={`${
+                      theme === "light"
+                        ? "bg-[#efefef] text-gray-500"
+                        : "bg-[#3e4246] text-white"
+                    } absolute top-12 -right-2 md:top-20 lg:top-24  md:-right-[1px] lg:-right-[3px] xl:-right-[4px] 2xl:right-[0px] 3xl:top-24 3xl:-right-[1px] 5xl:right-[0px]  rounded-full`}
                     onClick={handleProfileImageUpload}
                   >
-                <FaCheckCircle className="text-xl xl:text-2xl 3xl:text-3xl " />
+                    <FaCheckCircle className="text-xl xl:text-2xl 3xl:text-3xl " />
                   </button>
                 )}
-                  <input
-    type="file"
-    name="file"
-    accept="image/*"
-    onChange={handleUpdateProfileImage}
-    className="hidden"
-    id="profileImageInput"
-  />
+                <input
+                  type="file"
+                  name="file"
+                  accept="image/*"
+                  onChange={handleUpdateProfileImage}
+                  className="hidden"
+                  id="profileImageInput"
+                />
               </div>
               <ul className="flex justify-between items-center w-80 pb-5">
                 <li className="flex flex-col items-center justify-center border-r-2  py-2 w-full text-center  font-medium">
@@ -378,7 +381,7 @@ const UserProfileEM = () => {
                 >
                   {userName}
                 </h1>
-               
+
                 <h1
                   className={`${
                     theme === "light" ? "graish" : "text-white"
@@ -391,7 +394,7 @@ const UserProfileEM = () => {
                     theme === "light" ? "graish" : "text-white"
                   } font-medium text-[14px] xl:text-[16px] text-center  `}
                 >
-                 Address:  {userAddress} <span>{userCountry}</span>
+                  Address: {userAddress} <span>{userCountry}</span>
                 </h1>
                 <h1
                   className={`${

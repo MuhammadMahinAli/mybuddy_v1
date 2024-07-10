@@ -196,7 +196,7 @@ const Sign = () => {
           </button>
           <p className="text-center">
             Already have an account ?{" "}
-            <Link to="/login">
+            <Link to="/">
               <span className="text-blue-600 font-semibold cursor-pointer">
                 Sign In
               </span>

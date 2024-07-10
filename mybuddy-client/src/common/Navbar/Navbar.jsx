@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useAuthCheck } from "../../utils/useAuthCheck";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import searchIcon from "../../assets/navbar/searchicon.png";
 import darkSearchIcon from "../../assets/home/dark-search-btn.png";
@@ -124,12 +124,12 @@ const Navbar = ({
             </li>
 
             <li className="pl-12">
-              <a
-                href="/home"
+              <Link
+                to="/home"
                 className="text-[18px] font-medium tracking-wide  transition-colors duration-200 hover:text-deep-purple-accent-400"
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
               <Menu as="div" className="relative inline-block text-left">

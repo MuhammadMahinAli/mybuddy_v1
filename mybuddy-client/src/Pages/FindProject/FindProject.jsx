@@ -85,7 +85,7 @@ const FindProject = ({
   //   window.location.href = "https://buy.stripe.com/test_7sIfZP7d6bha3Qs5kk";
   const handleJoinClick = (project) => {
     if (!user) {
-      navigate("/login");
+      navigate("/");
     } else if (selectedTasks?.length === 0) {
       Swal.fire({
         icon: "warning",

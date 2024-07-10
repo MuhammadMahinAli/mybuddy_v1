@@ -12,7 +12,7 @@ const Description = ({ text }) => {
   
     return (
       <div>
-        <p className="text-start text-[14px] lg:text-[16px] px-1 md:px-3">
+        <p className="text-start text-[14px] lg:text-[16px] 2xl:text-[18px] px-1 md:px-3">
           {isExpanded ? text : `${descriptionPreview}...`}
           <span className="pl-2">
           {shouldShowToggle && (

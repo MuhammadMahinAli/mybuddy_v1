@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import barcode from "../../assets/barcode.png";
 import qrcode from "../../assets/qrcode.png";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import { AuthContext } from "../../Context/UserContext";
+import Loading from "../Loading/Loading";
 
 const VerificationSuccess = () => {
   const { token } = useParams();
@@ -11,6 +14,10 @@ const VerificationSuccess = () => {
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
+  const {loading} = useContext(AuthContext);
+  
+
+ 
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -20,7 +27,7 @@ const VerificationSuccess = () => {
         );
         const first = response?.data?.data?.firstName;
         const last = response?.data?.data?.lastName;
-        const emaill = response?.data?.data?.emaillail;
+        const emaill = response?.data?.data?.email;
         const phone = response?.data?.data?.phoneNumber;
 
         setFirstName(first);
@@ -40,7 +47,13 @@ const VerificationSuccess = () => {
     }
   }, [token]);
 
+  if(loading){
+    return <Loading/>
+  }
+
   console.log("Res2:", firstName, lastName, email, phoneNumber);
+
+ 
 
   return (
     <div>
@@ -74,27 +87,27 @@ const VerificationSuccess = () => {
 
                   {/* User Information */}
                   <div className="text-center mt-4">
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-xl  font-bold text-green-800">
                       {firstName} {lastName}
                     </h2>
                     {/* <p className="text-green-700">Graphic Designer</p> */}
                   </div>
                   <div className="py-5 px-3 space-y-1 text-left">
-                    <p className="text-[15px] tracking-wide">
-                      <span className="font-semibold graish">ID NO:</span>{" "}
+                    <p className="text-[15px] tracking-wide text-green-700">
+                      <span className="font-semibold ">ID NO:</span>{" "}
                       {token.slice(0, 16)}
                     </p>
-                    <p className="text-sm tracking-wide">
-                      <span className="font-semibold graish">EMAIL:</span>{" "}
+                    <p className="text-sm tracking-wide text-green-700">
+                      <span className="font-semibold ">EMAIL:</span>{" "}
                       {email}
                     </p>
-                    <p className="text-sm tracking-wide">
-                      <span className="font-semibold graish">PHONE:</span>{" "}
+                    <p className="text-sm tracking-wide text-green-700">
+                      <span className="font-semibold ">PHONE:</span>{" "}
                       {phoneNumber}
                     </p>
                   </div>
                   <div className="flex flex-col justify-center items-center py-2">
-                    <div className="bg-green-600 font-medium text-center text-white px-2 py-1 mb-3 rounded w-32">
+                    <div className="bg-green-700 font-medium text-center text-white px-2 py-1 mb-3 rounded w-32">
                       <p>Scan for Info</p>
                     </div>
                     <img

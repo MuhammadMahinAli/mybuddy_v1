@@ -31,25 +31,24 @@ export const createMemberService = async (userInfo) => {
     to: newUser.email,
     subject: 'Verify Your Email Address',
     html: `
-      <p>Dear ${newUser.name.firstName} ${newUser.name.lastName},</p>
+     <div style="font-family: Arial, sans-serif;">
+      <img src="https://i.ibb.co/g9fcnQq/logo.png" alt="Research Buddy" style="width: 50px; height: auto;"/>
+      <p style="padding-top: 10px;">Dear ${newUser.name.firstName} ${newUser.name.lastName},</p>
       <p>Thank you for signing up with us! We're excited to have you on board. To ensure the security and activation of your account, please verify your email address.</p>
       <p>To get started, click the link below:</p>
       <p><a className='font-semibold' href="${verificationUrl}">Verify Your Email</a></p>
       <p>If you did not sign up for this account, please ignore this email.</p>
       <p>Best regards,</p>
       <p>The Research Buddy Team</p>
+      </div>
     `,
   });
 
   return newUser;
 };
 
-// verify token
+//------------ verify email
 
-// export const verifyEmailService = async (token) => {
-//   const user = await Member.findOne({ verificationToken: token });
-//   return user;
-// };
 export const verifyEmailService = async (token) => {
   const user = await Member.findOne({ verificationToken: token });
   if (!user) {

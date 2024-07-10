@@ -20,7 +20,7 @@ const Sidebar = ({
       <div
         data-aos="fade-right"
         data-aos-duration="600"
-        className="absolute top-0 z-40 "
+        className="absolute top-0 z-50 "
       >
         {openSidebar && (
           <div className="">

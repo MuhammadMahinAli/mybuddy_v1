@@ -22,9 +22,9 @@ const ProjectSidebar = ({
   return (
     <div className={`${theme === "light" ? "bg-white" : "bg-[#3a565b]"} z-50 `}>
       <ul
-        className={`w-[35px] sm:w-[40px] md:w-[50px] lg:w-[60px] 3xl:w-[70px] border ${
-          theme === "light" ? "bg-white" : "bg-[#3a565b]"
-        } flex flex-col items-center justify-center py-4 sm:py-6 md:py-12 shadow-2xl rounded-full space-y-3 sm:space-y-6 lg:space-y-7 absolute top-[58%] sm:top-[65%] md:top-[47%] 3xl:top-[45%] left-0 z-50`}
+        className={`w-[35px] sm:w-[40px] md:w-[50px] lg:w-[50px] xl:w-[55px] 3xl:w-[55px]  ${
+          theme === "light" ? "bg-white border" : "bg-[#3a565b]"
+        } flex flex-col items-center justify-center py-4 sm:py-6 lg:py-10 shadow-2xl rounded-full space-y-3 sm:space-y-6 lg:space-y-7 absolute top-[58%] sm:top-[65%] md:top-[47%] 3xl:top-[45%] left-0 z-50`}
       >
         
           <li className="relative">

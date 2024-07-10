@@ -25,7 +25,7 @@ import GeneralRequestRecieve from "../Pages/GeneralDashboard/GeneralRequest/Gene
 import Academic from "../Pages/AcademicPage/Academic";
 import EmailVarification from "../Pages/Email/EmailVarification";
 import VerificationSuccess from "../Pages/Email/VerificationSuccess";
-import PrivateRoute from "./PrivateRoute";
+
 
 const router = createBrowserRouter([
   {
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/home",
-        element: <PrivateRoute><Homepage /> </PrivateRoute> ,
+        element: <Homepage /> ,
       },
 
       {
