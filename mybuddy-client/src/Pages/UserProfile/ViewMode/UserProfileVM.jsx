@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import whiteBorder from "../../../assets/user-profile/profile-white-border.png";
 import darkBorder from "../../../assets/user-profile/profile-dark-border.png";
 import xIcon from "../../../assets/user-profile/x.png";
-import facebookIcon from '../../../assets/home/facebook.png'
+import facebookIcon from "../../../assets/home/facebook.png";
 import googleIcon from "../../../assets/user-profile/google.png";
 import githubIcon from "../../../assets/user-profile/github.png";
 import linkedinIcon from "../../../assets/user-profile/linkedin.png";
@@ -118,17 +118,14 @@ const UserProfileVM = () => {
   const allSkill = userInfo?.skills;
   const allFriend = userInfo?.friends;
 
-
-
-  const currentTwitter = allSocialInfo ?.twitter;
-  const currentGithub = allSocialInfo ?.github;
-  const currentLinkedIn = allSocialInfo ?.linkedIn;       
-  const currentFacebook= allSocialInfo ?.facebook 
+  const currentTwitter = allSocialInfo?.twitter ? allSocialInfo?.twitter : "";
+  const currentGithub = allSocialInfo?.github ?  allSocialInfo?.github : "";
+  const currentLinkedIn = allSocialInfo?.linkedIn ? allSocialInfo?.linkedIn : "";
+  const currentFacebook = allSocialInfo?.facebook ? allSocialInfo?.facebook : "";
 
   const isFriend = userInfo.friends.some(
     (friend) => friend.requestedBy._id === requestedId
   );
-  
 
   console.log("p", userData?._id);
   console.log(allFriend);
@@ -149,6 +146,14 @@ const UserProfileVM = () => {
       window.location.reload();
     }, 2500);
   };
+
+  if(currentFacebook === ' ' || currentGithub === ' '|| currentLinkedIn === ' ' || currentGithub === ' '){
+    Swal.fire({
+      icon: "warning",
+      text: "You've sent friend request successfully.",
+    });
+    return
+  }
 
   //console.log(datas);
 
@@ -388,20 +393,35 @@ const UserProfileVM = () => {
                   <img src={googleIcon} className="h-9 rounded-full" />
                   <img src={linkedinIcon} className="h-9 rounded-full" />
                   <img src={githubIcon} className="h-9 rounded-full" /> */}
-
-                  <a target="blank"  href={`https://twitter.com/${currentTwitter}`}>
-              <img className="9" src={xIcon} alt="" />
-              </a>
-              <a target="blank"  href={`https://facebook.com/${currentFacebook}`}>
-              <img className="h-9  p-[2px]" src={facebookIcon} alt="" />
-              </a>
-              {/* <img className="h-12" src={google} alt="" /> */}
-              <a target="blank"  href={`https://linkedin.com/in/${currentLinkedIn}`}>
-              <img className="h-9 " src={linkedinIcon} alt="" />
-              </a>
-              <a target="blank"  href={`https://github.com/${currentGithub}`}>
-              <img className="h-9" src={githubIcon} alt="" />
-              </a>
+             
+                    <a
+                      target="blank"
+                      href={`https://twitter.com/${currentTwitter}`}
+                    >
+                      <img className="9" src={xIcon} alt="" />
+                    </a>
+             
+                    <a
+                      target="blank"
+                      href={`https://facebook.com/${currentFacebook}`}
+                    >
+                      <img className="h-9  p-[2px]" src={facebookIcon} alt="" />
+                    </a>
+               
+                    <a
+                      target="blank"
+                      href={`https://linkedin.com/in/${currentLinkedIn}`}
+                    >
+                      <img className="h-9 " src={linkedinIcon} alt="" />
+                    </a>
+               
+                    <a
+                      target="blank"
+                      href={`https://github.com/${currentGithub}`}
+                    >
+                      <img className="h-9" src={githubIcon} alt="" />
+                    </a>
+                  
                 </div>
               </div>
             </div>
@@ -417,51 +437,68 @@ const UserProfileVM = () => {
                 </h1>
                 <div className="space-y-1 flex flex-col justify-center items-center pt-1">
                   <p
-                    className={`${theme === "light" ? "graish" : "text-white"} font-medium`}
+                    className={`${
+                      theme === "light" ? "graish" : "text-white"
+                    } font-medium`}
                   >
-                  Role: {userData?.role}
+                    Role: {userData?.role}
                   </p>
-                  {userData?.phoneNumberPrivacy !== false &&  userData?.phoneNumber && (
+                  {userData?.phoneNumberPrivacy !== false &&
+                    userData?.phoneNumber && (
+                      <p
+                        className={`${
+                          theme === "light" ? "graish" : "text-white"
+                        } font-medium`}
+                      >
+                        Contact: {userData?.phoneNumber}
+                      </p>
+                    )}
+                  {userData?.adddressPrivacy !== false && userData?.address && (
                     <p
                       className={`${
                         theme === "light" ? "graish" : "text-white"
                       } font-medium`}
                     >
-                    Contact:  {userData?.phoneNumber}
+                      Address: {userData?.address}
                     </p>
                   )}
-                  {userData?.adddressPrivacy !== false && userData?.address &&  (
+                  {userData?.country && (
                     <p
                       className={`${
                         theme === "light" ? "graish" : "text-white"
                       } font-medium`}
                     >
-                   Address:  {userData?.address} 
+                      Country: {userData?.country}
                     </p>
                   )}
-                  {userData?.country && 
-                  <p
-                    className={`${theme === "light" ? "graish" : "text-white"} font-medium`}
-                  >
-                   Country: {userData?.country}
-                  </p>
-}
                 </div>
 
                 <div className="flex space-x-3">
-                <a target="blank"  href={`https://twitter.com/${currentTwitter}`}>
-              <img className="h-9" src={xIcon} alt="" />
-              </a>
-              <a target="blank"  href={`https://facebook.com/${currentFacebook}`}>
-              <img className="h-9" src={facebookIcon} alt="" />
-              </a>
-              {/* <img className="h-12" src={google} alt="" /> */}
-              <a target="blank"  href={`https://linkedin.com/in/${currentLinkedIn}`}>
-              <img className="h-9 " src={linkedinIcon} alt="" />
-              </a>
-              <a target="blank"  href={`https://github.com/${currentGithub}`}>
-              <img className="h-9" src={githubIcon} alt="" />
-              </a>
+                  <a
+                    target="blank"
+                    href={`https://twitter.com/${currentTwitter}`}
+                  >
+                    <img className="h-9" src={xIcon} alt="" />
+                  </a>
+                  <a
+                    target="blank"
+                    href={`https://facebook.com/${currentFacebook}`}
+                  >
+                    <img className="h-9" src={facebookIcon} alt="" />
+                  </a>
+                  {/* <img className="h-12" src={google} alt="" /> */}
+                  <a
+                    target="blank"
+                    href={`https://linkedin.com/in/${currentLinkedIn}`}
+                  >
+                    <img className="h-9 " src={linkedinIcon} alt="" />
+                  </a>
+                  <a
+                    target="blank"
+                    href={`https://github.com/${currentGithub}`}
+                  >
+                    <img className="h-9" src={githubIcon} alt="" />
+                  </a>
                 </div>
               </div>
 
