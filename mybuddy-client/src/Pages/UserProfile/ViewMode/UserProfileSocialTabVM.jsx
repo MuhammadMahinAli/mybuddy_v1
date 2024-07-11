@@ -4,7 +4,6 @@ import LinkedInIcon from "../../../icons/LinkedInIcon";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import instaIcon from "../../../assets/icon/instagram.png";
 import TwitterIcon from "../../../icons/TwitterIcon";
-import UploadIcon2 from "../../../icons/UploadIcon2";
 import { useSelector } from "react-redux";
 import ytube from '../../../assets/icon/yt.png';
 import pintrst from '../../../assets/icon/pintrst.png';

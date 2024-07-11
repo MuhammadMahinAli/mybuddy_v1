@@ -5,7 +5,7 @@ import darkBorder from "../../assets/home/dark-border.png";
 import { Link } from "react-router-dom";
 
 const FriendSection = ({ theme }) => {
-  const { getAllUsers, getAcceptedFriendRequest, getFriendRequest } =
+  const { getAllUsers, getAcceptedFriendRequest, getFriendRequest, user } =
     useContext(AuthContext);
   const [randomUsers, setRandomUsers] = useState([]);
   const [suggestionTab, setSuggestionTab] = useState(true);
@@ -18,7 +18,8 @@ const FriendSection = ({ theme }) => {
 
   const getRandomUsers = (count) => {
     if (!suggestedUsers) return [];
-    const shuffled = [...suggestedUsers]?.sort(() => 0.5 - Math.random());
+    const filteredUsers = suggestedUsers.filter(u => u?._id !== user?._id);
+    const shuffled = [...filteredUsers]?.sort(() => 0.5 - Math.random());
     return shuffled?.slice(0, count);
   };
 
@@ -28,7 +29,7 @@ const FriendSection = ({ theme }) => {
       setRandomUsers(randomUsersArray);
     }
   }, [suggestedUsers]);
-  console.log(randomUsers);
+  //console.log(randomUsers);
 
   const toggleSuggestion = () => {
     setSuggestionTab(true);
@@ -218,7 +219,7 @@ const FriendSection = ({ theme }) => {
                       <div className="flex flex-col justify-center items-center relative">
                         <img
                           src={
-                            user?.profilePic
+                            user?.requestedBy?.profilePic
                               ? user?.requestedBy?.profilePic
                               : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
                           }
@@ -278,7 +279,7 @@ const FriendSection = ({ theme }) => {
                       <div className="flex flex-col justify-center items-center relative">
                         <img
                           src={
-                            user?.profilePic
+                            user?.requestedBy?.profilePic
                               ? user?.requestedBy?.profilePic
                               : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
                           }

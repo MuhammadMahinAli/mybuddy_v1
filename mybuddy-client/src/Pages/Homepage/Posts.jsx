@@ -225,7 +225,7 @@ const Posts = ({ theme }) => {
                       ? "before:absolute before:bottom-0 before:left-0 before:h-[4px] before:w-full before:bg-gradient-to-r before:from-[#4EEBFF] before:from-10% before:via-[#AA62F9] before:via-30% before:to-[#F857FF] before:to-90% border-l-0 border-r-2 border-white"
                       : "border-b-2 border-r-2 border-white"
                     : mediaTab
-                    ? "border-b-4 border-b-[#2adba4] border-l-2 border-r-2 border-white"
+                    ? "border-b-4 border-b-[#2adba4] border-l-0 border-r-2 border-white"
                     : "border-b-2  border-r-2 border-gray-300"
                 }`}
               >
@@ -279,7 +279,7 @@ const Posts = ({ theme }) => {
                       ? "before:absolute before:bottom-0 before:left-0 before:h-[4px] before:w-full before:bg-gradient-to-r before:from-[#4EEBFF] before:from-10% before:via-[#AA62F9] before:via-30% before:to-[#F857FF] before:to-90% border-l-0 border-r-0 border-white"
                       : "border-b-2 border-r-0 border-white"
                     : articleTab
-                    ? "border-b-4 border-b-[#2adba4] border-l-2 border-r-2 border-white"
+                    ? "border-b-4 border-b-[#2adba4] border-l-2 border-r-0 border-white"
                     : "border-b-2 border-l-2 border- border-gray-300"
                 }`}
               >

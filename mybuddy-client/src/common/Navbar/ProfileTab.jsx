@@ -2,6 +2,7 @@ import { useContext } from "react";
 import darkBorder from "../../assets/home/dark-border.png";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../../Context/UserContext";
+import { Link } from "react-router-dom";
 
 const ProfileTab = ({ openProfile, logout }) => {
   const theme = useSelector((state) => state.theme.theme);
@@ -11,6 +12,9 @@ const ProfileTab = ({ openProfile, logout }) => {
     && singleUser?.data?.name?.firstName + " " + singleUser?.data?.name?.lastName;
   const userRole = singleUser
     && singleUser?.data?.role;
+
+    const userProfilePic = singleUser
+    && singleUser?.data?.profilePic ? singleUser?.data?.profilePic : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg" ;
   const signOut=()=>{
     logout()
 
@@ -27,7 +31,7 @@ const ProfileTab = ({ openProfile, logout }) => {
         <div className=" flex space-x-4 items-center py-3">
           <div className="relative">
             <img
-              src="https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+              src={userProfilePic}
               alt=""
               className={`${
                 theme === "light" ? "" : ""
@@ -86,13 +90,19 @@ const ProfileTab = ({ openProfile, logout }) => {
         </p>
         <ul className="pl-3 space-y-1">
           <li className="text-[11px] lg:text-[13px] text-gray-500 font-medium capitalize">
+            <Link to="/home">
             post
+            </Link>
           </li>
           <li className="text-[11px] lg:text-[13px] text-gray-500 font-medium capitalize">
+          <Link to="/dashboard/all-projects">
             project
+            </Link>
           </li>
           <li className="text-[11px] lg:text-[13px] text-gray-500 font-medium capitalize">
+          <Link to="/dashboard">
             dashboard
+            </Link>
           </li>
         </ul>
       </div>

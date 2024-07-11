@@ -141,8 +141,20 @@ import arduinoLogo from "../../assets/skill-icons/ardunio.svg";
 import xdLogo from "../../assets/skill-icons/adobe-xd.svg";
 import matlabLogo from "../../assets/skill-icons/Matlab_Logo.svg";
 
+const SkillTab = ({ theme, skills,user }) => {
+  console.log("skills", skills);
+  const userSkills = skills[0]?.skillArray;
 
-const SkillTab = ({ theme }) => {
+  const capitalize = (str) => {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
+  const firstName = capitalize(user?.name?.firstName || "");
+  const lastName = capitalize(user?.name?.lastName || "");
+
+  const defaultSkillMissingMessage = `${firstName} ${lastName} has not added any skill yet.`;
+  console.log(defaultSkillMissingMessage);
+
   const allTechnologies = [
     {
       name: "HTML",
@@ -959,156 +971,10 @@ const SkillTab = ({ theme }) => {
       lightButton: "#d3590f",
     },
   ];
-  console.log(allTechnologies.length);
-  const userSkills = [
-    "sanity",
-    "javascript",
-    "html",
-    "cloudflare",
-    "kubernetes",
-    "c++",
-    "swift",
-    "figma",
-    "prisma",
-    "postman",
-    "php",
-    "java original",
-    "typescript",
-    "bubel",
-    "pug",
-    "webpack",
-    "bulma",
-    "backbone.js",
-    "bootstrap",
-    "angular",
-    "vuetify",
-    "vue.js",
-    "babel",
-    "redux",
-    "sass",
-    "gulp",
-    "qt",
-    "clojure",
-    "svelte",
-    "haskell",
-    "react",
-    "selenium",
-    "nim",
-    "wxwidgets",
-    "erlang",
-    "python",
-    "scala",
-    "coffeescript",
-    "materialize",
-    "perl",
-    "scikit learn",
-    "go",
-    "elixir",
-    "tailwind",
-    "objetive",
-    "vue press",
-    "jasmine",
-    "csharpe",
-    "gt",
-    "nuxtjs",
-    "android",
-    "ngrinx",
-    "gcp",
-    "solr",
-    "springio",
-    "docker",
-    "graphql",
-    "nodejs",
-    "canvajs",
-    "open resty",
-    "grafana",
-    "rabbitmq",
-    "native script",
-    "jenkins",
-    "kafka",
-    "apache-cordova",
-    "chartjs",
-    "pytorch",
-    "hadoop",
-    "elastic search",
-    "express",
-    "tensor flow",
-    "amplify",
-    "flutterio",
-    "iconic",
-    "flask",
-    "dart",
-    "opencv",
-    "firebase",
-    "couchdb",
-    "pandas",
-    "azure",
-    "cassandra",
-    "karma",
-    "middleman",
-    "nextjs",
-    "circleci",
-    "heroku",
-    "realm",
-    "puppeteer",
-    "bash",
-    "mysql",
-    "hive",
-    "invision",
-    "rust",
-    "aws",
-    "mongodb",
-    "gridsome",
-    "sketch",
-    "laravel",
-    "veupress",
-    "reactNative",
-    "framer",
-    "jeky11",
-    "django",
-    "kibana",
-    "mssql",
-    "cockroachdb",
-    "hugo",
-    "mocha",
-    "sqlite",
-    "dotnet",
-    "gatsby",
-    "jest",
-    "blender",
-    "git",
-    "electron",
-    "d3js",
-    "quasar",
-    "mariadb",
-    "zapier",
-    "cypress",
-    "appwrite",
-    "symfony",
-    "linux",
-    "photoshop",
-    "travisci",
-    "rails",
-    "ifttt",
-    "illustrator",
-    "11ty",
-    "unreal",
-    "codeigniter",
-    "postgresql",
-    "radis",
-    "oracle",
-    "unity",
-    "hexo",
-    "sculpin",
-    "scully",
-    "arduino",
-    "xd",
-    "matlab",
-  ];
 
   //Find the technologies associated with the user's skills
-  const userTechnologies = allTechnologies.filter((tech) =>
-    userSkills.includes(tech.name.toLowerCase())
+  const userTechnologies = allTechnologies?.filter((tech) =>
+    userSkills?.includes(tech.name)
   );
 
   return (
@@ -1116,54 +982,67 @@ const SkillTab = ({ theme }) => {
       <h1
         className={`${
           theme === "light" ? "graish" : "text-white"
-        } text-[16px] xl:text-[27px] pt-8 font-semibold`}
+        } text-[16px] xl:text-[27px] md:pt-4 lg:pt-8 font-semibold`}
       >
         All Skills
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 gap-5 py-6">
-        {userTechnologies?.map((tech, index) => (
-          <div
-            key={index}
-            style={{
-              backgroundColor: tech.bgColor,
-              width: `${
-                tech.name.length === 4
-                  ? 6 * 45
-                  : tech.name.length === 5
-                  ? 5 * 50
-                  : tech.name.length === 6
-                  ? 5 * 50
-                  : tech.name.length === 3
-                  ? 5 * 42
-                  : tech.name.length === 7
-                  ? 6 * 40
-                  : tech.name.length === 9
-                  ? 5 * 53
-                  : 5 * 55
-              }px`,
-            }}
-            className={`py-3 rounded-lg flex items-center justify-between px-2`}
-          >
-            <div className="flex items-center space-x-3">
-              <img src={tech.logo} alt={tech.name} className=" h-8" />
-              <p
-                className={`${
-                  theme === "light" ? "text-gray-600" : "text-white"
-                } font-semibold text-lg capitalize`}
-              >
-                {tech.name}
-              </p>
-            </div>
-
-            <button
-              style={{ color: tech.lightButton, borderColor: tech.lightButton }}
-              className="border-[3px] font-medium rounded-lg px-2 py-1"
+      {skills?.length === 0 ? (
+        <p
+        className={` ${
+          theme === "light" ? "text-gray-700" : "text-white"
+        }  text-[16px] xl:text-[20px] py-3 `}
+      >
+      {defaultSkillMissingMessage}
+      </p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 gap-5 py-6">
+          {userTechnologies?.map((tech, index) => (
+            <div
+              key={index}
+              style={{
+                backgroundColor: tech.bgColor,
+                width: `${
+                  tech.name.length === 4
+                    ? 6 * 45
+                    : tech.name.length === 5
+                    ? 5 * 50
+                    : tech.name.length === 6
+                    ? 5 * 50
+                    : tech.name.length === 3
+                    ? 5 * 42
+                    : tech.name.length === 7
+                    ? 6 * 40
+                    : tech.name.length === 9
+                    ? 5 * 53
+                    : 5 * 55
+                }px`,
+              }}
+              className={`py-3 rounded-lg flex items-center justify-between px-2`}
             >
-              Endorse
-            </button>
-          </div>
-        ))}
-      </div>
+              <div className="flex items-center space-x-3">
+                <img src={tech.logo} alt={tech.name} className=" h-8" />
+                <p
+                  className={`${
+                    theme === "light" ? "text-gray-600" : "text-white"
+                  } font-semibold text-lg capitalize`}
+                >
+                  {tech.name}
+                </p>
+              </div>
+
+              <button
+                style={{
+                  color: tech.lightButton,
+                  borderColor: tech.lightButton,
+                }}
+                className="border-[3px] font-medium rounded-lg px-2 py-1"
+              >
+                Endorse
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
