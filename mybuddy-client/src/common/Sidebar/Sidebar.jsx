@@ -41,7 +41,7 @@ const Sidebar = ({
                 }`}
               >
                 <a href="/home">
-               <img className="h-[32px] w-[30px] md:h-12 md:w-[46px] rounded-lg" src='/logo.png' alt=''/>
+               <img className="h-[32px] w-[30px] md:h-12 md:w-[46px] rounded-lg" src='/logo.png' loading="lazy" alt=''/>
                </a>
               </h1>
               {/* mbl tab */}

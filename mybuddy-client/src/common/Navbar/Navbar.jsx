@@ -117,7 +117,7 @@ const Navbar = ({
                   <img
                     className="h-16 w-16 lg:p-2  rounded-lg"
                     src="/logo.png"
-                    alt=""
+                    loading="lazy" alt=""
                   />
                 </a>
               )}
@@ -165,7 +165,7 @@ const Navbar = ({
           {theme === "light" ? (
             <li className="xl:flex items-center -space-x-9 hidden  ">
               <input className=" h-10 w-60 rounded-3xl bg-gray-200 outline-none px-3" />
-              <img className="w-9" src={searchIcon} alt="search" />
+              <img className="w-9" src={searchIcon} loading="lazy" alt="search" />
             </li>
           ) : (
             <li className="relative xl:flex items-center -space-x-11 hidden rounded-3xl p-[1px] bg-gradient-to-l from-[#4EEBFF] to-[#AA62F9]">
@@ -176,7 +176,7 @@ const Navbar = ({
               <img
                 className=" absolute right-3 w-6 mb-2"
                 src={darkSearchIcon}
-                alt="search"
+                loading="lazy" alt="search"
               />
             </li>
           )}
@@ -186,7 +186,7 @@ const Navbar = ({
               <img
                 className="w-7 md:w-9 xl:hidden"
                 src={searchIcon}
-                alt="search"
+                loading="lazy" alt="search"
               />
             ) : (
               <div className="p-[1px] rounded-full bg-gradient-to-l from-[#4EEBFF] to-[#AA62F9]">
@@ -267,23 +267,23 @@ const Navbar = ({
                 <img
                   className="w-5 absolute -top-1 right-1 md:-right-2"
                   src={active}
-                  alt="active"
+                  loading="lazy" alt="active"
                 />
               ) : (
                 <img
                   className="w-5 absolute -top-1 right-[2px] md:-right-2"
                   src={activeDark}
-                  alt="active"
+                  loading="lazy" alt="active"
                 />
               )}
               <img
                 className="w-8 md:w-20 absolute  right-[12px] md:right-0"
                 src={theme === "light" ? darkBorder : whiteBorder}
-                alt="dashedborder"
+                loading="lazy" alt="dashedborder"
               />
               <img
                 src={userImage}
-                alt=""
+                loading="lazy" alt=""
                 className={`${
                   theme === "light" ? "" : ""
                 } mr-3 md:mr-0 object-cover w-8 h-8 md:w-12 md:h-12 xl:w-14 xl:h-14 mx-auto rounded-full aspect-square  p-[5px] border-dashed`}
@@ -305,7 +305,7 @@ const Navbar = ({
               {theme === "light" ? (
                 <img
                   src={msgIcon2}
-                  alt="navicon"
+                  loading="lazy" alt="navicon"
                   className="w-10 md:w-12 md:py-2"
                 />
               ) : (

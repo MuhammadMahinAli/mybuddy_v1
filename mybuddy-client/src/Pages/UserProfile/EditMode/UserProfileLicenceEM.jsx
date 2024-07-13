@@ -94,18 +94,6 @@ const UserProfileLicenceEM = () => {
                 </div>
                 <hr className="pt-2" />
 
-                {theme === "light" ? (
-                  <div className=" flex items-center xl:space-x-1 justify-center lg:text-sm xl:text-lg text-white font-semibold rounded-[10px] px-2 py-1 xl:px-1 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
-                    <p className="text-[13px] capitalize">
-                      show all 41 licenses and certifications
-                    </p>
-                    <FaArrowRight />
-                  </div>
-                ) : (
-                  <div className="credintialBtn">
-                    <p>show all 41 licenses and certifications</p>
-                  </div>
-                )}
               </div>
             )}
 

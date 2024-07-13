@@ -230,7 +230,7 @@
 //                           </label>
 //                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
 //                             <div className="bg-[#ff7478] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-//                               <img className="h-7 w-7" src={instaIcon} alt="" />
+//                               <img className="h-7 w-7" src={instaIcon} loading="lazy" alt="" />
 //                             </div>
 
 //                             <textarea

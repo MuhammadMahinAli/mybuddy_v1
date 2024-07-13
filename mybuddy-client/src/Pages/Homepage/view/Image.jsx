@@ -9,7 +9,7 @@ const Image = ({image,i}) => {
         <div className="flex justify-center items-center  ">
        {
         image &&
-        <img className=" w-7/12 md:w-8/12 lg:w-9/12  object-center rounded-lg" src={image} alt="Post" />
+        <img className=" w-7/12 md:w-8/12 lg:w-9/12  object-center rounded-lg" src={image} loading="lazy" alt="Post" />
        }
       </div>
     );

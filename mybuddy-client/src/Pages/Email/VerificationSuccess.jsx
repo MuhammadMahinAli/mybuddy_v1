@@ -69,7 +69,7 @@ const VerificationSuccess = () => {
                 {/*  id card front part*/}
                 <div className="w-[280px] md:w-[300px] h-[450px]  bg-white shadow-2xl rounded-lg overflow-hidden relative border border-gray-300">
                   <div className="flex justify-center items-center mt-4">
-                    <img src="/logo.png" alt="Company Logo" className="h-14" />
+                    <img src="/logo.png" loading="lazy" alt="Company Logo" className="h-14" />
                   </div>
 
                   <div className="relative mt-16">
@@ -78,7 +78,7 @@ const VerificationSuccess = () => {
                       <div className="w-24 h-24 rounded-full border-4 border-white overflow-hidden">
                         <img
                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1rTLeQraa9s-Rkj2_KMPOzh30CwK1G2D85A&s"
-                          alt="Profile"
+                          loading="lazy" alt="Profile"
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -112,7 +112,7 @@ const VerificationSuccess = () => {
                     </div>
                     <img
                       src={barcode} // Replace with your logo URL
-                      alt="Company Logo"
+                      loading="lazy" alt="Company Logo"
                       className="w-44 self-center"
                     />
                   </div>
@@ -125,7 +125,7 @@ const VerificationSuccess = () => {
                       <div className="w-16 mx-auto mb-2">
                         <img
                           src="/logo.png"
-                          alt="Logo"
+                          loading="lazy" alt="Logo"
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -136,7 +136,7 @@ const VerificationSuccess = () => {
                       <div className="py-3 flex justify-center items-center">
                         <img
                           src={qrcode}
-                          alt="Logo"
+                          loading="lazy" alt="Logo"
                           className="w-20 object-cover"
                         />
                       </div>
@@ -149,7 +149,7 @@ const VerificationSuccess = () => {
             ) : (
               <img
                 src="https://img.freepik.com/free-vector/high-five-hands-concept-illustration_114360-11529.jpg?size=338&ext=jpg"
-                alt="Logo"
+                loading="lazy" alt="Logo"
                 className="w-32 md:w-60 object-cover"
               />
             )}

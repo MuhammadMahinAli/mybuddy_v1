@@ -179,14 +179,14 @@ const UserProfileEM = () => {
           (previewCoverImage !== "" && (
             <img
               src={currentCover ? currentCover : previewCoverImage}
-              alt="Cover Photo"
+              loading="lazy" alt="Cover Photo"
               className="h-[180px] md:h-[250px] w-full object-cover z-0 p-[0px] "
             />
           ))} */}
         {currentCover || previewCoverImage ? (
           <img
             src={previewCoverImage || currentCover}
-            alt="Cover Photo"
+            loading="lazy" alt="Cover Photo"
             className="h-[180px] md:h-[250px] w-full object-cover z-0 p-[0px]"
           />
         ) : null}
@@ -294,7 +294,7 @@ const UserProfileEM = () => {
                 <img
                   className="w-20  md:w-32 lg:w-32 xl:w-36 absolute -top-[0px] right-0 md:top-[1px] md:right-0 lg:-top-0  lg:right-[0px] xl:-top-0 xl:right-[0px] 2xl:right-[0px] 3xl:right-[0px] 5xl:right-[0px]"
                   src={theme === "light" ? whiteBorder : darkBorder}
-                  alt="dashedborder"
+                  loading="lazy" alt="dashedborder"
                 />
                 {/* <CameraIcon /> */}
                 {previewProfileImage === "" ? (
@@ -466,7 +466,7 @@ export default UserProfileEM;
 //   <img
 //     className="w-20  md:w-32 lg:w-32 xl:w-36 absolute -top-[95px] md:-top-[110px] lg:-top-28 md:right-[26px] lg:right-14"
 //     src={theme === "light" ? whiteBorder : darkBorder}
-//     alt="dashedborder"
+//     loading="lazy" alt="dashedborder"
 //   />
 //
 //   {/* <CameraIcon /> */}
@@ -590,7 +590,7 @@ export default UserProfileEM;
 //  <img
 //    className="w-8 lg:w-32 xl:h-32 xl:w-36 absolute -top-28 right-[12px] md:right-0"
 //    src={theme === "light" ? whiteBorder : darkBorder}
-//    alt="dashedborder"
+//    loading="lazy" alt="dashedborder"
 //  />
 //
 //

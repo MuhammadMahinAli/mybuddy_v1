@@ -23,13 +23,13 @@ const MobileNavbar = ({
                 ? user?.profilePic
                 : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
             }
-            alt=""
+            loading="lazy" alt=""
             className="w-8 h-8 md:w-12 md:h-12 xl:w-12 xl:h-12 p-[3px] mx-auto rounded-full aspect-square"
           />
           <img
             className="w-8 h-8 md:w-12 md:h-12 xl:w-12 xl:h-12 absolute top-0  md:right-0"
             src={theme === "light" ? feedDarkBorder : feedWhiteBorder}
-            alt="dashedborder"
+            loading="lazy" alt="dashedborder"
           />
         </div>
         {/* slider */}

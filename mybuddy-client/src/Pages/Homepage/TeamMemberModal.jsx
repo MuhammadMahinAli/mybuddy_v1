@@ -87,7 +87,7 @@ const TeamMemberModal = ({ isTeamOpen, closeTeamModal, updatedTeamMembers }) => 
                               />
                               <img
                                 src={item?.requestedBy?.profilePic || "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"}
-                                alt={item?.requestedBy?.name?.firstName}
+                                loading="lazy" alt={item?.requestedBy?.name?.firstName}
                                 className="h-9 w-9 rounded-lg ml-2"
                               />
                               <div className="text-sm md:text-[14px] py-1 px-3 rounded-md font-semibold capitalize">

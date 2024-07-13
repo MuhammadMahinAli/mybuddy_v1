@@ -39,7 +39,7 @@ const PlusIcon = ({ theme }) => {
                 </linearGradient>
               </defs>
             </svg> */}
-              <img className='w-5' src={b} alt='' />
+              <img className='w-5' src={b} loading="lazy" alt='' />
           </div>
         </div>
       )}

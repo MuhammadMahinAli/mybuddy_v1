@@ -12,7 +12,7 @@ const EmailVarification = () => {
           <img
             className="w-56 md:w-80 3xl:w-[500px] rounded-xl md:rounded-2xl py-2"
             src={email}
-            alt="email"
+            loading="lazy" alt="email"
           />
           <p className="text-purple-800 font-semibold text-[18px] md:text-xl 3xl:text-[22px] py-3 capitalize">{`We're glad to have you with us !`}</p>
           <p className="text-purple-700 text-center text-[15px] md:text-[17px] 3xl:text-[20px] tracking-wide">{`Thank you for signing up! To ensure your account is secure and fully activated, we need you to confirm your email address. Please click the button below to be redirected to your mailbox. From there, open the account activation email we sent and click "Verify your email" to complete the process.`}</p>

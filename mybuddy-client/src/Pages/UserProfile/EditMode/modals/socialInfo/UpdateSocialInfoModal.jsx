@@ -239,7 +239,7 @@ const UpdateSocialInfoModal = ({
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#ff7478] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="h-7 w-7" src={instaIcon} alt="" />
+                              <img className="h-7 w-7" src={instaIcon} loading="lazy" alt="" />
                             </div>
 
                             <textarea
@@ -302,7 +302,7 @@ const UpdateSocialInfoModal = ({
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#FF0000] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="h-7 w-7" src={ytube} alt="" />
+                              <img className="h-7 w-7" src={ytube} loading="lazy" alt="" />
                             </div>
 
                             <textarea
@@ -329,7 +329,7 @@ const UpdateSocialInfoModal = ({
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#000000] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="h-7 w-7" src={tiktok} alt="" />
+                              <img className="h-7 w-7" src={tiktok} loading="lazy" alt="" />
                             </div>
 
                             <textarea
@@ -356,7 +356,7 @@ const UpdateSocialInfoModal = ({
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#E60023] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="h-7 w-7" src={pintrst} alt="" />
+                              <img className="h-7 w-7" src={pintrst} loading="lazy" alt="" />
                             </div>
 
                             <textarea
@@ -383,7 +383,7 @@ const UpdateSocialInfoModal = ({
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#3b5998] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="p-1 w-7" src={fb} alt="" />
+                              <img className="p-1 w-7 " src={fb} loading="lazy" alt="" />
                             </div>
 
                             <textarea
@@ -420,80 +420,3 @@ const UpdateSocialInfoModal = ({
 };
 
 export default UpdateSocialInfoModal;
-
-///////////////////////////////////////////////////
-
-// import { useSelector } from "react-redux";
-// import TwitterIcon from "../../../../../icons/TwitterIcon";
-// import GithubIcon from "../../../../../icons/GithubIcon";
-// import LinkedInIcon from "../../../../../icons/LinkedInIcon";
-// import ytube from "../../../../../assets/icon/yt.png";
-// import pintrst from "../../../../../assets/icon/pintrst.png";
-// import tiktok from "../../../../../assets/icon/tiktok.png";
-// import fb from "../../../../../assets/icon/fb.png";
-// import instaIcon from "../../../../../assets/icon/instagram.png";
-// import { Dialog, Transition } from "@headlessui/react";
-// import { Fragment, useContext, useState, useEffect } from "react";
-// import { AuthContext } from "../../../../../Context/UserContext";
-// import Swal from "sweetalert2";
-
-// const UpdateSocialInfoModal = ({
-//   isOpenSocialModal,
-//   theme,
-//   closeUpdateModal,
-// }) => {
-//   const { getSingleUserSocialInfo } = useContext(AuthContext);
-//   const socialInfo = getSingleUserSocialInfo?.data;
-
-//   // Initialize form data state
-//   const [formData, setFormData] = useState({
-//     twitter: '',
-//     github: '',
-//     linkedIn: '',
-//     instagram: '',
-//     personalWebsite: '',
-//     youtube: '',
-//     tiktok: '',
-//     pinterest: '',
-//     facebook: '',
-//   });
-
-//   // Populate form data state with socialInfo when modal opens
-//   useEffect(() => {
-//     if (socialInfo) {
-//       setFormData({
-//         twitter: socialInfo.twitter || '',
-//         github: socialInfo.github || '',
-//         linkedIn: socialInfo.linkedIn || '',
-//         instagram: socialInfo.instagram || '',
-//         personalWebsite: socialInfo.personalWebsite || '',
-//         youtube: socialInfo.youtube || '',
-//         tiktok: socialInfo.tiktok || '',
-//         pinterest: socialInfo.pinterest || '',
-//         facebook: socialInfo.facebook || '',
-//       });
-//     }
-//   }, [socialInfo]);
-
-//   // Handle input change
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   };
-
-//   // Handle form submission
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     // Here you would typically send formData to your server
-//     try {
-//       // Assuming you have a function to update the user's social info
-//       await updateUserSocialInfo(formData);
-//       Swal.fire("Success", "Social info updated successfully", "success");
-//       closeUpdateModal();
-//     } catch (error) {
-//       Swal.fire("Error", "Failed to update social info", "error");
-//     }
-//   };

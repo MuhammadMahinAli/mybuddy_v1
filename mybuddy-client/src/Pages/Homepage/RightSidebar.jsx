@@ -142,10 +142,10 @@ const RightSidebar = ({ theme }) => {
               <img
                 className="w-8 lg:w-32 xl:w-36 absolute -top-16 right-[12px] md:right-0"
                 src={whiteBorder}
-                alt="dashedborder"
+                loading="lazy" alt="dashedborder"
               />
 
-              <img className="w-6 -mt-5 z-10" src={active} alt="active" />
+              <img className="w-6 -mt-5 z-10" src={active} loading="lazy" alt="active" />
             </div>
             <p
               className={`${
@@ -171,7 +171,7 @@ const RightSidebar = ({ theme }) => {
                     : "/login"
                 }
               >
-                <img className="h-12 pr-1" src={twitter} alt="" />
+                <img className="h-12 pr-1" src={twitter} loading="lazy" alt="" />
               </a>
               <a
                 target="blank"
@@ -181,9 +181,9 @@ const RightSidebar = ({ theme }) => {
                     : "/login"
                 }
               >
-                <img className="h-12" src={facebook} alt="" />
+                <img className="h-12" src={facebook} loading="lazy" alt="" />
               </a>
-              {/* <img className="h-12" src={google} alt="" /> */}
+              {/* <img className="h-12" src={google} loading="lazy" alt="" /> */}
               <a
                 target="blank"
                 href={
@@ -192,7 +192,7 @@ const RightSidebar = ({ theme }) => {
                     : "/login"
                 }
               >
-                <img className="h-[55px]" src={linkedIn} alt="" />
+                <img className="h-[55px]" src={linkedIn} loading="lazy" alt="" />
               </a>
               <a
                 target="blank"
@@ -200,7 +200,7 @@ const RightSidebar = ({ theme }) => {
                   singleUser ? `https://github.com/${currentGithub}` : "/login"
                 }
               >
-                <img className="h-14" src={github} alt="" />
+                <img className="h-14" src={github} loading="lazy" alt="" />
               </a>
             </div>
 
@@ -297,7 +297,7 @@ const RightSidebar = ({ theme }) => {
                 // </div>
               )}
             </a>
-            <img className="pt-10" src={postCover} alt="" />
+            <img className="pt-10" src={postCover} loading="lazy" alt="" />
           </div>
         </div>
       </div>

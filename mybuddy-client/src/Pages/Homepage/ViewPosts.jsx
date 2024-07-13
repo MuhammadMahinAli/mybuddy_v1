@@ -94,21 +94,20 @@ const ViewPosts = ({ theme, active }) => {
                 <div className="flex items-center space-x-3">
                   <div className="flex flex-col justify-center items-center relative">
                     <img
-                      src={
+                      data-src={
                         post?.postedBy?.profilePic
                           ? post?.postedBy?.profilePic
                           : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
                       }
-                      className="h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 rounded-full p-[6px]"
+                      className="lazy h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 rounded-full p-[6px]"
                     />
 
                     <img
                       className="w-16 lg:w-32 xl:w-36 absolute"
                       src={theme === "light" ? darkBorder : whiteBorder}
-                      alt="dashedborder"
+                      loading="lazy" alt="dashedborder"
                     />
                   </div>
-
                   <div>
                     <div className="flex items-center space-x-1">
                       <p

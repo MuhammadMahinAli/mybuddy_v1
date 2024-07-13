@@ -164,7 +164,7 @@ export default FindProject;
 //                           src={project?.user?.profilePic ||
 //                             "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
 //                           }
-//                           alt=""
+//                           loading="lazy" alt=""
 //                           className="h-9 w-9 md:h-10 md:w-10 lg:w-8 lg:h-8 xl:w-16 xl:h-16  rounded-full p-[6px]"
 //                         />
 //                         <img
@@ -172,7 +172,7 @@ export default FindProject;
 //                           src={
 //                             theme === "light" ? feedDarkBorder : feedWhiteBorder
 //                           }
-//                           alt="dashedborder"
+//                           loading="lazy" alt="dashedborder"
 //                         />
 //                       </div>
 
@@ -330,7 +330,7 @@ export default FindProject;
 //                             {/* <img
 //                              src={des}
 //                              className="h-40 md:h-48 lg:h-52 xl:h-[300px]"
-//                              alt="hero"
+//                              loading="lazy" alt="hero"
 //                            /> */}
 //                             <ImageSlider images={project?.images} />
 //                           </div>

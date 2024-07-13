@@ -94,7 +94,7 @@ const Images = ({setImages, images}) => {
           <div className="relative">
             {previewImage.imageOne  ? (
               <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
-                <img className="object-cover h-full rounded-md" src={previewImage.imageOne} alt="" />
+                <img className="object-cover h-full rounded-md" src={previewImage.imageOne} loading="lazy" alt="" />
               </div>
             ) : (
               <label required htmlFor="image-one" className="">
@@ -126,7 +126,7 @@ const Images = ({setImages, images}) => {
           <div className="relative ">
             {previewImage.imageTwo ? (
               <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
-                <img className="object-cover h-full rounded-md" src={previewImage.imageTwo} alt="" />
+                <img className="object-cover h-full rounded-md" src={previewImage.imageTwo} loading="lazy" alt="" />
               </div>
             ) : (
               <label required htmlFor="image-two" className="">
@@ -158,7 +158,7 @@ const Images = ({setImages, images}) => {
           <div className="relative"> 
             {previewImage.imageThree  ? (
               <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px] box-border border-2 border-gray-100 custom-shadow">
-                <img className="object-cover h-full rounded-md" src={previewImage.imageThree} alt="" />
+                <img className="object-cover h-full rounded-md" src={previewImage.imageThree} loading="lazy" alt="" />
               </div>
             ) : (
               <label required htmlFor="image-three" className="">
@@ -197,7 +197,7 @@ export default Images;
 // <div className="relative ">
 // {previewImage.imageOne !== "" ? (
 //   <div className="rounded-lg h-[100px] md:w-[150px]  xl:h-[130px] xl:w-[200px] 2xl:h-[150px] 2xl:w-[150px]  box-border border-2 border-gray-100 custom-shadow">
-//     <img className="object-cover h-full rounded-md" src={previewImage.imageOne} alt="" />
+//     <img className="object-cover h-full rounded-md" src={previewImage.imageOne} loading="lazy" alt="" />
 //   </div>
 // ) : (
 //   <label required htmlFor="image-one" className="">
@@ -229,7 +229,7 @@ export default Images;
 //<div className="relative ">
 // {previewImage.imageTwo !== "" ? (
 //   <div className="rounded-lg h-[100px] md:w-[150px]  xl:h-[130px] xl:w-[200px] 2xl:h-[150px] 2xl:w-[150px]  box-border border-2 border-gray-100 custom-shadow">
-//     <img className="object-cover h-full rounded-md" src={previewImage.imageTwo} alt="" />
+//     <img className="object-cover h-full rounded-md" src={previewImage.imageTwo} loading="lazy" alt="" />
 //   </div>
 // ) : (
 //   <label required htmlFor="image-two" className="">
@@ -261,7 +261,7 @@ export default Images;
 //<div className="relative ">
 // {previewImage.imageThree !== "" ? (
 //   <div className="rounded-lg h-[100px] md:w-[150px]  xl:h-[130px] xl:w-[200px] 2xl:h-[150px] 2xl:w-[150px]  box-border border-2 border-gray-100 custom-shadow">
-//     <img className="object-cover h-full rounded-md" src={previewImage.imageThree} alt="" />
+//     <img className="object-cover h-full rounded-md" src={previewImage.imageThree} loading="lazy" alt="" />
 //   </div>
 // ) : (
 //   <label required htmlFor="image-three" className="">

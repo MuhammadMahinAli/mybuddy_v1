@@ -78,7 +78,7 @@ const UploadIcon2 = ({ theme }) => {
             </linearGradient>
           </defs>
         </svg> */}
-        <img className='w-4' src={b} alt='' />
+        <img className='w-4' src={b} loading="lazy" alt='' />
         </div>
         </div>
       )}

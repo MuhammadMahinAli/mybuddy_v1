@@ -18,7 +18,7 @@ const CameraIcon2 = ({ theme }) => {
           />
         </svg>
       ) : (
-        <img src={lightMoodCamera} className="w-4 mr-2" alt="camera" />
+        <img src={lightMoodCamera} className="w-4 mr-2" loading="lazy" alt="camera" />
       )}
     </>
   );

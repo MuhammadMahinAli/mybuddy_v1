@@ -109,7 +109,7 @@ const ProjectDetails = () => {
               <div className="flex justify-start items-start md:-space-x-3 w-48  xl:w-3/12 my-4 md:my-3 lg:my-2">
                 <img
                   src="https://source.unsplash.com/150x150/?portrait?3"
-                  alt=""
+                  loading="lazy" alt=""
                   className="h-10 w-10 lg:w-8 lg:h-8 xl:w-16 xl:h-16 mx-auto rounded-full dark:bg-gray-500 aspect-square"
                 />
                 <div>
@@ -197,7 +197,7 @@ const ProjectDetails = () => {
                         {/* <img
                           src={des}
                           className="h-40 md:h-48 lg:h-52 xl:h-[300px]"
-                          alt="hero"
+                          loading="lazy" alt="hero"
                         /> */}
                         <ImageSlider images={project?.images} />
                       </div>

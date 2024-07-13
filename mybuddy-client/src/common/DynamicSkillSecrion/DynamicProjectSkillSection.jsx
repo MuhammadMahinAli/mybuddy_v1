@@ -993,7 +993,7 @@ const DynamicProjectSkillSection = ({ theme, skillArray }) => {
             className={`py-3 rounded-lg flex items-center space-x-3 lg:space-x-4  px-2`}
           >
    
-              <img src={tech.logo} alt={tech.name} className=" h-6 md:h-7" />
+              <img src={tech.logo} loading="lazy" alt={tech.name} className=" h-6 md:h-7" />
               <p
                 className={`${
                   theme === "light" ? "text-gray-600" : "text-gray-600"

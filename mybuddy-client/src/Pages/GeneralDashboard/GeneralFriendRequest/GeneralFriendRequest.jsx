@@ -112,7 +112,7 @@ const GeneralFriendRequest = () => {
               <img
                 src={request?.requestedBy?.profilePic || "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"}
                 className="w-8 h-8 md:w-10 md:h-10 3xl:h-14 3xl:w-14 rounded-full"
-                alt=""
+                loading="lazy" alt=""
               />
               <div>
                 <p className="text-sm md:text-xl font-semibold text-gray-600 capitalize">{request?.requestedBy?.name?.firstName} {request?.requestedBy?.name?.lastName}</p>

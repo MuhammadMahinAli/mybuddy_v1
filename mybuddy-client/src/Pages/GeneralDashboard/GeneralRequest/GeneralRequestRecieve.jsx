@@ -151,7 +151,7 @@ const GeneralRequestRecieve = () => {
                     "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
                   }
                   className="w-8 h-8 md:w-10 md:h-10 rounded-full"
-                  alt=""
+                  loading="lazy" alt=""
                 />
                 <p className="capitalize pt-1 md:pt-0">
                   {request?.requestedTo?.name?.firstName}{" "}

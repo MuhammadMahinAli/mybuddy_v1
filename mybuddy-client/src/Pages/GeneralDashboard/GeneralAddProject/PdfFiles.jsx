@@ -68,7 +68,7 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
           <div className="relative ">
             {previewImage.pdfOne  ? (
               <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
-                <img className="h-24 lg:h-28 xl:h-32 3xl:h-52  w-6/12  lg:w-7/12 xl:w-6/12 md:w-9/12 3xl:w-8/12 rounded-md" src={pdfLogo} alt="" />
+                <img className="h-24 lg:h-28 xl:h-32 3xl:h-52  w-6/12  lg:w-7/12 xl:w-6/12 md:w-9/12 3xl:w-8/12 rounded-md" src={pdfLogo} loading="lazy" alt="" />
               </div>
             ) : (
               <label required htmlFor="pdf-one" className="">
@@ -100,7 +100,7 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
           <div className="relative ">
             {previewImage.pdfTwo ? (
               <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
-                <img className="h-24 lg:h-28 xl:h-32 3xl:h-52  w-6/12  lg:w-7/12 xl:w-6/12 md:w-9/12 3xl:w-8/12 rounded-md" src={pdfLogo} alt="" />
+                <img className="h-24 lg:h-28 xl:h-32 3xl:h-52  w-6/12  lg:w-7/12 xl:w-6/12 md:w-9/12 3xl:w-8/12 rounded-md" src={pdfLogo} loading="lazy" alt="" />
               </div>
             ) : (
               <label required htmlFor="pdf-two" className="">
@@ -132,7 +132,7 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
           <div className="relative ">
             {previewImage.pdfThree  ? (
               <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
-                <img className="h-24 lg:h-28 xl:h-32 3xl:h-52  w-6/12  lg:w-7/12 xl:w-6/12 md:w-9/12 3xl:w-8/12 rounded-md" src={pdfLogo} alt="" />
+                <img className="h-24 lg:h-28 xl:h-32 3xl:h-52  w-6/12  lg:w-7/12 xl:w-6/12 md:w-9/12 3xl:w-8/12 rounded-md" src={pdfLogo} loading="lazy" alt="" />
               </div>
             ) : (
               <label required htmlFor="pdf-three" className="">

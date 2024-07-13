@@ -8,7 +8,7 @@ const FindResearcherDescription = ({ post }) => {
         <img
           src={post?.image}
           className="h-40 md:h-48 lg:h-52 xl:h-[300px] rounded-lg"
-          alt="hero"
+          loading="lazy" alt="hero"
         />
       )}
     </div>

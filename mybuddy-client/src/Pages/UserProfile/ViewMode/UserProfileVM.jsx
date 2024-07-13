@@ -169,7 +169,7 @@ const UserProfileVM = () => {
         {userData?.coverPic && (
           <img
             src={userData?.coverPic}
-            alt="Cover Photo"
+            loading="lazy" alt="Cover Photo"
             className="h-[180px] md:h-[250px] w-full object-cover z-0 p-[0px] "
           />
         )}
@@ -279,7 +279,7 @@ const UserProfileVM = () => {
                 <img
                   className="w-8 lg:w-32 xl:h-32 xl:w-36 absolute -top-28 right-[12px] md:right-0"
                   src={theme === "light" ? whiteBorder : darkBorder}
-                  alt="dashedborder"
+                  loading="lazy" alt="dashedborder"
                 />
               </div>
               {/* right */}
@@ -339,7 +339,7 @@ const UserProfileVM = () => {
                 <img
                   className="w-20 md:w-32 lg:w-32 xl:w-36 absolute -top-[95px] md:-top-[110px] lg:-top-28 md:right-[27px] lg:right-14"
                   src={theme === "light" ? whiteBorder : darkBorder}
-                  alt="dashedborder"
+                  loading="lazy" alt="dashedborder"
                 />
 
                 {/* <CameraIcon /> */}
@@ -398,28 +398,28 @@ const UserProfileVM = () => {
                       target="blank"
                       href={`https://twitter.com/${currentTwitter}`}
                     >
-                      <img className="9" src={xIcon} alt="" />
+                      <img className="9" src={xIcon} loading="lazy" alt="" />
                     </a>
              
                     <a
                       target="blank"
                       href={`https://facebook.com/${currentFacebook}`}
                     >
-                      <img className="h-9  p-[2px]" src={facebookIcon} alt="" />
+                      <img className="h-9  p-[2px]" src={facebookIcon} loading="lazy" alt="" />
                     </a>
                
                     <a
                       target="blank"
                       href={`https://linkedin.com/in/${currentLinkedIn}`}
                     >
-                      <img className="h-9 " src={linkedinIcon} alt="" />
+                      <img className="h-9 " src={linkedinIcon} loading="lazy" alt="" />
                     </a>
                
                     <a
                       target="blank"
                       href={`https://github.com/${currentGithub}`}
                     >
-                      <img className="h-9" src={githubIcon} alt="" />
+                      <img className="h-9" src={githubIcon} loading="lazy" alt="" />
                     </a>
                   
                 </div>
@@ -478,26 +478,26 @@ const UserProfileVM = () => {
                     target="blank"
                     href={`https://twitter.com/${currentTwitter}`}
                   >
-                    <img className="h-9" src={xIcon} alt="" />
+                    <img className="h-9" src={xIcon} loading="lazy" alt="" />
                   </a>
                   <a
                     target="blank"
                     href={`https://facebook.com/${currentFacebook}`}
                   >
-                    <img className="h-9" src={facebookIcon} alt="" />
+                    <img className="h-9" src={facebookIcon} loading="lazy" alt="" />
                   </a>
-                  {/* <img className="h-12" src={google} alt="" /> */}
+                  {/* <img className="h-12" src={google} loading="lazy" alt="" /> */}
                   <a
                     target="blank"
                     href={`https://linkedin.com/in/${currentLinkedIn}`}
                   >
-                    <img className="h-9 " src={linkedinIcon} alt="" />
+                    <img className="h-9 " src={linkedinIcon} loading="lazy" alt="" />
                   </a>
                   <a
                     target="blank"
                     href={`https://github.com/${currentGithub}`}
                   >
-                    <img className="h-9" src={githubIcon} alt="" />
+                    <img className="h-9" src={githubIcon} loading="lazy" alt="" />
                   </a>
                 </div>
               </div>

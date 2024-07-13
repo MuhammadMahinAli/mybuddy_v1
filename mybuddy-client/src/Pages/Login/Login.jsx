@@ -96,13 +96,13 @@ const Login = () => {
         {/* left */}
         <div className="p-5 space-y-4 md:space-y-0 md:w-6/12">
           <div className="md:hidden w-[350px] rounded-[20px] shadow-[-7px_-7px_19px_rgba(255,_255,_255,_0.6),_9px_9px_16px_rgba(163,_177,_198,_0.6)] box-border border-[0.8px] border-solid border-gray">
-            <img src="https://img.freepik.com/free-vector/key-concept-illustration_114360-6305.jpg" className="p-7 w-[250px]" alt="" />
+            <img src="https://img.freepik.com/free-vector/key-concept-illustration_114360-6305.jpg" className="p-7 w-[250px]" loading="lazy" alt="" />
           </div>
           <div className="flex justify-center items-center p-8 hidden md:block">
             <img
               src="https://img.freepik.com/free-vector/key-concept-illustration_114360-6305.jpg"
               className="w-[280px] lg:w-[850px] xl:w-[900px]"
-              alt=""
+              loading="lazy" alt=""
             />
           </div>
         </div>

@@ -16,7 +16,7 @@ const DekstopFormatVM = ({
   allSocialInfo,
 }) => {
   const theme = useSelector((state) => state.theme.theme);
- const skillArray = ["react", "tailwind", "html", "kubernetes"];
+
   return (
     <div
       className={`${
@@ -38,20 +38,6 @@ const DekstopFormatVM = ({
                 : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover 3xl:ml-[1px]"
             }  rounded-2xl   space-y-4 p-3 md:p-5`}
           >
-            {/* <div
-              className={`${
-                theme === "light"
-                  ? "bg-[#edfaff]"
-                  : "bg-[url('/bluish-bg.png')] bg-no-repeat bg-cover"
-              } flex justify-between items-center px-4 py-3 rounded-xl`}
-            >
-              <div>
-                <p className="text-lg md:text-xl xl:text-2xl font-normal grish">
-                  KWS
-                </p>
-              </div>
-              <UploadIcon2 theme={theme} />
-            </div> */}
             {/* Experience */}
             <UserProfileExperienceVM
               allExperience={allExperience}
@@ -70,7 +56,7 @@ const DekstopFormatVM = ({
         <UserProfileActivityVM allPost={allPost} theme={theme} />
         {/* projects */}
         <UserProfileProjectVM allProject={allProject} theme={theme} />
-        <UserProfileSkillVM skillArray={skillArray}  allSkill={allSkill} theme={theme} />
+        <UserProfileSkillVM allSkill={allSkill} theme={theme} />
 
         {/* </div> */}
       </div>

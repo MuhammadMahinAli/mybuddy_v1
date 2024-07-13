@@ -1107,7 +1107,7 @@ const TechnicalRecommendationModal = ({ isOpen, closeModal, updateTechnicalRecom
                                   <img
                                   
                                     src={item.logo}
-                                    alt={item.name}
+                                    loading="lazy" alt={item.name}
                                     className="h-9 w-9 cursor-pointer"
                                   />
                                 </div>
@@ -1850,7 +1850,7 @@ export default TechnicalRecommendationModal;
 //                                     }
 //                                     onMouseLeave={() => setHoveredItemId(null)}
 //                                     src={item.logo}
-//                                     alt={item.name}
+//                                     loading="lazy" alt={item.name}
 //                                     className="h-9 w-9 cursor-pointer"
 //                                   />
 //                                   {hoveredItemId === item.name && (

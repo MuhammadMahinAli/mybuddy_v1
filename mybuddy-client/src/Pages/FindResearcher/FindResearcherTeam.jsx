@@ -43,7 +43,7 @@ const FindResearcherTeam = () => {
                     <img
                       className="h-8 w-10 xl:h-14 xl:w-16 object-center"
                       src="https://source.unsplash.com/150x150/?portrait?3"
-                      alt={trend.title}
+                      loading="lazy" alt={trend.title}
                     />
                     
                   </div>

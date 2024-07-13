@@ -499,11 +499,11 @@ body.dark .noti {
  color: #2adba4;
 }
 
-.gridl{
+/* .gridl{
   display: grid;
   grid-column: 4 !important;
   gap: 50px;
-}
+} */
  /* Hide scrollbar for Chrome, Safari, and Opera */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;

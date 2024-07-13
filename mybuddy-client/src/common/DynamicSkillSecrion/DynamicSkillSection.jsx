@@ -141,8 +141,9 @@ import xdLogo from "../../assets/skill-icons/adobe-xd.svg";
 import matlabLogo from "../../assets/skill-icons/Matlab_Logo.svg";
 
 
-const DynamicSkillSection = ({ theme, allSkill}) => {
+const DynamicSkillSection = ({ theme,showAllSkills, allSkill}) => {
   const skillArray =  allSkill[0]?.skillArray;
+
   const allTechnologies = [
     
         {
@@ -1012,7 +1013,7 @@ const DynamicSkillSection = ({ theme, allSkill}) => {
   const userTechnologies = allTechnologies.filter((tech) =>
     skillArray?.includes(tech.name)
   );
-  console.log("small", userTechnologies);
+ // console.log("small", userTechnologies);
   return (
     <>
     {
@@ -1050,7 +1051,7 @@ const DynamicSkillSection = ({ theme, allSkill}) => {
           className={`py-3 rounded-lg flex items-center justify-between px-2`}
         >
           <div className="flex items-center space-x-3">
-            <img src={tech.logo} alt={tech.name} className=" h-6 md:h-7" />
+            <img src={tech.logo} loading="lazy" alt={tech.name} className=" h-6 md:h-7" />
             <p
               className={`${
                 theme === "light" ? "text-gray-600" : "text-gray-600"

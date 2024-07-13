@@ -23,7 +23,7 @@ const ImageSlider = ({ images }) => {
             <img
               src={im}
               className="object-center w-[100px] h-[180px] xs:w-[280px] xs:h-[240px] md:h-[300px] md:w-[390px] xl:w-[400px] 3xl:h-[300px] rounded-[10px]"
-              alt="hero"
+              loading="lazy" alt="hero"
             />
           </SwiperSlide>
         ))}

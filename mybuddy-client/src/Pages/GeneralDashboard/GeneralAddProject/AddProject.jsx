@@ -56,7 +56,7 @@ export default AddProject;
 //       <div className="w-full md:w-6/12">
 //         <div className="md:flex hidden items-center space-x-4">
 //           <div className="flex items-center justify-center cursor-pointer [border:none] p-0 bg-[#fff] rounded-xl shadow-[2px_2px_5px_2px_rgba(155,_155,_155,_0.3)] filter:blur(2px) backdrop-filter:blur(20px) w-12 h-[42px]">
-//             {/* <img className=" h-8 object-cover" alt="" src={edit} /> */}
+//             {/* <img className=" h-8 object-cover" loading="lazy" alt="" src={edit} /> */}
 //           </div>
 //           <h1 className="text-3xl font-semibold">Create Project</h1>
 //         </div>
@@ -76,7 +76,7 @@ export default AddProject;
 //                     <div className="flex items-center justify-center cursor-pointer [border:none] p-0  w-12 h-[42px]">
 //                       <img
 //                         className=" h-8 object-cover"
-//                         alt=""
+//                         loading="lazy" alt=""
 //                         src={list?.image}
 //                       />
 //                     </div>
@@ -90,7 +90,7 @@ export default AddProject;
 //               {/* right */}
 //               <div className="lg:flex hidden items-center justify-center cursor-pointer w-14 h-[42px]">
 //                 <Link to={list?.route}>
-//                   {/* <img className=" h-8 object-cover" alt="" src={arrow} /> */}
+//                   {/* <img className=" h-8 object-cover" loading="lazy" alt="" src={arrow} /> */}
 //                 </Link>
 //               </div>
 //             </div>
@@ -99,7 +99,7 @@ export default AddProject;
 //       </div>
 //       {/* right */}
 //       <div className="flex justify-center items-center w-full md:w-4/12 lg:w-6/12 mb-2 md:pt-0">
-//         <img src={dash} alt="" className="w-[300px]" />
+//         <img src={dash} loading="lazy" alt="" className="w-[300px]" />
 //       </div>
 //     </div>
 //     {isOpen && (

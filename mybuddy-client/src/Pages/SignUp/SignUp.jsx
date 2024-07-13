@@ -72,7 +72,7 @@ const SignUp = () => {
                   <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start ">
                     {/*********************** Left image **********************/}
                     {/* <div data-aos="fade-up-right" data-aos-duration="1200" className="lg:w-5/12 lg:h-[550px]">
-                      <img className="lg:h-[530px]" alt="" src={HeroImage} />
+                      <img className="lg:h-[530px]" loading="lazy" alt="" src={HeroImage} />
                     </div> */}
                     {/*********************** Right form **********************/}
                     <div data-aos="fade-up-left" data-aos-duration="1200" className="lg:w-5/12  p-3">

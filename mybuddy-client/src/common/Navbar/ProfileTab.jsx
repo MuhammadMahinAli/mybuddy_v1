@@ -32,7 +32,7 @@ const ProfileTab = ({ openProfile, logout }) => {
           <div className="relative">
             <img
               src={userProfilePic}
-              alt=""
+              loading="lazy" alt=""
               className={`${
                 theme === "light" ? "" : ""
               }  object-cover w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 p-1 xl:w-10 xl:h-10  rounded-full aspect-square  border-dashed`}
@@ -40,7 +40,7 @@ const ProfileTab = ({ openProfile, logout }) => {
             <img
               className="w-10 md:w-20 absolute top-0  md:right-0"
               src={darkBorder}
-              alt="dashedborder"
+              loading="lazy" alt="dashedborder"
             />
           </div>
 

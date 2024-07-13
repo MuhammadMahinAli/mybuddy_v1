@@ -130,7 +130,7 @@ setUserData(singleUser);
             
                 </p>
               </div>
-              <img src={dash} className="h-20 md:h-28" alt="" />
+              <img src={dash} className="h-20 md:h-28" loading="lazy" alt="" />
             </div>
           </div>
           {/* 2 */}
@@ -140,7 +140,7 @@ setUserData(singleUser);
                 <p className="text-[19px] md:text-[29px]">Project</p>
                 <p className="text-[19px] md:text-[29px] font-semibold">{projects? projects?.length : 0 }</p>
               </div>
-              <img src={dash} className="h-20 md:h-28" alt="" />
+              <img src={dash} className="h-20 md:h-28" loading="lazy" alt="" />
             </div>
           </div>
         </div>

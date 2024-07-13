@@ -7,10 +7,10 @@ const TwitterIcon = ({theme}) => {
     {
         theme !== 'light' ?
 
-        <img className='w-6' src={twitterBlackIcon} alt=''/>
+        <img className='w-6' src={twitterBlackIcon} loading="lazy" alt=''/>
 
         :
-        <img className='' src={twitterWhiteIcon} alt=''/>
+        <img className='' src={twitterWhiteIcon} loading="lazy" alt=''/>
 
     }
             

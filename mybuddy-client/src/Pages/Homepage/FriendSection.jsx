@@ -176,7 +176,7 @@ const FriendSection = ({ theme }) => {
                           <img
                             className="w-16 lg:w-32 xl:w-36 absolute"
                             src={theme === "light" ? darkBorder : whiteBorder}
-                            alt="dashedborder"
+                            loading="lazy" alt="dashedborder"
                           />
                         </div>
                         <div>
@@ -228,7 +228,7 @@ const FriendSection = ({ theme }) => {
                         <img
                             className="w-16 lg:w-32 xl:w-36 absolute"
                             src={theme === "light" ? darkBorder : whiteBorder}
-                            alt="dashedborder"
+                            loading="lazy" alt="dashedborder"
                           />
                         </div>
                         <div>
@@ -288,7 +288,7 @@ const FriendSection = ({ theme }) => {
                         <img
                             className="w-16 lg:w-32 xl:w-36 absolute"
                             src={theme === "light" ? darkBorder : whiteBorder}
-                            alt="dashedborder"
+                            loading="lazy" alt="dashedborder"
                           />
                         </div>
                         <div>

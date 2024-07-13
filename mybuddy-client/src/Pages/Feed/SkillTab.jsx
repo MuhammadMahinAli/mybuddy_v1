@@ -1020,7 +1020,7 @@ const SkillTab = ({ theme, skills,user }) => {
               className={`py-3 rounded-lg flex items-center justify-between px-2`}
             >
               <div className="flex items-center space-x-3">
-                <img src={tech.logo} alt={tech.name} className=" h-8" />
+                <img src={tech.logo} loading="lazy" alt={tech.name} className=" h-8" />
                 <p
                   className={`${
                     theme === "light" ? "text-gray-600" : "text-white"

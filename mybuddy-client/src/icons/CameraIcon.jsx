@@ -18,7 +18,7 @@ const CameraIcon = ({ theme}) => {
           />
         </svg>
       ) : (
-        <img src={lightMoodCamera} className="h-4 lg:h-5 lg:w-5 m-1 lg:m-[9px]" alt="camera" />
+        <img src={lightMoodCamera} className="h-4 lg:h-5 lg:w-5 m-1 lg:m-[9px]" loading="lazy" alt="camera" />
       )}
     </div>
   );

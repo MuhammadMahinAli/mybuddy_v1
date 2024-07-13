@@ -1184,7 +1184,7 @@ const AddSkillModal = ({ isOpen, closeModal }) => {
                                   </div>
                                   <img
                                     src={item.logo}
-                                    alt={item.name}
+                                    loading="lazy" alt={item.name}
                                     className="h-9 w-9 cursor-pointer"
                                   />
                                 </div>
