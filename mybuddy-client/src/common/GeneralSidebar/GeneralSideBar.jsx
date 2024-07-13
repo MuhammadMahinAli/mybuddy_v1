@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MobileSidebar from "./MobileSidebar";
 import DekstopSidebar from "./DekstopSidebar";
-import { useGetSingleUserQuery } from "../../features/auth/authApi";
-import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useAuthCheck } from "../../utils/useAuthCheck";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/UserContext";
 
 const GeneralSideBar = () => {
   const [openDashboard, setOpenDashboard] = useState(false);
@@ -18,6 +17,8 @@ const GeneralSideBar = () => {
   const [openSetting, setOpenSetting] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [openRequestOption, setOpenRequestOption] = useState(false);
+  const [userData, setUserData] = useState({});
+  const{singleUser} = useContext(AuthContext);
 
   const toggleState = (stateToSet, stateToReset) => {
     setTimeout(() => {
@@ -25,34 +26,13 @@ const GeneralSideBar = () => {
       stateToReset.forEach((state) => state(false));
     }, 100);
   };
-
-
-  const { user } = useSelector((state) => state.auth);
-  const id = user?._id
-
-
-  
+ 
 //  ******************** single user
-const [userData, setUserData] = useState({})
-const {
- data: singleUser,
- isLoading: isFetchingUser,
- error
-} = useGetSingleUserQuery(id);
-
-console.log("user",userData);
-
-// Basic error handling example
-if (error) {
- console.error("An error occurred:", error);
-
-}
 
 useEffect(() => {
-
 setUserData(singleUser);
-
 }, [singleUser]);
+
 
   const handleDashboard = () =>
     toggleState(setOpenDashboard, [

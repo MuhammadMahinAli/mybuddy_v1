@@ -28,13 +28,13 @@ const GeneralDashboardNavbar = () => {
               </p>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/dashboard">
               <p className="px-4 py-[5px] text-[18px] font-semibold rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
                 General
               </p>
             </Link>
-          </li>
+          </li> */}
           <li>
             <a href="/find/academic">
               <p className="px-4 py-[5px] text-[18px] font-semibold rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">

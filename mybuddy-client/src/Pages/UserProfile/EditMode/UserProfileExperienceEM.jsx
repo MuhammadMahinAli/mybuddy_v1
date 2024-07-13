@@ -167,11 +167,11 @@ const UserProfileExperienceEM = () => {
               )}
             </div>
             {/* Display message if there is no experience */}
-            {getUserExperience?.data?.length === 0 && (
+            {/* {getUserExperience?.data?.length === 0 && (
               <p className="py-7 text-[16px]">
                 There Is No Experience To Show.
               </p>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -314,11 +314,11 @@ const UserProfileExperienceEM = () => {
               </div>
             )}
             {/* Display message if there is no experience */}
-            {getUserExperience?.data?.length === 0 && (
+            {/* {getUserExperience?.data?.length === 0 && (
               <p className="py-7 text-[16px]">
                 There Is No Experience To Show.
               </p>
-            )}
+            )} */}
           </>
         </div>
       </div>

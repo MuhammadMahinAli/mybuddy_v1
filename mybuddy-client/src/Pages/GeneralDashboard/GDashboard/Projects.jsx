@@ -1,19 +1,11 @@
-import { useSelector } from "react-redux";
-import { useGetAllProjectByUserQuery } from "../../../features/project/projectApi";
-import { Link } from "react-router-dom";
+// import { useContext } from "react";
+// import { AuthContext } from "../../../Context/UserContext";
 
 const Projects = () => {
-  const { user } = useSelector((state) => state.auth);
-  const id = user?._id;
-  // Effect to fetch all Project
-  const {
-    data: allProjects,
-    isLoading: isFetchingProject,
-    error,
-  } = useGetAllProjectByUserQuery(id);
-  // Effect to fetch all Project
-  const projects = allProjects?.data;
-  console.log(projects);
+
+  //const{getAllProjectByUser} = useContext(AuthContext);
+  //const projects = getAllProjectByUser?.data;
+  //console.log(projects);
 
   return (
     <div className="relative -mt-8 md:-mt-7 lg:mt-0 3xl:-mt-6 mr-4 md:mr-0 lg:mr-5 xl:mr-0">

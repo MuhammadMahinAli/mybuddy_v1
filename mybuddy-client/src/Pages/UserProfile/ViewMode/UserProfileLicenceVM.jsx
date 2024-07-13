@@ -113,9 +113,9 @@ const UserProfileLicenceVM = ({allLicense}) => {
               )}
             </div>
             {/* Display message if there is no License &Certification */}
-            {allLicense?.length === 0 && (
+            {/* {allLicense?.length === 0 && (
               <p className="py-7 text-[16px]">There Is No License To Show.</p>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -219,9 +219,9 @@ const UserProfileLicenceVM = ({allLicense}) => {
               </div>
             )}
             {/* Display message if there is no experience */}
-            {allLicense?.length === 0 && (
+            {/* {allLicense?.length === 0 && (
               <p className="py-7 text-[16px]">There Is No License To Show.</p>
-            )}
+            )} */}
           </>
         </div>
       </div>

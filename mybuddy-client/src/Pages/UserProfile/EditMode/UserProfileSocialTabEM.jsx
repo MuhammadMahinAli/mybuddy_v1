@@ -22,15 +22,15 @@ const UserProfileSocialTabEM = () => {
   const [openList, setOpenlist] = useState(false);
   const [isOpenSocialModal, setIsOpenSocialModal] = useState(false);
 
-  const currentTwitter = socialInfo?.twitter || "Add Username";
-  const currentGithub = socialInfo?.github || "Add Username";
-  const currentLinkedIn = socialInfo?.linkedIn || "Add Username";
-  const currentInstagram = socialInfo?.instagram || "Add Username";
-  const currentPersonalWebsite = socialInfo?.personalWebsite || "Add Portfolio";
-  const currentYoutube = socialInfo?.youtube || "Add YouTube Channel";
-  const currenTiktok = socialInfo?.tiktok || "Add Your Account";
-  const currentPinterest = socialInfo?.pinterest || "Add Your Account";
-  const currentFacebook = socialInfo?.facebook || "Add Username";
+  const currentTwitter = socialInfo?.twitter 
+  const currentGithub = socialInfo?.github 
+  const currentLinkedIn = socialInfo?.linkedIn
+  const currentInstagram = socialInfo?.instagram 
+  const currentPersonalWebsite = socialInfo?.personalWebsite 
+  const currentYoutube = socialInfo?.youtube 
+  const currenTiktok = socialInfo?.tiktok 
+  const currentPinterest = socialInfo?.pinterest
+  const currentFacebook = socialInfo?.facebook
 
   const closeSocialModal = () => {
     setIsOpenSocialModal(false);
@@ -101,7 +101,9 @@ const UserProfileSocialTabEM = () => {
             } space-y-2 p-3 md:p-3 box-border  w-full rounded-b-xl`}
           >
             {/* 1 twitter */}
-            <div>
+            {
+              currentTwitter &&
+              <div>
               <label
                 className={`${
                   theme === "light" ? "graish" : "text-white"
@@ -129,8 +131,12 @@ const UserProfileSocialTabEM = () => {
                 </p>
               </div>
             </div>
+            }
+           
             {/* 2 github */}
-            <div>
+            {
+              currentGithub &&
+              <div>
               <label
                 className={`${
                   theme === "light" ? "graish" : "text-white"
@@ -154,36 +160,44 @@ const UserProfileSocialTabEM = () => {
                 </p>
               </div>
             </div>
+            }
+            
             {/* if list open */}
             {openList && (
               <>
                 {/* 3 linkedIn */}
-                <div>
-                  <label
-                    className={`${
-                      theme === "light" ? "graish" : "text-white"
-                    } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-                  >
-                    LinkedIn
-                  </label>
-                  <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
-                    <div className="bg-[#0288d1] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                      <LinkedInIcon />
-                    </div>
-
-                    <p
-                      className={`${
-                        theme === "light"
-                          ? "bg-[#c4dfee] graish"
-                          : "bg-[#15384c] text-white"
-                      } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
-                    >
-                      {currentLinkedIn}
-                    </p>
-                  </div>
+                {
+              currentLinkedIn &&
+              <div>
+              <label
+                className={`${
+                  theme === "light" ? "graish" : "text-white"
+                } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
+              >
+                LinkedIn
+              </label>
+              <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
+                <div className="bg-[#0288d1] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
+                  <LinkedInIcon />
                 </div>
+
+                <p
+                  className={`${
+                    theme === "light"
+                      ? "bg-[#c4dfee] graish"
+                      : "bg-[#15384c] text-white"
+                  } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                >
+                  {currentLinkedIn}
+                </p>
+              </div>
+            </div>
+            }
+              
                 {/* 4 instagram */}
-                <div className="">
+                {
+              currentInstagram &&
+              <div className="">
                   <label
                     className={`${
                       theme === "light" ? "graish" : "text-white"
@@ -207,8 +221,12 @@ const UserProfileSocialTabEM = () => {
                     </p>
                   </div>
                 </div>
+            }
+                
                 {/* 5 website */}
-                <div className="">
+                {
+              currentPersonalWebsite &&
+              <div className="">
                   <label
                     className={`${
                       theme === "light" ? "graish" : "text-white"
@@ -235,8 +253,12 @@ const UserProfileSocialTabEM = () => {
                     </p>
                   </div>
                 </div>
+            }
+                
                 {/* 6 youtuve */}
-                <div className="">
+                {
+              currentYoutube &&
+              <div className="">
                   <label
                     className={`${
                       theme === "light" ? "graish" : "text-white"
@@ -260,8 +282,12 @@ const UserProfileSocialTabEM = () => {
                     </p>
                   </div>
                 </div>
+            }
+                
                 {/* 7 tiktok */}
-                <div className="">
+                {
+              currenTiktok &&
+              <div className="">
                   <label
                     className={`${
                       theme === "light" ? "graish" : "text-white"
@@ -285,8 +311,12 @@ const UserProfileSocialTabEM = () => {
                     </p>
                   </div>
                 </div>
+            }
+                
                 {/* 8 pinterest*/}
-                <div className="">
+                {
+              currentPinterest &&
+              <div className="">
                   <label
                     className={`${
                       theme === "light" ? "graish" : "text-white"
@@ -310,31 +340,37 @@ const UserProfileSocialTabEM = () => {
                     </p>
                   </div>
                 </div>
+            }
+                
                 {/* 8 fb*/}
-                <div className="">
-                  <label
-                    className={`${
-                      theme === "light" ? "graish" : "text-white"
-                    } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-                  >
-                    Facebook
-                  </label>
-                  <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
-                    <div className="bg-[#4563ff] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
-                      <img className="h-3 md:h-7 rounded-md" src={fb} />
-                    </div>
-
-                    <p
-                      className={`${
-                        theme === "light"
-                          ? "bg-[#dae0ff] graish"
-                          : "bg-[#223055] text-white"
-                      } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
-                    >
-                      {currentFacebook}
-                    </p>
-                  </div>
+                {
+              currentFacebook &&
+              <div className="">
+              <label
+                className={`${
+                  theme === "light" ? "graish" : "text-white"
+                } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
+              >
+                Facebook
+              </label>
+              <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
+                <div className="bg-[#4563ff] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
+                  <img className="h-3 md:h-7 rounded-md" src={fb} />
                 </div>
+
+                <p
+                  className={`${
+                    theme === "light"
+                      ? "bg-[#dae0ff] graish"
+                      : "bg-[#223055] text-white"
+                  } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                >
+                  {currentFacebook}
+                </p>
+              </div>
+            </div>
+            }
+               
               </>
             )}
             <div

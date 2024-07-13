@@ -134,9 +134,9 @@ const UserProfileLicenceEM = () => {
               )}
             </div>
             {/* Display message if there is no License &Certification */}
-            {getUserLicense?.data?.length === 0 && (
+            {/* {getUserLicense?.data?.length === 0 && (
               <p className="py-7 text-[16px]">There Is No License To Show.</p>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -272,9 +272,9 @@ const UserProfileLicenceEM = () => {
               </div>
             )}
             {/* Display message if there is no experience */}
-            {getUserLicense?.data?.length === 0 && (
+            {/* {getUserLicense?.data?.length === 0 && (
               <p className="py-7 text-[16px]">There Is No License To Show.</p>
-            )}
+            )} */}
           </>
         </div>
       </div>

@@ -65,8 +65,8 @@ const DekstopSidebar = ({
               to="/dashboard/all-projects"
               className={`${
                 openProject === true
-                  ? "bg-[#f3f6f8] rounded-l-2xl py-2"
-                  : "bg-[#e4ecf7] py-3"
+                  ? "bg-[#f3f6f8] rounded-l-2xl py-2 "
+                  : "bg-[#e4ecf7] py-3 border-b border-white"
               } flex relative lg:space-x-2 xl:space-x-4  items-center  lg:pl-5 xl:pl-3`}
             >
               <img src="/project2.svg" className="h-7" />
@@ -97,8 +97,8 @@ const DekstopSidebar = ({
               className={`${
                 openRequestOption === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
-                  : "bg-[#e4ecf7] py-3"
-              } flex relative space-x-4 rounded-l-[40px] it items-start  pl-4 `}
+                  : "bg-[#e4ecf7] py-3 border-b border-white"
+              } flex relative space-x-4  it items-start  pl-4 `}
             >
               <img src="/rqst.svg" className="h-5 mt-1" />
               <div
@@ -157,7 +157,7 @@ const DekstopSidebar = ({
               className={`${
                 openCreateProject === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
-                  : "bg-[#e4ecf7] py-3"
+                  : "bg-[#e4ecf7] py-3 border-b border-white"
               } flex space-x-3 items-center pl-3 lg:pr-14`}
             >
               <img src="/video.svg" className="h-4" />

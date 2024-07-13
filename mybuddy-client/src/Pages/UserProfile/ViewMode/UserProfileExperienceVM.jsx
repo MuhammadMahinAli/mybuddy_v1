@@ -121,11 +121,11 @@ const UserProfileExperienceVM = ({allExperience}) => {
               )}
             </div>
             {/* Display message if there is no experience */}
-            {allExperience?.length === 0 && (
+            {/* {allExperience?.length === 0 && (
               <p className="py-7 text-[16px]">
                 There Is No Experience To Show.
               </p>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -233,11 +233,11 @@ const UserProfileExperienceVM = ({allExperience}) => {
               </div>
             )}
             {/* Display message if there is no experience */}
-            {allExperience?.length === 0 && (
+            {/* {allExperience?.length === 0 && (
               <p className="py-7 text-[16px]">
                 There Is No Experience To Show.
               </p>
-            )}
+            )} */}
           </>
         </div>
       </div>

@@ -973,6 +973,7 @@ const SkillTab = ({ theme, skills,user }) => {
   ];
 
   //Find the technologies associated with the user's skills
+  //Find the tex=zh
   const userTechnologies = allTechnologies?.filter((tech) =>
     userSkills?.includes(tech.name)
   );

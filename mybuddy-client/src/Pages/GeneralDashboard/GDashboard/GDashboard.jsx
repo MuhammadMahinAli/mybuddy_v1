@@ -1,44 +1,20 @@
-import { useSelector } from "react-redux";
 import dash from "../../../assets/dashboard1.png";
 import Projects from "./Projects";
 import Requests from "./Requests";
 import { CiClock2 } from "react-icons/ci";
-import { useGetAllProjectByUserQuery } from "../../../features/project/projectApi";
-import { useGetSingleUserQuery } from "../../../features/auth/authApi";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../../Context/UserContext";
 const GDashboard = () => {
-  const { user } = useSelector((state) => state.auth);
+  //const { user } = useSelector((state) => state.auth);
+  const {getAllProjectByUser,singleUser} = useContext(AuthContext)
+  const [userData, setUserData] = useState({})
 
-  const id = user?._id
-
-
-const {
- data: allProjects,
- isLoading: isFetchingProject,
- error
-} = useGetAllProjectByUserQuery(id);
-
-const projects = allProjects?.data;
+const projects = getAllProjectByUser?.data;
 
 
 //  ******************** single user
-const [userData, setUserData] = useState({})
-const {
- data: singleUser,
- isLoading: isFetchingUser,
- 
-} = useGetSingleUserQuery(id);
-
-console.log("user",userData);
-
-// Basic error handling example
-if (error) {
- console.error("An error occurred:", error);
-
-}
 
 useEffect(() => {
-
 setUserData(singleUser);
 
 }, [singleUser]);
@@ -119,13 +95,13 @@ setUserData(singleUser);
         <h1 className="gray600 text-[20px] lg:text-[28px] pb-5 font-bold">
           DASHBOARD
         </h1>
-        <div className="flex flex-col md:flex-row justify-between items-center md:space-x-8 lg:space-x-0 space-y-5 md:space-y-0">
+        <div className="flex flex-col md:flex-row justify-between items-center md:space-x-8 lg:space-x-0 xl:space-x-5 space-y-5 md:space-y-0">
           {/* 1 */}
           <div className="w-full md:w-7/12 lg:w-7/12 xl:w-7/12 rounded-[20px] md:rounded-[35px] bg-skyblue  shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] overflow-hidden">
             <div className="flex justify-between items-center xl:space-x-20  md:py-5 ">
               <div className="p-3 lg:p-5 text-2xl gray500 md:space-y-1">
                 <p className="text-[18px] md:text-[29px]">Welcome</p>
-                <p className="text-[18px] md:text-[29px] font-semibold capitalize">
+                <p className="text-[18px] md:text-[29px] font-semibold capitalize pt-1">
                {userData?.data?.name?.firstName} {userData?.data?.name?.lastName}
             
                 </p>
@@ -134,7 +110,7 @@ setUserData(singleUser);
             </div>
           </div>
           {/* 2 */}
-          <div className=" rounded-[20px] md:rounded-[35px] bg-skyblue  shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] overflow-hidden">
+          <div className=" xl:w-5/12  rounded-[20px] md:rounded-[35px] bg-skyblue  shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] overflow-hidden">
             <div className="flex justify-between items-center lg:space-x-9 md:py-5">
               <div className="p-3 lg:p-5 text-2xl gray500 md:space-y-1">
                 <p className="text-[19px] md:text-[29px]">Project</p>
