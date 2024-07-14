@@ -102,7 +102,7 @@ const Navbar = ({
               >
                 <Hamburger theme={theme} />
               </button>
-              <MiniSidebar user={user} theme={theme} />
+              <MiniSidebar  user={user} theme={theme} />
             </div>
           </div>
 

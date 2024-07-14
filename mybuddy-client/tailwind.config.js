@@ -9,6 +9,9 @@ export default {
   
   theme: {
     extend: {
+      fontFamily: {
+        'sans': ['Nunito', 'sans-serif'],
+      },
       screens: {
         'xs':'375px',
         'ssm':'420px',

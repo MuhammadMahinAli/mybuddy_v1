@@ -1,4 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import "react-big-calendar/lib/css/react-big-calendar.css";
+
 
 @tailwind base;
 @tailwind components;
@@ -474,15 +476,17 @@ body.dark .noti {
 
 .sidebar {
   /* Your sidebar styles */
-  transition: transform 0.7s ease; /* Transition on transform property */
+  transition: transform 0.5s ease;
+  z-index: 9999; /* Transition on transform property */
 }
 
 .sidebar-open {
-  transform: translateX(-100%); /* Move the sidebar to the left */
+  
+  transform: translateX(-110%); /* Move the sidebar to the left */
 }
 
 .open {
-  animation: 3s ease-in 1s;
+  animation: 1s ease-in 5s;
 }
 
 .sidebar-list a .box1 .box2 svg {
@@ -513,3 +517,24 @@ body.dark .noti {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+/* .lsidebar {
+  /* Your sidebar styles 
+  transition: transform 0.5s ease;
+  z-index: 9999; /* Transition on transform property 
+}
+
+.lsidebar-open {
+  transform: translateX(10%); /* Move the sidebar to the left 
+} */
+
+
+
+
+
+
+
+
+
+
+

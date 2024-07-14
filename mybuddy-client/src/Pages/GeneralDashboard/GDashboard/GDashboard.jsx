@@ -131,11 +131,14 @@ setUserData(singleUser);
         </div>
         {/* right */}
 
-        <div className="p-3 xl:p-5 gray600 space-y-4 lg:w-4/12 xl:w-80 2xl:w-[400px] 3xl:w-[450px] rounded-[35px] w-full bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] overflow-hidden">
+        <div className="p-3 xl:p-5 gray600 space-y-4 lg:w-4/12 xl:w-80 2xl:w-[400px] 3xl:w-[450px] lg:h-[200px] xl:h-[300px] rounded-[35px] w-full bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] overflow-hidden">
           <h1 className="gray500 text-[24px] md:text-[28px] font-bold">
             Meetings
           </h1>
-          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 lg:justify-start gap-7 ">
+          <p className="text-[16px] md:text-[18px]  lg:text-[24px] font-semibold capitalize pb-3">
+            Coming soon
+            </p>
+          {/* <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 lg:justify-start gap-7 ">
             {meetings.map((meeting, i) => (
               <div
                 key={i}
@@ -173,7 +176,7 @@ setUserData(singleUser);
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

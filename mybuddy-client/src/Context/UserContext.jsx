@@ -386,7 +386,8 @@ const UserContext = ({ children }) => {
     allRecieveRequest,
     createNewRequest,
     getFriendRequest,
-    getAcceptedFriendRequest
+    getAcceptedFriendRequest,
+    isFatchingCreateNewRequest
   };
 
   return (

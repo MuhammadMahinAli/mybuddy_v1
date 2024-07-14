@@ -275,10 +275,10 @@ const Requests = () => {
               </div>
             </div>
           ))} quests?.length === 0 && (
-            <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not recieved any project request.`}</p>
+            <p className="text-gray-600 text-[16px] md:text-[18px]  lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not recieved any project request.`}</p>
           )}*/}
      
-            <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not recieved any project request.`}</p>
+            <p className="text-gray-600 text-[16px] md:text-[18px]  lg:text-[24px] pb-5 font-medium text-start w-11/12 md:w-[600px] xl:pt-7">{`You've not recieved any project request.`}</p>
       
         </>
       )}
@@ -324,7 +324,7 @@ const Requests = () => {
             ))}
           </div>
           {friendRequests?.length === 0 && (
-            <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not recieved any friend request.`}</p>
+            <p className="text-gray-600 text-[16px] md:text-[18px]  lg:text-[24px] xl:pb-5 font-medium text-start w-11/12 md:w-[600px] xl:pt-7">{`You've not recieved any friend request.`}</p>
           )}
         </>
       )}

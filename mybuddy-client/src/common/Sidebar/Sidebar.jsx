@@ -1,4 +1,3 @@
-
 import "aos/dist/aos.css";
 import DashboardIcon from "../../icons/DashboardIcon";
 import FeedIcon from "../../icons/FeedIcon";
@@ -7,21 +6,15 @@ import PeoplesIcon from "../../icons/PeoplesIcon";
 import VideoIcon from "../../icons/VideoIcon";
 import ResearcherIcon from "../../icons/ResearcherIcon";
 import Hamburger from "../../icons/Hamburger";
+     
 
-const Sidebar = ({
-  openSidebar,
-  toggleSidebar,
-  theme,
-  isPageActive,
-  user
-}) => {
+const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
   return (
     <div>
-      <div
-        data-aos="fade-right"
-        data-aos-duration="600"
-        className="absolute top-0 z-50 "
-      >
+ <div data-aos="fade-right"
+     data-aos-anchor="#example-anchor"
+     data-aos-offset="500"
+     data-aos-duration="400" className={`fixed  left-0 top-0 z-50`}>
         {openSidebar && (
           <div className="">
             <div
@@ -41,8 +34,13 @@ const Sidebar = ({
                 }`}
               >
                 <a href="/home">
-               <img className="h-[32px] w-[30px] md:h-12 md:w-[46px] rounded-lg" src='/logo.png' loading="lazy" alt=''/>
-               </a>
+                  <img
+                    className="h-[32px] w-[30px] md:h-12 md:w-[46px] rounded-lg"
+                    src="/logo.png"
+                    loading="lazy"
+                    alt=""
+                  />
+                </a>
               </h1>
               {/* mbl tab */}
 
@@ -60,7 +58,7 @@ const Sidebar = ({
                   : "text-white bg-[url('/sidebar-bg.png')] bg-no-repeat bg-cover"
               }  w-[200px] space-y-5 lg:rounded-br-xl p-4`}
             >
-                  <li className='sidebar-list'>
+              <li className="sidebar-list">
                 <a
                   href="/home"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
@@ -76,10 +74,16 @@ const Sidebar = ({
                       <FeedIcon theme={theme} />
                     </div>
                   </div>
-                  <p className={`${theme === 'light' ? 'sidebar-text':''} text-[18px] font-semibold`}>Feed</p>
+                  <p
+                    className={`${
+                      theme === "light" ? "sidebar-text" : ""
+                    } text-[18px] font-semibold`}
+                  >
+                    Feed
+                  </p>
                 </a>
               </li>
-              <li className='sidebar-list'>
+              <li className="sidebar-list">
                 <a
                   href="/find/researcher"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
@@ -95,12 +99,18 @@ const Sidebar = ({
                       <ResearcherIcon theme={theme} />
                     </div>
                   </div>
-                  <p className={`${theme === 'light' ? 'sidebar-text':''} text-[18px] font-semibold`}>Researchers</p>
+                  <p
+                    className={`${
+                      theme === "light" ? "sidebar-text" : ""
+                    } text-[18px] font-semibold`}
+                  >
+                    Researchers
+                  </p>
                 </a>
               </li>
-              <li className='sidebar-list'>
+              <li className="sidebar-list">
                 <a
-                  href={user? "/dashboard":"/login"}
+                  href={user ? "/dashboard" : "/login"}
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
@@ -114,10 +124,16 @@ const Sidebar = ({
                       <DashboardIcon theme={theme} />
                     </div>
                   </div>
-                  <p className={`${theme === 'light' ? 'sidebar-text':''} text-[18px] font-semibold`}>Dashboard</p>
+                  <p
+                    className={`${
+                      theme === "light" ? "sidebar-text" : ""
+                    } text-[18px] font-semibold`}
+                  >
+                    Dashboard
+                  </p>
                 </a>
               </li>
-              <li className='sidebar-list'>
+              <li className="sidebar-list">
                 <a
                   href="/find/project"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
@@ -133,10 +149,16 @@ const Sidebar = ({
                       <ProjectIcon theme={theme} />
                     </div>
                   </div>
-                  <p className={`${theme === 'light' ? 'sidebar-text':''} text-[18px] font-semibold`}>Projects</p>
+                  <p
+                    className={`${
+                      theme === "light" ? "sidebar-text" : ""
+                    } text-[18px] font-semibold`}
+                  >
+                    Projects
+                  </p>
                 </a>
               </li>
-              <li className='sidebar-list'>
+              <li className="sidebar-list">
                 <a
                   href="/frnd"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
@@ -152,10 +174,16 @@ const Sidebar = ({
                       <PeoplesIcon theme={theme} />
                     </div>
                   </div>
-                  <p className={`${theme === 'light' ? 'sidebar-text':''} text-[18px] font-semibold`}>Friends</p>
+                  <p
+                    className={`${
+                      theme === "light" ? "sidebar-text" : ""
+                    } text-[18px] font-semibold`}
+                  >
+                    Friends
+                  </p>
                 </a>
               </li>
-              <li className='sidebar-list'>
+              <li className="sidebar-list">
                 <a
                   href="/meet"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
@@ -171,7 +199,13 @@ const Sidebar = ({
                       <VideoIcon theme={theme} />
                     </div>
                   </div>
-                  <p className={`${theme === 'light' ? 'sidebar-text':''} text-[18px] font-semibold`}>Meetings</p>
+                  <p
+                    className={`${
+                      theme === "light" ? "sidebar-text" : ""
+                    } text-[18px] font-semibold`}
+                  >
+                    Meetings
+                  </p>
                 </a>
               </li>
             </ul>

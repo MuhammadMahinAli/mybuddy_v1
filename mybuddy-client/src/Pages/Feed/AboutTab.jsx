@@ -32,7 +32,7 @@ const AboutTab = ({ theme, user, userPersonalInfo }) => {
       <p
         className={` ${
           theme === "light" ? "text-gray-500" : "text-white"
-        }  text-[16px] xl:text-[20px] pt-1 capitalize`}
+        }  text-[16px] xl:text-[19px] pt-0 capitalize`}
       >
         {user?.role}
         {/* Lorem ipsum dolor sit amet */}

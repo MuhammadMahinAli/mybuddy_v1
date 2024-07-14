@@ -119,9 +119,13 @@ const UserProfileVM = () => {
   const allFriend = userInfo?.friends;
 
   const currentTwitter = allSocialInfo?.twitter ? allSocialInfo?.twitter : "";
-  const currentGithub = allSocialInfo?.github ?  allSocialInfo?.github : "";
-  const currentLinkedIn = allSocialInfo?.linkedIn ? allSocialInfo?.linkedIn : "";
-  const currentFacebook = allSocialInfo?.facebook ? allSocialInfo?.facebook : "";
+  const currentGithub = allSocialInfo?.github ? allSocialInfo?.github : "";
+  const currentLinkedIn = allSocialInfo?.linkedIn
+    ? allSocialInfo?.linkedIn
+    : "";
+  const currentFacebook = allSocialInfo?.facebook
+    ? allSocialInfo?.facebook
+    : "";
 
   const isFriend = userInfo.friends.some(
     (friend) => friend.requestedBy._id === requestedId
@@ -147,18 +151,13 @@ const UserProfileVM = () => {
     }, 2500);
   };
 
-  if(currentFacebook === ' ' || currentGithub === ' '|| currentLinkedIn === ' ' || currentGithub === ' '){
-    Swal.fire({
-      icon: "warning",
-      text: "You've sent friend request successfully.",
-    });
-    return
-  }
+
 
   //console.log(datas);
 
   return (
     <div>
+    
       {/* cover photo  3e4246 */}
 
       <div
@@ -169,7 +168,8 @@ const UserProfileVM = () => {
         {userData?.coverPic && (
           <img
             src={userData?.coverPic}
-            loading="lazy" alt="Cover Photo"
+            loading="lazy"
+            alt="Cover Photo"
             className="h-[180px] md:h-[250px] w-full object-cover z-0 p-[0px] "
           />
         )}
@@ -279,13 +279,14 @@ const UserProfileVM = () => {
                 <img
                   className="w-8 lg:w-32 xl:h-32 xl:w-36 absolute -top-28 right-[12px] md:right-0"
                   src={theme === "light" ? whiteBorder : darkBorder}
-                  loading="lazy" alt="dashedborder"
+                  loading="lazy"
+                  alt="dashedborder"
                 />
               </div>
               {/* right */}
               <div className="py-6 lg:py-0 lg:px-3 3xl:px-8">
                 <div className="flex justify-between items-center space-x-3">
-                  {theme === "light" ? (
+                  {/* {theme === "light" ? (
                     <div className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
                       <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
                         Proposal
@@ -295,7 +296,7 @@ const UserProfileVM = () => {
                     <p className="cursor-pointer text-sm lg:text-[14px] font-medium rounded-[15px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[-2px_-2px_100px_rgba(255,_255,_255,_0.1)_inset,_2px_2px_100px_rgba(66,_66,_66,_0.1)_inset] [backdrop-filter:blur(50px)]  box-border">
                       PROPOSAL
                     </p>
-                  )}
+                  )} */}
                   {/* <p>{isFriend ? "Friend" : " Friend Request"}</p> */}
                   {/* friend request button */}
                   {theme === "light" ? (
@@ -303,14 +304,14 @@ const UserProfileVM = () => {
                       onClick={isFriend ? undefined : sentFriendRequest}
                       className="lg:text-sm xl:text-lg text-white font-semibold rounded-[13px] px-3 py-2 xl:px-4 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]"
                     >
-                      {isFriend ? "Friend" : " Friend Request"}
+                      {isFriend ? "Friend" : "Add Friend"}
                     </div>
                   ) : (
                     <button
                       onClick={isFriend ? undefined : sentFriendRequest}
                       className="profileFriendRequestBtn"
                     >
-                      <p>{isFriend ? "Friend" : " Friend Request"}</p>
+                      <p>{isFriend ? "Friend" : "Add Friend"}</p>
                     </button>
                   )}
 
@@ -339,7 +340,8 @@ const UserProfileVM = () => {
                 <img
                   className="w-20 md:w-32 lg:w-32 xl:w-36 absolute -top-[95px] md:-top-[110px] lg:-top-28 md:right-[27px] lg:right-14"
                   src={theme === "light" ? whiteBorder : darkBorder}
-                  loading="lazy" alt="dashedborder"
+                  loading="lazy"
+                  alt="dashedborder"
                 />
 
                 {/* <CameraIcon /> */}
@@ -393,35 +395,49 @@ const UserProfileVM = () => {
                   <img src={googleIcon} className="h-9 rounded-full" />
                   <img src={linkedinIcon} className="h-9 rounded-full" />
                   <img src={githubIcon} className="h-9 rounded-full" /> */}
-             
-                    <a
-                      target="blank"
-                      href={`https://twitter.com/${currentTwitter}`}
-                    >
-                      <img className="9" src={xIcon} loading="lazy" alt="" />
-                    </a>
-             
-                    <a
-                      target="blank"
-                      href={`https://facebook.com/${currentFacebook}`}
-                    >
-                      <img className="h-9  p-[2px]" src={facebookIcon} loading="lazy" alt="" />
-                    </a>
-               
-                    <a
-                      target="blank"
-                      href={`https://linkedin.com/in/${currentLinkedIn}`}
-                    >
-                      <img className="h-9 " src={linkedinIcon} loading="lazy" alt="" />
-                    </a>
-               
-                    <a
-                      target="blank"
-                      href={`https://github.com/${currentGithub}`}
-                    >
-                      <img className="h-9" src={githubIcon} loading="lazy" alt="" />
-                    </a>
-                  
+
+                  <a
+                    target="blank"
+                    href={`https://twitter.com/${currentTwitter}`}
+                  >
+                    <img className="9" src={xIcon} loading="lazy" alt="" />
+                  </a>
+
+                  <a
+                    target="blank"
+                    href={`https://facebook.com/${currentFacebook}`}
+                  >
+                    <img
+                      className="h-9  p-[2px]"
+                      src={facebookIcon}
+                      loading="lazy"
+                      alt=""
+                    />
+                  </a>
+
+                  <a
+                    target="blank"
+                    href={`https://linkedin.com/in/${currentLinkedIn}`}
+                  >
+                    <img
+                      className="h-9 "
+                      src={linkedinIcon}
+                      loading="lazy"
+                      alt=""
+                    />
+                  </a>
+
+                  <a
+                    target="blank"
+                    href={`https://github.com/${currentGithub}`}
+                  >
+                    <img
+                      className="h-9"
+                      src={githubIcon}
+                      loading="lazy"
+                      alt=""
+                    />
+                  </a>
                 </div>
               </div>
             </div>
@@ -484,20 +500,35 @@ const UserProfileVM = () => {
                     target="blank"
                     href={`https://facebook.com/${currentFacebook}`}
                   >
-                    <img className="h-9" src={facebookIcon} loading="lazy" alt="" />
+                    <img
+                      className="h-9"
+                      src={facebookIcon}
+                      loading="lazy"
+                      alt=""
+                    />
                   </a>
                   {/* <img className="h-12" src={google} loading="lazy" alt="" /> */}
                   <a
                     target="blank"
                     href={`https://linkedin.com/in/${currentLinkedIn}`}
                   >
-                    <img className="h-9 " src={linkedinIcon} loading="lazy" alt="" />
+                    <img
+                      className="h-9 "
+                      src={linkedinIcon}
+                      loading="lazy"
+                      alt=""
+                    />
                   </a>
                   <a
                     target="blank"
                     href={`https://github.com/${currentGithub}`}
                   >
-                    <img className="h-9" src={githubIcon} loading="lazy" alt="" />
+                    <img
+                      className="h-9"
+                      src={githubIcon}
+                      loading="lazy"
+                      alt=""
+                    />
                   </a>
                 </div>
               </div>

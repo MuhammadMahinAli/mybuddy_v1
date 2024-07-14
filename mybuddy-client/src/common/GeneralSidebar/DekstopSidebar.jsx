@@ -31,7 +31,7 @@ const DekstopSidebar = ({
     ? singleUser?.data?.profilePic
     : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
   return (
-    <div className="hidden lg:flex py-4 flex-col justify-center items-center space-y-12 lg:w-[270px]  xl:w-3/12  rounded-[33px] bg-[#f3f6f8] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
+    <div className="hidden  lg:flex lg:relative lg:-left-3 py-4 pl-1  flex-col justify-center items-center space-y-12 lg:w-[270px]  xl:w-3/12  rounded-[33px] bg-[#f3f6f8] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
       <div
         onClick={handleDashboard}
         className={`bg-[#e4ecf7] py-4

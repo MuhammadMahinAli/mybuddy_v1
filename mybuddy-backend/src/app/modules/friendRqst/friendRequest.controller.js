@@ -8,17 +8,44 @@ import { ApiError } from "../../../handleError/apiError.js";
 
 
 //------create a new friend request
-export const createNewFriendRequest= catchAsync(async (req, res, next) => {
-    const data = req.body;
-    const newRequest = await createFriendRequest(data);
+// export const createNewFriendRequest= catchAsync(async (req, res, next) => {
+//     const data = req.body;
+//     const newRequest = await createFriendRequest(data);
   
+//     sendResponse(res, {
+//       statusCode: httpStatus.OK,
+//       success: true,
+//       message: "Friend request created successfully!",
+//       data: newRequest,
+//     });
+//   });
+
+
+export const createNewFriendRequest = catchAsync(async (req, res, next) => {
+  const data = req.body;
+
+  try {
+    const newRequest = await createFriendRequest(data);
+
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: "Friend request created successfully!",
       data: newRequest,
     });
-  });
+  } catch (error) {
+    if (error.statusCode === httpStatus.BAD_REQUEST) {
+      sendResponse(res, {
+        statusCode: httpStatus.BAD_REQUEST,
+        success: false,
+        message: error.message,
+      });
+    } else {
+      next(error);
+    }
+  }
+});
+
 //----- pending
   export const getPendingFriendRequestController = catchAsync(async (req, res) => {
     const { id } = req.params;

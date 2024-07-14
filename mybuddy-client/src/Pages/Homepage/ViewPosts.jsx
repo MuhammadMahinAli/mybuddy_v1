@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import whiteBorder from "../../assets/home/p-border.png";
 import darkBorder from "../../assets/home/dark-border.png";
 import Image from "./view/Image";
@@ -11,9 +11,15 @@ import Description from "./Description";
 import Loading from "../Loading/Loading";
 import { Link } from "react-router-dom";
 import TeamMember from "./view/TeamMember";
+import { AuthContext } from "../../Context/UserContext";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const ViewPosts = ({ theme, active }) => {
   const [openComponent, setOpenComponent] = useState({});
+  const { user } = useSelector((state) => state.auth);
+  const { createNewRequest,isFatchingCreateNewRequest } = useContext(AuthContext);
+  const requestedId = user?._id;
   const {
     data: allPosts,
     isLoading: isFetchingPosts,
@@ -71,6 +77,78 @@ const ViewPosts = ({ theme, active }) => {
 
   const posts = allPosts.data;
   console.log(posts);
+  // const sentFriendRequest = async (user) => {
+  //   const datas = {
+  //     requestedBy: requestedId,
+  //     requestedTo: user?._id,
+  //     status: "Pending",
+  //   };
+  //   console.log(datas);
+  
+  //   try {
+  //     await createNewRequest(datas);
+   
+  //     // setTimeout(() => {
+  //     //   window.location.reload();
+  //     // }, 2500);
+  //   } catch (error) {
+  //     console.log(error);
+  //     if (error.response && error.response.status === 500) {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Oops!",
+  //         text: "You have already sent a friend request to this user.",
+  //       });
+  //     } 
+  //     else {
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Well done!",
+  //         text: "You've sent friend request successfully.",
+  //       });
+  //     }
+  //   }
+  // };
+
+  const sentFriendRequest = async (user) => {
+    const datas = {
+      requestedBy: requestedId,
+      requestedTo: user?._id,
+      status: "Pending",
+    };
+    console.log(datas);
+  
+    try {
+      const response = await createNewRequest(datas);
+      console.log(response);
+  
+      if (response.data.success === true) {
+        Swal.fire({
+          icon: "success",
+          title: "Well done!",
+          text: "You've sent friend request successfully.",
+        });
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2500);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops!",
+          text: response.data.message || "You have already sent a friend request.",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        // title: "Oops!",
+        text:  "You have already sent a friend request.",
+      });
+    }
+  };
+  
+  
 
   return (
     <div className="space-y-3 py-3">
@@ -89,9 +167,10 @@ const ViewPosts = ({ theme, active }) => {
                 : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover"
             } shadow-[-1px_0px_56px_-6px_rgba(134,134,134,0.25)] rounded-[10px] w-[270px] xs:w-[280px] sm:w-[350px] md:w-[600px] lg:w-[500px] xl:w-[670px] 2xl:w-[750px] 3xl:w-[800px]`}
           >
-            <Link to={`/user/profile/${post?.postedBy?._id}`}>
+           
               <div className="flex justify-between items-center p-2 sm:px-3 sm:pt-3">
                 <div className="flex items-center space-x-3">
+                <Link to={`/user/profile/${post?.postedBy?._id}`}>
                   <div className="flex flex-col justify-center items-center relative">
                     <img
                       data-src={
@@ -108,6 +187,7 @@ const ViewPosts = ({ theme, active }) => {
                       loading="lazy" alt="dashedborder"
                     />
                   </div>
+                  </Link>
                   <div>
                     <div className="flex items-center space-x-1">
                       <p
@@ -137,11 +217,11 @@ const ViewPosts = ({ theme, active }) => {
                 </div>
                 <div>
                   {theme === "light" ? (
-                    <button className="flex items-center my-3 px-4 py-1 md:px-4 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]">
+                    <button onClick={()=>sentFriendRequest(post?.postedBy)} className="flex items-center my-3 px-4 py-1 md:px-4 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]">
                       <span className="pr-1">
                         <FaPlus />
                       </span>
-                      Follow
+                      Friend
                     </button>
                   ) : (
                     <button className="newBtn">
@@ -149,13 +229,13 @@ const ViewPosts = ({ theme, active }) => {
                         <span className="pr-1">
                           <FaPlus />
                         </span>{" "}
-                        Follow
+                        Friend
                       </p>
                     </button>
                   )}
                 </div>
               </div>
-            </Link>
+           
             <div
               className={`${
                 theme === "light" ? "graish" : "text-white"

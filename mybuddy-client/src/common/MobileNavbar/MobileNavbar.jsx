@@ -107,7 +107,7 @@ const MobileNavbar = ({
                     activeTab[user?._id] === "project"
                       ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
                       : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
-                  } cursor-pointer rounded-[27px] bg-[#fff0d4]  border-[2px] border-solid px-4 py-1 mx-5 mt-1 flex justify-center items-center`}
+                  } cursor-pointer rounded-[27px] bg-[#FFF0D4]  border-[2px] border-solid px-4 py-1 mx-5 mt-1 flex justify-center items-center`}
                 >
                   <p className="graish text-sm md:text-lg font-semibold">
                     Project
@@ -136,7 +136,7 @@ const MobileNavbar = ({
                     activeTab[user?._id] === "social"
                       ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
                       : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
-                  } cursor-pointer rounded-[27px] bg-[#e6fcce] border-[2px] border-solid px-4 py-1 mx-5 mt-1 flex justify-center items-center`}
+                  } cursor-pointer rounded-[27px] bg-[#C7F99173] border-[2px] border-solid px-4 py-1 mx-5 mt-1 flex justify-center items-center`}
                 >
                   <p className="graish text-[11px] xs:text-sm md:text-lg font-semibold">
                     Social Info

@@ -55,11 +55,11 @@ const SocialTab = ({ theme,user, socialInfos }) => {
       </p>
         :
 
-        <div className="flex justify-center items-center mt-5 md:mt-7 lg:w-[600px] lg:justify-start lg:pl-10">
+        <div className="flex justify-center items-center mt-5 md:mt-7 lg:w-[600px] lg:justify-start lg:pl-10 xl:mb-4">
         <div
           className={`${
             theme === "light"
-              ? "bg-[#f5f5f5] border-[0.8px] border-solid border-gray shadow-[-7px_-7px_19px_rgba(255,_255,_255,_0.6),_9px_9px_16px_rgba(163,_177,_198,_0.6)] "
+              ? "bg-[#f5f5f5] border-[0.8px] border-solid border-gray shadow-[-7px_-1px_1px_rgba(255,_255,_255,_0.6),_1px_1px_19px_rgba(163,_177,_198,_0.6)] "
               : "bg-[#1b1d25]"
           } space-y-2 p-3 md:p-3 box-border  w-full rounded-b-xl`}
         >
