@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Login = () => {
-  const [login] =  useLoginMutation();
+  const [login] = useLoginMutation();
   const { user } = useSelector((state) => state.auth);
   const { addSocialInfo } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -106,22 +106,19 @@ const Login = () => {
             });
           }
         });
-      }
-   else  if (response?.error?.data?.message === "Password is incorrect") {
+      } else if (response?.error?.data?.message === "Password is incorrect") {
         Swal.fire({
           icon: "error",
           text: "The password you entered is incorrect. Please try again with correct password.",
         });
-      } 
-      else  if (response?.error?.data?.message === "Member doesn't found") {
+      } else if (response?.error?.data?.message === "Member doesn't found") {
         Swal.fire({
           icon: "error",
           title: "Account Not Found",
           text: "We couldn't find an account associated with this email address. Please check your email and try again, or sign up for a new account if you don't have one.",
-          footer: '<a href="/sign-up">Sign up for a new account</a>'
+          footer: '<a href="/sign-up">Sign up for a new account</a>',
         });
-      }
-      else {
+      } else {
         console.log(response.error);
       }
     } catch (error) {
