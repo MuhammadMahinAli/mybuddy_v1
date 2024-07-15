@@ -118,7 +118,7 @@ const Login = () => {
           icon: "error",
           title: "Account Not Found",
           text: "We couldn't find an account associated with this email address. Please check your email and try again, or sign up for a new account if you don't have one.",
-          footer: '<a href="/sign">Sign up for a new account</a>'
+          footer: '<a href="/sign-up">Sign up for a new account</a>'
         });
       }
       else {
@@ -201,7 +201,7 @@ const Login = () => {
           <p className="text-center">
             {"Don't have any account ? "}
             <Link
-              to="/sign"
+              to="/sign-up"
               className="text-blue-600 font-semibold cursor-pointer"
             >
               Register Now

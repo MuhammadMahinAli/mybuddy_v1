@@ -128,7 +128,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/sign",
+    path: "/sign-up",
     element: <Sign />,
   },
   {

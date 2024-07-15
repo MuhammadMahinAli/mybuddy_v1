@@ -79,7 +79,7 @@ const MemberSchema = new Schema(
 MemberSchema.methods.isMemberExist = async function (email) {
   const user = await Member.findOne(
     { email },
-    { _id: 1, email: 1, password: 1, role: 1 }
+    { _id: 1, email: 1, password: 1, role: 1,emailVerified:1 }
   );
   return user;
 };

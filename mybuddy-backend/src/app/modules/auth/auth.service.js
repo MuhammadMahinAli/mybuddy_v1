@@ -12,12 +12,15 @@ export const loginUserService = async (payload) => {
   const member = new Member();
   // Checking member existence
   const isMemberExist = await member.isMemberExist(email);
+
+  
   if (!isMemberExist) {
      throw new ApiError(httpStatus.NOT_FOUND, "Member doesn't found");
   }
 
+  //console.log(isMemberExist);
     // Check if the email is verified
-    if (!isMemberExist.emailVerified === false) {
+    if (!isMemberExist.emailVerified) {
       throw new ApiError(httpStatus.UNAUTHORIZED, "Email is not verified");
     }
   // Checking password match
@@ -26,20 +29,19 @@ export const loginUserService = async (payload) => {
      throw new ApiError(httpStatus.UNAUTHORIZED, "Password is incorrect");
   }
   // Create access token
-  const {email: memberEmail, role, _id: memberId} = isMemberExist;
-  const token = createToken({memberEmail, role, memberId}, config.jwt.secret, {
-     expiresIn: config.jwt.expires_in,
+  const {email: memberEmail, role, _id: memberId, emailVerified} = isMemberExist;
+  const token = createToken({memberEmail, role, memberId, emailVerified}, config.jwt.secret, {
+    expiresIn: config.jwt.expires_in,
   });
- 
-  const refreshToken = createToken({memberEmail, role, memberId}, config.jwt.refresh_secret, {expiresIn: config.jwt.refresh_expires_in});
- 
+  
+  const refreshToken = createToken({memberEmail, role, memberId, emailVerified}, config.jwt.refresh_secret, {expiresIn: config.jwt.refresh_expires_in});
+  
   return {
-     accessToken: token,
-     refreshToken,
-     user: isMemberExist,
+    accessToken: token,
+    refreshToken,
+    user: isMemberExist,
   };
- };
-
+}
 
 ///create refreshtoken
 export const refreshTokenService = async (token) => {
