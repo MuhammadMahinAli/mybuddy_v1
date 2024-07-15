@@ -13,8 +13,8 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
     <div>
  <div data-aos="fade-right"
      data-aos-anchor="#example-anchor"
-     data-aos-offset="500"
-     data-aos-duration="400" className={`fixed  left-0 top-0 z-50`}>
+     data-aos-offset="300"
+     data-aos-duration="300" className={`fixed  left-0 top-0 z-50`}>
         {openSidebar && (
           <div className="">
             <div

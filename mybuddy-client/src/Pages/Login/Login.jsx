@@ -1,19 +1,19 @@
 import { MdOutlineEmail } from "react-icons/md";
 import { GoEyeClosed } from "react-icons/go";
-import { useContext,  useState } from "react";
+import { useContext, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { useLoginMutation } from "../../features/auth/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/UserContext";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Login = () => {
-  const [login, { data: responseData,  error: responseError }] =
-    useLoginMutation();
-    const { user } = useSelector((state) => state.auth);
-    const{addSocialInfo} = useContext(AuthContext);
-    const navigate = useNavigate();
+  const [login] =  useLoginMutation();
+  const { user } = useSelector((state) => state.auth);
+  const { addSocialInfo } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,10 +30,10 @@ const Login = () => {
     pinterest: "",
     facebook: "",
   };
-  const infoData={
-    user:user?._id,
-    socialData
-  }
+  const infoData = {
+    user: user?._id,
+    socialData,
+  };
   //setting form data to add service
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -54,55 +54,101 @@ const Login = () => {
     setPasswordType("password");
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-       // Assuming login returns a promise that resolves with the response data
-       const response = await login(formData);
-       console.log("r",response);
-       if (response?.data?.message === "User logged in successfully!") {
-         console.log(response);
-         Swal.fire({
-          icon:"success",
-          text:"You have been logged in successfully!"});
+      // Assuming login returns a promise that resolves with the response data
+      const response = await login(formData);
+      //console.log(response.data.message);
+      console.log(response);
+      if (response?.data?.message === "User logged in successfully!") {
+        //console.log(response.data.message);
+        Swal.fire({
+          icon: "success",
+          text: "You have been logged in successfully!",
+        });
 
         // social
-          addSocialInfo(infoData);
-         navigate("/user/edit-profile");
-       } else {
-         // Handle unexpected response format
-         Swal.fire({
-           icon: "error",
-           title: "Oops...",
-           text: "Please enter correct Email/Password !",
-         });
-       }
+        addSocialInfo(infoData);
+        navigate("/user/edit-profile");
+      } else if (response?.error?.data?.message === "Email is not verified") {
+        // Handle unexpected response format
+        Swal.fire({
+          icon: "warning",
+          title: "Email is not verified",
+          text: "Please enter your email to resend the verification link:",
+          input: "email",
+          inputPlaceholder: "Enter your email",
+          showCancelButton: true,
+          confirmButtonText: "Send",
+          showLoaderOnConfirm: true,
+          preConfirm: async (email) => {
+            try {
+              const resendResponse = await axios.post(
+                "http://localhost:3000/api/v1/member/resend-verification-email",
+                { email }
+              );
+              return resendResponse.data.message;
+            } catch (error) {
+              Swal.showValidationMessage(
+                `Request failed: ${
+                  error.response?.data?.message || "Something went wrong"
+                }`
+              );
+            }
+          },
+          allowOutsideClick: () => !Swal.isLoading(),
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              icon: "success",
+              text: result.value,
+            });
+          }
+        });
+      }
+   else  if (response?.error?.data?.message === "Password is incorrect") {
+        Swal.fire({
+          icon: "error",
+          text: "The password you entered is incorrect. Please try again with correct password.",
+        });
+      } 
+      else  if (response?.error?.data?.message === "Member doesn't found") {
+        Swal.fire({
+          icon: "error",
+          title: "Account Not Found",
+          text: "We couldn't find an account associated with this email address. Please check your email and try again, or sign up for a new account if you don't have one.",
+          footer: '<a href="/sign">Sign up for a new account</a>'
+        });
+      }
+      else {
+        console.log(response.error);
+      }
     } catch (error) {
-       // Handle login error
-       Swal.fire({
-         icon: "error",
-         title: "Oops...",
-         text: "Please enter correct Email/Password!",
-         footer: '<a href="#">Why do I have this issue?</a>'
-       });
+      // Handle login error
+      console.log(error);
     }
-   };
-   //bg-[url('https://i.ibb.co/jkHs6rF/page-1.png')]
+  };
+  //bg-[url('https://i.ibb.co/jkHs6rF/page-1.png')]
   return (
     <div className="flex justify-center items-center  bg-no-repeat bg-cover min-h-screen">
       <div className="py-5 md:py-0 md:mx-10 lg:mx-20 w-full flex flex-col md:flex-row justify-between items-center   rounded-[20px]  shadow-[-7px_-7px_19px_rgba(255,_255,_255,_0.6),_9px_9px_16px_rgba(163,_177,_198,_0.6)] box-border border-[0.8px] border-solid border-gray">
         {/* left */}
         <div className="p-5 space-y-4 md:space-y-0 md:w-6/12">
           <div className="md:hidden w-[350px] rounded-[20px] shadow-[-7px_-7px_19px_rgba(255,_255,_255,_0.6),_9px_9px_16px_rgba(163,_177,_198,_0.6)] box-border border-[0.8px] border-solid border-gray">
-            <img src="https://img.freepik.com/free-vector/key-concept-illustration_114360-6305.jpg" className="p-7 w-[250px]" loading="lazy" alt="" />
+            <img
+              src="https://img.freepik.com/free-vector/key-concept-illustration_114360-6305.jpg"
+              className="p-7 w-[250px]"
+              loading="lazy"
+              alt=""
+            />
           </div>
           <div className="flex justify-center items-center p-8 hidden md:block">
             <img
               src="https://img.freepik.com/free-vector/key-concept-illustration_114360-6305.jpg"
               className="w-[280px] lg:w-[850px] xl:w-[900px]"
-              loading="lazy" alt=""
+              loading="lazy"
+              alt=""
             />
           </div>
         </div>
@@ -138,9 +184,15 @@ const Login = () => {
             />
             {/* <GoEyeClosed className="text-gray-500 text-xl" /> */}
             {passwordType === "password" ? (
-              <AiOutlineEye onClick={togglePassword} className="text-gray-500 text-xl" />
+              <AiOutlineEye
+                onClick={togglePassword}
+                className="text-gray-500 text-xl"
+              />
             ) : (
-              <GoEyeClosed onClick={togglePassword}  className="text-gray-500 text-xl" />
+              <GoEyeClosed
+                onClick={togglePassword}
+                className="text-gray-500 text-xl"
+              />
             )}
           </div>
           <button className="text-xl md:text-2xl text-white font-semibold bg-blue-500 py-1 md:py-2 rounded-[30px]">
@@ -148,7 +200,12 @@ const Login = () => {
           </button>
           <p className="text-center">
             {"Don't have any account ? "}
-            <Link to='/sign' className="text-blue-600 font-semibold cursor-pointer">Register Now</Link>
+            <Link
+              to="/sign"
+              className="text-blue-600 font-semibold cursor-pointer"
+            >
+              Register Now
+            </Link>
           </p>
         </form>
       </div>

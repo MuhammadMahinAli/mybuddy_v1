@@ -15,6 +15,11 @@ export const loginUserService = async (payload) => {
   if (!isMemberExist) {
      throw new ApiError(httpStatus.NOT_FOUND, "Member doesn't found");
   }
+
+    // Check if the email is verified
+    if (!isMemberExist.emailVerified === false) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, "Email is not verified");
+    }
   // Checking password match
   // Correctly call isPasswordMatched on the isMemberExist instance
   if (!await isMemberExist.isPasswordMatched(password)) {

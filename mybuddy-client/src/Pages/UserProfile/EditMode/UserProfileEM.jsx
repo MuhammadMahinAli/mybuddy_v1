@@ -186,7 +186,8 @@ const UserProfileEM = () => {
         {currentCover || previewCoverImage ? (
           <img
             src={previewCoverImage || currentCover}
-            loading="lazy" alt="Cover Photo"
+            loading="lazy"
+            alt="Cover Photo"
             className="h-[180px] md:h-[250px] w-full object-cover z-0 p-[0px]"
           />
         ) : null}
@@ -221,7 +222,6 @@ const UserProfileEM = () => {
                 <label htmlFor="coverImageInput">
                   <div className="flex space-x-1">
                     <CameraIcon2 theme={theme} />
-
                     <p>Edit Cover Photo</p>
                   </div>
                 </label>
@@ -242,7 +242,7 @@ const UserProfileEM = () => {
         ) : (
           <>
             {previewCoverImage === "" ? (
-              <button className="hidden lg:block updateCoverBtn float-right absolute -top-56 right-5">
+              <button className="hidden lg:block updateCoverBtn float-right absolute top-5 right-5">
                 <label htmlFor="coverImageInput">
                   <p>
                     <span>
@@ -294,7 +294,8 @@ const UserProfileEM = () => {
                 <img
                   className="w-20  md:w-32 lg:w-32 xl:w-36 absolute -top-[0px] right-0 md:top-[1px] md:right-0 lg:-top-0  lg:right-[0px] xl:-top-0 xl:right-[0px] 2xl:right-[0px] 3xl:right-[0px] 5xl:right-[0px]"
                   src={theme === "light" ? whiteBorder : darkBorder}
-                  loading="lazy" alt="dashedborder"
+                  loading="lazy"
+                  alt="dashedborder"
                 />
                 {/* <CameraIcon /> */}
                 {previewProfileImage === "" ? (
@@ -383,7 +384,7 @@ const UserProfileEM = () => {
                 <h1
                   className={`${
                     theme === "light" ? "graish" : "text-white"
-                  } pb-3 text-xl text-center font-bold`}
+                  } pb-3 text-xl text-center font-bold capitalize`}
                 >
                   {userName}
                 </h1>
@@ -391,14 +392,14 @@ const UserProfileEM = () => {
                 <h1
                   className={`${
                     theme === "light" ? "graish" : "text-white"
-                  } font-medium text-[14px] xl:text-[16px] text-center `}
+                  } font-medium text-[14px] xl:text-[16px] text-center capitalize`}
                 >
                   Role: {userRole}
                 </h1>
                 <h1
                   className={`${
                     theme === "light" ? "graish" : "text-white"
-                  } font-medium text-[14px] xl:text-[16px] text-center  `}
+                  } font-medium text-[14px] xl:text-[16px] text-center  capitalize`}
                 >
                   Address: {userAddress} <span>{userCountry}</span>
                 </h1>

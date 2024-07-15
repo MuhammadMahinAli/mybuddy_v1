@@ -69,6 +69,44 @@ export const verifyEmailService = async (token) => {
   return userDetails;
 };
 
+// ----------- resent email
+export const resendEmailService = async (email) => {
+  const member = await Member.findOne({ email });
+
+  if (!member) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Member not found");
+  }
+
+  if (member.emailVerified === true) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Email is already verified");
+  }
+
+  const verificationToken = member.verificationToken
+
+  //member.verificationToken = verificationToken;
+  await member.save();
+
+  const verificationLink =  `http://localhost:5173/verified-email/${verificationToken}`;
+  await sendEmail({
+    to: email,
+    subject: 'Verify Your Email Address',
+    html: `
+     <div style="font-family: Arial, sans-serif;">
+      <img src="https://i.ibb.co/g9fcnQq/logo.png" alt="Research Buddy" style="width: 50px; height: auto;"/>
+      <p style="padding-top: 10px;">Dear ${member.name.firstName} ${member.name.lastName},</p>
+      <p>Thank you for signing up with us! We're excited to have you on board. To ensure the security and activation of your account, please verify your email address.</p>
+      <p>To get started, click the link below:</p>
+      <p><a className='font-semibold' href="${verificationLink}">Verify Your Email</a></p>
+      <p>If you did not sign up for this account, please ignore this email.</p>
+      <p>Best regards,</p>
+      <p>The Research Buddy Team</p>
+      </div>
+    `,
+  });
+
+  return { message: 'Verification email sent' };
+};
+
 
 
 

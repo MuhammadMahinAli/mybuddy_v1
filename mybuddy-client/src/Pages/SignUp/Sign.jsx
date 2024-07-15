@@ -85,10 +85,7 @@ const Sign = () => {
       navigate(`/verify-your-email`);
     }
   }, [responseData, responseError]);
-  // const navigateWithToken = () => {
-  //   const verificationUrl = `/verify-email/${token}`;
-  //   navigate(verificationUrl);
-  // };
+
   return (
     <div className="flex justify-center items-center bg-no-repeat bg-cover min-h-screen">
       <div className="py-5 lg:my-9 md:py-0 md:mx-10 lg:mx-20 w-full flex flex-col md:flex-row justify-between items-center   rounded-[20px]  shadow-[-7px_-7px_19px_rgba(255,_255,_255,_0.6),_9px_9px_16px_rgba(163,_177,_198,_0.6)] box-border border-[0.8px] border-solid border-gray">

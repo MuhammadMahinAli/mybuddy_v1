@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import barcode from "../../assets/barcode.png";
 import qrcode from "../../assets/qrcode.png";
 import Swal from "sweetalert2";
-import { useSelector } from "react-redux";
 import { AuthContext } from "../../Context/UserContext";
 import Loading from "../Loading/Loading";
 
@@ -87,7 +86,7 @@ const VerificationSuccess = () => {
 
                   {/* User Information */}
                   <div className="text-center mt-4">
-                    <h2 className="text-xl  font-bold text-green-800">
+                    <h2 className="text-xl  font-bold text-green-800 capitalize">
                       {firstName} {lastName}
                     </h2>
                     {/* <p className="text-green-700">Graphic Designer</p> */}

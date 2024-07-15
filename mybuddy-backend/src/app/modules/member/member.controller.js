@@ -1,4 +1,4 @@
-import {createMemberService,getAllMemberService,getSingleMember,updateMemberCoverPicService,updateMemberInfoService,updateMemberProfilePicService,updateMemberService, verifyEmailService} from "./member.service.js";
+import {createMemberService,getAllMemberService,getSingleMember,resendEmailService,updateMemberCoverPicService,updateMemberInfoService,updateMemberProfilePicService,updateMemberService, verifyEmailService} from "./member.service.js";
 import {catchAsync} from "../../../utils/catchAsync.js";
 import {sendResponse} from "../../../utils/sendResponse.js";
 import httpStatus from "http-status";
@@ -82,7 +82,12 @@ export const verifyEmail = catchAsync(async (req, res, next) => {
   }
 });
 
-
+// -------------- resend email
+export const resendVerificationEmail = catchAsync(async (req, res) => {
+  const { email } = req.body;
+  const result = await resendEmailService(email);
+  res.status(200).json(result);
+});
 
 
 //-------get all users

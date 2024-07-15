@@ -22,7 +22,7 @@ const ProfileTab = ({ openProfile, logout }) => {
   return (
     <div
       data-aos={openProfile === true ? "fade-up" : "fade-down"}
-      data-aos-duration="600"
+      data-aos-duration="300"
       className="absolute z-50 top-14 right-5 md:top-20 md:right-10 lg:right-10 3xl:right-16 shadow-2xl w-56 py-3 px-[3px] rounded-lg bg-white"
     >
       {/* profile and button */}
@@ -45,8 +45,8 @@ const ProfileTab = ({ openProfile, logout }) => {
           </div>
 
           <div>
-            <p className="text-[13px] font-medium ">{userName}</p>
-            <p className="text-[12px] text-gray-500">{userRole}</p>
+            <p className="text-[16px] font-medium ">{userName}</p>
+            <p className="text-[15px] text-gray-500">{userRole}</p>
           </div>
         </div>
         <a href={user? "/user/edit-profile":"/login"}>

@@ -23,6 +23,7 @@ const Posts = ({ theme }) => {
   const [articleTab, setArticleTab] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isTeamOpen, setIsTeamOpen] = useState(false);
+  const [isFileLoading, setIsFileLoading] = useState(false);
   const [createPost, { data: responseData, error: responseError }] =
     useCreatePostMutation();
   const { user } = useSelector((state) => state.auth);
@@ -51,29 +52,56 @@ const Posts = ({ theme }) => {
   };
 
   const [previewImage, setPreviewImage] = useState("");
+  // const handlePreviewImage = async (e) => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     const file = e.target.files[0];
+  //     setPreviewImage(file);
+  //     //setPreviewImage(URL.createObjectURL(file));
+  //     const imageUrl = await fileUpload(file);
+  //     setFormData((prevState) => ({
+  //       ...prevState,
+  //       image: imageUrl,
+  //     }));
+  //     return imageUrl;
+  //   }
+  // };
   const handlePreviewImage = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setPreviewImage(file);
-      //setPreviewImage(URL.createObjectURL(file));
-      const imageUrl = await fileUpload(file);
-      setFormData((prevState) => ({
-        ...prevState,
-        image: imageUrl,
-      }));
-      return imageUrl;
+
+      setIsFileLoading(true); // Start loading
+
+      try {
+        const imageUrl = await fileUpload(file);
+        setFormData((prevState) => ({
+          ...prevState,
+          image: imageUrl,
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+
+      setIsFileLoading(false); // End loading
     }
   };
+
   console.log(previewImage);
+
   const handlePdfUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
+
+    setIsFileLoading(true); // Start loading
+
     reader.onloadend = () => {
       setFormData((prevState) => ({
         ...prevState,
         pdf: reader.result,
       }));
+      setIsFileLoading(false); // End loading
     };
+
     reader.readAsDataURL(file);
   };
   // teamMembers: [],
@@ -123,25 +151,20 @@ const Posts = ({ theme }) => {
       return;
     }
 
-    const fileInput = document.getElementById("mediaa");
     if (projectTab === true) {
-      let missingItems = [];
-
-      if (!fileInput.files.length) {
-        missingItems.push("Image");
-      }
-      if (formData?.teamMembers.length === 0) {
-        missingItems.push("Team Members");
-      }
-      if (formData?.technicalRecommendations.length === 0) {
-        missingItems.push("Technical Recommendations");
-      }
-
-      if (missingItems.length > 0) {
+      if (formData?.image.length === 0) {
         Swal.fire({
           icon: "warning",
-          title: "Oops !",
-          text: `You Must've To Add ${missingItems.join(" , ")}.`,
+          title: "Oops!",
+          text: "You Must've to Add An Image.",
+        });
+        return;
+      }
+      if (formData?.technicalRecommendations.length === 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "Oops!",
+          text: "You Must've To Add Technical Recommendations.",
         });
         return;
       }
@@ -203,12 +226,10 @@ const Posts = ({ theme }) => {
           "p-[1px] bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90% rounded-[15px] h-[210px] md:h-[355px] xl:h-[344px]"
         }`}
       >
-
         <div className="relative h-[230px] md:h-[330px] xl:h-[330px]">
-         {
-          theme === 'light' &&
-          <div className="bg-[#f2f3f4] rounded-b-[14px] w-[230px] xs:w-[240px] sm:w-[350px] md:w-[560px] lg:w-[470px] xl:w-[640px] 2xl:w-[715px] 3xl:w-[760px] h-4 absolute -bottom-0 left-4" />
-         }
+          {theme === "light" && (
+            <div className="bg-[#f2f3f4] rounded-b-[14px] w-[230px] xs:w-[240px] sm:w-[350px] md:w-[560px] lg:w-[470px] xl:w-[640px] 2xl:w-[715px] 3xl:w-[760px] h-4 absolute -bottom-0 left-4" />
+          )}
           <div
             className={`${
               theme === "light"
@@ -324,18 +345,9 @@ const Posts = ({ theme }) => {
                     <button type="button" onClick={() => setIsOpen(true)}>
                       <TechnicalIcon theme={theme} />
                     </button>
-                    <label htmlFor="mediaa">
+                    <label htmlFor="media">
                       <MediaIcon theme={theme} />
                     </label>
-                    <input
-                      className="hidden"
-                      type="file"
-                      name="file"
-                      id="mediaa"
-                      required
-                      onChange={handlePreviewImage}
-                      accept="image/*"
-                    />
                   </>
                 )}
                 <input
@@ -362,6 +374,13 @@ const Posts = ({ theme }) => {
                     />
                   </>
                 )}
+                {isFileLoading && (
+                  <div
+                    className={`${
+                      theme === "light" ? "border-[#06b965]" : "border-[#fff]"
+                    }  w-8 h-8 border-2 border-dashed rounded-full animate-spin`}
+                  ></div>
+                )}
                 {/* preview image */}
                 {formData?.image && (
                   <div className="relative  bg-gray-300 rounded-lg h-7 w-10 md:h-14 md:w-28 lg:ml-4">
@@ -371,13 +390,11 @@ const Posts = ({ theme }) => {
                     >
                       <IoIosCloseCircle className="text-[18px] md:text-[22px] cursor-pointer" />
                     </div>
-              
+
                     <img
                       src={formData?.image}
                       className="h-7 w-10 md:h-14 md:w-full border border-gray-400 shadow-xl rounded-lg"
                     />
-                
-                   
                   </div>
                 )}
                 {/* preview pdf */}
@@ -432,3 +449,78 @@ const Posts = ({ theme }) => {
 };
 
 export default Posts;
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   if (!user) {
+//     navigate("/");
+//     return;
+//   }
+//   if (!formData.description) {
+//     Swal.fire({
+//       icon: "warning",
+//       title: "Oops!",
+//       text: "I Think, You Forget To Write Description",
+//     });
+//     return;
+//   }
+
+//   const fileInput = document.getElementById("media");
+
+//   if (projectTab === true) {
+//     let missingItems = [];
+
+//     if (!fileInput.files.length) {
+//       missingItems.push("Image");
+//     }
+//     if (formData?.technicalRecommendations.length === 0) {
+//       missingItems.push("Technical Recommendations");
+//     }
+
+//     if (missingItems.length > 0) {
+//       Swal.fire({
+//         icon: "warning",
+//         title: "Oops!",
+//         text: `You Must've To Add ${missingItems.join(" , ")}.`,
+//       });
+//       return;
+//     }
+//   }
+
+//   if (fileInput.files.length === 0) {
+//     Swal.fire({
+//       icon: "warning",
+//       title: "Oops!",
+//       text: "You must add an image.",
+//     });
+//     return;
+//   }
+
+//   const postData = {
+//     ...formData,
+//     postedBy: user._id,
+//     image: fileInput.files[0], // Assuming you want to include the file in postData
+//   };
+
+//   console.log("form", postData);
+//   createPost(postData);
+
+//   setFormData({
+//     description: "",
+//     image: "",
+//     technicalRecommendations: [],
+//     comments: [],
+//     pdf: "",
+//   });
+// };
+
+// const handlePdfUpload = (e) => {
+//   const file = e.target.files[0];
+//   const reader = new FileReader();
+//   reader.onloadend = () => {
+//     setFormData((prevState) => ({
+//       ...prevState,
+//       pdf: reader.result,
+//     }));
+//   };
+//   reader.readAsDataURL(file);
+// };
