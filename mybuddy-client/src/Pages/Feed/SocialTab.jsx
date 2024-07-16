@@ -2,12 +2,11 @@ import GithubIcon from "../../icons/GithubIcon";
 import TwitterIcon from "../../icons/TwitterIcon";
 import LinkedInIcon from "../../icons/LinkedInIcon";
 import instaIcon from "../../assets/icon/instagram.png";
-import { useState } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import ytube from "../../assets/icon/yt.png";
 import pintrst from "../../assets/icon/pintrst.png";
 import tiktok from "../../assets/icon/tiktok.png";
 import fb from "../../assets/icon/fb.png";
+import PropTypes from "prop-types";
 
 const SocialTab = ({ theme,user, socialInfos }) => {
   console.log("si", socialInfos);
@@ -329,6 +328,11 @@ const SocialTab = ({ theme,user, socialInfos }) => {
 };
 
 export default SocialTab;
+SocialTab.propTypes = {
+  theme: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
+  socialInfos: PropTypes.array.isRequired,
+};
 // <div
 //           data-aos="fade-down"
 //           data-aos-duration="1500" className="flex justify-center items-center md:-mt-5 lg:w-[900px] lg:justify-start lg:pl-10">

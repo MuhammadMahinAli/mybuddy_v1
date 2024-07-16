@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
 import AboutTab from "./AboutTab";
 import ProjectTab from "./ProjectTab";
 import SkillTab from "./SkillTab";
@@ -402,7 +401,6 @@ export default Feed;
 // import { useEffect, useState } from "react";
 // import { FaHeart } from "react-icons/fa";
 // import AboutTab from "./AboutTab";
-// import InterestTab from "./InterestTab";
 // import ProjectTab from "./ProjectTab";
 // import SkillTab from "./SkillTab";
 // import SocialTab from "./SocialTab";
@@ -707,7 +705,6 @@ export default Feed;
 // import { useState } from "react";
 // import { FaHeart } from "react-icons/fa";
 // import AboutTab from "./AboutTab";
-// import InterestTab from "./InterestTab";
 // import ProjectTab from "./ProjectTab";
 // import SkillTab from "./SkillTab";
 // import SocialTab from "./SocialTab";
@@ -972,7 +969,6 @@ export default Feed;
 //             {activeTab === "project" && <ProjectTab theme={theme} user={user} />}
 //             {activeTab === "social" && <SocialTab theme={theme}  socialInfos={userInfo?.socialInfos} />}
 //             {activeTab === "skill" && <SkillTab theme={theme} user={user} />}
-//             {activeTab === "interest" && <InterestTab theme={theme} user={user} />}
 //           </div>
 //         </div>
 //       ))}

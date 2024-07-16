@@ -1,5 +1,7 @@
+import PropTypes from "prop-types";
+
 const AboutTab = ({ theme, user, userPersonalInfo }) => {
-  console.log("s",userPersonalInfo);
+  console.log("s", userPersonalInfo);
   const capitalize = (str) => {
     return str.replace(/\b\w/g, (char) => char.toUpperCase());
   };
@@ -27,7 +29,6 @@ const AboutTab = ({ theme, user, userPersonalInfo }) => {
         } text-[18px] md:text-[20px] xl:text-[27px] font-semibold capitalize`}
       >
         {user?.name?.firstName} {user?.name?.lastName}
-   
       </h1>
       <p
         className={` ${
@@ -35,7 +36,6 @@ const AboutTab = ({ theme, user, userPersonalInfo }) => {
         }  text-[16px] xl:text-[19px] pt-0 capitalize`}
       >
         {user?.role}
-        {/* Lorem ipsum dolor sit amet */}
       </p>
       <h1
         className={` ${
@@ -50,15 +50,14 @@ const AboutTab = ({ theme, user, userPersonalInfo }) => {
         } text-[16px] xl:text-[20px] pt-2`}
       >
         {userAbout}
-        {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-        aliquid eligendi consequatur facilis vero sed veniam esse ullam dolores
-        libero nulla accusantium molestiae quasi fuga, corporis non tempore
-        expedita dolor? consequatur facilis vero sed veniam esse ullam dolores
-        libero nulla accusantium molestiae quasi fuga, corporis non tempore
-        expedita dolor? */}
       </p>
     </div>
   );
 };
 
 export default AboutTab;
+AboutTab.propTypes = {
+  theme: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
+  userPersonalInfo: PropTypes.object.isRequired,
+};

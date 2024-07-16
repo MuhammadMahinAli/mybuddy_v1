@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import barcode from "../../assets/barcode.png";
 import qrcode from "../../assets/qrcode.png";
 import Swal from "sweetalert2";
@@ -13,10 +13,7 @@ const VerificationSuccess = () => {
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  const {loading} = useContext(AuthContext);
-  
-
- 
+  const { loading } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -46,13 +43,11 @@ const VerificationSuccess = () => {
     }
   }, [token]);
 
-  if(loading){
-    return <Loading/>
+  if (loading) {
+    return <Loading />;
   }
 
   console.log("Res2:", firstName, lastName, email, phoneNumber);
-
- 
 
   return (
     <div>
@@ -68,7 +63,12 @@ const VerificationSuccess = () => {
                 {/*  id card front part*/}
                 <div className="w-[280px] md:w-[300px] h-[450px]  bg-white shadow-2xl rounded-lg overflow-hidden relative border border-gray-300">
                   <div className="flex justify-center items-center mt-4">
-                    <img src="/logo.png" loading="lazy" alt="Company Logo" className="h-14" />
+                    <img
+                      src="/logo.png"
+                      loading="lazy"
+                      alt="Company Logo"
+                      className="h-14"
+                    />
                   </div>
 
                   <div className="relative mt-16">
@@ -77,7 +77,8 @@ const VerificationSuccess = () => {
                       <div className="w-24 h-24 rounded-full border-4 border-white overflow-hidden">
                         <img
                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1rTLeQraa9s-Rkj2_KMPOzh30CwK1G2D85A&s"
-                          loading="lazy" alt="Profile"
+                          loading="lazy"
+                          alt="Profile"
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -97,8 +98,7 @@ const VerificationSuccess = () => {
                       {token.slice(0, 16)}
                     </p>
                     <p className="text-sm tracking-wide text-green-700">
-                      <span className="font-semibold ">EMAIL:</span>{" "}
-                      {email}
+                      <span className="font-semibold ">EMAIL:</span> {email}
                     </p>
                     <p className="text-sm tracking-wide text-green-700">
                       <span className="font-semibold ">PHONE:</span>{" "}
@@ -111,7 +111,8 @@ const VerificationSuccess = () => {
                     </div>
                     <img
                       src={barcode} // Replace with your logo URL
-                      loading="lazy" alt="Company Logo"
+                      loading="lazy"
+                      alt="Company Logo"
                       className="w-44 self-center"
                     />
                   </div>
@@ -124,7 +125,8 @@ const VerificationSuccess = () => {
                       <div className="w-16 mx-auto mb-2">
                         <img
                           src="/logo.png"
-                          loading="lazy" alt="Logo"
+                          loading="lazy"
+                          alt="Logo"
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -135,7 +137,8 @@ const VerificationSuccess = () => {
                       <div className="py-3 flex justify-center items-center">
                         <img
                           src={qrcode}
-                          loading="lazy" alt="Logo"
+                          loading="lazy"
+                          alt="Logo"
                           className="w-20 object-cover"
                         />
                       </div>
@@ -148,7 +151,8 @@ const VerificationSuccess = () => {
             ) : (
               <img
                 src="https://img.freepik.com/free-vector/high-five-hands-concept-illustration_114360-11529.jpg?size=338&ext=jpg"
-                loading="lazy" alt="Logo"
+                loading="lazy"
+                alt="Logo"
                 className="w-32 md:w-60 object-cover"
               />
             )}

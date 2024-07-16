@@ -1,4 +1,5 @@
 import lightMoodCamera from "../assets/user-profile/dark-cam.png";
+import PropTypes from "prop-types";
 
 const CameraIcon2 = ({ theme }) => {
   return (
@@ -18,10 +19,18 @@ const CameraIcon2 = ({ theme }) => {
           />
         </svg>
       ) : (
-        <img src={lightMoodCamera} className="w-4 mr-2" loading="lazy" alt="camera" />
+        <img
+          src={lightMoodCamera}
+          className="w-4 mr-2"
+          loading="lazy"
+          alt="camera"
+        />
       )}
     </>
   );
 };
 
 export default CameraIcon2;
+CameraIcon2.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

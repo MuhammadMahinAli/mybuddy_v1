@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import Images from "./Images";
 import Documents from "./Documents";
 import PdfFiles from "./PdfFiles";
-import next from "../../../assets/next.png";
 
 const AddProjectSecForm = ({
   handleSecond,

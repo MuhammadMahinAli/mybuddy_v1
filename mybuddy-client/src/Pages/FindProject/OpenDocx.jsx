@@ -2,6 +2,8 @@ import { useState } from "react";
 import FileViewer from "react-file-viewer";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import PropTypes from "prop-types";
+
 
 const OpenDocx = ({ documents, showDocuments }) => {
   const [selectedDocxIndex, setSelectedDocxIndex] = useState(null);
@@ -78,3 +80,7 @@ const OpenDocx = ({ documents, showDocuments }) => {
 };
 
 export default OpenDocx;
+OpenDocx.propTypes = {
+  documents: PropTypes.array,
+  showDocuments: PropTypes.bool,
+};

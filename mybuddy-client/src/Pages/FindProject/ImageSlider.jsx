@@ -3,9 +3,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css/navigation";
+import PropTypes from "prop-types";
 
 const ImageSlider = ({ images }) => {
-  console.log(images);
+  //console.log(images);
 
   return (
     <div className="w-[100px] h-[180px] xs:w-[280px] xs:h-[240px] md:h-[350px] md:w-[400px] xl:w-[400px] 3xl:h-[300px] md:pt-5">
@@ -33,3 +34,6 @@ const ImageSlider = ({ images }) => {
 };
 
 export default ImageSlider;
+ImageSlider.propTypes = {
+  images: PropTypes.array.isRequired,
+};

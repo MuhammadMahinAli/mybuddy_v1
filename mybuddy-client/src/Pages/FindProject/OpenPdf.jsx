@@ -2,6 +2,7 @@ import { useState } from "react";
 import FileViewer from "react-file-viewer";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import PropTypes from "prop-types";
 
 const OpenPdf = ({ pdfFiles, showPdfList }) => {
   const [selectedPdfIndex, setSelectedPdfIndex] = useState(null);
@@ -79,3 +80,7 @@ const OpenPdf = ({ pdfFiles, showPdfList }) => {
 };
 
 export default OpenPdf;
+OpenPdf.propTypes = {
+  pdfFiles: PropTypes.array.isRequired,
+  showPdfList: PropTypes.bool.isRequired,
+};

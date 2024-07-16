@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 const FindResearcherDescription = ({ post }) => {
   return (
     <div className="flex flex-col justify-center items-center space-y-4">
@@ -16,3 +17,6 @@ const FindResearcherDescription = ({ post }) => {
 };
 
 export default FindResearcherDescription;
+FindResearcherDescription.propTypes = {
+ post: PropTypes.object
+};

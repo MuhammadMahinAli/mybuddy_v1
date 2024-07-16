@@ -1,7 +1,6 @@
 import dash from "../../../assets/dashboard1.png";
 import Projects from "./Projects";
 import Requests from "./Requests";
-import { CiClock2 } from "react-icons/ci";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 const GDashboard = () => {
@@ -20,73 +19,73 @@ setUserData(singleUser);
 }, [singleUser]);
 
 //console.log(userData);
-  const meetings = [
-    {
-      _id: 1,
-      title: "Lorem ispam",
-      startTime: "10.00 AM",
-      endTime: "11.00 AM",
-      users: [
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  // const meetings = [
+  //   {
+  //     _id: 1,
+  //     title: "Lorem ispam",
+  //     startTime: "10.00 AM",
+  //     endTime: "11.00 AM",
+  //     users: [
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
 
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
 
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
 
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
-      ],
-    },
-    {
-      _id: 2,
-      title: "Lorem ispam",
-      startTime: "10.00 AM",
-      endTime: "11.00 AM",
-      users: [
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //     ],
+  //   },
+  //   {
+  //     _id: 2,
+  //     title: "Lorem ispam",
+  //     startTime: "10.00 AM",
+  //     endTime: "11.00 AM",
+  //     users: [
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
 
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
-      ],
-    },
-    {
-      _id: 3,
-      title: "Lorem ispam",
-      startTime: "10.00 AM",
-      endTime: "11.00 AM",
-      users: [
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //     ],
+  //   },
+  //   {
+  //     _id: 3,
+  //     title: "Lorem ispam",
+  //     startTime: "10.00 AM",
+  //     endTime: "11.00 AM",
+  //     users: [
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
 
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
 
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
-      ],
-    },
-    {
-      _id: 4,
-      title: "Lorem ispam",
-      startTime: "10.00 AM",
-      endTime: "11.00 AM",
-      users: [
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //     ],
+  //   },
+  //   {
+  //     _id: 4,
+  //     title: "Lorem ispam",
+  //     startTime: "10.00 AM",
+  //     endTime: "11.00 AM",
+  //     users: [
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
 
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
 
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
-      ],
-    },
-    {
-      _id: 5,
-      title: "Lorem ispam",
-      startTime: "10.00 AM",
-      endTime: "11.00 AM",
-      users: [
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //     ],
+  //   },
+  //   {
+  //     _id: 5,
+  //     title: "Lorem ispam",
+  //     startTime: "10.00 AM",
+  //     endTime: "11.00 AM",
+  //     users: [
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
 
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
 
-        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
-      ],
-    },
-  ];
+  //       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg",
+  //     ],
+  //   },
+  // ];
 
   return (
     <div className="flex flex-col justify-start space-y-16">

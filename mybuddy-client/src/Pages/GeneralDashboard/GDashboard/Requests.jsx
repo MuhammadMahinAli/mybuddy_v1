@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../Context/UserContext";
-import { useUpdateJoinRequestStatusMutation } from "../../../features/projectJoinRequest/projectJoinRequestApi";
+//import { useUpdateJoinRequestStatusMutation } from "../../../features/projectJoinRequest/projectJoinRequestApi";
 import { useUpdateFriendRequestStatusMutation } from "../../../features/friend/friendApi";
 import Swal from "sweetalert2";
 
@@ -8,16 +8,16 @@ import Swal from "sweetalert2";
 const Requests = () => {
   const [openFriendRequest, setOpenFriendRequest] = useState(true);
   const [openProjectRequest, setOpenProjectRequest] = useState(false);
-  const {  getFriendRequest, allRecieveRequest } =
+  const {  getFriendRequest } =
     useContext(AuthContext);
 
 
   const friendRequests = getFriendRequest?.data;
-  const projectRequests = allRecieveRequest?.data;
+  //const projectRequests = allRecieveRequest?.data;
 
 
   // Use the mutation hook for update
-  const [updateJoinRequestStatus] = useUpdateJoinRequestStatusMutation();
+ // const [updateJoinRequestStatus] = useUpdateJoinRequestStatusMutation();
   const [updateFriendRequestStatus] = useUpdateFriendRequestStatusMutation();
 
   const handleUpdateFRStatusAccept = (e, index) => {
@@ -105,91 +105,91 @@ const Requests = () => {
   };
 
   // accept project join request
-  const handleUpdatePJRStatusAccept = (e, index) => {
-    e.preventDefault();
-    //setSelectedRequestIndex(index);
-    const selectedTask = allRecieveRequest?.data[index];
-    if (selectedTask) {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "Do you really want to accept the request?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Accept it!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const newStatus = "Accepted";
-          console.log({ id: selectedTask._id, data: { status: newStatus } });
-          updateJoinRequestStatus({
-            id: selectedTask._id,
-            data: { status: newStatus },
-          })
-            .unwrap()
-            .then(() => {
-              Swal.fire({
-                icon: "success",
-                title: "Well done !",
-                text: "You have accepted the request successfully!",
-              });
-              setTimeout(() => {
-                window.location.reload();
-              }, 2500);
-            })
-            .catch((error) => {
-              alert("Failed to accept the request.");
-              console.error(error);
-            });
-        }
-      });
-    } else {
-      console.log("No task found for the selected index.");
-    }
-  };
+  // const handleUpdatePJRStatusAccept = (e, index) => {
+  //   e.preventDefault();
+  //   //setSelectedRequestIndex(index);
+  //   const selectedTask = allRecieveRequest?.data[index];
+  //   if (selectedTask) {
+  //     Swal.fire({
+  //       title: "Are you sure?",
+  //       text: "Do you really want to accept the request?",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Yes, Accept it!",
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         const newStatus = "Accepted";
+  //         console.log({ id: selectedTask._id, data: { status: newStatus } });
+  //         updateJoinRequestStatus({
+  //           id: selectedTask._id,
+  //           data: { status: newStatus },
+  //         })
+  //           .unwrap()
+  //           .then(() => {
+  //             Swal.fire({
+  //               icon: "success",
+  //               title: "Well done !",
+  //               text: "You have accepted the request successfully!",
+  //             });
+  //             setTimeout(() => {
+  //               window.location.reload();
+  //             }, 2500);
+  //           })
+  //           .catch((error) => {
+  //             alert("Failed to accept the request.");
+  //             console.error(error);
+  //           });
+  //       }
+  //     });
+  //   } else {
+  //     console.log("No task found for the selected index.");
+  //   }
+  // };
   // reject project join request
-  const handleUpdatePJRStatusReject = (e, index) => {
-    e.preventDefault();
-    //setSelectedRequestIndex(index);
-    const selectedTask = allRecieveRequest?.data[index];
-    if (selectedTask) {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "Do you really want to reject the request?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Reject it!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const newStatus = "Rejected";
-          console.log({ id: selectedTask._id, data: { status: newStatus } });
-          updateJoinRequestStatus({
-            id: selectedTask._id,
-            data: { status: newStatus },
-          })
-            .unwrap()
-            .then(() => {
-              Swal.fire({
-                icon: "success",
-                title: "Well done !",
-                text: "You have rejected the request successfully!",
-              });
-              setTimeout(() => {
-                window.location.reload();
-              }, 2500);
-            })
-            .catch((error) => {
-              console.log("Failed to reject the request.");
-              console.error(error);
-            });
-        }
-      });
-    } else {
-      console.log("No task found for the selected index.");
-    }
-  };
+  // const handleUpdatePJRStatusReject = (e, index) => {
+  //   e.preventDefault();
+  //   //setSelectedRequestIndex(index);
+  //   const selectedTask = allRecieveRequest?.data[index];
+  //   if (selectedTask) {
+  //     Swal.fire({
+  //       title: "Are you sure?",
+  //       text: "Do you really want to reject the request?",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Yes, Reject it!",
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         const newStatus = "Rejected";
+  //         console.log({ id: selectedTask._id, data: { status: newStatus } });
+  //         updateJoinRequestStatus({
+  //           id: selectedTask._id,
+  //           data: { status: newStatus },
+  //         })
+  //           .unwrap()
+  //           .then(() => {
+  //             Swal.fire({
+  //               icon: "success",
+  //               title: "Well done !",
+  //               text: "You have rejected the request successfully!",
+  //             });
+  //             setTimeout(() => {
+  //               window.location.reload();
+  //             }, 2500);
+  //           })
+  //           .catch((error) => {
+  //             console.log("Failed to reject the request.");
+  //             console.error(error);
+  //           });
+  //       }
+  //     });
+  //   } else {
+  //     console.log("No task found for the selected index.");
+  //   }
+  // };
 
   const toggleFriendRequest = () => {
     setOpenFriendRequest(true);

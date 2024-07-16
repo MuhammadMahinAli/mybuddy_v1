@@ -1,4 +1,4 @@
-
+import PropTypes from "prop-types";
 
 const TechnicalRecomIcon = ({
   theme,
@@ -33,7 +33,7 @@ const TechnicalRecomIcon = ({
         </svg>
       ) : (
         <svg
-           className="w-5 lg:w-6 xl:w-6 3xl:w-7"
+          className="w-5 lg:w-6 xl:w-6 3xl:w-7"
           viewBox="0 0 26 25"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -67,3 +67,8 @@ const TechnicalRecomIcon = ({
 };
 
 export default TechnicalRecomIcon;
+TechnicalRecomIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+  openTechnicalRecommendation: PropTypes.string.isRequired,
+  openComponent: PropTypes.string.isRequired,
+};

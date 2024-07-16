@@ -1,5 +1,4 @@
-import React from "react";
-
+import PropTypes from "prop-types";
 const FundIcon = ({ theme }) => {
   return (
     <div>
@@ -19,3 +18,6 @@ const FundIcon = ({ theme }) => {
 };
 
 export default FundIcon;
+FundIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

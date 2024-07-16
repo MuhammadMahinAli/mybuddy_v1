@@ -1,16 +1,14 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useContext, useState } from "react";
+import { Fragment,  useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../common/Navbar/Navbar";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import RightSidebar from "../Pages/Homepage/RightSidebar";
 import BottomNavbar from "../common/BottomNavbar/BottomNavbar";
-import { AuthContext } from "../Context/UserContext";
 
 const HomepageLayout = () => {
   let [isOpen, setIsOpen] = useState(true);
-  const { singleUser, loading: isFetchingUser } = useContext(AuthContext);
   const theme = useSelector((state) => state.theme.theme);
   const { user } = useSelector((state) => state.auth);
   // const { user } = useSelector((state) => state.auth);
@@ -44,10 +42,10 @@ const HomepageLayout = () => {
     }, 1000);
   }, []);
 
-  // if (!user ) {
-  //   navigate("/");
-  //   return;
-  // }
+  if (!user ) {
+    navigate("/");
+    return;
+  }
 
   return (
     <>

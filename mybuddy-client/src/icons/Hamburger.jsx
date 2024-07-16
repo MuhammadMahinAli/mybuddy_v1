@@ -1,4 +1,4 @@
-
+import PropTypes from "prop-types";
 
 const Hamburger = ({ theme }) => {
   return (
@@ -170,3 +170,6 @@ const Hamburger = ({ theme }) => {
 };
 
 export default Hamburger;
+Hamburger.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

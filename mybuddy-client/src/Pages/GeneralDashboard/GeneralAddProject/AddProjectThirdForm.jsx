@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import plus from "../../../assets/plus3.png";
-import PropTypes from "prop-types";
-const AddProjectThirdForm = ({ handleThird, tasks, setTasks }) => {
+
+const AddProjectThirdForm = ({ tasks, setTasks }) => {
   const addTask = (e) => {
     e.preventDefault();
     setTasks([...tasks, { title: "", details: "", budget: "" }]);
@@ -64,9 +64,7 @@ const AddProjectThirdForm = ({ handleThird, tasks, setTasks }) => {
 
 export default AddProjectThirdForm;
 
-AddProjectThirdForm.propTypes = {
-  handleThird: PropTypes.func,
-};
+
 
 // import { useState } from "react";
 // import plus from "../../../assets/plus3.png";

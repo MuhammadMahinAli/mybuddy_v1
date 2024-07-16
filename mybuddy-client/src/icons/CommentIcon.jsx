@@ -1,4 +1,4 @@
-
+import PropTypes from "prop-types";
 
 const CommentIcon = ({ theme }) => {
   return (
@@ -19,3 +19,6 @@ const CommentIcon = ({ theme }) => {
 };
 
 export default CommentIcon;
+CommentIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

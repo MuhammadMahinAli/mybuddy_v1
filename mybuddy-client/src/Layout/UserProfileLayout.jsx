@@ -1,4 +1,4 @@
-import { Outlet, useNavigate} from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../common/Navbar/Navbar";
 import { useAuthCheck } from "../utils/useAuthCheck";
 import { useEffect, useState } from "react";
@@ -29,11 +29,7 @@ const UserProfileLayout = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1500);
-
   }, []);
-
-  
-
 
   if (!user) {
     navigate("/");
@@ -97,7 +93,7 @@ const UserProfileLayout = () => {
                                 <Outlet />
                               </div>
                             </div>
-                            <BottomNavbar theme={theme}/>
+                            <BottomNavbar theme={theme} />
                           </div>
                         </Dialog.Panel>
                       </Transition.Child>

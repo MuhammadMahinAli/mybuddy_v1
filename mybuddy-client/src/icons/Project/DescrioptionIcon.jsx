@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const DescrioptionIcon = ({ theme, openImage, openComponent }) => {
   const lightModeColor =
     openComponent === "image" && openImage
@@ -53,3 +55,8 @@ const DescrioptionIcon = ({ theme, openImage, openComponent }) => {
 };
 
 export default DescrioptionIcon;
+DescrioptionIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+  openComponent: PropTypes.string.isRequired,
+  openImage: PropTypes.string.isRequired,
+};

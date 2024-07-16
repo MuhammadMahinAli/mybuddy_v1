@@ -1,6 +1,7 @@
 import dashboard from "../assets/icon/dashboard.png";
+import PropTypes from "prop-types";
 
-const DashboardIcon = ({ theme,openDashboard }) => {
+const DashboardIcon = ({ theme }) => {
   return (
     <>
       {theme === "light" ? (
@@ -28,11 +29,13 @@ const DashboardIcon = ({ theme,openDashboard }) => {
           />
         </svg>
       ) : (
-        <img src={dashboard}
-        className="w-4 sm:w-5" />
+        <img src={dashboard} className="w-4 sm:w-5" />
       )}
     </>
   );
 };
 
 export default DashboardIcon;
+DashboardIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

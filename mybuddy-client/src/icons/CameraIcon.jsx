@@ -1,8 +1,13 @@
 import lightMoodCamera from "../assets/user-profile/dark-cam.png";
+import PropTypes from "prop-types";
 
-const CameraIcon = ({ theme}) => {
+const CameraIcon = ({ theme }) => {
   return (
-    <div  className={`${theme === 'light' ? "bg-[#efefef]":"bg-[#3e4246]"} absolute top-12 -right-2 md:top-20 lg:top-20  md:-right-[18px] lg:-right-[3px] xl:-right-[4px] 2xl:right-[0px] 3xl:top-20 3xl:-right-[14px] 5xl:right-[0px]  rounded-full`}>
+    <div
+      className={`${
+        theme === "light" ? "bg-[#efefef]" : "bg-[#3e4246]"
+      } absolute top-12 -right-2 md:top-20 lg:top-20  md:-right-[18px] lg:-right-[3px] xl:-right-[4px] 2xl:right-[0px] 3xl:top-20 3xl:-right-[14px] 5xl:right-[0px]  rounded-full`}
+    >
       {theme === "light" ? (
         <svg
           className=" w-4 md:h-4 md:w-4 lg:h-5 lg:w-5 m-1 md:m-2 lg:m-[9px]"
@@ -18,10 +23,18 @@ const CameraIcon = ({ theme}) => {
           />
         </svg>
       ) : (
-        <img src={lightMoodCamera} className="h-4 lg:h-5 lg:w-5 m-1 lg:m-[9px]" loading="lazy" alt="camera" />
+        <img
+          src={lightMoodCamera}
+          className="h-4 lg:h-5 lg:w-5 m-1 lg:m-[9px]"
+          loading="lazy"
+          alt="camera"
+        />
       )}
     </div>
   );
 };
 
 export default CameraIcon;
+CameraIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

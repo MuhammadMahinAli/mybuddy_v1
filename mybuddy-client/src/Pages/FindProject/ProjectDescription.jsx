@@ -56,4 +56,5 @@ const ProjectDescription = ({ description,theme }) => {
 export default ProjectDescription;
 ProjectDescription.propTypes = {
   description: PropTypes.string,
+  theme: PropTypes.string,
 };

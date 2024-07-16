@@ -3,6 +3,7 @@ import man from "../../assets/dummy.png";
 import "../GeneralDashboard/GeneralAddProject/editor.css";
 import { Dialog, Transition } from "@headlessui/react";
 import ProjectIcon1 from "../../icons/ProjectIcon1";
+import PropTypes from "prop-types";
 
 const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
   const [checkedStates, setCheckedStates] = useState(tasks?.map(() => false));
@@ -416,6 +417,11 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
 };
 
 export default TaskTable;
+TaskTable.propTypes = {
+  theme: PropTypes.string.isRequired,
+  setSelectedTasks: PropTypes.array.isRequired,
+  tasks: PropTypes.array.isRequired,
+};
 
 // ${
 //   index === 0

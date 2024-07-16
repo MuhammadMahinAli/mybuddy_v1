@@ -25,7 +25,6 @@ import GeneralRequestRecieve from "../Pages/GeneralDashboard/GeneralRequest/Gene
 import Academic from "../Pages/AcademicPage/Academic";
 import EmailVarification from "../Pages/Email/EmailVarification";
 import VerificationSuccess from "../Pages/Email/VerificationSuccess";
-import ResendEmail from "../Pages/Email/ResendEmail";
 
 
 const router = createBrowserRouter([
@@ -138,10 +137,6 @@ const router = createBrowserRouter([
   {
     path: "/verify-your-email",
     element: <EmailVarification />,
-  },
-  {
-    path: "/resend",
-    element: <ResendEmail />,
   },
   {
     path: "/verified-email/:token",

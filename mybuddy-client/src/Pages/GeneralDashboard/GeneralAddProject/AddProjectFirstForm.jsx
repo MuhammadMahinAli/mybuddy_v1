@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 import DescriptionTextArea from "./DescriptionTextArea";
-import next from "../../../assets/next.png";
 import PropTypes from "prop-types";
-import {useState} from "react";
 
 const AddProjectFirstForm = ({handleFirst, onFormChange, projectData, setProjectData}) => {
   const handleDescriptionChange = (description) => {

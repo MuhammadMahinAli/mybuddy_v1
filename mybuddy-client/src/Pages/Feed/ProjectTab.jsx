@@ -1,26 +1,27 @@
-import project from "../../assets/office-team-working-on-a-project-together 1.png";
+//import project from "../../assets/office-team-working-on-a-project-together 1.png";
+import PropTypes from "prop-types";
 
 const ProjectTab = ({ theme,user }) => {
-  const projects = [
-    {
-      image: project,
-      title: "1 Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      description:
-        "Lorem ipsum dolor sit amet conse ctetur adipisicing elit. Suscipit aliquid eligendi",
-    },
-    {
-      image: project,
-      title: "2 Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      description:
-        "Lorem ipsum dolor sit amet conse ctetur adipisicing elit. Suscipit aliquid eligendi",
-    },
-    {
-      image: project,
-      title: "3 Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      description:
-        "Lorem ipsum dolor sit amet conse ctetur adipisicing elit. Suscipit aliquid eligendi",
-    },
-  ];
+  // const projects = [
+  //   {
+  //     image: project,
+  //     title: "1 Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+  //     description:
+  //       "Lorem ipsum dolor sit amet conse ctetur adipisicing elit. Suscipit aliquid eligendi",
+  //   },
+  //   {
+  //     image: project,
+  //     title: "2 Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+  //     description:
+  //       "Lorem ipsum dolor sit amet conse ctetur adipisicing elit. Suscipit aliquid eligendi",
+  //   },
+  //   {
+  //     image: project,
+  //     title: "3 Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+  //     description:
+  //       "Lorem ipsum dolor sit amet conse ctetur adipisicing elit. Suscipit aliquid eligendi",
+  //   },
+  // ];
 
   const capitalize = (str) => {
     return str.replace(/\b\w/g, (char) => char.toUpperCase());
@@ -129,6 +130,10 @@ const ProjectTab = ({ theme,user }) => {
 };
 
 export default ProjectTab;
+ProjectTab.propTypes = {
+  theme: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
+};
 
   {/* <div
            dangerouslySetInnerHTML={{

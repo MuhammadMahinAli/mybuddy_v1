@@ -140,6 +140,7 @@ import scllyLogo from "../../assets/skill-icons/scullyio-icon.svg";
 import arduinoLogo from "../../assets/skill-icons/ardunio.svg";
 import xdLogo from "../../assets/skill-icons/adobe-xd.svg";
 import matlabLogo from "../../assets/skill-icons/Matlab_Logo.svg";
+import PropTypes from "prop-types";
 
 const SkillTab = ({ theme, skills,user }) => {
   console.log("skills", skills);
@@ -1049,3 +1050,8 @@ const SkillTab = ({ theme, skills,user }) => {
 };
 
 export default SkillTab;
+SkillTab.propTypes = {
+  theme: PropTypes.string.isRequired,
+  skills: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+};

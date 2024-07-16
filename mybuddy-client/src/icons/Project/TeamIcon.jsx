@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 const TeamIcon = ({ theme, openTeam, openComponent }) => {
   const lightModeColor =
@@ -95,3 +95,8 @@ const TeamIcon = ({ theme, openTeam, openComponent }) => {
 };
 
 export default TeamIcon;
+TeamIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+  openComponent: PropTypes.string.isRequired,
+  openTeam: PropTypes.string.isRequired,
+};
