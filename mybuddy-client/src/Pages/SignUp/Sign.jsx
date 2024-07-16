@@ -2,7 +2,6 @@ import { FiUser } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
 import { TiPhoneOutline } from "react-icons/ti";
 import { GoEyeClosed } from "react-icons/go";
-import heroImg from "../../assets/object.png";
 import { useEffect, useState } from "react";
 import { validateEmail, validatePass } from "../../utils/validation";
 import { useSignUpMutation } from "../../features/auth/authApi.js";

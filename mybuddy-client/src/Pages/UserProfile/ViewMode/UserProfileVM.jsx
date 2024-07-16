@@ -34,7 +34,7 @@ const UserProfileVM = () => {
     }
     const fetchData = async () => {
       const res = await apiFetch(
-        `http://localhost:3000/api/v1/member/getUserById/${id}`,
+        `https://test-two-22w0.onrender.com/api/v1/member/getUserById/${id}`,
         "GET"
       );
       setData(res?.data ?? {});
@@ -60,35 +60,35 @@ const UserProfileVM = () => {
     }
     const fetchData = async () => {
       const userPersonalInfo = await apiFetch(
-        `http://localhost:3000/api/v1/member/getUserById/${data?._id}`,
+        `https://test-two-22w0.onrender.com/api/v1/member/getUserById/${data?._id}`,
         "GET"
       );
       const posts = await apiFetch(
-        `http://localhost:3000/api/v1/posts/getUserPostById/${data?._id}`,
+        `https://test-two-22w0.onrender.com/api/v1/posts/getUserPostById/${data?._id}`,
         "GET"
       );
       const projects = await apiFetch(
-        `http://localhost:3000/api/v1/project/getUserProjectById/${data?._id}`,
+        `https://test-two-22w0.onrender.com/api/v1/project/getUserProjectById/${data?._id}`,
         "GET"
       );
       const experiences = await apiFetch(
-        `http://localhost:3000/api/v1/experience/getExperienceByUser/${data?._id}`,
+        `https://test-two-22w0.onrender.com/api/v1/experience/getExperienceByUser/${data?._id}`,
         "GET"
       );
       const licenses = await apiFetch(
-        `http://localhost:3000/api/v1/license/getLicenseByUser/${data?._id}`,
+        `https://test-two-22w0.onrender.com/api/v1/license/getLicenseByUser/${data?._id}`,
         "GET"
       );
       const socialInfos = await apiFetch(
-        `http://localhost:3000/api/v1/socialInfo/getSocialInfoByUser/${data?._id}`,
+        `https://test-two-22w0.onrender.com/api/v1/socialInfo/getSocialInfoByUser/${data?._id}`,
         "GET"
       );
       const skills = await apiFetch(
-        `http://localhost:3000/api/v1/skill/getUserSkillById/${data?._id}`,
+        `https://test-two-22w0.onrender.com/api/v1/skill/getUserSkillById/${data?._id}`,
         "GET"
       );
       const friends = await apiFetch(
-        `http://localhost:3000/api/v1/friend/accepted/getFriendRequest/${data?._id}`,
+        `https://test-two-22w0.onrender.com/api/v1/friend/accepted/getFriendRequest/${data?._id}`,
         "GET"
       );
       setUserInfo({

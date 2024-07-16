@@ -14,6 +14,7 @@ const Login = () => {
   const { user } = useSelector((state) => state.auth);
   const { addSocialInfo } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isLoader, setIsLoader] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -54,11 +55,15 @@ const Login = () => {
     setPasswordType("password");
   };
 
+ 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoader(true);
     try {
       // Assuming login returns a promise that resolves with the response data
       const response = await login(formData);
+      setIsLoader(false);
       //console.log(response.data.message);
       console.log(response);
       if (response?.data?.message === "User logged in successfully!") {
@@ -85,7 +90,7 @@ const Login = () => {
           preConfirm: async (email) => {
             try {
               const resendResponse = await axios.post(
-                "http://localhost:3000/api/v1/member/resend-verification-email",
+                "https://test-two-22w0.onrender.com/api/v1/member/resend-verification-email",
                 { email }
               );
               return resendResponse.data.message;
@@ -123,6 +128,7 @@ const Login = () => {
       }
     } catch (error) {
       // Handle login error
+      setIsLoader(false);
       console.log(error);
     }
   };
@@ -192,8 +198,12 @@ const Login = () => {
               />
             )}
           </div>
-          <button className="text-xl md:text-2xl text-white font-semibold bg-blue-500 py-1 md:py-2 rounded-[30px]">
-            Login
+          <button className="flex justify-center items-center text-xl md:text-2xl text-white font-semibold bg-blue-500 py-1 md:py-2 rounded-[30px]">
+          {isLoader ? (
+              <div className="border-[#fff] w-6 h-6 border-2 border-dashed rounded-full animate-spin" />
+            ) : (
+              "Login"
+            )}
           </button>
           <p className="text-center">
             {"Don't have any account ? "}

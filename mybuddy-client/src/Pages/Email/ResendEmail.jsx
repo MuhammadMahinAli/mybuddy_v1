@@ -7,7 +7,7 @@ const ResendEmail = () => {
 
   const handleResendEmail = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/member/resend-verification-email', { email });
+      const response = await axios.post('https://test-two-22w0.onrender.com/api/v1/member/resend-verification-email', { email });
       setMessage(response.data.message);
     } catch (error) {
       setMessage(error.response.data.message || 'Something went wrong');
