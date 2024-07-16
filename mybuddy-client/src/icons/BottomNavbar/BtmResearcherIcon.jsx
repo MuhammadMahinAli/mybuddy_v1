@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 const BtmResearcherIcon = ({ theme,isPageActive }) => {
     const lightModeColor = isPageActive  ? '#2ADBA4'  : '#838DAA';
@@ -28,3 +28,7 @@ const BtmResearcherIcon = ({ theme,isPageActive }) => {
 };
 
 export default BtmResearcherIcon;
+BtmResearcherIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+  isPageActive: PropTypes.bool.isRequired,
+};

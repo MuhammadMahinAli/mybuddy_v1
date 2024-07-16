@@ -4,6 +4,7 @@ import BtmProjectIcon from "../../icons/BottomNavbar/BtmProjectIcon";
 import BtmResearcherIcon from "../../icons/BottomNavbar/BtmResearcherIcon";
 import BtmHomeIcon from "../../icons/BottomNavbar/BtmHomeIcon";
 import { useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const BottomNavbar = ({ theme }) => {
   const location = useLocation();
@@ -87,3 +88,6 @@ const BottomNavbar = ({ theme }) => {
 };
 
 export default BottomNavbar;
+BottomNavbar.propTypes = {
+  theme: PropTypes.string.isRequired
+};

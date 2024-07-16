@@ -1,4 +1,5 @@
 import { RxExternalLink } from "react-icons/rx";
+import PropTypes from "prop-types";
 
 const InternalLinkIcon = ({ theme }) => {
   return (
@@ -79,3 +80,6 @@ const InternalLinkIcon = ({ theme }) => {
 };
 
 export default InternalLinkIcon;
+InternalLinkIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

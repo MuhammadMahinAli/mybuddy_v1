@@ -1,3 +1,6 @@
+import PropTypes from "prop-types";
+
+
 const UsersIcon = ({ theme }) => {
   return (
     <>
@@ -45,3 +48,6 @@ const UsersIcon = ({ theme }) => {
 };
 
 export default UsersIcon;
+UsersIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

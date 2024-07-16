@@ -1,4 +1,6 @@
-const MessageIcon1 = ({theme}) => {
+import PropTypes from "prop-types";
+
+const MessageIcon1 = ({ theme }) => {
   return (
     <>
       {theme === "light" ? (
@@ -29,7 +31,7 @@ const MessageIcon1 = ({theme}) => {
         </svg>
       ) : (
         <svg
-        className="w-7 hidden lg:block"
+          className="w-7 hidden lg:block"
           viewBox="0 0 26 29"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -162,3 +164,6 @@ const MessageIcon1 = ({theme}) => {
 };
 
 export default MessageIcon1;
+MessageIcon1.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

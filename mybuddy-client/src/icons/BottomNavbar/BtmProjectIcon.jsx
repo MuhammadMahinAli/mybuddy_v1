@@ -1,5 +1,4 @@
-import React from 'react';
-
+import PropTypes from "prop-types";
 const BtmProjectIcon = ({theme,isPageActive}) => {
   const lightModeColor = isPageActive  ? '#2ADBA4'  : '#838DAA';
     return (
@@ -37,3 +36,7 @@ const BtmProjectIcon = ({theme,isPageActive}) => {
 };
 
 export default BtmProjectIcon;
+BtmProjectIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+  isPageActive: PropTypes.bool.isRequired,
+};

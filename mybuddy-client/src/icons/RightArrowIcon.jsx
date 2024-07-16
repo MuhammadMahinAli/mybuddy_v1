@@ -1,9 +1,11 @@
+import PropTypes from "prop-types";
+
 const RightArrowIcon = ({ theme }) => {
   return (
     <div>
       {theme === "light" ? (
         <svg
-        className="w-4 ml-1"
+          className="w-4 ml-1"
           viewBox="0 0 27 16"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -51,3 +53,6 @@ const RightArrowIcon = ({ theme }) => {
 };
 
 export default RightArrowIcon;
+RightArrowIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

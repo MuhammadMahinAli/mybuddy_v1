@@ -17,7 +17,6 @@ import vueJsLogo from "../../assets/skill-icons/vuejs-original-wordmark.svg";
 import pugLogo from "../../assets/skill-icons/pig.svg";
 import tsLogo from "../../assets/skill-icons/typescript-original.svg";
 import javaLogo from "../../assets/skill-icons/java-original.svg";
-import phpLogo from "../../assets/skill-icons/php-original.svg";
 import postmanLogo from "../../assets/skill-icons/getpostman-icon.svg";
 import bubelLogo from "../../assets/skill-icons/babeljs-icon.svg";
 import reduxLogo from "../../assets/skill-icons/redux.svg";
@@ -35,7 +34,6 @@ import pythonLogo from "../../assets/skill-icons/python-original.svg";
 import scalaLogo from "../../assets/skill-icons/scala-original.svg";
 import coffeescriptLogo from "../../assets/skill-icons/coffeescript-original-wordmark.svg";
 import materializeLogo from "../../assets/skill-icons/materialize.svg";
-import perlLogo from "../../assets/skill-icons/logos-perl.svg";
 import goLogo from "../../assets/skill-icons/go-original 1.svg";
 import elixirLogo from "../../assets/skill-icons/elixir-lang-icon.svg";
 import tailwindLogo from "../../assets/skill-icons/tailwindcss-icon.svg";
@@ -139,9 +137,9 @@ import scllyLogo from "../../assets/skill-icons/scullyio-icon.svg";
 import arduinoLogo from "../../assets/skill-icons/ardunio.svg";
 import xdLogo from "../../assets/skill-icons/adobe-xd.svg";
 import matlabLogo from "../../assets/skill-icons/Matlab_Logo.svg";
+import PropTypes from "prop-types";
 
-
-const DynamicSkillSection = ({ theme,showAllSkills, allSkill}) => {
+const DynamicSkillSection = ({ theme, allSkill}) => {
   const skillArray =  allSkill[0]?.skillArray;
 
   const allTechnologies = [
@@ -1078,3 +1076,10 @@ const DynamicSkillSection = ({ theme,showAllSkills, allSkill}) => {
 };
 
 export default DynamicSkillSection;
+
+DynamicSkillSection.propTypes = {
+  theme: PropTypes.string.isRequired,
+  allSkill: PropTypes.arrayOf(PropTypes.shape({
+    skillArray: PropTypes.arrayOf(PropTypes.string),
+  })).isRequired,
+}

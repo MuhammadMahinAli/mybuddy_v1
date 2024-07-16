@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const PostMediaIcon = ({ theme, mediaTab }) => {
   const lightModeColor = mediaTab === true ? "#2adba4" : "#838DAA";
   return (
@@ -86,3 +88,7 @@ const PostMediaIcon = ({ theme, mediaTab }) => {
 };
 
 export default PostMediaIcon;
+PostMediaIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+  mediaTab: PropTypes.bool.isRequired,
+};

@@ -1,6 +1,7 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const FindDropdown = ({ theme }) => {
   return (
@@ -61,3 +62,6 @@ const FindDropdown = ({ theme }) => {
 };
 
 export default FindDropdown;
+FindDropdown.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

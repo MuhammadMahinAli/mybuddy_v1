@@ -7,8 +7,9 @@ import DashboardIcon from "../../icons/DashboardIcon";
 import ProjectIcon from "../../icons/ProjectIcon";
 import PeoplesIcon from "../../icons/PeoplesIcon";
 import VideoIcon from "../../icons/VideoIcon";
+import PropTypes from "prop-types";
 
-const MiniSidebar = ({ user, theme, handleSidebarLinkClick }) => {
+const MiniSidebar = ({ user, theme }) => {
   const [openFeed, setOpenFeed] = useState(false);
   const [openResearcher, setOpenResearcher] = useState(false);
   const [openDashboard, setOpenDashboard] = useState(false);
@@ -183,3 +184,7 @@ const MiniSidebar = ({ user, theme, handleSidebarLinkClick }) => {
 };
 
 export default MiniSidebar;
+MiniSidebar.propTypes = {
+  user: PropTypes.object,
+  theme: PropTypes.string.isRequired,
+};

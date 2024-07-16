@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 
 const NotificationIcon = () => {
@@ -8,7 +7,7 @@ const NotificationIcon = () => {
     <>
       {theme === "light" ? (
         <svg
-         className="w-6 md:w-6"
+          className="w-6 md:w-6"
           viewBox="0 0 21 22"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

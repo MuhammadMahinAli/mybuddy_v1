@@ -2,7 +2,7 @@ const SearchIcon = () => {
   return (
     <>
       <svg
-       className="w-3 md:w-6 mb-[0px]"
+        className="w-3 md:w-6 mb-[0px]"
         viewBox="0 0 25 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const BtmDashboardIcon = ({ theme,isPagedActive }) => {
   const lightModeColor = isPagedActive  ? '#2ADBA4'  : '#838DAA';
   return (
@@ -56,3 +58,7 @@ const BtmDashboardIcon = ({ theme,isPagedActive }) => {
 };
 
 export default BtmDashboardIcon;
+BtmDashboardIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+  isPagedActive: PropTypes.bool.isRequired,
+};

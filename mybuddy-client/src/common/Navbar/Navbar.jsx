@@ -24,11 +24,11 @@ import { Menu } from "@headlessui/react";
 import MiniSidebar from "./MiniSidebar";
 import ProfileTab from "./ProfileTab";
 import { AuthContext } from "../../Context/UserContext";
+import PropTypes from "prop-types";
 
 const Navbar = ({
   darkMode,
   toggleSidebar,
-  setOpenSidebar,
   openSidebar,
   theme,
 }) => {
@@ -330,3 +330,9 @@ const Navbar = ({
   );
 };
 export default Navbar;
+Navbar.propTypes = {
+  darkMode: PropTypes.bool.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
+  openSidebar: PropTypes.bool.isRequired,
+  theme: PropTypes.string.isRequired,
+};

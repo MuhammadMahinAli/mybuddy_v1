@@ -5,6 +5,7 @@ import { Navigation } from "swiper/modules";
 import { FaHeart } from "react-icons/fa";
 import feedWhiteBorder from "../../assets/home/feed-w-b.png";
 import feedDarkBorder from "../../assets/home/feed-d-b.png";
+import PropTypes from "prop-types";
 
 const MobileNavbar = ({
   activeTab,
@@ -211,3 +212,10 @@ const MobileNavbar = ({
 };
 
 export default MobileNavbar;
+MobileNavbar.propTypes = {
+  activeTab: PropTypes.object.isRequired,
+  toggleTab: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  theme: PropTypes.string.isRequired,
+  sentFriendRequest: PropTypes.func.isRequired,
+};

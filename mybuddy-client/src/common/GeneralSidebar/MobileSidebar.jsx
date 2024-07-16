@@ -337,4 +337,5 @@ MobileSidebar.propTypes = {
   openSetting: PropTypes.bool.isRequired,
   openRequestOption: PropTypes.bool.isRequired,
   setOpenRequestOption: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 }

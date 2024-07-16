@@ -8,7 +8,6 @@ const DekstopSidebar = ({
   handleFriendRqst,
   handleFund,
   handleMeeting,
-  handleProfile,
   handleProject,
   handleRequest,
   handleSetting,
@@ -329,7 +328,6 @@ DekstopSidebar.propTypes = {
   handleFriendRqst: PropTypes.func.isRequired,
   handleFund: PropTypes.func.isRequired,
   handleMeeting: PropTypes.func.isRequired,
-  handleProfile: PropTypes.func.isRequired,
   handleProject: PropTypes.func.isRequired,
   handleRequest: PropTypes.func.isRequired,
   handleSetting: PropTypes.func.isRequired,
@@ -344,5 +342,6 @@ DekstopSidebar.propTypes = {
   openSetting: PropTypes.bool.isRequired,
   openRequestOption: PropTypes.bool.isRequired,
   setOpenRequestOption: PropTypes.func.isRequired,
+  logout : PropTypes.func.isRequired,
   userData: PropTypes.object.isRequired,
 };

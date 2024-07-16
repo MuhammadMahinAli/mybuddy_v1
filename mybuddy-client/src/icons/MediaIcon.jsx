@@ -1,6 +1,6 @@
+import PropTypes from "prop-types";
+
 const MediaIcon = ({ theme }) => {
-
-
   return (
     <>
       {theme === "light" ? (
@@ -67,3 +67,6 @@ const MediaIcon = ({ theme }) => {
 };
 
 export default MediaIcon;
+MediaIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

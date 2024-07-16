@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const ProjectIcon1 = ({ theme }) => {
   return (
     <>
@@ -21,3 +23,6 @@ const ProjectIcon1 = ({ theme }) => {
 };
 
 export default ProjectIcon1;
+ProjectIcon1.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

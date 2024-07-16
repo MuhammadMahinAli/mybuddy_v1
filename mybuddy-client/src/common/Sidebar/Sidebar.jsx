@@ -6,6 +6,7 @@ import PeoplesIcon from "../../icons/PeoplesIcon";
 import VideoIcon from "../../icons/VideoIcon";
 import ResearcherIcon from "../../icons/ResearcherIcon";
 import Hamburger from "../../icons/Hamburger";
+import PropTypes from "prop-types";
      
 
 const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
@@ -217,3 +218,10 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
 };
 
 export default Sidebar;
+Sidebar.propTypes = {
+  openSidebar: PropTypes.bool.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
+  theme: PropTypes.string.isRequired,
+  isPageActive: PropTypes.func.isRequired,
+  user: PropTypes.object,
+};

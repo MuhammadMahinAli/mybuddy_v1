@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const BtmHomeIcon = ({ theme ,isPageActive}) => {
     const lightModeColor = isPageActive ?'#2ADBA4'  : '#838DAA';
   return (
@@ -32,3 +34,7 @@ const BtmHomeIcon = ({ theme ,isPageActive}) => {
 };
 
 export default BtmHomeIcon;
+BtmHomeIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+  isPageActive: PropTypes.bool.isRequired,
+};

@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const TechnicalIcon = ({ theme }) => {
   return (
     <>
@@ -53,3 +55,6 @@ const TechnicalIcon = ({ theme }) => {
 };
 
 export default TechnicalIcon;
+TechnicalIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

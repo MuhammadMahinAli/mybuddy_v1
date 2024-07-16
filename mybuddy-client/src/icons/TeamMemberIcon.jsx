@@ -1,3 +1,6 @@
+import PropTypes from "prop-types";
+
+
 const TeamMemberIcon = ({ theme }) => {
   return (
     <>
@@ -85,3 +88,6 @@ const TeamMemberIcon = ({ theme }) => {
 };
 
 export default TeamMemberIcon;
+TeamMemberIcon.propTypes = {
+  theme: PropTypes.string.isRequired,
+};

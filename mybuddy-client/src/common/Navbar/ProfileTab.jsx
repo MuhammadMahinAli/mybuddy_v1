@@ -3,6 +3,7 @@ import darkBorder from "../../assets/home/dark-border.png";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../../Context/UserContext";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const ProfileTab = ({ openProfile, logout }) => {
   const theme = useSelector((state) => state.theme.theme);
@@ -125,3 +126,7 @@ const ProfileTab = ({ openProfile, logout }) => {
 };
 
 export default ProfileTab;
+ProfileTab.propTypes = {
+  openProfile: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
+};

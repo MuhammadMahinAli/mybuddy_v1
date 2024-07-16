@@ -1,23 +1,32 @@
-import { useState, useEffect, useContext } from "react";
-import UserContext from "../Context/UserContext";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const SunIcon = () => {
-   
-    const theme = useSelector((state) => state.theme.theme);
-   
-   
- 
-   
+  const theme = useSelector((state) => state.theme.theme);
+
   return (
     <span className="sun">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <defs>
           {theme === "dark" ? (
-            <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: "#4eebff", stopOpacity: 1 }} />
-              <stop offset="64%" style={{ stopColor: "#aa62f9", stopOpacity: 1 }} />
-              <stop offset="100%" style={{ stopColor: "#f857ff", stopOpacity: 1 }} />
+            <linearGradient
+              id="sunGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={{ stopColor: "#4eebff", stopOpacity: 1 }}
+              />
+              <stop
+                offset="64%"
+                style={{ stopColor: "#aa62f9", stopOpacity: 1 }}
+              />
+              <stop
+                offset="100%"
+                style={{ stopColor: "#f857ff", stopOpacity: 1 }}
+              />
             </linearGradient>
           ) : null}
         </defs>
@@ -37,6 +46,5 @@ const SunIcon = () => {
     </span>
   );
 };
-
 
 export default SunIcon;
