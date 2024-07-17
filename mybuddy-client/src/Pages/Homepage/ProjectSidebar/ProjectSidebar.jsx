@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import HoveredText from "../../../icons/HoveredText";
 import DescrioptionIcon from "../../../icons/Project/DescrioptionIcon";
@@ -7,7 +8,6 @@ import TeamIcon from "../../../icons/Project/TeamIcon";
 const ProjectSidebar = ({
   theme,
   teamMembers,
-  description,
   technicalRecommendations,
   openComponent,
   toggleImage,

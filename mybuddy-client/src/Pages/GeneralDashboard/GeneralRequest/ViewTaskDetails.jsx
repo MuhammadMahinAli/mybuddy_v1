@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment } from "react";
+import  { Fragment } from "react";
 
 const ViewTaskDetails = ({ isOpenModal, tasks, closeModal }) => {
   console.log("t1",tasks[0].details);

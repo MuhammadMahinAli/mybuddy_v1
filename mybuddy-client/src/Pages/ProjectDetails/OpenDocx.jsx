@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import FileViewer from "react-file-viewer";
 import { Dialog, Transition } from "@headlessui/react";

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 import xMark from "../../../assets/xmark.png";
 import { useContext, useState } from "react";
 import ViewTaskDetails from "./ViewTaskDetails";
@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../../Context/UserContext";
 
 const GeneralRequestSent = () => {
-  const { user } = useSelector((state) => state.auth);
+  //const { user } = useSelector((state) => state.auth);
   const [selectedRequestIndex, setSelectedRequestIndex] = useState(null);
   const [isOpenModal, setIsOpenModal] = useState(false);
 

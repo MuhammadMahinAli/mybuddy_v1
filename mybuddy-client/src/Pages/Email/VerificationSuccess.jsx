@@ -19,7 +19,7 @@ const VerificationSuccess = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `https://test-two-22w0.onrender.com/api/v1/member/verify-email?token=${token}`
+          `http://localhost:3000/api/v1/member/verify-email?token=${token}`
         );
         const first = response?.data?.data?.firstName;
         const last = response?.data?.data?.lastName;
