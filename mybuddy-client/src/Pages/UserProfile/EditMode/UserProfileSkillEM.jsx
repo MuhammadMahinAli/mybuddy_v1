@@ -11,7 +11,7 @@ import { AuthContext } from "../../../Context/UserContext";
 const UserProfileSkillEM = () => {
   const theme = useSelector((state) => state.theme.theme);
   //const { user } = useSelector((state) => state.auth);
-  const { singleUser, getAllSkillByUser } = useContext(AuthContext);
+  const { getAllSkillByUser,isFetchingSkill } = useContext(AuthContext);
   const allSkill = getAllSkillByUser?.data;
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {
@@ -81,7 +81,7 @@ const UserProfileSkillEM = () => {
             ) : (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 py-6 px-5  xl:px-3">
-                  <DynamicSkillSection theme={theme} allSkill={allSkill} />
+                  <DynamicSkillSection isFetchingSkill={isFetchingSkill} theme={theme} allSkill={allSkill} />
                 </div>
                 <div className="flex justify-center items-center">
                   {theme === "light" ? (

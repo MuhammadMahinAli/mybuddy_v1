@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import GithubIcon from "../../../icons/GithubIcon";
 import LinkedInIcon from "../../../icons/LinkedInIcon";
@@ -324,24 +325,28 @@ const UserProfileSocialTabVM = ({ allSocialInfo }) => {
                 )}
               </>
             )}
-           {
-            currentFacebook || currenTiktok || currentInstagram || currentLinkedIn || currentPersonalWebsite || currentYoutube || currentPinterest &&
-            <div
-            onClick={() => setOpenlist(!openList)}
-            className="flex justify-center items-center "
-          >
-            {openList === true ? (
-              <IoIosArrowUp
-                className={theme === "light" ? "graish" : "text-white"}
-              />
-            ) : (
-              <IoIosArrowDown
-                className={theme === "light" ? "graish" : "text-white"}
-              />
-            )}
-          </div>
-           }
-           
+            {currentFacebook ||
+              currenTiktok ||
+              currentInstagram ||
+              currentLinkedIn ||
+              currentPersonalWebsite ||
+              currentYoutube ||
+              (currentPinterest && (
+                <div
+                  onClick={() => setOpenlist(!openList)}
+                  className="flex justify-center items-center "
+                >
+                  {openList === true ? (
+                    <IoIosArrowUp
+                      className={theme === "light" ? "graish" : "text-white"}
+                    />
+                  ) : (
+                    <IoIosArrowDown
+                      className={theme === "light" ? "graish" : "text-white"}
+                    />
+                  )}
+                </div>
+              ))}
           </div>
         </div>
       </div>

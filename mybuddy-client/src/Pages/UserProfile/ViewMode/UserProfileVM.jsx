@@ -1,16 +1,12 @@
+/* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
 import whiteBorder from "../../../assets/user-profile/profile-white-border.png";
 import darkBorder from "../../../assets/user-profile/profile-dark-border.png";
 import xIcon from "../../../assets/user-profile/x.png";
 import facebookIcon from "../../../assets/home/facebook.png";
-import googleIcon from "../../../assets/user-profile/google.png";
 import githubIcon from "../../../assets/user-profile/github.png";
 import linkedinIcon from "../../../assets/user-profile/linkedin.png";
 import { FaHeart } from "react-icons/fa";
-import CameraIcon from "../../../icons/CameraIcon";
-import BackButton from "../../../icons/BackButton";
-import UpdateButton from "../../../icons/UpdateButton";
-import CameraIcon2 from "../../../icons/CameraIcon2";
 import DekstopFormatVM from "./DekstopFormatVM";
 import MobileTabFormetVM from "./MobileTabFormetVM";
 import UserProfileAboutVM from "./UserProfileAboutVM";
@@ -23,7 +19,7 @@ import Swal from "sweetalert2";
 const UserProfileVM = () => {
   const { user } = useSelector((state) => state.auth);
   const theme = useSelector((state) => state.theme.theme);
-  const { createNewRequest } = useContext(AuthContext);
+  const { createNewRequest,isFetchingSkill } = useContext(AuthContext);
   const requestedId = user?._id;
   const [data, setData] = useState(null);
   const { id } = useParams();
@@ -551,6 +547,7 @@ const UserProfileVM = () => {
         </div>
       </div>
       <MobileTabFormetVM
+      isFetchingSkill={isFetchingSkill}
         allExperience={allExperience}
         allLicense={allLicense}
         allPost={allPost}
@@ -560,6 +557,7 @@ const UserProfileVM = () => {
         theme={theme}
       />
       <DekstopFormatVM
+      isFetchingSkill={isFetchingSkill}
         allExperience={allExperience}
         allLicense={allLicense}
         allPost={allPost}

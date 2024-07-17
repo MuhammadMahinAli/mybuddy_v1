@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
 
-const UserProfileProjectVM = ({allProject}) => {
+const UserProfileProjectVM = ({ allProject }) => {
   const theme = useSelector((state) => state.theme.theme);
   return (
     <>
-       <div
+      <div
         className={`${
           theme !== "light" &&
           "p-[1px] bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90% md:mx-7 lg:ml-20 lg:mr-32 xl:ml-0 xl:mr-0 rounded-2xl"
@@ -68,7 +69,7 @@ const UserProfileProjectVM = ({allProject}) => {
                     />
                   </div>
                   <div className=" px-2 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">
-                   <p className="font-semibold pb-2 text-[14px] lg:text-[15px] xl:text-xl">
+                    <p className="font-semibold pb-2 text-[14px] lg:text-[15px] xl:text-xl">
                       {p.projectName.slice(0, 12)}..
                     </p>
                     <div

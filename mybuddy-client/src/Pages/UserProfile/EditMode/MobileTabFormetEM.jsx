@@ -7,18 +7,16 @@ import UserProfileSkillEM from "./UserProfileSkillEM";
 import UserProfileSocialTabEM from "./UserProfileSocialTabEM";
 
 
-const MobileTabFormetEM = ({getAllProjectByUser}) => {
+const MobileTabFormetEM = () => {
     const theme = useSelector((state) => state.theme.theme);
-    const skillArray = [
-        "react", "tailwind" , "html","kubernetes"
-      ]
+
     return (
         <div className="xl:hidden py-6 px-5 space-y-5">
             <UserProfileActivityEM theme={theme} />
            <UserProfileExperienceEM theme={theme} />
            <UserProfileLicenceEM theme={theme} /> 
             <UserProfileProjectEM theme={theme} />
-            <UserProfileSkillEM skillArray={skillArray} theme={theme} />
+            <UserProfileSkillEM theme={theme} />
             <UserProfileSocialTabEM theme={theme} /> 
         </div>
     );

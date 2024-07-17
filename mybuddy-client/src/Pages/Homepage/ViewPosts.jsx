@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from "react";
 import whiteBorder from "../../assets/home/p-border.png";
 import darkBorder from "../../assets/home/dark-border.png";
@@ -15,10 +16,10 @@ import { AuthContext } from "../../Context/UserContext";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
-const ViewPosts = ({ theme, active }) => {
+const ViewPosts = ({ theme }) => {
   const [openComponent, setOpenComponent] = useState({});
   const { user } = useSelector((state) => state.auth);
-  const { createNewRequest,isFatchingCreateNewRequest } = useContext(AuthContext);
+  const { createNewRequest} = useContext(AuthContext);
   const requestedId = user?._id;
   const {
     data: allPosts,

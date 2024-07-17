@@ -1,4 +1,4 @@
-import UploadIcon2 from "../../../icons/UploadIcon2";
+/* eslint-disable react/prop-types */
 import UserProfileProjectVM from "./UserProfileProjectVM";
 import UserProfileSocialTabVM from "./UserProfileSocialTabVM";
 import UserProfileSkillVM from "./UserProfileSkillVM";

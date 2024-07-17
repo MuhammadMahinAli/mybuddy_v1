@@ -1,7 +1,6 @@
+/* eslint-disable react/prop-types */
 import DynamicSkillSection from "../../../common/DynamicSkillSecrion/DynamicSkillSection";
-import PlusIcon from "../../../icons/PlusIcon";
 import RightArrowIcon from "../../../icons/RightArrowIcon";
-import UploadIcon2 from "../../../icons/UploadIcon2";
 import { useSelector } from "react-redux";
 
 const UserProfileSkillVM = ({  allSkill }) => {

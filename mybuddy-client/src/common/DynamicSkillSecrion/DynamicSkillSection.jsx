@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import htmlLogo from "../../assets/skill-icons/html.png";
 import javascriptLogo from "../../assets/skill-icons/js.png";
 import kuberLogo from "../../assets/skill-icons/kuber.png";
@@ -138,8 +139,9 @@ import arduinoLogo from "../../assets/skill-icons/ardunio.svg";
 import xdLogo from "../../assets/skill-icons/adobe-xd.svg";
 import matlabLogo from "../../assets/skill-icons/Matlab_Logo.svg";
 import PropTypes from "prop-types";
+import Loading from "../../Pages/Loading/Loading";
 
-const DynamicSkillSection = ({ theme, allSkill}) => {
+const DynamicSkillSection = ({ theme, allSkill,isFetchingSkill}) => {
   const skillArray =  allSkill[0]?.skillArray;
 
   const allTechnologies = [
@@ -1011,6 +1013,10 @@ const DynamicSkillSection = ({ theme, allSkill}) => {
   const userTechnologies = allTechnologies.filter((tech) =>
     skillArray?.includes(tech.name)
   );
+
+  if(isFetchingSkill){
+    return <Loading/>
+  }
  // console.log("small", userTechnologies);
   return (
     <>

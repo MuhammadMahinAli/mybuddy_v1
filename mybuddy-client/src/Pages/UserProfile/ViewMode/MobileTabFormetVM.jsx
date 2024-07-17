@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
 import UserProfileActivityVM from "./UserProfileActivityVM";
 import UserProfileExperienceVM from "./UserProfileExperienceVM";
@@ -7,6 +8,7 @@ import UserProfileSkillVM from "./UserProfileSkillVM";
 import UserProfileSocialTabVM from "./UserProfileSocialTabVM";
 
 const MobileTabFormetVM = ({
+  isFetchingSkill,
   allExperience,
   allLicense,
   allPost,
@@ -23,7 +25,7 @@ const MobileTabFormetVM = ({
       <UserProfileExperienceVM allExperience={allExperience} theme={theme} />
       <UserProfileLicenceVM allLicense={allLicense} theme={theme} />
       <UserProfileProjectVM allProject={allProject} theme={theme} />
-      <UserProfileSkillVM allSkill={allSkill} theme={theme} />
+      <UserProfileSkillVM isFetchingSkill={isFetchingSkill} allSkill={allSkill} theme={theme} />
       <UserProfileSocialTabVM allSocialInfo={allSocialInfo} theme={theme} />
     </div>
   );
