@@ -3,7 +3,7 @@ import BtmDashboardIcon from "../../icons/BottomNavbar/BtmDashboardIcon";
 import BtmProjectIcon from "../../icons/BottomNavbar/BtmProjectIcon";
 import BtmResearcherIcon from "../../icons/BottomNavbar/BtmResearcherIcon";
 import BtmHomeIcon from "../../icons/BottomNavbar/BtmHomeIcon";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const BottomNavbar = ({ theme }) => {
@@ -28,19 +28,19 @@ const BottomNavbar = ({ theme }) => {
         {/* left */}
         <ul className="flex items-center space-x-14">
           <li>
-            <a href="/home">
+            <Link to="/home">
               {" "}
               <BtmHomeIcon theme={theme} isPageActive={isPageActive("/home")} />
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/find/researcher">
+            <Link to="/find/researcher">
               {" "}
               <BtmResearcherIcon
                 theme={theme}
                 isPageActive={isPageActive("/find/researcher")}
               />
-            </a>
+            </Link>
           </li>
         </ul>
         {/* center */}
@@ -57,29 +57,29 @@ const BottomNavbar = ({ theme }) => {
                 : "bg-[#554a52] bg-cover bg-no-repeat"
             } h-12 w-12 rounded-full flex justify-center items-center`}
           >
-            <a href="/home">
+            <Link to="/home">
               <FaPlus className=" text-xl text-white" />
-            </a>
+            </Link>
           </div>
         </div>
         {/* right */}
         <ul className="flex items-center space-x-14">
           <li>
-            <a href="/find/project">
+            <Link to="/find/project">
               <BtmProjectIcon
                 theme={theme}
                 isPageActive={isPageActive("/find/project")}
               />
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/dashboard">
+            <Link to="/dashboard">
               {" "}
               <BtmDashboardIcon
                 theme={theme}
                 isPageActive={isPageActive("/dashboard")}
               />
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

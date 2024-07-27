@@ -140,873 +140,875 @@ import xdLogo from "../../assets/skill-icons/adobe-xd.svg";
 import matlabLogo from "../../assets/skill-icons/Matlab_Logo.svg";
 import PropTypes from "prop-types";
 import Loading from "../../Pages/Loading/Loading";
-
-const DynamicSkillSection = ({ theme, allSkill,isFetchingSkill}) => {
-  const skillArray =  allSkill[0]?.skillArray;
+const DynamicSkillSection = ({
+  theme,
+  allSkill,
+  isFetchingSkill,
+  isReadMoreOpen,
+}) => {
+  //const skillArray = isReadMoreOpen ?  allSkill[0]?.skillArray ;
+  const skillArray = isReadMoreOpen
+    ? allSkill[0]?.skillArray.slice(0, 6)
+    : allSkill[0]?.skillArray;
 
   const allTechnologies = [
-    
-        {
-          name: "JavaScript",
-          logo: javascriptLogo,
-          bgColor: "#fff3c4",
-          lightButton: "#ffca28",
-        },
-        {
-          name: "C++",
-          logo: cLanguageLogo,
-          bgColor: "#e0ebf6",
-          lightButton: "#659ad2",
-        },
-        {
-          name: "CSharpe",
-          logo: csharpeLogo,
-          bgColor: "#d0cddd",
-          lightButton: "#8A4182",
-        },
-        {
-          name: "Go",
-          logo: goLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Objective",
-          logo: objetiveLogo,
-          bgColor: "#fddac2",
-          lightButton: "#f88535",
-        },
-        {
-          name: "Elixir",
-          logo: elixirLogo,
-          bgColor: "#d0cddd",
-          lightButton: "#8A4182",
-        },
-        {
-          name: "Rust",
-          logo: rustLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Clojure",
-          logo: clojureLogo,
-          bgColor: "#b0d3e8",
-          lightButton: "#0071b5",
-        },
+    {
+      name: "JavaScript",
+      logo: javascriptLogo,
+      bgColor: "#fff3c4",
+      lightButton: "#ffca28",
+    },
+    {
+      name: "C++",
+      logo: cLanguageLogo,
+      bgColor: "#e0ebf6",
+      lightButton: "#659ad2",
+    },
+    {
+      name: "CSharpe",
+      logo: csharpeLogo,
+      bgColor: "#d0cddd",
+      lightButton: "#8A4182",
+    },
+    {
+      name: "Go",
+      logo: goLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Objective",
+      logo: objetiveLogo,
+      bgColor: "#fddac2",
+      lightButton: "#f88535",
+    },
+    {
+      name: "Elixir",
+      logo: elixirLogo,
+      bgColor: "#d0cddd",
+      lightButton: "#8A4182",
+    },
+    {
+      name: "Rust",
+      logo: rustLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Clojure",
+      logo: clojureLogo,
+      bgColor: "#b0d3e8",
+      lightButton: "#0071b5",
+    },
 
-        {
-          name: "Haskell",
-          logo: haskellLogo,
-          bgColor: "#d0cddd",
-          lightButton: "#8A4182",
-        },
+    {
+      name: "Haskell",
+      logo: haskellLogo,
+      bgColor: "#d0cddd",
+      lightButton: "#8A4182",
+    },
 
-        {
-          name: "Nim",
-          logo: nimLogo,
-          bgColor: "#fff4c6",
-          lightButton: "#FED10A",
-        },
-        {
-          name: "Erlang",
-          logo: erlangLogo,
-          bgColor: "#eecdd6",
-          lightButton: "#A90533",
-        },
-        {
-          name: "Python",
-          logo: pythonLogo,
-          bgColor: "#fff4c6",
-          lightButton: "#FED10A",
-        },
-        {
-          name: "Scala",
-          logo: scalaLogo,
-          bgColor: "#fbd4cc",
-          lightButton: "#e13b36",
-        },
-        {
-          name: "Coffescript",
-          logo: coffeescriptLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Java Original",
-          logo: javaLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Typescript",
-          logo: tsLogo,
-          bgColor: "#b0d3e8",
-          lightButton: "#0071b5",
-        },
-  
-        {
-          name: "Solr",
-          logo: solrLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Graphql",
-          logo: graphqlLogo,
-          bgColor: "#f9c9e9",
-          lightButton: "#FF4088",
-        },
-        {
-          name: "Nodejs",
-          logo: nodejsLogo,
-          bgColor: "#c0e8d6",
-          lightButton: "#41b883",
-        },
-        {
-          name: "Cloudflare",
-          logo: cloudflareLogo,
-          bgColor: "#fcd9bc",
-          lightButton: "#faad3f",
-        },
-        {
-          name: "Prisma",
-          logo: prismaLogo,
-          bgColor: "#d9e7fd",
-          lightButton: "#4285f4",
-        },
-        {
-          name: "Sanity",
-          logo: sanityLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Springio",
-          logo: springioLogo,
-          bgColor: "#c0e8d6",
-          lightButton: "#41b883",
-        },
+    {
+      name: "Nim",
+      logo: nimLogo,
+      bgColor: "#fff4c6",
+      lightButton: "#FED10A",
+    },
+    {
+      name: "Erlang",
+      logo: erlangLogo,
+      bgColor: "#eecdd6",
+      lightButton: "#A90533",
+    },
+    {
+      name: "Python",
+      logo: pythonLogo,
+      bgColor: "#fff4c6",
+      lightButton: "#FED10A",
+    },
+    {
+      name: "Scala",
+      logo: scalaLogo,
+      bgColor: "#fbd4cc",
+      lightButton: "#e13b36",
+    },
+    {
+      name: "Coffescript",
+      logo: coffeescriptLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Java Original",
+      logo: javaLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Typescript",
+      logo: tsLogo,
+      bgColor: "#b0d3e8",
+      lightButton: "#0071b5",
+    },
 
-        {
-          logo: openRestyLogo,
-          name: "Open Resty",
-          bgColor: "#e0ffd2",
-          lightButton: "#5AA946",
-        },
-        {
-          logo: kafkaLogo,
-          name: "kafka",
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Rabbitmq",
-          logo: rabitmqLogo,
-          bgColor: "#fddac2",
-          lightButton: "#f88535",
-        },
-        {
-          name: "Express",
-          logo: expressLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Hadoop",
-          logo: hadoopLogo,
-          bgColor: "#fff4c6",
-          lightButton: "#FED10A",
-        },
-        {
-          name: "Ngrinx",
-          logo: ngrinxLogo,
-          bgColor: "#c0e8d6",
-          lightButton: "#41b883",
-        },
-        {
-          name: "Nextjs",
-          logo: nextjsLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-   
-        {
-          name: "HTML",
-          logo: htmlLogo,
-          bgColor: "#ffd7cd",
-          lightButton: "#f16529",
-        },
-        {
-          name: "Vue.Js",
-          logo: vueJsLogo,
-          bgColor: "#c0e8d6",
-          lightButton: "#41b883",
-        },
-        {
-          name: "Materialize",
-          logo: materializeLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Tailwind",
-          logo: tailwindLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Swift",
-          logo: swiftLogo,
-          bgColor: "#fddac2",
-          lightButton: "#f88535",
-        },
-        {
-          name: "Svelte",
-          logo: svelteLogo,
-          bgColor: "#fddac2",
-          lightButton: "#f88535",
-        },
-        {
-          name: "React",
-          logo: reactLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "WX Widgets",
-          logo: wxWidgetsLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Webpack", //er  vagrant scikiti
-          logo: webpackLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
+    {
+      name: "Solr",
+      logo: solrLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Graphql",
+      logo: graphqlLogo,
+      bgColor: "#f9c9e9",
+      lightButton: "#FF4088",
+    },
+    {
+      name: "Nodejs",
+      logo: nodejsLogo,
+      bgColor: "#c0e8d6",
+      lightButton: "#41b883",
+    },
+    {
+      name: "Cloudflare",
+      logo: cloudflareLogo,
+      bgColor: "#fcd9bc",
+      lightButton: "#faad3f",
+    },
+    {
+      name: "Prisma",
+      logo: prismaLogo,
+      bgColor: "#d9e7fd",
+      lightButton: "#4285f4",
+    },
+    {
+      name: "Sanity",
+      logo: sanityLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Springio",
+      logo: springioLogo,
+      bgColor: "#c0e8d6",
+      lightButton: "#41b883",
+    },
 
-        {
-          name: "Babel",
-          logo: bubelLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "GTK",
-          logo: gtkLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Vuetify",
-          logo: vuetifyLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Angular",
-          logo: angularLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Bootstrap",
-          logo: bootstrapLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Backbone.Js",
-          logo: backboeLogo,
-          bgColor: "#b0d3e8",
-          lightButton: "#0071b5",
-        },
-        {
-          name: "Bulma",
-          logo: bulmaLogo,
-          bgColor: "#ccf6f0",
-          lightButton: "#00D1B2",
-        },
+    {
+      logo: openRestyLogo,
+      name: "Open Resty",
+      bgColor: "#e0ffd2",
+      lightButton: "#5AA946",
+    },
+    {
+      logo: kafkaLogo,
+      name: "kafka",
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Rabbitmq",
+      logo: rabitmqLogo,
+      bgColor: "#fddac2",
+      lightButton: "#f88535",
+    },
+    {
+      name: "Express",
+      logo: expressLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Hadoop",
+      logo: hadoopLogo,
+      bgColor: "#fff4c6",
+      lightButton: "#FED10A",
+    },
+    {
+      name: "Ngrinx",
+      logo: ngrinxLogo,
+      bgColor: "#c0e8d6",
+      lightButton: "#41b883",
+    },
+    {
+      name: "Nextjs",
+      logo: nextjsLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
 
-        {
-          name: "Pug",
-          logo: pugLogo,
-          bgColor: "#f5dfc6",
-          lightButton: "#56332B",
-        },
+    {
+      name: "HTML",
+      logo: htmlLogo,
+      bgColor: "#ffd7cd",
+      lightButton: "#f16529",
+    },
+    {
+      name: "Vue.Js",
+      logo: vueJsLogo,
+      bgColor: "#c0e8d6",
+      lightButton: "#41b883",
+    },
+    {
+      name: "Materialize",
+      logo: materializeLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Tailwind",
+      logo: tailwindLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Swift",
+      logo: swiftLogo,
+      bgColor: "#fddac2",
+      lightButton: "#f88535",
+    },
+    {
+      name: "Svelte",
+      logo: svelteLogo,
+      bgColor: "#fddac2",
+      lightButton: "#f88535",
+    },
+    {
+      name: "React",
+      logo: reactLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "WX Widgets",
+      logo: wxWidgetsLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Webpack", //er  vagrant scikiti
+      logo: webpackLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
 
-        {
-          name: "Redux",
-          logo: reduxLogo,
-          bgColor: "#d0cddd",
-          lightButton: "#764ABC",
-        },
-        {
-          name: "Sass",
-          logo: sassLogo,
-          bgColor: "#eecdd6",
-          lightButton: "#CB6699",
-        },
-        {
-          name: "Gulp",
-          logo: gulpLogo,
-          bgColor: "#fbd4cc",
-          lightButton: "#e13b36",
-        },
-        {
-          name: "QT",
-          logo: qtLogo,
-          bgColor: "#c0e8d6",
-          lightButton: "#41b883",
-        },
-    
-        {
-          name: "Android",
-          logo: androidLogo,
-          bgColor: "#dce9b4",
-          lightButton: "#A4C439",
-        },
-        {
-          name: "Flutterio",
-          logo: flutterioLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Dart",
-          logo: dartLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Iconic",
-          logo: iconicLogo,
-          bgColor: "#b0d3e8",
-          lightButton: "#0071b5",
-        },
-        {
-          name: "reactNative",
-          logo: reactNativeLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Xamarin",
-          logo: xamarinLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Native Script",
-          logo: nativescriptLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Apache Cordova",
-          logo: apacheLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-      
-   
-        {
-          name: "Tensor Flow",
-          logo: tensorFlowLogo,
-          bgColor: "#fde8d1",
-          lightButton: "#F89939",
-        },
-        {
-          name: "Pytorch",
-          logo: pytorchLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Pandas",
-          logo: pandasLogo,
-          bgColor: "#d0cddd",
-          lightButton: "#8A4182",
-        },
-        {
-          name: "Opencv",
-          logo: opencvLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Scikit Learn",
-          logo: scikitLearnLogo,
-          bgColor: "#fde8d1",
-          lightButton: "#F89939",
-        },
- 
-  
-        {
-          name: "Oracle",
-          logo: oracleLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Postgresql",
-          logo: postgresqlLogo,
-          bgColor: "#e5f2fa",
-          lightButton: "#336791",
-        },
-        {
-          name: "Redis",
-          logo: radisLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Mssql",
-          logo: mssqlLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "CockroachDB",
-          logo: cockroachdbLogo,
-          bgColor: "#e5f2d9",
-          lightButton: "#348540",
-        },
-        {
-          name: "Hive",
-          logo: hiveLogo,
-          bgColor: "#fff4c6",
-          lightButton: "#FED10A",
-        },
-        {
-          name: "Cassandra",
-          logo: cassandraLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Mysql",
-          logo: mysqlLogo,
-          bgColor: "#ccdfe8",
-          lightButton: "#00618A",
-        },
-        {
-          name: "MongoDB",
-          logo: mongodbLogo,
-          bgColor: "#c0e8d6",
-          lightButton: "#41b883",
-        },
-        {
-          name: "CouchDB",
-          logo: couchdbLogo,
-          bgColor: "#c0e8d6",
-          lightButton: "#41b883",
-        },
-        {
-          name: "Realm",
-          logo: realmLogo,
-          bgColor: "#f9c9e9",
-          lightButton: "#FF4088",
-        },
-        {
-          name: "MariaDB",
-          logo: mariadbLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Elastic Search",
-          logo: elasticSearchLogo,
-          bgColor: "#fff4c6",
-          lightButton: "#FED10A",
-        },
-        {
-          name: "Sqlite",
-          logo: sqliteLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-      
-   
-        {
-          name: "D3js",
-          logo: d3jdLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Chartjs",
-          logo: chartjsLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Canvajs",
-          logo: canvajsLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "kibana",
-          logo: kibanaLogo,
-          bgColor: "#f9c9e9",
-          lightButton: "#FF4088",
-        },
-        {
-          name: "Grafana",
-          logo: grafanaLogo,
-          bgColor: "#fff4c6",
-          lightButton: "#FF9900",
-        },
+    {
+      name: "Babel",
+      logo: bubelLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "GTK",
+      logo: gtkLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Vuetify",
+      logo: vuetifyLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Angular",
+      logo: angularLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Bootstrap",
+      logo: bootstrapLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Backbone.Js",
+      logo: backboeLogo,
+      bgColor: "#b0d3e8",
+      lightButton: "#0071b5",
+    },
+    {
+      name: "Bulma",
+      logo: bulmaLogo,
+      bgColor: "#ccf6f0",
+      lightButton: "#00D1B2",
+    },
 
-        {
-          name: "AWS",
-          logo: awsLogo,
-          bgColor: "#fff4c6",
-          lightButton: "#FF9900",
-        },
+    {
+      name: "Pug",
+      logo: pugLogo,
+      bgColor: "#f5dfc6",
+      lightButton: "#56332B",
+    },
 
-        {
-          name: "Travisci",
-          logo: travisciLogo,
-          bgColor: "#f5d6db",
-          lightButton: "#CB3349",
-        },
-        {
-          name: "Circleci",
-          logo: circleciLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Azure",
-          logo: azureLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
+    {
+      name: "Redux",
+      logo: reduxLogo,
+      bgColor: "#d0cddd",
+      lightButton: "#764ABC",
+    },
+    {
+      name: "Sass",
+      logo: sassLogo,
+      bgColor: "#eecdd6",
+      lightButton: "#CB6699",
+    },
+    {
+      name: "Gulp",
+      logo: gulpLogo,
+      bgColor: "#fbd4cc",
+      lightButton: "#e13b36",
+    },
+    {
+      name: "QT",
+      logo: qtLogo,
+      bgColor: "#c0e8d6",
+      lightButton: "#41b883",
+    },
 
-        {
-          name: "Bash",
-          logo: bashLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Kubernetes",
-          logo: kuberLogo,
-          bgColor: "#d5e3ff",
-          lightButton: "#326de6",
-        },
-        {
-          name: "GCP",
-          logo: gcpLogo,
-          bgColor: "#b0d3e8",
-          lightButton: "#0071b5",
-        },
-        {
-          name: "Jenkins",
-          logo: jenkinsLogo,
-          bgColor: "#fbd4cc",
-          lightButton: "#e13b36",
-        },
-        {
-          name: "Docker",
-          logo: dockerLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-    
-        {
-          name: "Firebase",
-          logo: firebaseLogo,
-          bgColor: "#fff4c6",
-          lightButton: "#FED10A",
-        },
-        {
-          name: "Amplify",
-          logo: amplifyLogo,
-          bgColor: "#fff4c6",
-          lightButton: "#FED10A",
-        },
-        {
-          name: "Appwrite",
-          logo: appwriteLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Heroku",
-          logo: herokuLogo,
-          bgColor: "#e1e0ed",
-          lightButton: "#663399",
-        },
-  
-        {
-          name: "Django",
-          logo: djangoLogo,
-          bgColor: "#d5eee4",
-          lightButton: "#2BA977",
-        },
-        {
-          name: "Laravel",
-          logo: laravelLogo,
-          bgColor: "#fbd4cc",
-          lightButton: "#e13b36",
-        },
-        {
-          name: "Dotnet",
-          logo: dotnetLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Codeigniter",
-          logo: codeigniterLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#f37368",
-        },
-        {
-          name: "Quasar",
-          logo: quasarLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
+    {
+      name: "Android",
+      logo: androidLogo,
+      bgColor: "#dce9b4",
+      lightButton: "#A4C439",
+    },
+    {
+      name: "Flutterio",
+      logo: flutterioLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Dart",
+      logo: dartLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Iconic",
+      logo: iconicLogo,
+      bgColor: "#b0d3e8",
+      lightButton: "#0071b5",
+    },
+    {
+      name: "reactNative",
+      logo: reactNativeLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Xamarin",
+      logo: xamarinLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Native Script",
+      logo: nativescriptLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Apache Cordova",
+      logo: apacheLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
 
-        {
-          name: "Flask",
-          logo: flaskLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Rails",
-          logo: railsLogo,
-          bgColor: "#edd5d7",
-          lightButton: "#A62C39",
-        },
-        {
-          name: "Symfony",
-          logo: symfonyLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Electron",
-          logo: electronLogo,
-          bgColor: "#dae6e9",
-          lightButton: "#47848F",
-        },
-  
-        {
-          name: "Cypress",
-          logo: cypressLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Puppeteer",
-          logo: puppeteerLogo,
-          bgColor: "#cdf6ec",
-          lightButton: "#04D49F",
-        },
-        {
-          name: "Karma",
-          logo: karmaLogo,
-          bgColor: "#cdf6ec",
-          lightButton: "#56C5A8",
-        },
-        {
-          name: "Selenium",
-          logo: seleniumLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Jasmine",
-          logo: jasmineLogo,
-          bgColor: "#d0cddd",
-          lightButton: "#8A4182",
-        },
-        {
-          name: "Jest",
-          logo: jestLogo,
-          bgColor: "#ebd9dc",
-          lightButton: "#99424F",
-        },
-        {
-          name: "Mocha",
-          logo: mochaLogo,
-          bgColor: "#e8e1da",
-          lightButton: "#8D6748",
-        },
-        {
-          name: "Illustrator",
-          logo: illustratorLogo,
-          bgColor: "#ffe0c2",
-          lightButton: "#FF7C00",
-        },
-        {
-          name: "Photoshop",
-          logo: photoshopLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Blender",
-          logo: blenderLogo,
-          bgColor: "#ffe0c2",
-          lightButton: "#FF7C00",
-        },
-        {
-          name: "Matlab",
-          logo: matlabLogo,
-          bgColor: "#f9e9e0",
-          lightButton: "#d3590f",
-        },
-        {
-          name: "Postman",
-          logo: postmanLogo,
-          bgColor: "#fddac2",
-          lightButton: "#f88535",
-        },
-        {
-          name: "XD",
-          logo: xdLogo,
-          bgColor: "#ffd5f3",
-          lightButton: "#ff2bc2",
-        },
-        {
-          name: "Figma",
-          logo: figmaLogo,
-          bgColor: "#d9e7fd",
-          lightButton: "#2fc1fd",
-        },
-        {
-          name: "Sketch",
-          logo: sketchLogo,
-          bgColor: "#fff4c6",
-          lightButton: "#FDD231",
-        },
-        {
-          name: "Framer",
-          logo: framerLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Gatsby",
-          logo: gatsbyLogo,
-          bgColor: "#e1e0ed",
-          lightButton: "#663399",
-        },
-        {
-          name: "Gridsome",
-          logo: gridsomeLogo,
-          bgColor: "#c0e8d6",
-          lightButton: "#41b883",
-        },
-        {
-          name: "Hugo",
-          logo: hugoLogo,
-          bgColor: "#fcdbd7",
-          lightButton: "#FF4088",
-        },
-        {
-          name: "Nuxt.js",
-          logo: nuxtjsLogo,
-          bgColor: "#56C5A8",
-          lightButton: "#56C5A8",
-        },
-        {
-          name: "11ty",
-          logo: eleventyLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Sculpin",
-          logo: sculpinLogo,
-          bgColor: "#eff3f5",
-          lightButton: "#83a3b2",
-        },
-        {
-          name: "Vue press",
-          logo: veupressLogo,
-          bgColor: "#d1eee1",
-          lightButton: "#41B783",
-        },
-        {
-          name: "H",
-          logo: hexoLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
-        {
-          name: "Middleman",
-          logo: middlemanLogo,
-          bgColor: "#fbedcc",
-          lightButton: "#F1C761",
-        },
-        {
-          name: "Jeky11",
-          logo: jeky11Logo,
-          bgColor: "#fbd4cc",
-          lightButton: "#e13b36",
-        },
-        {
-          name: "Scully",
-          logo: scllyLogo,
-          bgColor: "#c0e8d6",
-          lightButton: "#41b883",
-        },
+    {
+      name: "Tensor Flow",
+      logo: tensorFlowLogo,
+      bgColor: "#fde8d1",
+      lightButton: "#F89939",
+    },
+    {
+      name: "Pytorch",
+      logo: pytorchLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Pandas",
+      logo: pandasLogo,
+      bgColor: "#d0cddd",
+      lightButton: "#8A4182",
+    },
+    {
+      name: "Opencv",
+      logo: opencvLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Scikit Learn",
+      logo: scikitLearnLogo,
+      bgColor: "#fde8d1",
+      lightButton: "#F89939",
+    },
 
-        {
-          name: "Unity",
-          logo: unityLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
-        {
-          name: "Unreal",
-          logo: unrealLogo,
-          bgColor: "#b8b8b8",
-          lightButton: "#000",
-        },
+    {
+      name: "Oracle",
+      logo: oracleLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Postgresql",
+      logo: postgresqlLogo,
+      bgColor: "#e5f2fa",
+      lightButton: "#336791",
+    },
+    {
+      name: "Redis",
+      logo: radisLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Mssql",
+      logo: mssqlLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "CockroachDB",
+      logo: cockroachdbLogo,
+      bgColor: "#e5f2d9",
+      lightButton: "#348540",
+    },
+    {
+      name: "Hive",
+      logo: hiveLogo,
+      bgColor: "#fff4c6",
+      lightButton: "#FED10A",
+    },
+    {
+      name: "Cassandra",
+      logo: cassandraLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Mysql",
+      logo: mysqlLogo,
+      bgColor: "#ccdfe8",
+      lightButton: "#00618A",
+    },
+    {
+      name: "MongoDB",
+      logo: mongodbLogo,
+      bgColor: "#c0e8d6",
+      lightButton: "#41b883",
+    },
+    {
+      name: "CouchDB",
+      logo: couchdbLogo,
+      bgColor: "#c0e8d6",
+      lightButton: "#41b883",
+    },
+    {
+      name: "Realm",
+      logo: realmLogo,
+      bgColor: "#f9c9e9",
+      lightButton: "#FF4088",
+    },
+    {
+      name: "MariaDB",
+      logo: mariadbLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Elastic Search",
+      logo: elasticSearchLogo,
+      bgColor: "#fff4c6",
+      lightButton: "#FED10A",
+    },
+    {
+      name: "Sqlite",
+      logo: sqliteLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
 
-        {
-          name: "Zapier",
-          logo: zapierLogo,
-          bgColor: "#ffdbcc",
-          lightButton: "#FF4A00",
-        },
-        {
-          name: "Ifttt",
-          logo: iftttLogo,
-          bgColor: "#d0eafd",
-          lightButton: "#588beb",
-        },
+    {
+      name: "D3js",
+      logo: d3jdLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Chartjs",
+      logo: chartjsLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Canvajs",
+      logo: canvajsLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "kibana",
+      logo: kibanaLogo,
+      bgColor: "#f9c9e9",
+      lightButton: "#FF4088",
+    },
+    {
+      name: "Grafana",
+      logo: grafanaLogo,
+      bgColor: "#fff4c6",
+      lightButton: "#FF9900",
+    },
 
-        {
-          name: "Linux",
-          logo: linuxLogo,
-          bgColor: "#fff5cc",
-          lightButton: "#FFD133",
-        },
-        {
-          name: "Git",
-          logo: gitLogo,
-          bgColor: "#fbd4cc",
-          lightButton: "#e13b36",
-        },
+    {
+      name: "AWS",
+      logo: awsLogo,
+      bgColor: "#fff4c6",
+      lightButton: "#FF9900",
+    },
 
-        {
-          name: "Arduino",
-          logo: arduinoLogo,
-          bgColor: "#def1f2",
-          lightButton: "#00979d",
-        },
-      
+    {
+      name: "Travisci",
+      logo: travisciLogo,
+      bgColor: "#f5d6db",
+      lightButton: "#CB3349",
+    },
+    {
+      name: "Circleci",
+      logo: circleciLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Azure",
+      logo: azureLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+
+    {
+      name: "Bash",
+      logo: bashLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Kubernetes",
+      logo: kuberLogo,
+      bgColor: "#d5e3ff",
+      lightButton: "#326de6",
+    },
+    {
+      name: "GCP",
+      logo: gcpLogo,
+      bgColor: "#b0d3e8",
+      lightButton: "#0071b5",
+    },
+    {
+      name: "Jenkins",
+      logo: jenkinsLogo,
+      bgColor: "#fbd4cc",
+      lightButton: "#e13b36",
+    },
+    {
+      name: "Docker",
+      logo: dockerLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+
+    {
+      name: "Firebase",
+      logo: firebaseLogo,
+      bgColor: "#fff4c6",
+      lightButton: "#FED10A",
+    },
+    {
+      name: "Amplify",
+      logo: amplifyLogo,
+      bgColor: "#fff4c6",
+      lightButton: "#FED10A",
+    },
+    {
+      name: "Appwrite",
+      logo: appwriteLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Heroku",
+      logo: herokuLogo,
+      bgColor: "#e1e0ed",
+      lightButton: "#663399",
+    },
+
+    {
+      name: "Django",
+      logo: djangoLogo,
+      bgColor: "#d5eee4",
+      lightButton: "#2BA977",
+    },
+    {
+      name: "Laravel",
+      logo: laravelLogo,
+      bgColor: "#fbd4cc",
+      lightButton: "#e13b36",
+    },
+    {
+      name: "Dotnet",
+      logo: dotnetLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Codeigniter",
+      logo: codeigniterLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#f37368",
+    },
+    {
+      name: "Quasar",
+      logo: quasarLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+
+    {
+      name: "Flask",
+      logo: flaskLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Rails",
+      logo: railsLogo,
+      bgColor: "#edd5d7",
+      lightButton: "#A62C39",
+    },
+    {
+      name: "Symfony",
+      logo: symfonyLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Electron",
+      logo: electronLogo,
+      bgColor: "#dae6e9",
+      lightButton: "#47848F",
+    },
+
+    {
+      name: "Cypress",
+      logo: cypressLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Puppeteer",
+      logo: puppeteerLogo,
+      bgColor: "#cdf6ec",
+      lightButton: "#04D49F",
+    },
+    {
+      name: "Karma",
+      logo: karmaLogo,
+      bgColor: "#cdf6ec",
+      lightButton: "#56C5A8",
+    },
+    {
+      name: "Selenium",
+      logo: seleniumLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Jasmine",
+      logo: jasmineLogo,
+      bgColor: "#d0cddd",
+      lightButton: "#8A4182",
+    },
+    {
+      name: "Jest",
+      logo: jestLogo,
+      bgColor: "#ebd9dc",
+      lightButton: "#99424F",
+    },
+    {
+      name: "Mocha",
+      logo: mochaLogo,
+      bgColor: "#e8e1da",
+      lightButton: "#8D6748",
+    },
+    {
+      name: "Illustrator",
+      logo: illustratorLogo,
+      bgColor: "#ffe0c2",
+      lightButton: "#FF7C00",
+    },
+    {
+      name: "Photoshop",
+      logo: photoshopLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Blender",
+      logo: blenderLogo,
+      bgColor: "#ffe0c2",
+      lightButton: "#FF7C00",
+    },
+    {
+      name: "Matlab",
+      logo: matlabLogo,
+      bgColor: "#f9e9e0",
+      lightButton: "#d3590f",
+    },
+    {
+      name: "Postman",
+      logo: postmanLogo,
+      bgColor: "#fddac2",
+      lightButton: "#f88535",
+    },
+    {
+      name: "XD",
+      logo: xdLogo,
+      bgColor: "#ffd5f3",
+      lightButton: "#ff2bc2",
+    },
+    {
+      name: "Figma",
+      logo: figmaLogo,
+      bgColor: "#d9e7fd",
+      lightButton: "#2fc1fd",
+    },
+    {
+      name: "Sketch",
+      logo: sketchLogo,
+      bgColor: "#fff4c6",
+      lightButton: "#FDD231",
+    },
+    {
+      name: "Framer",
+      logo: framerLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Gatsby",
+      logo: gatsbyLogo,
+      bgColor: "#e1e0ed",
+      lightButton: "#663399",
+    },
+    {
+      name: "Gridsome",
+      logo: gridsomeLogo,
+      bgColor: "#c0e8d6",
+      lightButton: "#41b883",
+    },
+    {
+      name: "Hugo",
+      logo: hugoLogo,
+      bgColor: "#fcdbd7",
+      lightButton: "#FF4088",
+    },
+    {
+      name: "Nuxt.js",
+      logo: nuxtjsLogo,
+      bgColor: "#56C5A8",
+      lightButton: "#56C5A8",
+    },
+    {
+      name: "11ty",
+      logo: eleventyLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Sculpin",
+      logo: sculpinLogo,
+      bgColor: "#eff3f5",
+      lightButton: "#83a3b2",
+    },
+    {
+      name: "Vue press",
+      logo: veupressLogo,
+      bgColor: "#d1eee1",
+      lightButton: "#41B783",
+    },
+    {
+      name: "H",
+      logo: hexoLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+    {
+      name: "Middleman",
+      logo: middlemanLogo,
+      bgColor: "#fbedcc",
+      lightButton: "#F1C761",
+    },
+    {
+      name: "Jeky11",
+      logo: jeky11Logo,
+      bgColor: "#fbd4cc",
+      lightButton: "#e13b36",
+    },
+    {
+      name: "Scully",
+      logo: scllyLogo,
+      bgColor: "#c0e8d6",
+      lightButton: "#41b883",
+    },
+
+    {
+      name: "Unity",
+      logo: unityLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+    {
+      name: "Unreal",
+      logo: unrealLogo,
+      bgColor: "#b8b8b8",
+      lightButton: "#000",
+    },
+
+    {
+      name: "Zapier",
+      logo: zapierLogo,
+      bgColor: "#ffdbcc",
+      lightButton: "#FF4A00",
+    },
+    {
+      name: "Ifttt",
+      logo: iftttLogo,
+      bgColor: "#d0eafd",
+      lightButton: "#588beb",
+    },
+
+    {
+      name: "Linux",
+      logo: linuxLogo,
+      bgColor: "#fff5cc",
+      lightButton: "#FFD133",
+    },
+    {
+      name: "Git",
+      logo: gitLogo,
+      bgColor: "#fbd4cc",
+      lightButton: "#e13b36",
+    },
+
+    {
+      name: "Arduino",
+      logo: arduinoLogo,
+      bgColor: "#def1f2",
+      lightButton: "#00979d",
+    },
   ];
 
   //Find the technologies associated with the user's skills
@@ -1014,70 +1016,73 @@ const DynamicSkillSection = ({ theme, allSkill,isFetchingSkill}) => {
     skillArray?.includes(tech.name)
   );
 
-  if(isFetchingSkill){
-    return <Loading/>
+  if (isFetchingSkill) {
+    return <Loading />;
   }
- // console.log("small", userTechnologies);
+  // console.log("small", userTechnologies);
   return (
-    <>
-    {
-      skillArray && skillArray?.length < 0 ?
-
-      <p className="text-[13px] md:text-[16px] text-center capitalize font-medium">
-        {"You've not add any skill yet."}
-        </p>
-        :
-
-        <>
-        {userTechnologies?.map((tech, index) => (
-        <div
-          key={index}
-          style={{
-            backgroundColor: tech.bgColor,
-            width: `${
-              tech.name.length === 4
-                ? 6 * 30
-                : tech.name.length === 5
-                ? 5 * 38
-                : tech.name.length === 6
-                ? 5 * 43
-                : tech.name.length === 3
-                ? 5 * 42
-                : tech.name.length === 7
-                ? 6 * 37
-                : tech.name.length === 2
-                ? 6 * 33
-                : tech.name.length === 9
-                ? 5 * 49
-                : 5 * 49
-            }px`,
-          }}
-          className={`py-3 rounded-lg flex items-center justify-between px-2`}
-        >
-          <div className="flex items-center space-x-3">
-            <img src={tech.logo} loading="lazy" alt={tech.name} className=" h-6 md:h-7" />
-            <p
-              className={`${
-                theme === "light" ? "text-gray-600" : "text-gray-600"
-              } font-semibold text-sm md:text-lg capitalize`}
-            >
-              {tech.name}
-            </p>
-          </div>
-
-          <button
-            style={{ color: tech.lightButton, borderColor: tech.lightButton }}
-            className="border-[1px] md:border-[3px] font-medium rounded-lg px-2 py-1 text-[14px] md:text-[16px]"
-          >
-            Endorse
-          </button>
-        </div>
-      ))}
-        </>
     
-    }
-     
+    <>
+      {skillArray && skillArray?.length < 0 ? (
+        <p className="text-[13px] md:text-[16px] text-center capitalize font-medium">
+          {"You've not add any skill yet."}
+        </p>
+      ) : (
+        <>
+          {userTechnologies?.map((tech, index) => (
+            <div
+              key={index}
+              style={{
+                backgroundColor: tech.bgColor,
+                width: `${tech.name.length === 4
+                    ? 6 * 30
+                    : tech.name.length === 5
+                      ? 5 * 38
+                      : tech.name.length === 6
+                        ? 5 * 43
+                        : tech.name.length === 3
+                          ? 5 * 42
+                          : tech.name.length === 7
+                            ? 6 * 37
+                            : tech.name.length === 2
+                              ? 6 * 33
+                              : tech.name.length === 9
+                                ? 5 * 49
+                                : 5 * 49
+                  }px`,
+              }}
+              className={`py-3 rounded-lg flex items-center justify-between px-2`}
+            >
+              <div className="flex items-center space-x-3">
+                <img
+                  src={tech.logo}
+                  loading="lazy"
+                  alt={tech.name}
+                  className=" h-6 md:h-7"
+                />
+                <p
+                  className={`${theme === "light" ? "text-gray-600" : "text-gray-600"
+                    } font-semibold text-sm md:text-lg capitalize`}
+                >
+                  {tech.name}
+                </p>
+              </div>
+
+              <button
+                style={{
+                  color: tech.lightButton,
+                  borderColor: tech.lightButton,
+                }}
+                className="border-[1px] md:border-[3px] font-medium rounded-lg px-2 py-1 text-[14px] md:text-[16px]"
+              >
+                Endorse
+              </button>
+            </div>
+          ))}
+        </>
+      )}
     </>
+  
   );
 };
 
@@ -1085,7 +1090,9 @@ export default DynamicSkillSection;
 
 DynamicSkillSection.propTypes = {
   theme: PropTypes.string.isRequired,
-  allSkill: PropTypes.arrayOf(PropTypes.shape({
-    skillArray: PropTypes.arrayOf(PropTypes.string),
-  })).isRequired,
-}
+  allSkill: PropTypes.arrayOf(
+    PropTypes.shape({
+      skillArray: PropTypes.arrayOf(PropTypes.string),
+    })
+  ).isRequired,
+};

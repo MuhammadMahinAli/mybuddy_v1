@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
 import UploadIcon2 from "../../../icons/UploadIcon2";
 

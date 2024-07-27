@@ -12,6 +12,7 @@ import { AuthContext } from "../../Context/UserContext";
 import { apiFetch } from "../../utils/apiFetch";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import Loading from '../Loading/Loading'
 
 const Feed = () => {
   const [activeTab, setActiveTab] = useState({});
@@ -144,6 +145,7 @@ const Feed = () => {
   };
 
   console.log(userData);
+  console.log(allUsers?.length);
 
   return (
     <div className="space-y-4">
@@ -390,6 +392,10 @@ const Feed = () => {
           </div>
         </div>
       ))}
+      {
+        allUsers?.length === 0 &&
+      <Loading/>
+      }
     </div>
   );
 };

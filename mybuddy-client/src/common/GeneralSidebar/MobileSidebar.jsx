@@ -257,9 +257,9 @@ const MobileSidebar = ({
                   : "bg-[#e4ecf7]  py-3"
               } flex relative  items-center justify-center`}
             >
-              <a href='/user/edit-profile'> 
+              < Link to='/user/edit-profile'> 
               <img src={userImage} className="h-6 w-7 rounded-full" />
-              </a>
+              </Link>
 
             </div>
 

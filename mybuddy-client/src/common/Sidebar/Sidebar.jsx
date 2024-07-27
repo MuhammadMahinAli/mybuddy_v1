@@ -7,6 +7,7 @@ import VideoIcon from "../../icons/VideoIcon";
 import ResearcherIcon from "../../icons/ResearcherIcon";
 import Hamburger from "../../icons/Hamburger";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
      
 
 const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
@@ -34,14 +35,14 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                   openSidebar === false && "hidden"
                 }`}
               >
-                <a href="/home">
+                < Link to="/home">
                   <img
                     className="h-[32px] w-[30px] md:h-12 md:w-[46px] rounded-lg"
                     src="/logo.png"
                     loading="lazy"
                     alt=""
                   />
-                </a>
+                </Link>
               </h1>
               {/* mbl tab */}
 
@@ -60,8 +61,7 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
               }  w-[200px] space-y-5 lg:rounded-br-xl p-4`}
             >
               <li className="sidebar-list">
-                <a
-                  href="/home"
+                < Link to="/home"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer box1 [border:none]">
@@ -82,11 +82,10 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                   >
                     Feed
                   </p>
-                </a>
+                </Link>
               </li>
               <li className="sidebar-list">
-                <a
-                  href="/find/researcher"
+                < Link to="/find/researcher"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer box1 [border:none]">
@@ -107,11 +106,10 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                   >
                     Researchers
                   </p>
-                </a>
+                </Link>
               </li>
               <li className="sidebar-list">
-                <a
-                  href={user ? "/dashboard" : "/login"}
+                < Link to={user ? "/dashboard" : "/login"}
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
@@ -132,11 +130,10 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                   >
                     Dashboard
                   </p>
-                </a>
+                </Link>
               </li>
               <li className="sidebar-list">
-                <a
-                  href="/find/project"
+                < Link to="/find/project"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
@@ -157,11 +154,10 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                   >
                     Projects
                   </p>
-                </a>
+                </Link>
               </li>
               <li className="sidebar-list">
-                <a
-                  href="/frnd"
+                < Link to="/frnd"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
@@ -182,11 +178,10 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                   >
                     Friends
                   </p>
-                </a>
+                </Link>
               </li>
               <li className="sidebar-list">
-                <a
-                  href="/meet"
+                < Link to="/meet"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
@@ -207,7 +202,7 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                   >
                     Meetings
                   </p>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

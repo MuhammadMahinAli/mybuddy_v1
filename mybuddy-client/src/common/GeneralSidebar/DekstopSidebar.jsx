@@ -275,8 +275,8 @@ const DekstopSidebar = ({
         </ul>
       </div>
       {/* bottom */}
-      <a
-        href="/user/edit-profile"
+      <Link
+        to="/user/edit-profile"
         className={`${
           openProfile === true ? "bg-[#dce2ea]" : "bg-[#e4ecf7] py-4 "
         } flex flex-col justify-center items-center relative rounded-[15px] py-2 lg:px-[75px] xl:px-[94px] 3xl:px-[100px]    shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]`}
@@ -290,7 +290,7 @@ const DekstopSidebar = ({
             {userData?.data?.name?.lastName}
           </p>
         </div>
-      </a>
+      </Link>
       {/* setting logout */}
       <div className="space-y-3">
         <div

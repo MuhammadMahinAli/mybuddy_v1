@@ -1,6 +1,5 @@
+/* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
-import PlusIcon from "../../../icons/PlusIcon";
-import UploadIcon2 from "../../../icons/UploadIcon2";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 

@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import { Fragment, useState } from "react";
 import man from "../../assets/dummy.png";
 import man1 from "../../assets/people1.png";
 import "../GeneralDashboard/GeneralAddProject/editor.css";
 import { Dialog, Transition } from "@headlessui/react";
 
-const TaskTable = ({ tasks,selectedTasks,setSelectedTasks }) => {
+const TaskTable = ({ tasks,setSelectedTasks }) => {
   const [checkedStates, setCheckedStates] = useState(tasks?.map(() => false));
 
 

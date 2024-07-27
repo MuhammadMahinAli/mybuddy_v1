@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import FeedIcon from "../../icons/FeedIcon";
 import HoveredText from "../../icons/HoveredText";
 import ResearcherIcon from "../../icons/ResearcherIcon";
@@ -31,7 +31,7 @@ const MiniSidebar = ({ user, theme }) => {
       }  flex flex-col items-center justify-center py-5 space-y-4 lg:space-y-9 z-50`}
     >
       <li className="sidebar-list">
-        <a href="/home" className="relative">
+        <Link to="/home" className="relative">
           <p>
             <div
               className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
@@ -54,10 +54,10 @@ const MiniSidebar = ({ user, theme }) => {
               <HoveredText text={"Feed"} theme={theme} />
             </div>
           )}
-        </a>
+        </Link>
       </li>
       <li className="relative sidebar-list">
-        <a href="/find/researcher">
+        <Link to="/find/researcher">
           <div
             className="flex items-center justify-center cursor-pointer [border:none] box1 p-0 rounded-xl"
             onMouseEnter={() => setOpenResearcher(true)}
@@ -73,7 +73,7 @@ const MiniSidebar = ({ user, theme }) => {
               <ResearcherIcon theme={theme} openResearcher={openResearcher} />
             </div>
           </div>
-        </a>
+        </Link>
         {openResearcher && (
           <div className="absolute left-16 top-1 z-50">
             <HoveredText text={"Researchers"} theme={theme} />
@@ -81,7 +81,7 @@ const MiniSidebar = ({ user, theme }) => {
         )}
       </li>
       <li className="relative sidebar-list">
-        <a href={user ? "/dashboard" : "/login"}>
+        <Link to={user ? "/dashboard" : "/login"}>
           <div
             className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
             onMouseEnter={() => setOpenDashboard(true)}
@@ -97,7 +97,7 @@ const MiniSidebar = ({ user, theme }) => {
               <DashboardIcon theme={theme} openDashboard={openDashboard} />
             </div>
           </div>
-        </a>
+        </Link>
         {openDashboard && (
           <div className="absolute left-16 top-1 z-50">
             <HoveredText text={"Dashboard"} theme={theme} />
@@ -105,7 +105,7 @@ const MiniSidebar = ({ user, theme }) => {
         )}
       </li>
       <li className="relative sidebar-list">
-        <a href="/find/project">
+        <Link to="/find/project">
           <p>
             <div
               className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
@@ -128,11 +128,11 @@ const MiniSidebar = ({ user, theme }) => {
               <HoveredText text={"Projects"} theme={theme} />
             </div>
           )}
-        </a>
+        </Link>
       </li>
 
       <li className="relative sidebar-list">
-        <a href="/friend">
+        <Link to="/friend">
           <div
             className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
             onMouseEnter={() => setOpenPeoples(true)}
@@ -148,7 +148,7 @@ const MiniSidebar = ({ user, theme }) => {
               <PeoplesIcon theme={theme} openPeoples={openPeoples} />
             </div>
           </div>
-        </a>
+        </Link>
         {openPeoples && (
           <div className="absolute left-16 top-1 z-50">
             <HoveredText text={"Friends"} theme={theme} />
@@ -156,7 +156,7 @@ const MiniSidebar = ({ user, theme }) => {
         )}
       </li>
       <li className="relative sidebar-list">
-        <a href="/meeting">
+        <Link to="/meeting">
           <div
             className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
             onMouseEnter={() => setOpenMeeting(true)}
@@ -172,7 +172,7 @@ const MiniSidebar = ({ user, theme }) => {
               <VideoIcon theme={theme} openMeeting={openMeeting} />
             </div>
           </div>
-        </a>
+        </Link>
         {openMeeting && (
           <div className="absolute left-16 top-1 z-50">
             <HoveredText text={"Meetings"} theme={theme} />

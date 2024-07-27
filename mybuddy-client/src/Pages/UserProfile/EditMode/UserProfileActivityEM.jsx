@@ -3,6 +3,7 @@ import RightArrowIcon from "../../../icons/RightArrowIcon";
 import { useContext } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 import pdf from "../../../assets/home/pdf-image.jpg";
+import { Link } from "react-router-dom";
 
 const UserProfileActivityEM = () => {
   const theme = useSelector((state) => state.theme.theme);
@@ -35,7 +36,7 @@ const UserProfileActivityEM = () => {
             <p className="text-lg md:text-2xl font-semibold">Activity</p>
             <p className="text-sm pt-1">422 Followers</p>
           </div>
-          <a href="/home">
+          <Link to="/home">
             {theme === "light" ? (
               <div className="lg:text-sm xl:text-lg text-white font-semibold rounded-[10px] px-2 py-2 xl:px-4 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
                 {/* <EditIcon /> */}
@@ -46,7 +47,7 @@ const UserProfileActivityEM = () => {
                 <p>Create A Post</p>
               </div>
             )}
-          </a>
+          </Link>
         </div>
         {allPosts?.length === 0 ? (
           <p className="text-[13px] md:text-[16px] capitalize font-medium py-8 text-center">
@@ -73,24 +74,27 @@ const UserProfileActivityEM = () => {
                 </div>
               ))}
             </div>
-            <div className="flex justify-center items-center py-5">
-              {theme === "light" ? (
-                <div className="w-36 flex items-center space-x-2 justify-center lg:text-sm xl:text-lg text-white font-semibold rounded-[10px] px-2 py-1 xl:px-4 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
-                  <p className="text-sm capitalize">see all posts</p>
-                  <RightArrowIcon theme={theme} />
-                </div>
-              ) : (
-                <div className="seeAllPostBtn">
-                  <p>
-                    See All Posts{" "}
-                    <span>
-                      {" "}
-                      <RightArrowIcon theme={theme} />
-                    </span>{" "}
-                  </p>
-                </div>
-              )}
-            </div>
+
+            {allPosts?.length > 6 && (
+              <div className="flex justify-center items-center py-5">
+                {theme === "light" ? (
+                  <div className="w-36 flex items-center space-x-2 justify-center lg:text-sm xl:text-lg text-white font-semibold rounded-[10px] px-2 py-1 xl:px-4 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
+                    <p className="text-sm capitalize">see all posts</p>
+                    <RightArrowIcon theme={theme} />
+                  </div>
+                ) : (
+                  <div className="seeAllPostBtn">
+                    <p>
+                      See All Posts{" "}
+                      <span>
+                        {" "}
+                        <RightArrowIcon theme={theme} />
+                      </span>{" "}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
           </>
         )}
       </div>

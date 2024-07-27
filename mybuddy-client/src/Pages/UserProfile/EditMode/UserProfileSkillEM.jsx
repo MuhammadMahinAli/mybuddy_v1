@@ -11,13 +11,16 @@ import { AuthContext } from "../../../Context/UserContext";
 const UserProfileSkillEM = () => {
   const theme = useSelector((state) => state.theme.theme);
   //const { user } = useSelector((state) => state.auth);
-  const { getAllSkillByUser,isFetchingSkill } = useContext(AuthContext);
+  const { getAllSkillByUser, isFetchingSkill } = useContext(AuthContext);
   const allSkill = getAllSkillByUser?.data;
   const [isOpen, setIsOpen] = useState(false);
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+  const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
+
   const closeModal = () => {
     setIsOpen(false);
   };
-  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+
   const closeUpdateModal = () => {
     setIsUpdateOpen(false);
   };
@@ -81,26 +84,43 @@ const UserProfileSkillEM = () => {
             ) : (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 py-6 px-5  xl:px-3">
-                  <DynamicSkillSection isFetchingSkill={isFetchingSkill} theme={theme} allSkill={allSkill} />
+                  <DynamicSkillSection
+                    isReadMoreOpen={isReadMoreOpen}
+                    setIsReadMoreOpen={setIsReadMoreOpen}
+                    isFetchingSkill={isFetchingSkill}
+                    theme={theme}
+                    allSkill={allSkill}
+                  />
                 </div>
-                <div className="flex justify-center items-center">
-                  {theme === "light" ? (
-                    <div className="w-36 flex items-center space-x-2 justify-center lg:text-sm xl:text-lg text-white font-semibold rounded-[10px] px-2 py-1 xl:px-4 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
-                      <p className="text-sm capitalize">View More</p>
-                      <RightArrowIcon theme={theme} />
-                    </div>
-                  ) : (
-                    <div className="viewMoreBlueBtn">
-                      <p>
-                        View More{" "}
-                        <span>
+                {allSkill[0]?.skillArray?.length > 6 && (
+                  <div className="flex justify-center items-center">
+                    {theme === "light" ? (
+                      <div
+                        onClick={() => setIsReadMoreOpen(!isReadMoreOpen)}
+                        className="w-36 flex items-center space-x-2 justify-center lg:text-sm xl:text-lg text-white font-semibold rounded-[10px] px-2 py-1 xl:px-4 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]"
+                      >
+                        <p className="text-sm capitalize">
                           {" "}
-                          <RightArrowIcon theme={theme} />
-                        </span>{" "}
-                      </p>
-                    </div>
-                  )}
-                </div>
+                          {isReadMoreOpen ? "View More" : "View Less"}
+                        </p>
+                        <RightArrowIcon theme={theme} />
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => setIsReadMoreOpen(!isReadMoreOpen)}
+                        className="viewMoreBlueBtn"
+                      >
+                        <p>
+                          {isReadMoreOpen ? "View More" : "View Less"}{" "}
+                          <span>
+                            {" "}
+                            <RightArrowIcon theme={theme} />
+                          </span>{" "}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
               </>
             )}
           </div>

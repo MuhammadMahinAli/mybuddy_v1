@@ -2,15 +2,16 @@ import { useSelector } from "react-redux";
 import PlusIcon from "../../../icons/PlusIcon";
 import { useContext } from "react";
 import { AuthContext } from "../../../Context/UserContext";
+import { Link } from "react-router-dom";
 
 const UserProfileProjectEM = () => {
   const theme = useSelector((state) => state.theme.theme);
-  const { singleUser, getAllProjectByUser } = useContext(AuthContext);
+  const { getAllProjectByUser } = useContext(AuthContext);
   const allProject = getAllProjectByUser?.data;
   //const userName = singleUser?.data?.name?.firstName + " " + singleUser?.data?.name?.lastName
 
   //console.log("p", allProject.length);
- 
+
   return (
     <>
       <div
@@ -36,9 +37,9 @@ const UserProfileProjectEM = () => {
             <div>
               <p className="text-[16px] md:text-2xl font-semibold">Projects</p>
             </div>
-            <a href="/dashboard/create-projects">
+            <Link to="/dashboard/create-projects">
               <PlusIcon theme={theme} />
-            </a>
+            </Link>
           </div>
           {allProject?.length === 0 ? (
             <p

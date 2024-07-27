@@ -7,19 +7,14 @@ const GeneralDashboardNavbar = () => {
   return (
     <div className="px-2 py-5 mx-auto sm:max-w-xl md:max-w-full bg-tr md:px-8 lg:px-8 gray500">
       <div className="relative flex items-center justify-between">
-        <a
-          href="/home"
-          aria-label="Company"
-          title="Company"
-          className="inline-flex items-center"
-        >
+        <Link to="/home" className="inline-flex items-center">
           <div className="hidden lg:block px-2 py-2 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
             <img src="/logo.png" className="w-8" />
           </div>
           {/* <span className="ml-2 text-2xl font-bold tracking-wide uppercase">
             LOGO
           </span> */}
-        </a>
+        </Link>
         <ul className="flex items-center hidden space-x-8 lg:flex">
           <li>
             <Link to="/home">
@@ -36,11 +31,11 @@ const GeneralDashboardNavbar = () => {
             </Link>
           </li> */}
           <li>
-            <a href="/find/academic">
+            <Link to="/find/academic">
               <p className="px-4 py-[5px] text-[18px] font-semibold rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
                 Academic
               </p>
-            </a>
+            </Link>
           </li>
           <li>
             <div className="px-3 py-1 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
@@ -74,19 +69,19 @@ const GeneralDashboardNavbar = () => {
               <div className="p-5 bg-white border rounded shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <a
-                      href="/home"
+                    <Link
+                      to="/home"
                       aria-label="Company"
                       title="Company"
                       className="inline-flex items-center"
                     >
-                      <div className="p-3 rounded-lg shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
-                        <img src="/hambrgr2.svg" className="h-4" />
+                      <div className="p-1 rounded-lg shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
+                        <img src="/logo.png" className="h-8" />
                       </div>
                       <span className="ml-2 text-xl font-bold tracking-wide uppercase">
-                        LOGO
+                        Research Buddy
                       </span>
-                    </a>
+                    </Link>
                   </div>
                   <div>
                     <button
@@ -107,28 +102,20 @@ const GeneralDashboardNavbar = () => {
                 <nav>
                   <ul className="space-y-4">
                     <li>
-                      <a
-                        href="/home"
+                      <Link
+                        to="/home"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         Home
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
-                        href="/home"
-                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                      >
-                        General
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="/home"
+                      <Link
+                        to="/find/academic"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         Academic
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </nav>
