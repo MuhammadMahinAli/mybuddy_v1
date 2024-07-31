@@ -1,68 +1,262 @@
-/* eslint-disable react/prop-types */
-import plus from "../../../assets/plus3.png";
+ import { useState } from "react";
+ import plus from "../../../assets/plus3.png";
+ import PropTypes from "prop-types";
 
-const AddProjectThirdForm = ({ tasks, setTasks }) => {
-  const addTask = (e) => {
-    e.preventDefault();
-    setTasks([...tasks, { title: "", details: "", budget: "" }]);
-  };
-  const handleTaskChange = (index, event) => {
-    const newTasks = [...tasks];
-    newTasks[index][event.target.name] = event.target.value;
-    setTasks(newTasks);
-  };
+ const AddProjectThirdForm = ({ tasks, setTasks }) => {
+   const [taskInput, setTaskInput] = useState({
+     title: "",
+     details: "",
+     taskType: "free",
+     coin: "0",
+     priority: "low",
+     startDate: "", 
+     endDate: "" ,
+     subTask: [],
+   });
 
-  return (
-    <form className="w-[280px] ssm:w-[320px]   sm:w-11/12 lg:w-12/12 space-y-4 py-2 lg:py-3 relative lg:mr-4">
-      <div className="flex  justify-between lg:items-center space-x-1 lg:space-x-3 lg:w-full">
-        <div className="rounded-md text-center px-1 py-2 md:w-1/12 lg:w-1/12 md:py-3 text-sm lg:text-2xl font-bold text-white gradient-background shadow-[1px_5px_7px_rgba(125,_125,_125,_0.4),_1px_2px_15px_rgba(213,_213,_213,_0.3)] [backdrop-filter:blur(42px)] ">
-          NO
-        </div>
-        <div className=" rounded-md text-center px-2 py-2 md:w-2/12 lg:w-2/12  md:py-3 text-sm lg:text-2xl font-bold text-white gradient-background shadow-[1px_5px_7px_rgba(125,_125,_125,_0.4),_1px_2px_15px_rgba(213,_213,_213,_0.3)] [backdrop-filter:blur(42px)]">
-          Title
-        </div>
-        <div className="text-center rounded-md px-2  py-2 w-4/12 ssm:w-5/12 sm:w-5/12  lg:w-6/12 l  md:py-3 text-sm lg:text-2xl font-bold text-white gradient-background shadow-[1px_5px_7px_rgba(125,_125,_125,_0.4),_1px_2px_15px_rgba(213,_213,_213,_0.3)] [backdrop-filter:blur(42px)]">
-          DETAILS
-        </div>
-        <div className=" text-white text-center rounded-md px-2  py-2 w-3/12 lg:w-2/12  md:py-3 text-sm lg:text-2xl font-bold  gradient-background shadow-[1px_5px_7px_rgba(125,_125,_125,_0.4),_1px_2px_15px_rgba(213,_213,_213,_0.3)] [backdrop-filter:blur(42px)]">
-          BUDGET
-        </div>
-      </div>
+   const addTask = (e) => {
+     e.preventDefault();
+     if (taskInput.title !== "") {
+       setTasks([...tasks, { ...taskInput }]);
+       setTaskInput({
+         title: "",
+         details: "",
+         taskType: "free",
+         coin: "0",
+         priority: "low",
+          startDate: "", 
+          endDate: "" ,
+         subTask: [],
+       });
+     }
+   };
+
+   const handleTaskChange = (e) => {
+     const { name, value } = e.target;
+     setTaskInput((prev) => ({ ...prev, [name]: value }));
+   };
+
+   const handleSubTaskChange = (index, event) => {
+     const newSubTasks = [...taskInput.subTask];
+     newSubTasks[index] = event.target.value;
+     setTaskInput((prev) => ({ ...prev, subTask: newSubTasks }));
+   };
+
+   const addSubTask = () => {
+     setTaskInput((prev) => ({ ...prev, subTask: [...prev.subTask, ""] }));
+   };
+
+   const removeSubTask = (index) => {
+     const newSubTasks = taskInput.subTask.filter((_, i) => i !== index);
+     setTaskInput((prev) => ({ ...prev, subTask: newSubTasks }));
+   };
+
+   const removeTask = (taskIndex) => {
+     const newTasks = tasks?.filter((_, index) => index !== taskIndex);
+     setTasks(newTasks);
+   };
+console.log(tasks);
+   return (
+     <div className="w-full">
+       {tasks?.length > 0 && (
+         <table className="w-full table-auto mb-4">
+           <thead>
+             <tr>
+               <th>Title</th>
+               <th>Details</th>
+               <th>Budget</th>
+               <th>Deadline</th>
+               <th>Priority</th>
+               <th>SubTasks</th>
+               <th>Actions</th>
+             </tr>
+           </thead>
+           <tbody>
+             {tasks.map((task, index) => (
+               <tr key={index}>
+                 <td>{task.title}</td>
+                 <td>{task.details}</td>
+                 <td>{task.taskType === "paid" ? `${task.coin} coin` : "Free"}</td>
+                 <td>{task.endDate}</td>
+                 <td>{task.priority}</td>
+                 <td>{task.subTask.length}</td>
+                 <td>
+                   <button
+                     onClick={() => removeTask(index)}
+                     className="text-red-500 hover:text-red-700"
+                   >
+                     &times;
+                   </button>
+                 </td>
+               </tr>
+             ))}
+           </tbody>
+         </table>
+       )}
+
+       <form className="w-full space-y-4 py-2 lg:py-3">
+         <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+           <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 md:space-x-3">
+             <label className="text-[16px] md:text-xl">Title:</label>
+             <input
+               name="title"
+               value={taskInput.title}
+               onChange={handleTaskChange}
+               className="outline-none rounded-lg py-3 px-2 md:w-[380px] lg:w-[446px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+             />
+           </div>
+         </div>
+
+         {/* details */}
+         <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+           <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 md:space-x-3">
+             <label className="text-[16px] md:text-xl">Details:</label>
+             <textarea
+               name="details"
+               value={taskInput.details}
+               onChange={handleTaskChange}
+               className="outline-none rounded-lg py-3 px-2 md:w-[380px] lg:w-[446px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+             />
+           </div>
+         </div>
+
+         {/* budget */}
+         <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+           <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 md:space-x-3">
+             <label className="text-[16px] md:text-xl">Budget:</label>
+             <select
+               name="taskType"
+               value={taskInput.taskType}
+               onChange={handleTaskChange}
+               className="outline-none rounded-lg py-3 px-2 md:w-[380px] lg:w-[447px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+             >
+               <option value="free">Free</option>
+               <option value="paid">Paid</option>
+             </select>
+             {taskInput.taskType === "paid" && (
+               <input
+                 name="coin"
+                 type="number"
+                 value={taskInput.coin}
+                 onChange={handleTaskChange}
+                 className="outline-none rounded-lg py-3 px-2 md:w-[315px] lg:w-[340px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+               />
+             )}
+           </div>
+         </div>
+
+         {/* duration */}
+         <div className="flex flex-col space-y-3 w-full lg:w-[550px] ">
+           <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 md:space-x-3">
+             <label className="text-[16px] md:text-xl">Duration:</label>
+             <input
+               type="date"
+               name="startDate"
+               value={taskInput.startDate}
+                onChange={handleTaskChange}
+               
+               className="outline-none rounded-lg py-3 px-2 md:w-[182px] lg:w-[215px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+             />
+             <input
+               type="date"
+               name="endDate"
+               value={taskInput.endDate}
+               onChange={handleTaskChange}
+               className="outline-none rounded-lg py-3 px-2 md:w-[182px] lg:w-[215px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+             />
+           </div>
+         </div>
+
+         {/* priority */}
+         <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+           <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 md:space-x-3">
+             <label className="text-[16px] md:text-xl">Priority:</label>
+             <select
+               name="priority"
+               value={taskInput.priority}
+               onChange={handleTaskChange}
+               className="outline-none rounded-lg py-3 px-2 md:w-[380px] lg:w-[447px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+             >
+               <option value="low">Low</option>
+               <option value="medium">Medium</option>
+               <option value="high">High</option>
+             </select>
+           </div>
+         </div>
+
+         {/* sub tasks */}
+         <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+           <div className="flex flex-col space-y-2">
+             <label className="text-[16px] md:text-xl">SubTasks:</label>
+             {taskInput.subTask.map((subTask, index) => (
+               <div
+                 key={index}
+                 className="flex items-center space-x-3 md:w-[360px] lg:w-[440px]"
+               >
+                 <input
+                   type="text"
+                   value={subTask}
+                   onChange={(e) => handleSubTaskChange(index, e)}
+                   className="outline-none rounded-lg py-3 px-2 w-full bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+                 />
+                 <button
+                   type="button"
+                   onClick={() => removeSubTask(index)}
+                   className="text-red-500 hover:text-red-700"
+                 >
+                   &times;
+                 </button>
+               </div>
+             ))}
+             <button
+               type="button"
+               onClick={addSubTask}
+               className="flex items-center space-x-2 text-blue-500 hover:text-blue-700"
+             >
+               <img src={plus} alt="Add SubTask" className="w-5 h-5" />
+               <span>Add SubTask</span>
+             </button>
+           </div>
+         </div>
+
+         <div className="md:w-9/12 lg:w-[550px] flex justify-end">
+           <button
+             type="submit"
+             onClick={addTask}
+             className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
+           >
+             Add Task
+           </button>
+         </div>
+       </form>
+     </div>
+   );
+ };
 
 
-       <div>
-        {tasks?.map((task, index) => (
-          <div key={index} className="flex justify-between lg:items-center w-full mt-4">
-            <input readOnly className="h-10 lg:h-14 rounded-md px-1 py-2 w-1/12 text-center md:w-1/12 lg:w-1/12 md:py-3 text-sm lg:text-2xl font-medium text-gray-600 outline-none  bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] [backdrop-filter:blur(42px)] " value={String.fromCharCode(65 + index)}  />
-            <textarea
-              className="h-10 lg:h-14 rounded-md px-2 py-2 w-2/12 md:w-2/12 lg:w-2/12  md:py-3 text-sm lg:text-2xl font-medium text-gray-600 outline-none  bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] [backdrop-filter:blur(42px)]"
-              name="title"
-              value={task.title}
-              onChange={(event) => handleTaskChange(index, event)}
-            />
-            <textarea
-              className=" rounded-md px-2 h-10 lg:h-14 py-2 w-4/12 ssm:w-5/12  sm:w-5/12  lg:w-6/12 l  md:py-3 text-sm lg:text-2xl font-medium text-gray-600 outline-none  bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] [backdrop-filter:blur(42px)]"
-              name="details"
-              value={task.details}
-              onChange={(event) => handleTaskChange(index, event)}
-            />
-            <input
-              className=" text-gray-600 outline-none h-10 lg:h-14 rounded-md px-2  py-2 w-3/12 lg:w-2/12  md:py-3 text-sm lg:text-2xl font-medium  bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] [backdrop-filter:blur(42px)]"
-              name="budget"
-              value={task.budget}
-              onChange={(event) => handleTaskChange(index, event)}
-            />
-          </div>
-        ))}
-      </div> 
-      <div onClick={addTask} className="absolute  lg:bottom-[0px] lg:-right-20">
-        <img src={plus} className="h-12 md:h-16 lg:h-20 md:-mt-2" />
-      </div>
-    </form>
-  );
-};
 
 export default AddProjectThirdForm;
+
+AddProjectThirdForm.propTypes = {
+  handleThird: PropTypes.func,
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -70,6 +264,7 @@ export default AddProjectThirdForm;
 // import plus from "../../../assets/plus3.png";
 // import post from "../../../assets/post.png";
 // import PropTypes from "prop-types";
+
 
 // const AddProjectThirdForm = ({ handleThird }) => {
 //   const [questions, setQuestions] = useState([]);
@@ -96,12 +291,12 @@ export default AddProjectThirdForm;
 //         <input className="w-3/12 md:w-2/12 lg:w-1/12 rounded-md px-5 py-1 lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
 //         <input className="w-3/12 md:w-2/12 lg:w-4/12 rounded-md px-5 py-1 lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
 //         <input className="w-7/12 md:w-6/12 rounded-md lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//       </div>
+//       </div> 
 //        <div className="flex justify-between lg:items-center w-full">
 //         <input className="w-3/12 md:w-2/12 lg:w-1/12 rounded-md px-5 py-1 lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
 //         <input className="w-3/12 md:w-2/12 lg:w-4/12 rounded-md px-5 py-1 lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
 //         <input className="w-8/12 md:w-6/12 rounded-md lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//       </div>
+//       </div> 
 //       <div>
 //         {questions.map((question, index) => (
 //           <div
@@ -120,7 +315,7 @@ export default AddProjectThirdForm;
 //       >
 //         <img src={plus} className="h-9 lg:h-16" />
 //       </div>
-
+      
 //     </form>
 //   );
 // };

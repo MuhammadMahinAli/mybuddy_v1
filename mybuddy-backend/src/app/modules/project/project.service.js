@@ -1,11 +1,12 @@
 import { Project } from "./project.model.js";
-import httpStatus from "http-status";
+import httpStatus from "http-status";import { ApiError } from "../../../handleError/apiError.js"
 
 // ************** create project
 
 export const createProject = async(postData) => {
    try {
       const result = await Project.create(postData);
+      console.log(result);
      
       if (!result) {
         throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create post");

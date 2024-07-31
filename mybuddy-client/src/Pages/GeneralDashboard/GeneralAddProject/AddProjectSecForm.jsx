@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Images from "./Images";
 import Documents from "./Documents";
 import PdfFiles from "./PdfFiles";
+import next from "../../../assets/next.png";
 
 const AddProjectSecForm = ({
   handleSecond,
@@ -30,10 +31,10 @@ const AddProjectSecForm = ({
         <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
           <input
             name="videoUrl"
-            className="lg:w-[300px] 3xl:w-[350px] outline-none rounded-lg py-3 px-2 bg-[#f7fafd] shadow-[3px_3px_20px_rgba(186,_183,_183,_0.4),_3px_3px_10px_rgba(255,_255,_255,_0.41),_1px_0px_6px_rgba(98,_98,_98,_0.4)] box-border border-[0.5px] border-solid border-gray-100"
+            className="lg:w-[300px] 3xl:w-[350px] outline-none rounded-lg py-3 px-2 bg-[#c6e3f2] shadow-[-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)_inset] box-border border-[0.5px] border-solid border-gray-100"
             onChange={onFormChange}
           />
-          <select className="outline-none rounded-lg py-3 px-2  bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100">
+          <select className="outline-none rounded-lg py-3 px-2 bg-[#c6e3f2] shadow-[-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)_inset] box-border border-[0.5px] border-solid border-gray-100">
             <option value="video">Select</option>
             <option value="video">YouTube</option>
             <option value="googleDrive">Google Drive</option>
@@ -42,7 +43,7 @@ const AddProjectSecForm = ({
       </div>
 
       <div onClick={handleSecond} className="float-right">
-      <img src='/projectNext.svg' className="h-12"/>
+        <img src={next} className="h-12" />
       </div>
     </form>
   );
@@ -173,21 +174,6 @@ AddProjectSecForm.propTypes = {
 //           </select>
 //         </div>
 //       </div>
-//import PropTypes from "prop-types";
-//
-//const Rectangle2 = ({ className = "" }) => {
-//  return (
-//    <div
-//      className={`w-[211px] shadow-[3px_3px_20px_rgba(186,_183,_183,_0.4),_3px_3px_10px_rgba(255,_255,_255,_0.41),_1px_0px_6px_rgba(98,_98,_98,_0.4)] rounded-md [background:linear-gradient(180deg,_#d9d9d9,_rgba(255,_255,_255,_0.55)_51.5%,_#fff)] box-border h-[39.2px] border-[1px] border-solid border-white ${className}`}
-//    />
-//  );
-//};
-//
-//Rectangle2.propTypes = {
-//  className: PropTypes.string,
-//};
-//
-//export default Rectangle2;
 
 //       <div onClick={handleSecond} className="float-right">
 //         <img src={next} className="h-12" />

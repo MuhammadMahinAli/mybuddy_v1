@@ -1,34 +1,40 @@
 import { Schema, model } from "mongoose";
 
-const TaskSchema = new Schema(
-  {
-    projectOf: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "Project",
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    tasks: [{
-      title: {
-         type: String,
-      },
-      description: {
-        type: String,
-      },
-  
-     }],
+const TaskSchema = new Schema({
+  title: {
+    type: String,
   },
-  {
-    timestamps: true,
-  }
-);
+  details: {
+    type: String,
+  },
+  taskType: {
+    type: String,
+
+  },
+  coin: {
+    type: String,
+
+  },
+  priority: {
+    type: String,
+
+  },
+  duration: {
+    startDate: {
+      type: String,
+
+    },
+    endDate: {
+      type: String,
+    
+    },
+  },
+  subTask: [
+    {
+      type: String,
+    },
+  ],
+});
 
 //create task model
 export const Task = model("Task", TaskSchema);
