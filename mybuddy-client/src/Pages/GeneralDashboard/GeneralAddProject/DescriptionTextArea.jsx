@@ -16,7 +16,7 @@ const DescriptionTextArea = ({handleDescriptionChange}) => {
   };
 
   return (
-    <div className="bg-[#c6e3f2] my-5 3xl:py-10 h-60 rounded-xl border-white mt-2">
+    <div className="bg-[#e9f2f9] shadow-xl my-5 3xl:py-10 h-60 rounded-xl border-gray-800 mt-2">
       <ReactQuill theme={theme} name="description" onChange={handleChange} value={editorHtml} modules={DescriptionTextArea.modules} formats={DescriptionTextArea.formats} bounds=".app" className="react-quill-custom" />
     </div>
   );

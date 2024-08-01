@@ -82,7 +82,13 @@ const GeneralAddProject = ({ closeModal }) => {
     <div>
       <div className="flex justify-between items-center">
         <h1 className="gray600 text-[20px] lg:text-[28px] pb-5 font-bold">
-          CREATE PROJECT
+          {
+            openFirstForm &&   "CREATE PROJECT"
+          }
+          {
+            openThirdForm && "TASK"
+          }
+      
         </h1>
 
         <button
@@ -94,7 +100,7 @@ const GeneralAddProject = ({ closeModal }) => {
         </button>
       </div>
 
-      <div className="w-full pt-2 lg:py-4 bg-[#9ec9e2] flex my-5 justify-center items-center  shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] backdrop-filter:blur(20px); rounded-xl">
+      <div className="w-full pt-2 lg:py-4 bg-[#e9f2f9] flex my-5 justify-center items-center shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
         <form onSubmit={handleSubmit} className="md:w-11/12">
           {/* 1st form */}
           {openFirstForm && <AddProjectFirstForm handleFirst={handleFirst} onFormChange={handleFormChange} projectData={projectData} setProjectData={setProjectData} />}
@@ -105,7 +111,7 @@ const GeneralAddProject = ({ closeModal }) => {
        {
         openThirdForm &&
         <button className="float-right">
-        <img src={post} className="h-12 lg:h-16" />
+        <button className="my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]">Post</button>
       </button>
        }
         </form>

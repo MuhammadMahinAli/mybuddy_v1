@@ -17,74 +17,85 @@ const AddProjectFirstForm = ({
   };
 
   return (
-    <form className="p-3llg:p-6  w-11/12 space-y-2">
+    <form className="p-3 lg:p-6 w-[320px]   sm:w-11/12 space-y-2">
       {/* project name */}
-      <div className="w-10/12 md:w-8/12 lg:w-4/12 flex flex-col space-y-2 font-medium gray600">
-        <label className="text-[16px] md:text-xl">Project name</label>
+      <div className="w-12/12 md:w-[430px]  lg:w-[460px] flex flex-col space-y-2 font-medium gray600">
+        <label className="text-[16px] md:text-xl">Project name:</label>
         <input
           name="projectName"
           value={projectData.projectName}
           onChange={onFormChange}
-          className="outline-none rounded-lg py-3 bg-[#c6e3f2] shadow-[-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)_inset] box-border border-[0.5px] border-solid border-gray-100"
-        />
-      </div>
-      {/* dis */}
-      <div className="w-10/12 md:w-8/12 lg:w-4/12 flex flex-col space-y-2 font-medium gray600">
-        <label className="text-[16px] md:text-xl">Discord</label>
-        <input
-          name="discord"
-          value={projectData.discord}
-          onChange={onFormChange}
-          className="outline-none rounded-lg py-3 bg-[#c6e3f2] shadow-[-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)_inset] box-border border-[0.5px] border-solid border-gray-100"
-        />
-      </div>
-      {/* whatsApp */}
-      <div className="w-10/12 md:w-8/12 lg:w-4/12 flex flex-col space-y-2 font-medium gray600">
-        <label className="text-[16px] md:text-xl">whatsApp</label>
-        <input
-          name="whatsApp"
-          value={projectData.whatsApp}
-          onChange={onFormChange}
-          className="outline-none rounded-lg py-3 bg-[#c6e3f2] shadow-[-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)_inset] box-border border-[0.5px] border-solid border-gray-100"
-        />
-      </div>
-      {/* startDate */}
-      <div className="w-10/12 md:w-8/12 lg:w-4/12 flex flex-col space-y-2 font-medium gray600">
-        <label className="text-[16px] md:text-xl">startDate</label>
-        <input
-          name="startDate"
-          type="date"
-          value={projectData.startDate}
-          onChange={onFormChange}
-          className="outline-none rounded-lg py-3 bg-[#c6e3f2] shadow-[-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)_inset] box-border border-[0.5px] border-solid border-gray-100"
-        />
-      </div>
-      {/* endDate */}
-      <div className="w-10/12 md:w-8/12 lg:w-4/12 flex flex-col space-y-2 font-medium gray600">
-        <label className="text-[16px] md:text-xl">endDate</label>
-        <input
-          name="endDate"
-          type="date"
-          value={projectData.endDate}
-          onChange={onFormChange}
-          className="outline-none rounded-lg py-3 bg-[#c6e3f2] shadow-[-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)_inset] box-border border-[0.5px] border-solid border-gray-100"
+          className="outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border  border-solid border-gray-100"
         />
       </div>
       {/* category */}
+
       <div className="md:w-[430px]  lg:w-[460px] flex flex-col space-y-2 font-medium gray600">
         <div className="flex flex-col md:flex-row md:items-center justify-between space-y-3 md:space-y-0 md:space-x-3">
           <label className="text-[16px] md:text-xl ">Category:</label>
-          <select     value={projectData.category}
-          onChange={onFormChange} name="category" className="outline-none rounded-lg py-3 px-2 md:w-[315px] lg:w-[340px]  bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100">
+          <select
+            value={projectData.category}
+            onChange={onFormChange}
+            name="category"
+            className="lg:mx-9 outline-none rounded-lg py-3 px-2 md:w-[315px] lg:w-[340px]  bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+          >
             <option value="">Select</option>
             <option value="technology">Technology</option>
             <option value="tech">Tech</option>
           </select>
         </div>
       </div>
+      {/* Whatsapp */}
+      <div className="md:w-[430px]  lg:w-[460px] flex flex-col space-y-2 font-medium gray600">
+        <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
+          <label className="text-[16px] md:text-xl">WhatsApp:</label>
+          <input
+            className="outline-none rounded-lg py-3 px-2 md:w-[380px]   bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+            name="whatsApp"
+            value={projectData.whatsApp}
+            onChange={onFormChange}
+          />
+        </div>
+      </div>
+      {/* discord */}
+      <div className=" md:w-[430px] lg:w-[460px]   flex flex-col space-y-2 font-medium gray600">
+        <div className="flex flex-col md:flex-row md:items-center justify-between space-y-3 md:space-y-0 md:space-x-3">
+          <label className="text-[16px] md:text-xl">Discord:</label>
+          <input
+            className="outline-none rounded-lg py-3 px-2 md:w-[320px] lg:w-[343px]   bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+            name="discord"
+            value={projectData.discord}
+            onChange={onFormChange}
+          />
+        </div>
+      </div>
+      {/* duration */}
+      <div className="md:w-6/12 lg:w-10/12 flex flex-col space-y-2 font-medium gray600">
+        <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
+          <label className="text-[16px] md:text-xl lg:mr-6">Duration:</label>
+          <div className="flex justify-start items-center  cursor-pointer space-x-4 h-10 md:h-20 pt-1">
+            <p>Start</p>
+            <input
+              name="startDate"
+              type="date"
+              value={projectData.startDate}
+              onChange={onFormChange}
+              className={`bg-[#e4ecf7] m-[1px] border uppercase outline-none pl-2 md:pt-0 rounded-lg w-full md:px-3 text-[15px] font-medium text-start shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[37px] md:h-[57px]`}
+            />
+             <p>End</p>
+            <input
+              name="endDate"
+              type="date"
+              value={projectData.endDate}
+              onChange={onFormChange}
+              className={`bg-[#e4ecf7] m-[1px] border uppercase outline-none pl-2 md:pt-0 rounded-lg w-full md:px-3 text-[15px] font-medium text-start shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[37px] md:h-[57px]`}
+            />
+          </div>
+        </div>
+      </div>
       {/* description */}
       <div className="flex flex-col space-y-2 w-full font-medium gray600">
-        <label className="text-[16px] md:text-xl border-b-2 border-white py-2">
+        <label className="text-[16px] md:text-xl font-bold border-b-2 border-gray-200 py-2">
           Description
         </label>
         <DescriptionTextArea
@@ -92,7 +103,7 @@ const AddProjectFirstForm = ({
         />
       </div>
       <div onClick={handleFirst} className="float-right">
-        <img src={next} className="h-12" />
+        <img src="/projectNext.svg" className="h-12" />
       </div>
     </form>
   );

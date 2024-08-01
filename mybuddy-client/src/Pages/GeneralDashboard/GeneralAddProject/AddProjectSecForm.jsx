@@ -27,14 +27,14 @@ const AddProjectSecForm = ({
       <PdfFiles pdfFiles={pdfFiles} setPdfFiles={setPdfFiles} />
       {/* video link */}
       <div className="md:w-6/12 lg:w-10/12 flex flex-col space-y-2 font-medium gray600">
-        <label className="text-[16px] md:text-xl">Video</label>
+        <label className="text-[16px] md:text-xl font-bold">Video</label>
         <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
           <input
             name="videoUrl"
-            className="lg:w-[300px] 3xl:w-[350px] outline-none rounded-lg py-3 px-2 bg-[#c6e3f2] shadow-[-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)_inset] box-border border-[0.5px] border-solid border-gray-100"
+            className="lg:w-[300px] 3xl:w-[350px] outline-none rounded-lg py-3 px-2 bg=-[#f5f9fc] box-border border-[0.5px] border-solid border-gray-100"
             onChange={onFormChange}
           />
-          <select className="outline-none rounded-lg py-3 px-2 bg-[#c6e3f2] shadow-[-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)_inset] box-border border-[0.5px] border-solid border-gray-100">
+          <select className="outline-none rounded-lg py-3 px-2 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100">
             <option value="video">Select</option>
             <option value="video">YouTube</option>
             <option value="googleDrive">Google Drive</option>

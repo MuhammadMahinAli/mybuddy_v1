@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import {useState} from "react";
-import pdf from "../../../assets/profile1.png";
+import pdf from "../../../assets/home/pdf-icon.png";
 import pdfLogo from "../../../assets/pdf-logo3.png";
 const PdfFiles = ({pdfFiles, setPdfFiles}) => {
   const [loading, setLoading] = useState({
@@ -60,10 +60,11 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
     <div>
       <div className="flex flex-col space-y-5 md:space-y-0  font-medium gray600">
         <div className="">
-          <label className="text-[16px] md:text-xl capitalize">Pdf (up to 3)</label>
+          <label className="text-[16px] md:text-xl capitalize font-bold">Pdf (up to 2)</label>
           <p className="text-[12px] md:text-lg font-normal pt-1 md:pb-3">Lorem ipsum dolor sit amet consectetur.</p>
         </div>
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          {/* doc one  */}
+        <div className="flex flex-col md:flex-row  items-center space-y-4 md:space-y-0  md:space-x-10 lg:space-x-11 xl:space-x-8 2xl:space-x-16 3xl:space-x-12 4xl:space-x-28">
           {/* doc one  */}
           <div className="relative ">
             {previewImage.pdfOne  ? (
@@ -77,8 +78,8 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
                     <span className="loading loading-spinner loading-xs"></span>
                   ) : (
                     <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
-                      <img src="/upload.svg" className="h-3" />
-                      <p className="text-[10px] md:text-[12px] font-normal capitalize">drag & drop a docx or</p>
+                      <img src={pdf} className="h-8 lg:h-10" />
+                      <p className="text-[10px] md:text-[12px] font-normal capitalize">drag & drop a Pdf or</p>
                       <p className="text-[10px] md:text-[12px] font-medium capitalize text-blue-500">browse</p>
                     </div>
                   )}
@@ -109,9 +110,9 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
                     <span className="loading loading-spinner loading-xs"></span>
                   ) : (
                     <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
-                      <img src={pdf} className="h-5" />
+                      {/* <img src={pdf} className="h-5" />
                       <p className="text-[10px] md:text-[12px] font-normal capitalize">drag & drop a pdf or</p>
-                      <p className="text-[10px] md:text-[12px] font-medium capitalize text-blue-500">browse</p>
+                      <p className="text-[10px] md:text-[12px] font-medium capitalize text-blue-500">browse</p> */}
                     </div>
                   )}
                 </div>
@@ -129,7 +130,7 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
             />
           </div>
           {/* doc three  */}
-          <div className="relative ">
+          {/* <div className="relative ">
             {previewImage.pdfThree  ? (
               <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
                 <img className="h-24 lg:h-28 xl:h-32 3xl:h-52  w-6/12  lg:w-7/12 xl:w-6/12 md:w-9/12 3xl:w-8/12 rounded-md" src={pdfLogo} alt="" />
@@ -159,7 +160,7 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
               onChange={handleUploadPdf}
               
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
