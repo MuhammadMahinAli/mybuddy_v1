@@ -19,6 +19,14 @@ const GeneralAddProject = ({ closeModal }) => {
   const [documents, setDocuments] = useState([]);
   const [pdfFiles, setPdfFiles] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [todayDate, setTodayDate] = useState('');
+
+
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    setTodayDate(formattedDate);
+  }, []);
 
   const handleFirst = () => {
     setOpenFirstForm(false);
@@ -39,12 +47,13 @@ const GeneralAddProject = ({ closeModal }) => {
     projectName: "",
     discord: "",
     whatsApp: "",
-    startDate: "",
+    startDate: todayDate,
     endDate: "",
     category: "",
     description: "",
     videoUrl: "",
   });
+  console.log(projectData);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -56,6 +65,46 @@ const GeneralAddProject = ({ closeModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!projectData.projectName) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "I Think, You Forget To Write Project Name.",
+      });
+      return;
+    }
+    if (!projectData.description) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "I Think, You Forget To Write Description",
+      });
+      return;
+    }
+    if (!projectData.whatsApp) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "I Think, You Forget To Write WhatsApp Number.",
+      });
+      return;
+    }
+    if (!projectData.discord) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "I Think, You Forget To Write Discord Server Link",
+      });
+      return;
+    }
+    if (!projectData.endDate) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "I Think, You Forget To Write Deadline of the project.",
+      });
+      return;
+    }
     const data = {
       user: user._id,
       ...projectData,
@@ -63,10 +112,12 @@ const GeneralAddProject = ({ closeModal }) => {
       documents,
       pdfFiles,
       tasks,
+ 
     };
     console.log(data);
     createNewProject(data);
   };
+ 
   console.log(responseData, responseError?.data);
   useEffect(() => {
     if (!responseData?.status) {
@@ -82,6 +133,13 @@ const GeneralAddProject = ({ closeModal }) => {
         icon: "success",
         title: "Hurry !",
         text: "Project created successfully !",
+      });
+    }
+    if(responseError){
+      Swal.fire({
+        icon: "error",
+        title: "Oops !",
+        text: "Something went wrong , try again later !",
       });
     }
   }, [responseData, responseError]);
@@ -111,6 +169,7 @@ const GeneralAddProject = ({ closeModal }) => {
               onFormChange={handleFormChange}
               projectData={projectData}
               setProjectData={setProjectData}
+              todayDate={todayDate}
             />
           )}
           {/* 2nd form */}
@@ -132,6 +191,8 @@ const GeneralAddProject = ({ closeModal }) => {
               handleThird={handleThird}
               tasks={tasks}
               setTasks={setTasks}
+              todayDate={todayDate}
+              setTodayDate={setTodayDate}
             />
           )}
           {openThirdForm && (

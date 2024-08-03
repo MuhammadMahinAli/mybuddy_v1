@@ -3,13 +3,14 @@ import plus from "../../../assets/plus3.png";
 import PropTypes from "prop-types";
 import { IoTrashOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
+import Swal from "sweetalert2";
 
-const AddProjectThirdForm = ({ tasks, setTasks }) => {
-  const [startDate, setStartDate] = useState("");
+const AddProjectThirdForm = ({ tasks, setTasks,todayDate, setTodayDate }) => {
+
   useEffect(() => {
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0];
-    setStartDate(formattedDate);
+    setTodayDate(formattedDate);
   }, []);
   const [taskInput, setTaskInput] = useState({
     title: "",
@@ -17,13 +18,38 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     taskType: "free",
     coin: "0",
     priority: "low",
-    startDate: "",
+    status: "pending",
+    startDate: todayDate,
     endDate: "",
     subTask: [],
   });
 
   const addTask = (e) => {
     e.preventDefault();
+    if (!taskInput.title) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "I Think, You Forget To Write Task Title",
+      });
+      return;
+    }
+    if (!taskInput.details) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "I Think, You Forget To Write Details Of Task.",
+      });
+      return;
+    }
+    if (!taskInput.endDate) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "I Think, You Forget To Write Deadline Of The Task.",
+      });
+      return;
+    }
     if (taskInput.title !== "") {
       setTasks([...tasks, { ...taskInput }]);
       setTaskInput({
@@ -101,26 +127,26 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
       {tasks?.length > 0 && (
         <div className="w-[300px] md:w-[630px] xl:w-full overflow-x-auto xl:overflow-hidden">
           {/* table head */}
-          <div className="min-w-[1200px] md:min-w-[900px] xl:min-w-[1000px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-gray-700">
+          <div className="min-w-[900px] md:min-w-[900px] xl:min-w-[1000px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">
               Title
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-3/12 border-r border-gray-700">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-3/12 border-r border-[#C8CBD3]">
               Details
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-gray-700">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-[#C8CBD3]">
               Budget
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-gray-700">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">
               Deadline
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-gray-700">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">
               Priority
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-gray-700">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-[#C8CBD3]">
               Subtasks
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-gray-700">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12">
               Action
             </div>
           </div>
@@ -128,28 +154,28 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
           {tasks?.map((task, i) => (
             <div
               key={i}
-              className="min-w-[1200px] md:min-w-[900px] xl:min-w-[1000px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
+              className="min-w-[900px] md:min-w-[900px] xl:min-w-[1000px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
             >
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-gray-700">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
               {task.title.length > 9 ? `${task.title.slice(0, 9)}...` : task.title}
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-3/12 border-r border-gray-700">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-3/12 border-r border-[#C8CBD3]">
               {task.details.length > 20 ? `${task.details.slice(0, 22)}...` : task.details}
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-gray-700 px-2">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-[#C8CBD3] px-2">
                 <p className=" px-3 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
                   Free
                 </p>
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-gray-700">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
                 {formatDate(task.endDate)}
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-gray-700">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
                 <button className={buttonClasses(task.priority)}>
                   {task.priority}
                 </button>
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-gray-700">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-[#C8CBD3]">
                 {task.subTask.length}
               </div>
               <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 flex justify-center items-center">
@@ -210,7 +236,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
               <input
                 type="date"
                 name="startDate"
-                value={taskInput.startDate || startDate}
+                value={taskInput.startDate || todayDate}
                 onChange={handleTaskChange}
                 className="outline-none rounded-lg py-3 px-2 w-11/12 md:w-[140px] lg:w-[180px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
               />
@@ -234,13 +260,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
               Priority:
             </label>
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
-              <button
-                type="button"
-                className={buttonClasses("high")}
-                onClick={() => handlePriorityChange("high")}
-              >
-                High
-              </button>
+              
               <button
                 type="button"
                 className={buttonClasses("low")}
@@ -254,6 +274,13 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
                 onClick={() => handlePriorityChange("medium")}
               >
                 Medium
+              </button>
+              <button
+                type="button"
+                className={buttonClasses("high")}
+                onClick={() => handlePriorityChange("high")}
+              >
+                High
               </button>
             </div>
           </div>

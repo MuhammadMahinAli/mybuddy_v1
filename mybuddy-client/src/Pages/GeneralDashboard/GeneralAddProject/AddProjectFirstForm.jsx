@@ -9,13 +9,9 @@ const AddProjectFirstForm = ({
   onFormChange,
   projectData,
   setProjectData,
+  todayDate
 }) => {
-  const [todayDate, setTodayDate] = useState('');
-  useEffect(() => {
-    const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0];
-    setTodayDate(formattedDate);
-  }, []);
+ 
   const handleDescriptionChange = (description) => {
     setProjectData((prevState) => ({
       ...prevState,
@@ -85,7 +81,7 @@ const AddProjectFirstForm = ({
             <input
               name="startDate"
               type="date"
-              value={projectData.startDate || todayDate}
+              value={todayDate}
               onChange={onFormChange}
               className={`bg-[#e4ecf7] m-[1px] border uppercase outline-none pl-2 md:pt-0 rounded-lg w-11/12 md:w-full md:px-3 text-[15px] font-medium text-start shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[37px] md:h-[57px]`}
             />
@@ -110,7 +106,7 @@ const AddProjectFirstForm = ({
         />
       </div>
       <div onClick={handleFirst} className="float-right py-2">
-        <img src="/projectNext.svg" className="h-8 md:h-12" />
+        <img src="/projectNext.svg" className="h-8 md:h-12 mr-6 xs:mr-0" />
       </div>
     </form>
   );

@@ -134,8 +134,8 @@ const ProjectSchema = new Schema(
         priority: {
           type: String,
         },
-        status:{
-type:String
+        status: {
+          type: String,
         },
         startDate: {
           type: String,
