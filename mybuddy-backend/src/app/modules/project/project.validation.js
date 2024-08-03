@@ -19,10 +19,10 @@ export const createProjectZodSchema = z.object({
       required_error: "WhatsApp is required",
     }),
     startDate: z.string({
-      required_error: "start Date is required",
+      required_error: "Start Date is required",
     }),
     endDate: z.string({
-      required_error: "end Date is required",
+      required_error: "End Date is required",
     }),
     description: z.string({
       required_error: "Project description is required",
