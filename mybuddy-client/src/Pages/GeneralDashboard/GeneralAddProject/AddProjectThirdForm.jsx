@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import plus from "../../../assets/plus3.png";
 import PropTypes from "prop-types";
 import { IoTrashOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 
 const AddProjectThirdForm = ({ tasks, setTasks }) => {
+  const [startDate, setStartDate] = useState("");
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0];
+    setStartDate(formattedDate);
+  }, []);
   const [taskInput, setTaskInput] = useState({
     title: "",
     details: "",
@@ -26,6 +32,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
         taskType: "free",
         coin: "0",
         priority: "low",
+        status: "pending",
         startDate: "",
         endDate: "",
         subTask: [],
@@ -70,7 +77,8 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
   };
 
   const buttonClasses = (priority) => {
-    let baseClasses = "px-5 py-1 border rounded-lg cursor-pointer mr-2";
+    let baseClasses =
+      "px-5 py-1 border rounded-lg cursor-pointer mr-2 capitalize";
     if (selectedPriority === priority) {
       if (priority === "high")
         return `${baseClasses}  bg-red-200 text-red-600  border-red-600`;
@@ -81,48 +89,82 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     }
     return `${baseClasses} bg-gray-300 text-gray-600  border-gray-600`;
   };
+
+  function formatDate(dateString) {
+    const options = { day: "numeric", month: "short", year: "numeric" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", options);
+  }
   return (
     <div className="w-full">
+      {/* table */}
       {tasks?.length > 0 && (
-        <table className="w-full table-auto mb-4">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Details</th>
-              <th>Budget</th>
-              <th>Deadline</th>
-              <th>Priority</th>
-              <th>SubTasks</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tasks.map((task, index) => (
-              <tr key={index}>
-                <td>{task.title}</td>
-                <td>{task.details}</td>
-                <td>
-                  {task.taskType === "paid" ? `${task.coin} coin` : "Free"}
-                </td>
-                <td>{task.endDate}</td>
-                <td>{task.priority}</td>
-                <td>{task.subTask.length}</td>
-                <td>
-                  <button
-                    onClick={() => removeTask(index)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    &times;
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="w-[300px] md:w-[630px] xl:w-full overflow-x-auto xl:overflow-hidden">
+          {/* table head */}
+          <div className="min-w-[1200px] md:min-w-[900px] xl:min-w-[1000px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-gray-700">
+              Title
+            </div>
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-3/12 border-r border-gray-700">
+              Details
+            </div>
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-gray-700">
+              Budget
+            </div>
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-gray-700">
+              Deadline
+            </div>
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-gray-700">
+              Priority
+            </div>
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-gray-700">
+              Subtasks
+            </div>
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-gray-700">
+              Action
+            </div>
+          </div>
+          {/* table data */}
+          {tasks?.map((task, i) => (
+            <div
+              key={i}
+              className="min-w-[1200px] md:min-w-[900px] xl:min-w-[1000px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
+            >
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-gray-700">
+              {task.title.length > 9 ? `${task.title.slice(0, 9)}...` : task.title}
+              </div>
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-3/12 border-r border-gray-700">
+              {task.details.length > 20 ? `${task.details.slice(0, 22)}...` : task.details}
+              </div>
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-gray-700 px-2">
+                <p className=" px-3 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
+                  Free
+                </p>
+              </div>
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-gray-700">
+                {formatDate(task.endDate)}
+              </div>
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-gray-700">
+                <button className={buttonClasses(task.priority)}>
+                  {task.priority}
+                </button>
+              </div>
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-gray-700">
+                {task.subTask.length}
+              </div>
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 flex justify-center items-center">
+                <IoTrashOutline
+                  onClick={() => removeTask(i)}
+                  className="text-xl text-red-500 cursor-pointer"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       )}
 
       <form className="w-full space-y-4 py-2 lg:py-3">
-        <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+        <div className=" xs:w-full  md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 md:space-x-3">
             <label className="text-[16px] md:text-xl">Title:</label>
             <input
@@ -135,7 +177,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
         </div>
 
         {/* details */}
-        <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+        <div className="xs:w-full md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start space-y-3 md:space-y-0 md:space-x-3">
             <label className="text-[16px] md:text-xl">Details:</label>
             <textarea
@@ -147,33 +189,15 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
           </div>
         </div>
 
-        {/* budget */}
-        <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+        {/* details */}
+        <div className=" xs:w-full  md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
           <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
             <label className="text-[16px] md:text-xl md:pr-2 lg:pr-5">
               Budget:
             </label>
-            <buttton className=" px-5 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
+            <button className=" px-5 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
               Free
-            </buttton>
-            {/* <select
-               name="taskType"
-               value={taskInput.taskType}
-               onChange={handleTaskChange}
-               className="outline-none rounded-lg py-3 px-2 md:w-[380px] lg:w-[447px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
-             >
-               <option value="free">Free</option>
-               <option value="paid">Paid</option>
-             </select>
-             {taskInput.taskType === "paid" && (
-               <input
-                 name="coin"
-                 type="number"
-                 value={taskInput.coin}
-                 onChange={handleTaskChange}
-                 className="outline-none rounded-lg py-3 px-2 md:w-[315px] lg:w-[340px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
-               />
-             )} */}
+            </button>
           </div>
         </div>
 
@@ -181,14 +205,14 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
         <div className="flex flex-col space-y-3 w-full lg:w-[550px] ">
           <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
             <label className="text-[16px] md:text-xl">Duration:</label>
-            <div className="flex items-center space-x-2">
+            <div className="flex flex-col md:flex-row md:items-center space-x-2">
               <p>Start</p>
               <input
                 type="date"
                 name="startDate"
-                value={taskInput.startDate}
+                value={taskInput.startDate || startDate}
                 onChange={handleTaskChange}
-                className="outline-none rounded-lg py-3 px-2 md:w-[140px] lg:w-[180px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+                className="outline-none rounded-lg py-3 px-2 w-11/12 md:w-[140px] lg:w-[180px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
               />
               <p>End</p>
               <input
@@ -196,35 +220,20 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
                 name="endDate"
                 value={taskInput.endDate}
                 onChange={handleTaskChange}
-                className="outline-none rounded-lg py-3 px-2 md:w-[140px] lg:w-[180px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+                className="outline-none rounded-lg py-3 px-2 w-11/12 md:w-[140px] lg:w-[180px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
               />
             </div>
           </div>
         </div>
 
         {/* priority */}
-        {/* <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
-           <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 md:space-x-3">
-             <label className="text-[16px] md:text-xl">Priority:</label>
-             <select
-               name="priority"
-               value={taskInput.priority}
-               onChange={handleTaskChange}
-               className="outline-none rounded-lg py-3 px-2 md:w-[380px] lg:w-[447px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
-             >
-               <option value="low">Low</option>
-               <option value="medium">Medium</option>
-               <option value="high">High</option>
-             </select>
-           </div>
-         </div> */}
 
-        <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+        <div className=" xs:w-full md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
           <div className="flex flex-col md:flex-row  md:items-center space-y-3 md:space-y-0 md:space-x-3">
             <label className="text-[16px] md:text-xl md:pr-2 lg:pr-4">
               Priority:
             </label>
-            <div className="flex space-x-2">
+            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
               <button
                 type="button"
                 className={buttonClasses("high")}
@@ -251,7 +260,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
         </div>
 
         {/* sub tasks */}
-        <div className="md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+        <div className="w-full xs:w-full md:w-9/12 lg:w-[550px] flex flex-col space-y-3">
           <div className="flex flex-col space-y-2">
             <label className="text-[16px] md:text-xl">SubTasks:</label>
             <button
@@ -263,25 +272,25 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
               <span>Add SubTask</span>
             </button>
             <div className="-space-y-2">
-            {taskInput.subTask.map((subTask, index) => (
-              <div
-                key={index}
-                className="flex items-center space-x-3 md:w-[360px] lg:w-[440px]"
-              >
-                <p>{index + 1}</p>
-                <input
-                  type="text"
-                  value={subTask}
-                  onChange={(e) => handleSubTaskChange(index, e)}
-                  className="outline-none rounded-lg py-3 px-2 w-[250px] bg-transparent"
-                />
-                <IoTrashOutline
-                  onClick={() => removeSubTask(index)}
-                  className="text-red-500 cursor-pointer"
-                />
-              </div>
-            ))}
-           </div>
+              {taskInput.subTask.map((subTask, index) => (
+                <div
+                  key={index}
+                  className="flex items-center space-x-3  xs:w-[180px] sm:w-[250px] px-2 md:w-[360px] lg:w-[440px]"
+                >
+                  <p>{index + 1}</p>
+                  <input
+                    type="text"
+                    value={subTask}
+                    onChange={(e) => handleSubTaskChange(index, e)}
+                    className="outline-none rounded-lg py-3 px-2 w-[135px] xs:w-[180px] sm:w-[250px] bg-transparent"
+                  />
+                  <IoTrashOutline
+                    onClick={() => removeSubTask(index)}
+                    className="text-red-500 cursor-pointer text-lg"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -291,7 +300,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
             onClick={addTask}
             className="my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
           >
-           Save
+            Save
           </button>
         </div>
       </form>
@@ -305,67 +314,23 @@ AddProjectThirdForm.propTypes = {
   handleThird: PropTypes.func,
 };
 
-// import { useState } from "react";
-// import plus from "../../../assets/plus3.png";
-// import post from "../../../assets/post.png";
-// import PropTypes from "prop-types";
-
-// const AddProjectThirdForm = ({ handleThird }) => {
-//   const [questions, setQuestions] = useState([]);
-
-//   const addQuestion = (e) => {
-//     e.preventDefault();
-//     setQuestions([...questions, { question: "", answer: "" }]);
-//   };
-//   return (
-//     <form className="w-12/12 space-y-4 py-2 lg:py-3 relative">
-//       <div className="flex justify-between items-center w-full ">
-//         <div className="w-3/12 md:w-2/12 lg:w-1/12 rounded-md text-center py-2 lg:px-10 md:py-3 lg:text-2xl font-bold text-white gradient-background shadow-[1px_5px_7px_rgba(125,_125,_125,_0.4),_1px_2px_15px_rgba(213,_213,_213,_0.3)] [backdrop-filter:blur(42px)]">
-//           NO
-//         </div>
-//         <div className="w-3/12 md:w-2/12 lg:w-4/12 rounded-md text-center py-2 lg:px-10 md:py-3 lg:text-2xl font-bold text-white gradient-background shadow-[1px_5px_7px_rgba(125,_125,_125,_0.4),_1px_2px_15px_rgba(213,_213,_213,_0.3)] [backdrop-filter:blur(42px)]">
-//          Title
-//         </div>
-//         <div className="w-8/12 md:w-9/12 lg:w-6/12 text-center rounded-md  py-2  lg:px-10 md:py-3 lg:text-2xl font-bold text-white gradient-background shadow-[1px_5px_7px_rgba(125,_125,_125,_0.4),_1px_2px_15px_rgba(213,_213,_213,_0.3)] [backdrop-filter:blur(42px)]">
-//           DETAILS
-//         </div>
-//       </div>
-
-//      <div className="flex justify-between lg:items-center w-full">
-//         <input className="w-3/12 md:w-2/12 lg:w-1/12 rounded-md px-5 py-1 lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//         <input className="w-3/12 md:w-2/12 lg:w-4/12 rounded-md px-5 py-1 lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//         <input className="w-7/12 md:w-6/12 rounded-md lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//       </div>
-//        <div className="flex justify-between lg:items-center w-full">
-//         <input className="w-3/12 md:w-2/12 lg:w-1/12 rounded-md px-5 py-1 lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//         <input className="w-3/12 md:w-2/12 lg:w-4/12 rounded-md px-5 py-1 lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//         <input className="w-8/12 md:w-6/12 rounded-md lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//       </div>
-//       <div>
-//         {questions.map((question, index) => (
-//           <div
-//             key={index}
-//             className="flex justify-between lg:items-center w-full mt-4"
-//           >
-//             <input className="w-3/12 md:w-2/12 lg:w-1/12 rounded-md px-5 py-1 lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//             <input className="w-3/12 md:w-2/12 lg:w-4/12 rounded-md px-5 py-1 lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//             <input className="w-8/12 md:w-6/12 rounded-md lg:px-10 lg:py-3 text-2xl font-bold text-white bg-[#a2cbe4] outline-none shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] [backdrop-filter:blur(42px)]" />
-//           </div>
-//         ))}
-//       </div>
-//       <div
-//         onClick={addQuestion}
-//         className="absolute lg:bottom-[105px] lg:-right-16"
-//       >
-//         <img src={plus} className="h-9 lg:h-16" />
-//       </div>
-
-//     </form>
-//   );
-// };
-
-// export default AddProjectThirdForm;
-
-// AddProjectThirdForm.propTypes = {
-//   handleThird : PropTypes.func,
-// };
+{
+  /* <select
+               name="taskType"
+               value={taskInput.taskType}
+               onChange={handleTaskChange}
+               className="outline-none rounded-lg py-3 px-2 md:w-[380px] lg:w-[447px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+             >
+               <option value="free">Free</option>
+               <option value="paid">Paid</option>
+             </select>
+             {taskInput.taskType === "paid" && (
+               <input
+                 name="coin"
+                 type="number"
+                 value={taskInput.coin}
+                 onChange={handleTaskChange}
+                 className="outline-none rounded-lg py-3 px-2 md:w-[315px] lg:w-[340px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+               />
+             )} */
+}

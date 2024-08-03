@@ -167,9 +167,7 @@ const Images = ({setImages, images}) => {
                     <span className="loading loading-spinner loading-xs"></span>
                   ) : (
                     <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
-                      {/* <img src="/upload.svg" className="h-3" />
-                      <p className="text-[10px] md:text-[12px] font-normal capitalize">drag & drop a photo or</p>
-                      <p className="text-[10px] md:text-[12px] font-medium capitalize text-blue-500">browse</p> */}
+                   
                     </div>
                   )}
                 </div>

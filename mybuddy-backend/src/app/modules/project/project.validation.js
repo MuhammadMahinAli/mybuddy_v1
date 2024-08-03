@@ -34,6 +34,7 @@ export const createProjectZodSchema = z.object({
         taskType: z.string(), 
         coin: z.string(), 
         priority: z.string(), 
+        status: z.string(), 
         startDate: z.string(), 
         endDate: z.string(), 
         subTask: z.array(z.string())

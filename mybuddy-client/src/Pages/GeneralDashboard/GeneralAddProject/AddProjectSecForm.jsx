@@ -43,7 +43,7 @@ const AddProjectSecForm = ({
       </div>
 
       <div onClick={handleSecond} className="float-right">
-        <img src={next} className="h-12" />
+      <img src="/projectNext.svg" className="h-8 md:h-12" />
       </div>
     </form>
   );
