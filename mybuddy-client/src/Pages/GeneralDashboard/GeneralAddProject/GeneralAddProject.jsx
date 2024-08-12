@@ -19,14 +19,7 @@ const GeneralAddProject = ({ closeModal }) => {
   const [documents, setDocuments] = useState([]);
   const [pdfFiles, setPdfFiles] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [todayDate, setTodayDate] = useState('');
 
-
-  useEffect(() => {
-    const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0];
-    setTodayDate(formattedDate);
-  }, []);
 
   const handleFirst = () => {
     setOpenFirstForm(false);
@@ -47,7 +40,7 @@ const GeneralAddProject = ({ closeModal }) => {
     projectName: "",
     discord: "",
     whatsApp: "",
-    startDate: todayDate,
+    startDate:"",
     endDate: "",
     category: "",
     description: "",
@@ -105,6 +98,22 @@ const GeneralAddProject = ({ closeModal }) => {
       });
       return;
     }
+    if (pdfFiles?.length === 0 && documents?.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "Please upload at least one PDF or DOCX file.",
+      });
+      return;
+    }
+    if (pdfFiles?.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "Please upload at least one Image.",
+      });
+      return;
+    }
     const data = {
       user: user._id,
       ...projectData,
@@ -112,12 +121,11 @@ const GeneralAddProject = ({ closeModal }) => {
       documents,
       pdfFiles,
       tasks,
- 
     };
     console.log(data);
     createNewProject(data);
   };
- 
+
   console.log(responseData, responseError?.data);
   useEffect(() => {
     if (!responseData?.status) {
@@ -134,8 +142,9 @@ const GeneralAddProject = ({ closeModal }) => {
         title: "Hurry !",
         text: "Project created successfully !",
       });
+      closeModal();
     }
-    if(responseError){
+    if (responseError) {
       Swal.fire({
         icon: "error",
         title: "Oops !",
@@ -143,21 +152,43 @@ const GeneralAddProject = ({ closeModal }) => {
       });
     }
   }, [responseData, responseError]);
+
+  const goBack = () => {
+    if (openThirdForm) {
+      setOpenFirstForm(false);
+      setOpenThirdForm(false);
+      setOpenSecondForm(true);
+    }
+    if (openSecondForm) {
+      setOpenFirstForm(true);
+      setOpenThirdForm(false);
+      setOpenSecondForm(false);
+    }
+  };
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <h1 className="gray600 text-[20px] lg:text-[28px] pb-5 font-bold">
+      <div className="flex justify-between items-center pb-5">
+        <h1 className="gray600 text-[20px] lg:text-[28px]  font-bold">
           {openFirstForm && "CREATE PROJECT"}
           {openThirdForm && "TASK"}
         </h1>
-
-        <button
-          onClick={closeModal}
-          type="button"
-          className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-3 md:px-4 py-2 text-sm md:text-lg  font-semibold text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-        >
-          Close
-        </button>
+        <div className="flex space-x-2 justify-center items-center">
+          {openFirstForm || (
+            <button
+              className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-3 md:px-4 py-2 text-sm md:text-lg  font-semibold text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              onClick={goBack}
+            >
+              Go back
+            </button>
+          )}
+          <button
+            onClick={closeModal}
+            type="button"
+            className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-3 md:px-4 py-2 text-sm md:text-lg  font-semibold text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+          >
+            Close
+          </button>
+        </div>
       </div>
 
       <div className="w-full pt-2 lg:py-4 bg-[#e9f2f9] flex my-5 justify-center items-center shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
@@ -169,7 +200,7 @@ const GeneralAddProject = ({ closeModal }) => {
               onFormChange={handleFormChange}
               projectData={projectData}
               setProjectData={setProjectData}
-              todayDate={todayDate}
+          
             />
           )}
           {/* 2nd form */}
@@ -191,8 +222,6 @@ const GeneralAddProject = ({ closeModal }) => {
               handleThird={handleThird}
               tasks={tasks}
               setTasks={setTasks}
-              todayDate={todayDate}
-              setTodayDate={setTodayDate}
             />
           )}
           {openThirdForm && (

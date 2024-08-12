@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useGetAllUsersQuery, useGetSingleUserQuery, useUpdateCoverPicMutation, useUpdateProfilePicMutation, useUpdateUserInfoMutation } from "../features/auth/authApi";
 import { useSelector } from "react-redux";
 import { useGetSingleUserPostQuery } from "../features/post/postApi";
-import { useGetAllProjectByUserQuery } from "../features/project/projectApi";
+import { useCreateNewTaskMutation, useGetAllProjectByUserQuery } from "../features/project/projectApi";
 import {
   useAddSkillsMutation,
   useGetSingleUserSkillQuery,
@@ -139,6 +139,12 @@ const UserContext = ({ children }) => {
     { data: responseAddSkillData, isFatchingAddSkill, error: addSkillError },
   ] = useAddSkillsMutation();
 
+  //-------------- post task in project
+
+  const [ createNewTask,
+    {data:responseAddTaskData, isFatchingAddTask,error:addTaskError}
+  ] = useCreateNewTaskMutation()
+
   //-------------- post social information of specific user
   const [
     addSocialInfo,
@@ -223,6 +229,7 @@ const UserContext = ({ children }) => {
   useEffect(() => {
     if (
       isFetchingUser ||
+      isFatchingAddTask ||
       isFetchingAllUsers ||
       isFetchingPost ||
       isFetchingProject ||
@@ -253,6 +260,7 @@ const UserContext = ({ children }) => {
     }
   }, [
     isFetchingUser,
+    isFatchingAddTask,
     isFetchingAllUsers,
     isFetchingPost,
     isFetchingProject,
@@ -282,6 +290,7 @@ const UserContext = ({ children }) => {
   useEffect(() => {
     if (
       userError ||
+      addTaskError ||
       allUserError ||
       postError ||
       projectError ||
@@ -306,6 +315,7 @@ const UserContext = ({ children }) => {
     ) {
       console.error("Error fetching user data:", {
         userError,
+        addTaskError,
         allUserError,
         postError,
         projectError,
@@ -332,6 +342,7 @@ const UserContext = ({ children }) => {
     }
   }, [
     userError,
+    addTaskError,
     allUserError,
     postError,
     projectError,
@@ -362,6 +373,7 @@ const UserContext = ({ children }) => {
 
   const shareableData = {
     loading,
+    createNewTask,
     user,
     getAllUsers,
     setLoading,

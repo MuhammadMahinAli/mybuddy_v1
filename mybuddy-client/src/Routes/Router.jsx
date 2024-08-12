@@ -25,6 +25,7 @@ import GeneralRequestRecieve from "../Pages/GeneralDashboard/GeneralRequest/Gene
 import Academic from "../Pages/AcademicPage/Academic";
 import EmailVarification from "../Pages/Email/EmailVarification";
 import VerificationSuccess from "../Pages/Email/VerificationSuccess";
+import AddTaskForm from "../Pages/Try/AddTaskForm";
 
 
 const router = createBrowserRouter([
@@ -146,6 +147,10 @@ const router = createBrowserRouter([
   {
     path: "/try",
     element: <Try />,
+  },
+  {
+    path: "/test",
+    element: <AddTaskForm />,
   },
 ]);
 

@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
-import plus from "../../../assets/plus3.png";
-import PropTypes from "prop-types";
-import { IoTrashOutline } from "react-icons/io5";
+import { useContext } from "react";
 import { FaPlus } from "react-icons/fa";
+import { IoTrashOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../Context/UserContext";
 
-const AddProjectThirdForm = ({ tasks, setTasks }) => {
- 
+const AddTaskForm = () => {
+  const [tasks, setTasks] = useState([]);
+  const [todayDate, setTodayDate] = useState("");
+
+  const { createNewTask } = useContext(AuthContext);
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0];
+    setTodayDate(formattedDate);
+  }, []);
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0];
+    setTodayDate(formattedDate);
+  }, []);
   const [taskInput, setTaskInput] = useState({
     title: "",
     details: "",
@@ -14,7 +27,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     coin: "0",
     priority: "low",
     status: "pending",
-    startDate: "",
+    startDate: todayDate,
     endDate: "",
     subTask: [{ todo: "Describe the sub task", status: "pending" }],
   });
@@ -47,17 +60,25 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     }
     if (taskInput.title !== "") {
       setTasks([...tasks, { ...taskInput }]);
-      setTaskInput({
-        title: "",
-        details: "",
-        taskType: "free",
-        coin: "0",
-        priority: "low",
-        status: "pending",
-        startDate: "",
-        endDate: "",
-        subTask: [{ todo: "", status: "pending" }],
-      });
+
+      // setTaskInput({
+      //   title: "",
+      //   details: "",
+      //   taskType: "free",
+      //   coin: "0",
+      //   priority: "low",
+      //   status: "pending",
+      //   startDate: "",
+      //   endDate: "",
+      //   subTask: [{ todo: "", status: "pending" }],
+      // });
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const projectId = "66b435bccfb6bc5072c46337";
+    if (projectId) {
+      createNewTask(taskInput);
     }
   };
 
@@ -65,19 +86,6 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     const { name, value } = e.target;
     setTaskInput((prev) => ({ ...prev, [name]: value }));
   };
-
-  // const handleSubTaskChange = (index, event) => {
-  //   const newSubTasks = [...taskInput.subTask];
-  //   newSubTasks[index] = event.target.value;
-  //   setTaskInput((prev) => ({ ...prev, subTask: newSubTasks }));
-  // };
-
-  // const addSubTask = () => {
-  //   setTaskInput((prev) => ({
-  //     ...prev,
-  //     subTask: [...prev.subTask, "Describe the sub task"],
-  //   }));
-  // };
 
   const handleSubTaskChange = (index, event) => {
     const { name, value } = event.target;
@@ -105,7 +113,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     const newTasks = tasks?.filter((_, index) => index !== taskIndex);
     setTasks(newTasks);
   };
-  console.log(tasks);
+  console.log("k", tasks);
   //
   const [selectedPriority, setSelectedPriority] = useState(taskInput.priority);
 
@@ -128,11 +136,13 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     return `${baseClasses} bg-gray-300 text-gray-600  border-gray-600`;
   };
 
+  // date
   function formatDate(dateString) {
     const options = { day: "numeric", month: "short", year: "numeric" };
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB", options);
   }
+
   return (
     <div className="w-full">
       {/* table */}
@@ -252,7 +262,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
               <input
                 type="date"
                 name="startDate"
-                value={taskInput.startDate}
+                value={taskInput.startDate || todayDate}
                 onChange={handleTaskChange}
                 className="outline-none rounded-lg py-3 px-2 w-11/12 md:w-[140px] lg:w-[180px] bg-[#e4ecf7] shadow-[-4px_-4px_9px_rgba(255,_255,_255,_0.88)_inset,_4px_4px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
               />
@@ -345,14 +355,18 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
           >
             Save
           </button>
+
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
+          >
+            Post
+          </button>
         </div>
       </form>
     </div>
   );
 };
 
-export default AddProjectThirdForm;
-
-AddProjectThirdForm.propTypes = {
-  handleThird: PropTypes.func,
-};
+export default AddTaskForm;

@@ -1,17 +1,13 @@
 /* eslint-disable react/prop-types */
 import DescriptionTextArea from "./DescriptionTextArea";
-import next from "../../../assets/next.png";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
 
 const AddProjectFirstForm = ({
   handleFirst,
   onFormChange,
   projectData,
   setProjectData,
-  todayDate
 }) => {
- 
   const handleDescriptionChange = (description) => {
     setProjectData((prevState) => ({
       ...prevState,
@@ -81,11 +77,10 @@ const AddProjectFirstForm = ({
             <input
               name="startDate"
               type="date"
-              value={todayDate}
-              onChange={onFormChange}
+              value={projectData.startDate}
               className={`bg-[#e4ecf7] m-[1px] border uppercase outline-none pl-2 md:pt-0 rounded-lg w-11/12 md:w-full md:px-3 text-[15px] font-medium text-start shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[37px] md:h-[57px]`}
             />
-             <p>End</p>
+            <p>End</p>
             <input
               name="endDate"
               type="date"

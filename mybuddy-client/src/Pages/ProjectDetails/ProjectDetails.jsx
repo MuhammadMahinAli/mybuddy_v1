@@ -79,7 +79,7 @@ const ProjectDetails = () => {
         icon: "success",
         title: "Hurry !",
         text: "Your request has been sent successfully !",
-      });;
+      });
     }
   }, [responseData, responseError]);
 

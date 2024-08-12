@@ -5,16 +5,28 @@ const GeneralDashboardNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="px-2 py-5 mx-auto sm:max-w-xl md:max-w-full bg-tr md:px-8 lg:px-8 gray500">
+    <div className="px-2 py-5 mx-auto sm:max-w-xl md:max-w-full bg-tr md:px-8 lg:px-8 gray500 bg-[#DFF1FE] sm:bg-[#EFF4FA]">
       <div className="relative flex items-center justify-between">
-        <Link to="/home" className="inline-flex items-center">
-          <div className="hidden lg:block px-2 py-2 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
-            <img src="/logo.png" className="w-8" />
+        <div className="xl:space-x-1">
+        <button
+          aria-label="Open Menu"
+          title="Open Menu"
+          className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
+          onClick={() => setIsMenuOpen(true)}
+        >
+          <div className="px-2 py-2 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
+            <img src="/hambrgr2.svg" className="h-4" />
           </div>
-          {/* <span className="ml-2 text-2xl font-bold tracking-wide uppercase">
-            LOGO
-          </span> */}
+        </button>
+        <Link to="/home" className="inline-flex items-center">
+          <div className="block lg:p-1 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
+            <img src="/logo.png" className="w-6" />
+          </div>
+          <span className="ml-2 text-lg md:text-xl font-bold tracking-wide capitalize">
+            Research Buddy
+          </span>
         </Link>
+        </div>
         <ul className="flex items-center hidden space-x-8 lg:flex">
           <li>
             <Link to="/home">
@@ -54,7 +66,7 @@ const GeneralDashboardNavbar = () => {
               <img src="/user.svg" className="h-6" />
             </div>
           </button>
-          <button
+          {/* <button
             aria-label="Open Menu"
             title="Open Menu"
             className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
@@ -63,10 +75,10 @@ const GeneralDashboardNavbar = () => {
             <div className="px-2 py-2 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
               <img src="/hambrgr2.svg" className="h-4" />
             </div>
-          </button>
+          </button> */}
           {isMenuOpen && (
             <div className="absolute top-0 left-0 w-full z-50">
-              <div className="p-5 bg-white border rounded shadow-sm">
+              <div className="p-5 bg-[#DFF1FE] border rounded shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <Link
@@ -78,7 +90,7 @@ const GeneralDashboardNavbar = () => {
                       <div className="p-1 rounded-lg shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
                         <img src="/logo.png" className="h-8" />
                       </div>
-                      <span className="ml-2 text-xl font-bold tracking-wide uppercase">
+                      <span className="ml-2 text-lg font-bold tracking-wide uppercase">
                         Research Buddy
                       </span>
                     </Link>
@@ -100,8 +112,8 @@ const GeneralDashboardNavbar = () => {
                   </div>
                 </div>
                 <nav>
-                  <ul className="space-y-4">
-                    <li>
+                  <ul className="flex flex-col justify-center items-center space-y-4">
+                    <li className="border-b w-full text-center pb-2">
                       <Link
                         to="/home"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
@@ -109,14 +121,54 @@ const GeneralDashboardNavbar = () => {
                         Home
                       </Link>
                     </li>
-                    <li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard"
+                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                      >
+                        Dashboard
+                      </Link>
+                    </li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard"
+                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                      >
+                        All Projects
+                      </Link>
+                    </li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard"
+                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                      >
+                        Requests
+                      </Link>
+                    </li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard"
+                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                      >
+                        Fund Proposal
+                      </Link>
+                    </li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard"
+                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                      >
+                        Friend Request
+                      </Link>
+                    </li>
+                    {/* <li>
                       <Link
                         to="/find/academic"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
                         Academic
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </nav>
               </div>

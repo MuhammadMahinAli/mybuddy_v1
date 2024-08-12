@@ -2,6 +2,8 @@ import "../GeneralAddProject/editor.css";
 import "react-quill/dist/quill.core.css";
 import { useContext } from "react";
 import { AuthContext } from "../../../Context/UserContext";
+import { FaPlus, FaSearch } from "react-icons/fa";
+import filter from "../../../assets/filter.png";
 
 const GeneralAllProject = () => {
   const { getAllProjectByUser } = useContext(AuthContext);
@@ -13,24 +15,62 @@ const GeneralAllProject = () => {
       <h1 className=" text-[20px] lg:text-[28px] pb-5 font-bold">
         ALL PROJECTS
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7">
+
+      {/* search div */}
+
+      <div className="py-5 w-full justify-between flex items-center flex-col md:flex-row">
+        {/* input */}
+        <div className="flex  justify-center items-center -space-x-4 md:-space-x-9 w-full  md:w-6/12 xl:w-7/12 2xl:w-6/12 3xl:w-7/12">
+          <input
+            name="projectName"
+            // value={projectData.projectName}
+            // onChange={onFormChange}
+            className="w-11/12 outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border  border-solid border-gray-100"
+          />
+          <button
+            className={`flex justify-center items-center p-3 text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]`}
+          >
+            <FaSearch className="text-xl" />
+          </button>
+        </div>
+
+        {/* buttons */}
+        <div className="flex space-x-2 lg:space-x-3 items-center w-full md:w-6/12 xl:w-5/12 2xl:w-5/12 3xl:w-5/12 md:px-4">
+          <button
+            className={`flex justify-center items-center space-x-1 w-full my-3 px-2 md:px-3 py-1 lg:px-4 md:py-2 text-[14px] md:text-[16px] text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]`}
+          >
+            <FaPlus /> <span> New Project</span>
+          </button>
+          <button
+            className={`flex justify-center  items-center space-x-1 w-full my-3 md:px-3 py-1 lg:px-4 md:py-2 text-[14px] md:text-[16px]  font-semibold shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] rounded-[10px]`}
+          >
+            <img src={filter} />
+            <span>Filter</span>
+          </button>
+        </div>
+      </div>
+
+      {/* cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-7 ssm:px-5">
         {projects?.length > 0 ? (
           projects.map((p, i) => (
-            <>
+            <div key={i}>
               <div
-                key={i}
                 className={`space-y-1 flex flex-col justify-start rounded-[25px] bg-skyblue shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] overflow-hidden`}
               >
                 <div className="flex justify-center items-center h-[120px] md:h-[140px] xl:h-[180px] rounded-[25px] bg-[#DCE2EA] shadow-[0px_1px_2px_rgba(0,_0,_0,_0.25),_-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)]">
-                  <img
-                    src={p.images[0]}
-                    className="h-[100px] md:h-[120px] xl:h-[160px] rounded-2xl"
-                  />
+                  <img src={p.images[0]} className="rounded-2xl" />
                 </div>
+              
 
-                <div className="p-1 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">
-                  <p className="text-xl font-semibold py-3">
-                    {p.projectName.slice(0, 15)}...
+                <div className="px-2 pt-5 ssm:pt-14 lg:pt-12 3xl:pt-6 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">
+                  <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold py-3">
+                    {p?.projectName.length > 15
+                      ? `${p.projectName.slice(0, 7)}...`
+                      : p.projectName}
+                  </p>
+                  <p className="hidden 2xl:block text-xl 3xl:text-[22px] font-bold py-3">
+                    {p.projectName}
                   </p>
                   <div
                     dangerouslySetInnerHTML={{
@@ -49,15 +89,17 @@ const GeneralAllProject = () => {
                   </button>
                 </div>
               </div>
-              <div className="w-full flex justify-center items-center pt-3">
-                <img src="/more2.svg" className="h-20  top-32 " />
-              </div>
-            </>
+            </div>
           ))
         ) : (
           <p className=" text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not posted any project yet.`}</p>
         )}
       </div>
+      {projects?.length > 3 && (
+        <div className="w-full flex justify-center items-center pt-3">
+          <img src="/more2.svg" className="h-20  top-32 " />
+        </div>
+      )}
     </div>
   );
 };

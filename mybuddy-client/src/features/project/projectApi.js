@@ -12,6 +12,14 @@ export const projectApi = apiSlice.injectEndpoints({
       }),
      invalidateTags: ["Project"],
     }),
+    createNewTask: builder.mutation({
+      query: (data) => ({
+        url: "/project/create-task",
+        method: "POST",
+        body: data,
+      }),
+     invalidateTags: ["Project"],
+    }),
     
     getAllProject: builder.query({
       query: () => ({
@@ -32,6 +40,6 @@ export const projectApi = apiSlice.injectEndpoints({
   }),
 });
 
- export const {useCreateNewProjectMutation, useGetAllProjectQuery, useGetAllProjectByUserQuery } = projectApi;
+ export const {useCreateNewProjectMutation, useCreateNewTaskMutation , useGetAllProjectQuery, useGetAllProjectByUserQuery } = projectApi;
 
 // useGetAllPostQuery

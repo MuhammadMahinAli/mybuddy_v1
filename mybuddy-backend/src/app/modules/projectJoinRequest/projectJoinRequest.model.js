@@ -31,10 +31,25 @@ const ProjectJoinRequestSchema = new Schema(
         details: {
           type: String,
         },
-        budget:{
-          type:String,
-        }
-        
+        taskType: {
+          type: String,
+        },
+        coin: {
+          type: String,
+        },
+        priority: {
+          type: String,
+        },
+        status: {
+          type: String,
+        },
+        startDate: {
+          type: String,
+        },
+        endDate: {
+          type: String,
+        },
+        subTask: [{ type: String }],
       },
     ],
   },

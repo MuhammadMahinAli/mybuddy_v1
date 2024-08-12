@@ -205,7 +205,7 @@ const Requests = () => {
       <h1 className="gray600 text-[20px] lg:text-[28px] md:pb-5 font-bold w-full">
         NEW REQUESTS
       </h1>
-      <div className="my-5 flex items-center space-x-1 md:space-x-5">
+      <div className="my-5 flex items-center justify-between md:space-x-5">
         <button
           onClick={toggleFriendRequest}
           className="text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#d4e3ed] shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9] cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  hover:shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9_inset] box-border border-[2px] border-solid border-white px-2 py-1 md:px-4 md:py-2 flex justify-center items-center"

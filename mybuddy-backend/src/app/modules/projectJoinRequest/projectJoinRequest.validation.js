@@ -16,13 +16,18 @@ body:z.object({
       required_error: "Status is required and must be one of 'Pending', 'Accepted', 'Rejected','Cancelled'",
    }),
    tasks: z.array(
-     z.object({
-       title: z.string(),
-       details: z.string(), 
-       budget: z.string(), 
-     })
-   ).optional(),
-   
+      z.object({
+        title: z.string(),
+        details: z.string(),
+        taskType: z.string(), 
+        coin: z.string(), 
+        priority: z.string(), 
+        status: z.string(), 
+        startDate: z.string(), 
+        endDate: z.string(), 
+        subTask: z.array(z.string())
+      })
+    ).optional(),
   })
 });
 
@@ -33,3 +38,12 @@ export const updateStatusZodSchema = z.object({
     }),
  }).strict(),
 });
+
+export const updateTaskStatusSchema = z.object({
+body:z.object({
+   user:z.string().optional,
+   status:z.string().optional()
+
+}).strict()
+
+})

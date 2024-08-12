@@ -396,7 +396,7 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
                         </h2>
                         <h4 className="text-lg lg:text-xl font-bold mb-4">
                           {tasks[selectedTaskIndex]?.title} [ Budget $
-                          {tasks[selectedTaskIndex]?.budget} ]
+                          {tasks[selectedTaskIndex]?.coin} ]
                         </h4>
 
                         <p className="lg:text-[20px]">
