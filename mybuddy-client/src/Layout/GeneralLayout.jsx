@@ -24,7 +24,7 @@ const GeneralLayout = () => {
           <GeneralDashboardNavbar />
           <div className="flex items-center justify-center  md:items-start p-0 md:pr-7 ">
             <GeneralSideBar />
-            <div className="w-11/12 md:w-11/12 lg:w-9/12 xl:w-9/12 pl-3 md:pl-8 lg:pl-5 xl:pl-8">
+            <div className="w-11/12 md:w-11/12 lg:w-9/12 xl:w-9/12 pl-3 md:pl-16 lg:pl-5 xl:pl-8">
               <Outlet />
             </div>
           </div>

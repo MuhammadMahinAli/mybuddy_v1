@@ -30,6 +30,7 @@ const MiniSidebar = ({ user, theme }) => {
           : "shadow-[-2px_-2px_100px_rgba(255,_255,_255,_0.1)_inset,_2px_2px_100px_rgba(66,_66,_66,_0.1)_inset] [backdrop-filter:blur(50px)] rounded-br-xl"
       }  flex flex-col items-center justify-center py-5 space-y-4 lg:space-y-9 z-50`}
     >
+      
       <li className="sidebar-list">
         <Link to="/home" className="relative">
           <p>
