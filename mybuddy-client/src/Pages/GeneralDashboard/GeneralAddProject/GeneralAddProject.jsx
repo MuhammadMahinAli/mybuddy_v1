@@ -3,7 +3,6 @@ import AddProjectFirstForm from "./AddProjectFirstForm";
 import AddProjectSecForm from "./AddProjectSecForm";
 import AddProjectThirdForm from "./AddProjectThirdForm";
 import PropTypes from "prop-types";
-import post from "../../../assets/post.png";
 import { useCreateNewProjectMutation } from "../../../features/project/projectApi";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";

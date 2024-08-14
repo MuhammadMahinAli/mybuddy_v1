@@ -20,7 +20,7 @@ const GeneralDashboardNavbar = () => {
   }, [location.pathname])
 
   return (
-    <div className="px-2 py-4 mx-auto sm:max-w-xl md:max-w-full bg-tr md:pr-8  lg:px-8 gray500 bg-[#DFF1FE] sm:bg-[#EFF4FA]">
+    <div className="px-2 py-4 mx-auto  bg-tr md:pr-8 sm:px-5 lg:px-8 gray500 bg-[#DFF1FE] sm:bg-[#EFF4FA]">
       <div className="relative flex items-center justify-between  w-full">
         <div className="xl:space-x-1">
           <button

@@ -27,7 +27,7 @@ const MobileSidebar = ({
   const{singleUser} = useContext(AuthContext);
   const userImage = singleUser?.data?.profilePic ?  singleUser?.data?.profilePic  : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
   return (
-    <div className="hidden md:block lg:hidden flex flex-col  border-2  w-[60px] md:w-[70px]  bg-[#dce2ea] absolute -top-0 -left-0">
+    <div className="hidden md:block xl:hidden flex flex-col  border-2  w-[60px] md:w-[70px]  bg-[#dce2ea] absolute -top-0 -left-0">
       <div className="flex flex-col  rounded-xl py-2 pl-2 w-[50px] md:w-[60px]">
         <ul className=" ">
           <li className="flex justify-center items-center rounded-t-xl  bg-[#e4ecf7] w-full ">
