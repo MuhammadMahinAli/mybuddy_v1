@@ -8,14 +8,13 @@ import Swal from "sweetalert2";
 const Requests = () => {
   const [openFriendRequest, setOpenFriendRequest] = useState(true);
   const [openProjectRequest, setOpenProjectRequest] = useState(false);
-  const {  getFriendRequest } =
-    useContext(AuthContext);
+  const {  getFriendRequest } = useContext(AuthContext);
 
 
   const friendRequests = getFriendRequest?.data;
   //const projectRequests = allRecieveRequest?.data;
 
-
+console.log(friendRequests);
   // Use the mutation hook for update
  // const [updateJoinRequestStatus] = useUpdateJoinRequestStatusMutation();
   const [updateFriendRequestStatus] = useUpdateFriendRequestStatusMutation();
@@ -208,24 +207,24 @@ const Requests = () => {
       <div className="my-5 flex items-center justify-between md:space-x-5">
         <button
           onClick={toggleFriendRequest}
-          className={`${openFriendRequest ? "shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] hover:shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]" :"hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]"}  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-2 py-1  sm:px-10 lg:px-4 flex justify-center items-center`}
+          className={`${openFriendRequest ? "shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] hover:shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]" :"hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]"}  text-[11px] sm:text-[16px] md:text-[18px] lg:text-xl gray600 font-bold bg-[#e4ecf7] cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-3 py-1 sm:py-2 xs:px-5 sm:px-10 lg:px-7 2xl:px-10 4xl:px-14 flex justify-center items-center`}
         >
           Friend
         </button>
         <button
           onClick={toggleProjectRequest}
-          className={`${openProjectRequest ? "shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] hover:shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]" :"hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]"}  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-2 py-1  sm:px-10 lg:px-4 md:py-2 flex justify-center items-center`}
+          className={`${openProjectRequest ? "shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] hover:shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]" :"hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]"}  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-3 py-1  xs:px-5 sm:px-10 lg:px-7 2xl:px-10 4xl:px-14 md:py-2 flex justify-center items-center`}
         >
            Project
         </button>
      
         <button
-          className={`hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-2 py-1  sm:px-10 lg:px-4 flex justify-center items-center`}
+          className={`hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-3 py-1  xs:px-5 sm:px-10 lg:px-7 2xl:px-10 4xl:px-14 flex justify-center items-center`}
         >
            Fund
         </button>
         <button
-          className={`hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-2 py-1  sm:px-10 lg:px-4 flex justify-center items-center`}
+          className={`hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-3 py-1  xs:px-5 sm:px-10 lg:px-7 2xl:px-10 4xl:px-14 flex justify-center items-center`}
         >
            Proposal
         </button>
@@ -303,36 +302,37 @@ const Requests = () => {
       {/* friend request */}
       {openFriendRequest && (
         <>
-          <div className="flex flex-col space-y-5 3xl:space-y-9 items-start 3xl:pt-5">
+          <div className="flex flex-col space-y-5 3xl:space-y-9 items-enter  3xl:pt-5">
             {friendRequests?.slice(0, 2).map((p, i) => (
               <div
                 key={i}
-                className="w-12/12 md:space-x-10 p-5 flex flex-col md:flex-row  justify-between items-center rounded-[25px] bg-skyblue shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] overflow-hidden"
+                className="w-12/12  md:space-x-10 p-3 sm:p-5 flex flex-row  justify-between items-center rounded-[15px] bg-skyblue shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] overflow-hidden"
               >
-                <div className="flex space-x-2 items-center">
+                <div className="flex space-x-2 ssm:space-x-4 items-center">
                   <img
                     src={
                       p?.requestedBy?.profilePic ||
                       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
                     }
-                    className="w-8 h-8 md:w-10 md:h-10 3xl:h-14 3xl:w-14 rounded-full border border-gray-500"
+                    className="w-8 h-8 sm:w-12 sm:h-12 md:w-10 md:h-10 3xl:h-14 3xl:w-14 rounded-full border border-gray-500"
                     loading="lazy" alt=""
                   />
-                  <p className="text-sm md:text-xl font-semibold text-gray-600 capitalize">
+                  <p className="text-sm sm:text-[18px] md:text-xl font-semibold text-gray-600 capitalize">
                     {p?.requestedBy?.name?.firstName}{" "}
-                    {p?.requestedBy?.name?.lastName}
+                    <span>{p?.requestedBy?.name?.lastName.length > 4 ? `${p?.requestedBy?.name?.lastName.slice(0,4)}...` : p?.requestedBy?.name?.lastName }</span>
+                    
                   </p>
                 </div>
-                <div className="flex space-x-3 items-center mt-3">
+                <div className="flex space-x-1 xs:space-x-3 items-center">
                   <button
                     onClick={(e) => handleUpdateFRStatusAccept(e, i)}
-                    className="text-sm md:text-xl font-semibold py-1 px-3 rounded-[10px] border-[3px] border-[#7fa0fa]"
+                    className="text-[10px] xs:text-[14px] md:text-xl font-semibold py-1 px-3 rounded-[6px] border-[1px] sm:border-[2px] border-[#7fa0fa]"
                   >
                     Aceept
                   </button>
                   <button
                     onClick={(e) => handleUpdateFRStatusReject(e, i)}
-                    className="text-sm md:text-xl font-semibold py-1 px-3 rounded-[10px] border-[3px] border-[#ff59ad]"
+                    className="text-[10px] xs:text-[14px] md:text-xl font-semibold py-1 px-3 rounded-[6px] border-[1px] sm:border-[2px] border-[#ff59ad]"
                   >
                     Decline
                   </button>

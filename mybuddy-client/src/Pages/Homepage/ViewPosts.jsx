@@ -111,10 +111,10 @@ const ViewPosts = ({ theme }) => {
   //   }
   // };
 
-  const sentFriendRequest = async (user) => {
+  const sentFriendRequest = async (friend) => {
     const datas = {
       requestedBy: requestedId,
-      requestedTo: user?._id,
+      requestedTo: friend?._id,
       status: "Pending",
     };
     console.log(datas);
@@ -129,9 +129,9 @@ const ViewPosts = ({ theme }) => {
           title: "Well done!",
           text: "You've sent friend request successfully.",
         });
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 2500);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2500);
       } else {
         Swal.fire({
           icon: "error",

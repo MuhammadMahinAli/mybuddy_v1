@@ -105,9 +105,9 @@ const GeneralFriendRequest = () => {
       {requests?.map((request,i) => (
         <div
           key={request._id}
-          className=" p-3 md:p-7 space-y-5 md:space-y-7 xl:space-y-10 w-full rounded-[20px] bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]"
+          className=" p-3 md:p-7 mb-3 ssm:mb-5 xl:mb-6 w-full rounded-[20px] bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]"
         >
-          <div className=" flex justify-between items-center">
+          <div className="flex justify-between items-center">
             <div className="flex flex-col md:flex-row justify-center items-start md:items-center space-x-0 md:space-x-4">
               <img
                 src={request?.requestedBy?.profilePic || "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"}
