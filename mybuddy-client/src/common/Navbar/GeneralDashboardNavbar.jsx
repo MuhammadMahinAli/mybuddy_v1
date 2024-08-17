@@ -150,7 +150,7 @@ const GeneralDashboardNavbar = () => {
                       <Link
                         to="/dashboard/sent-request"
                         className={`${
-                          isPageActive("/dashboard/sent-request")
+                          isPageActive("/dashboard/recieve-request")
                             ? "font-bold"
                             : "font-medium"
                         } tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400`}
