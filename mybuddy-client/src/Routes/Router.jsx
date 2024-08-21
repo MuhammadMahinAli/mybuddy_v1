@@ -26,6 +26,7 @@ import Academic from "../Pages/AcademicPage/Academic";
 import EmailVarification from "../Pages/Email/EmailVarification";
 import VerificationSuccess from "../Pages/Email/VerificationSuccess";
 import AddTaskForm from "../Pages/Try/AddTaskForm";
+import GeneralProjectDetails from "../Pages/GeneralDashboard/GeneralProjectDetails/GeneralProjectDetails";
 
 
 const router = createBrowserRouter([
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/meeting-s",
         element: <CalenderPage />,
+      },
+      {
+        path: "/dashboard/details",
+        element: <GeneralProjectDetails />,
       },
       {
         path: "/dashboard/test",
