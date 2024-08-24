@@ -154,7 +154,7 @@ const GeneralRequestRecieve = () => {
                   loading="lazy" alt=""
                 />
                 <p className=" capitalize pt-1 md:pt-0">
-                  {request?.requestedTo?.name?.firstName.slice(0,3)} <span className="hidden lg:inline-block">{request?.requestedTo?.name?.lastName.length > 3 ? request?.requestedTo?.name?.lastName.length : request?.requestedTo?.name?.lastName.slice(0,3)}</span> 
+                  {request?.requestedBy?.name?.firstName.slice(0,3)} <span className="hidden lg:inline-block">{request?.requestedBy?.name?.lastName.length > 3 ? request?.requestedBy?.name?.lastName.length : request?.requestedBy?.name?.lastName.slice(0,3)}</span> 
                 </p>
               </div>
               <div className="capitalize text-[16px] md:text-[18px] border-r-2  text-center sm:w-3/12 lg:hidden">

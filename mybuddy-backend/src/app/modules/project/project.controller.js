@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import { catchAsync } from "../../../utils/catchAsync.js";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { addTaskToProjectService, createProject,getProjectByUserService, getProjectsService, getSingleProjectService } from "./project.service.js";
+import { addTaskToProjectService, createProject,deleteProjectService,deleteTaskFromProjectService,getProjectByUserService, getProjectsService, getSingleProjectService, updateProjectService } from "./project.service.js";
 
 
 // ************** create project
@@ -20,9 +20,9 @@ export const createNewProject= catchAsync(async (req, res, next) => {
 // ************** insert task in project
 
 export const addTaskToProjectController = catchAsync(async(req,res)=>{
-
+  const id = req.params.id;
   const data = req.body;
-  const newTask = await addTaskToProjectService(data);
+  const newTask = await addTaskToProjectService(id,data);
 
   sendResponse(res,{
     statusCode:httpStatus.OK,
@@ -31,6 +31,21 @@ export const addTaskToProjectController = catchAsync(async(req,res)=>{
     data:newTask
   })
 })
+//----------------- delete task from project
+export const deleteTaskFromProjectController = catchAsync(async (req, res) => {
+  const { taskId } = req.params;
+  const updatedProject = await deleteTaskFromProjectService(taskId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Task deleted successfully",
+    data: updatedProject,
+  });
+});
+
+
+
 
 // ************** get all project
 
@@ -81,3 +96,46 @@ export const updateTaskStatus = catchAsync(async(req,res)=>{
     data:updateStatus
   })
 })
+
+//----------------- delete project
+
+
+export const deleteProjectController = catchAsync(async (req, res) => {
+  const id = req.params.id;
+
+  const project = await deleteProjectService(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Project deleted successfully!",
+    data: project,
+  });
+});
+
+//------------update project
+export const updateProjectController = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const updateData = req.body;
+  const updatedProject = await updateProjectService(id, updateData);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Project updated successfully!",
+    data: updatedProject,
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+

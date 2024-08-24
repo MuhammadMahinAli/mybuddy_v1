@@ -14,7 +14,7 @@ const AddProjectFirstForm = ({
       description: description,
     }));
   };
-
+console.log(projectData.startDate);
   return (
     <form className="p-5 md:p-3 lg:p-6 w-[320px]   sm:w-11/12 space-y-2">
       {/* project name */}
@@ -78,6 +78,7 @@ const AddProjectFirstForm = ({
               name="startDate"
               type="date"
               value={projectData.startDate}
+              onChange={onFormChange}
               className={`bg-[#e4ecf7] m-[1px] border uppercase outline-none pl-2 md:pt-0 rounded-lg w-11/12 md:w-full md:px-3 text-[15px] font-medium text-start shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[37px] md:h-[57px]`}
             />
             <p>End</p>

@@ -122,8 +122,9 @@ const router = createBrowserRouter([
         element: <CalenderPage />,
       },
       {
-        path: "/dashboard/details",
+        path: "/dashboard/details/:id",
         element: <GeneralProjectDetails />,
+        loader: ({ params }) => fetch(`http://localhost:3000/api/v1/project/getProjectById/${params.id}`)
       },
       {
         path: "/dashboard/test",

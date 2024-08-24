@@ -12,62 +12,79 @@ import { MdOutlineCircle } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiEdit } from "react-icons/ci";
 import { IoQrCodeOutline } from "react-icons/io5";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../Context/UserContext";
+import Swal from "sweetalert2";
+import UpdateProjectForm from "./UpdateProjectForm";
+import AddNewTask from "./AddNewTask";
+import { useUpdateJoinRequestStatusMutation } from "../../../features/projectJoinRequest/projectJoinRequestApi";
 
 const GeneralProjectDetails = () => {
-  const tasks = [
-    {
-      title: "Web Designing",
-      description: "Prototyping",
-      startDate: "2024-08-01",
-      endDate: "2024-08-04",
-      progress: 90,
-    },
-    {
-      title: "Mobile App",
-      description: "Shopping",
-      startDate: "2024-08-01",
-      endDate: "2024-08-07",
-      progress: 30,
-    },
-    {
-      title: "Web Development",
-      description: "Prototyping",
-      startDate: "2024-08-01",
-      endDate: "2024-08-04",
-      progress: 90,
-    },
-    {
-      title: "Dashboard",
-      description: "Medical",
-      startDate: "2024-08-01",
-      endDate: "2024-08-10",
-      progress: 50,
-    },
-    {
-      title: "Web Designing",
-      description: "Wireframing",
-      startDate: "2024-08-01",
-      endDate: "2024-08-20",
-      progress: 20,
-    },
-    {
-      title: "Dashboard",
-      description: "Medical",
-      startDate: "2024-08-01",
-      endDate: "2024-08-10",
-      progress: 50,
-    },
-  ];
+  const {
+    allRecieveRequest,
+    allAcceptedRecieveRequest,
+    deleteProject,
+    deleteTask,
+    deleteTeamMember
+  } = useContext(AuthContext);
+  const currentTeamMember = allAcceptedRecieveRequest?.data;
+  const req = allRecieveRequest?.data;
+  console.log("currentTeamMember", currentTeamMember);
+  const info = useLoaderData();
+  const ProjectInfo = info?.data;
+  const {
+    tasks,
+    description,
+    category,
+    discord,
+    whatsApp,
+    projectName,
+    user,
+    startDate,
+    endDate,
+    images,
+    _id,
+  } = ProjectInfo;
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
+  const navigate = useNavigate();
 
   function formatDate(dateString) {
     const options = { day: "numeric", month: "short", year: "numeric" };
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB", options);
   }
+
+  const userName = user?.name?.firstName + " " + user?.name?.lastName;
+  const userEmail = user?.email;
+  const userProfilePic = user?.profilePic
+    ? user?.profilePic
+    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
+  const formattedDate = formatDate(user?.createdAt);
+  const projectDeadline = formatDate(startDate) + " -" + formatDate(endDate);
+  const projectFirstImage = images[0]
+    ? images[0]
+    : "https://www.liquidplanner.com/wp-content/uploads/2019/04/HiRes-17-1024x615.jpg";
+  const projectSecoundImage = images[1]
+    ? images[1]
+    : "https://www.liquidplanner.com/wp-content/uploads/2019/04/HiRes-17-1024x615.jpg";
+  const projectLastImage = images[2]
+    ? images[2]
+    : "https://www.liquidplanner.com/wp-content/uploads/2019/04/HiRes-17-1024x615.jpg";
+
+  const totalTasks = tasks?.length;
+  const completedTasks = tasks.filter(
+    (task) => task.status === "complete"
+  ).length;
+  const progress = (completedTasks / totalTasks) * 100;
+  //console.log("info", ProjectInfo);
+
   // Function to calculate days left
-  const calculateDaysLeft = (endDate) => {
+  const calculateDaysLeft = (startDate, endDate) => {
     const end = new Date(endDate);
-    const today = new Date();
+    const today = new Date(startDate);
     const diffTime = Math.abs(end - today);
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
@@ -129,6 +146,150 @@ const GeneralProjectDetails = () => {
       status: "Backend management",
     },
   ];
+
+  // open update
+  const openProjectUpdateModal = () => {
+    setOpenUpdateModal(true);
+  };
+  const openTaskModal = () => {
+    setOpenAddTaskModal(true);
+  };
+  const closeProjectUpdateModal = () => {
+    setOpenUpdateModal(false);
+  };
+  const closeAddTaskModal = () => {
+    setOpenAddTaskModal(false);
+  };
+
+  // delete project
+
+  const deleteProjectById = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteProject(id)
+          .then(() => {
+            Swal.fire("Deleted!", "Your project has been deleted.", "success");
+            navigate("/dashboard/all-projects"); // Navigate on success
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire(
+              "Error!",
+              "There was an issue deleting your project.",
+              "error"
+            );
+          });
+      }
+    });
+  };
+  // delete task
+  const deleteTaskById = (taskId) => {
+    console.log(taskId);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteTask(taskId)
+          .then(() => {
+            Swal.fire("Deleted!", "Your task has been deleted.", "success");
+            // Optionally, navigate or update the UI after deletion
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire(
+              "Error!",
+              "There was an issue deleting your task.",
+              "error"
+            );
+          });
+      }
+    });
+  };
+  // delete team member
+  const deleteMember = (id) => {
+  console.log('req id', id);
+    Swal.fire({
+      title: "Are you sure to delete this member?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteTeamMember(id)
+          .then(() => {
+            Swal.fire("Deleted!", "This member has been deleted.", "success");
+            // Optionally, navigate or update the UI after deletion
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire(
+              "Error!",
+              "There was an issue deleting your task.",
+              "error"
+            );
+          });
+      }
+    });
+  };
+// update task member status
+const [updateJoinRequestStatus] = useUpdateJoinRequestStatusMutation();
+  const [selectedRequestIndex, setSelectedRequestIndex] = useState(null);
+const handleUpdateStatusDone = (e, index) => {
+  e.preventDefault();
+  setSelectedRequestIndex(index);
+  const selectedTask = allRecieveRequest?.data[index];
+  if (selectedTask) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Does this member completed his task?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, all task are completed!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newStatus = "Done";
+        console.log({ id: selectedTask._id, data: { status: newStatus } });
+        updateJoinRequestStatus({
+          id: selectedTask._id,
+          data: { status: newStatus },
+        })
+          .unwrap()
+          .then(() => {
+            Swal.fire({
+              icon: "success",
+              title: "Well done !",
+              text: "You have updated the status successfully!",
+            });
+          })
+          .catch((error) => {
+            alert("Failed to update status.");
+            console.error(error);
+          });
+      }
+    });
+  } else {
+    console.log("No task found for the selected index.");
+  }
+};
   return (
     <div>
       <div className="flex items-center space-x-1">
@@ -137,9 +298,9 @@ const GeneralProjectDetails = () => {
         <FaCaretRight className="text-xl text-blue-500" />
         <p className="text-blue-500 text-lg">Project</p>
         <FaCaretRight className="text-xl text-blue-500" />
-        <p className=" text-lg">Project Name</p>
+        <p className=" text-lg">{projectName}</p>
       </div>
-      <p className="graish font-bold text-xl py-3">Project Name</p>
+      <p className="graish font-bold text-xl py-3">{projectName}</p>
 
       <div className="p-5 space-y-3">
         {/* tab */}
@@ -165,17 +326,17 @@ const GeneralProjectDetails = () => {
             <div className=" w-4/12 flex flex-col justify-center items-center space-y-1 py-2">
               <img
                 className="h-[68px] w-[68px] rounded-full"
-                src="https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                src={userProfilePic}
                 alt=""
               />
               <p className="text-[18px] graish font-bold pt-3">Project Owner</p>
-              <p className="text-[17px] graish font-medium">Adam Smith</p>
-              <p className="text-[16px] graish font-medium">
-                Member since - 12-03-2023{" "}
+              <p className="text-[17px] graish font-medium capitalize">
+                {userName}
               </p>
               <p className="text-[16px] graish font-medium">
-                marzia@example.com
+                Member since -{formattedDate}{" "}
               </p>
+              <p className="text-[16px] graish font-medium">{userEmail}</p>
             </div>
 
             {/* right */}
@@ -185,32 +346,34 @@ const GeneralProjectDetails = () => {
                 <li>
                   <p className="graish font-bold text-lg">Duration</p>
                   <p className="graish text-[16px] pt-[3px]">
-                    July 10, 2024- dec20, 2024
+                    {projectDeadline}
                   </p>
                 </li>
                 <li>
                   <p className="graish font-bold text-lg">Category</p>
-                  <p className="graish text-[16px] pt-[3px]">Technology</p>
+                  <p className="graish text-[16px] pt-[3px] capitalize">
+                    {category}
+                  </p>
                 </li>
                 <li>
                   <p className="graish font-bold text-lg">Disdord</p>
-                  <p className="graish text-[16px] pt-[3px]">
-                    https://discord.gg/benujvuu
-                  </p>
+                  <p className="graish text-[16px] pt-[3px]">{discord}</p>
                 </li>
               </ul>
               <ul className="flex justify-between items-center w-full">
                 <li>
                   <p className="graish font-bold text-lg">WhatsApp</p>
-                  <p className="graish text-[16px] pt-[3px]">0187652024</p>
+                  <p className="graish text-[16px] pt-[3px]">{whatsApp}</p>
                 </li>
               </ul>
               <div>
                 <p className="graish font-bold text-lg">Description</p>
-                <p className="graish text-[16px] pt-[3px]">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Architecto atque nobis tenetur doloremque aspernatur...
-                </p>
+                <div
+                  className=""
+                  dangerouslySetInnerHTML={{
+                    __html: description.slice(0, 100),
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -242,22 +405,22 @@ const GeneralProjectDetails = () => {
             <ul className="flex justify-between  items-center space-x-4 w-8/12">
               <li className="">
                 <img
-                  className="h-36 40 rounded-lg"
-                  src="https://www.liquidplanner.com/wp-content/uploads/2019/04/HiRes-17-1024x615.jpg"
+                  className="h-36 w-40 rounded-lg"
+                  src={projectFirstImage}
                   alt=""
                 />
               </li>
               <li className="">
                 <img
-                  className="h-36 40 rounded-lg"
-                  src="https://www.liquidplanner.com/wp-content/uploads/2019/04/HiRes-17-1024x615.jpg"
+                  className="h-36 w-40 rounded-lg object-center"
+                  src={projectSecoundImage}
                   alt=""
                 />
               </li>
               <li className="">
                 <img
-                  className="h-36 40 rounded-lg"
-                  src="https://www.liquidplanner.com/wp-content/uploads/2019/04/HiRes-17-1024x615.jpg"
+                  className="h-36 w-40 rounded-lg object-cover"
+                  src={projectLastImage}
                   alt=""
                 />
               </li>
@@ -266,11 +429,32 @@ const GeneralProjectDetails = () => {
           {/* edit delete */}
           <div className="absolute right-5 top-3">
             <div className="flex items-center space-x-2">
-              <FaRegEdit className="text-2xl text-blue-500" />
-              <LuTrash2 className="text-2xl text-red-500" />
+              <FaRegEdit
+                onClick={openProjectUpdateModal}
+                className="text-2xl text-blue-500 cursor-pointer"
+              />
+              <LuTrash2
+                onClick={() => deleteProjectById(_id)}
+                className="text-2xl text-red-500 cursor-pointer"
+              />
             </div>
           </div>
         </div>
+        {openUpdateModal === true && (
+          <UpdateProjectForm
+            initialData={ProjectInfo}
+            openUpdateModal={openUpdateModal}
+            closeProjectUpdateModal={closeProjectUpdateModal}
+          />
+        )}
+        {openAddTaskModal === true && (
+          <AddNewTask
+            tasks={tasks}
+            openAddTaskModal={openAddTaskModal}
+            projectId={ProjectInfo?._id}
+            closeAddTaskModal={closeAddTaskModal}
+          />
+        )}
         {/* task */}
         <div className="flex justify-between items-center py-10">
           <div className="flex space-x-8 text-center">
@@ -305,7 +489,10 @@ const GeneralProjectDetails = () => {
               </div>
             </div>
           </div>
-          <button className="flex items-center px-4 py-2 bg-gradient-to-r from-[#60f5c6] to-teal-400 text-white font-semibold rounded-xl shadow-md hover:shadow-lg focus:outline-none">
+          <button
+            onClick={openTaskModal}
+            className="flex items-center px-4 py-2 bg-gradient-to-r from-[#60f5c6] to-teal-400 text-white font-semibold rounded-xl shadow-md hover:shadow-lg focus:outline-none"
+          >
             <span className="mr-2">+</span>
             Add New Task
           </button>
@@ -313,7 +500,7 @@ const GeneralProjectDetails = () => {
         {/* card */}
         <div className="grid grid-cols-3 gap-4">
           {tasks.map((task, index) => {
-            const daysLeft = calculateDaysLeft(task.endDate);
+            const daysLeft = calculateDaysLeft(task.startDate, task.endDate);
             const { progressColor, daysLeftColor, cardBg } =
               colors[index % colors.length];
 
@@ -321,13 +508,16 @@ const GeneralProjectDetails = () => {
               <div
                 key={index}
                 className={`rounded-3xl shadow-md p-4 w-64 ${cardBg}`}
+                onClick={() => setSelectedIndex(index)}
               >
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-gray-500 text-sm">
                     {formatDate(task.startDate)}
                   </p>
                   <button className="text-gray-500">
-                    <BsThreeDotsVertical />
+                    <BsThreeDotsVertical
+                      onClick={() => deleteTaskById(task?._id)}
+                    />
                   </button>
                 </div>
                 <h3 className="text-lg font-semibold text-gray-800 text-center">
@@ -341,11 +531,11 @@ const GeneralProjectDetails = () => {
                   <div className="w-full bg-gray-50 rounded-full h-2.5 mb-2">
                     <div
                       className={`${progressColor} h-2.5 rounded-full`}
-                      style={{ width: `${task.progress}%` }}
+                      style={{ width: `${progress}%` }}
                     ></div>
                   </div>
                   <p className="text-gray-500 text-sm text-right">
-                    {task.progress}%
+                    {progress.toFixed(2)}%
                   </p>
                 </div>
                 <div className="flex justify-between items-center mt-4">
@@ -377,147 +567,166 @@ const GeneralProjectDetails = () => {
           })}
         </div>
         {/* current task member */}
-        <div className="py-4">
-          <h2 className="text-lg font-semibold text-gray-800">
-            Develop Backend
-          </h2>
+        {selectedIndex !== null && (
+          <>
+            <div className="py-4">
+              <h2 className="text-lg font-semibold text-gray-800">
+                {tasks[selectedIndex].title}
+              </h2>
 
-          <div className="mt-2">
-            <p className="text-gray-500 font-semibold">Description</p>
-            <p className="text-gray-500">
-              Create the backend for user management and data processing...
-              <span className="text-blue-500 font-semibold cursor-pointer">
-                Read More
-              </span>
-            </p>
-          </div>
+              <div className="mt-2">
+                <p className="text-gray-800 font-semibold">Description</p>
+                <p className="text-gray-500">{tasks[selectedIndex].details}</p>
+              </div>
 
-          <div className="mt-2">
-            <p className="text-gray-500 font-semibold">Deadline</p>
-            <p className="text-gray-500">August 30, 2024</p>
-          </div>
-
-          <div className="mt-2">
-            <p className="text-gray-800 font-semibold">
-              Application Fee: <span className="text-gray-500">2 Coins</span>
-            </p>
-          </div>
-        </div>
-        <div className=" gray600 space-y-6 w-12/12 md:w-full">
-          <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
-            REQUESTS
-          </h1>
-          <div className="w-full py-4 flex my-5  items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
-            <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-4/12 sm:w-3/12 ">
-              Name
-            </div>
-            <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-3/12 sm:w-4/12 ">
-              Part
-            </div>
-            <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-2/12 sm:w-2/12 ">
-              Status
+              <div className="mt-2">
+                <p className="text-gray-800 font-semibold">Deadline</p>
+                <p className="text-gray-500">
+                  {formatDate(tasks[selectedIndex].endDate)}
+                </p>
+              </div>
             </div>
 
-            <div className="text-[15px]  md:text-[21px] w-3/12 sm:w-3/12">
-              <p className="font-semibold text-center ">Manage</p>
-            </div>
-          </div>
-          {/* table */}
-          {member.map((request, i) => (
-            <div
-              key={i}
-              className="w-full px-1 py-4  flex my-5 justify-between items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
-            >
-              <div className="flex justify-center items-center space-x-1 text-[16px] md:text-lg   border-r-2  text-center w-4/12 sm:w-3/12">
-                <img
-                  src={
-                    request?.profileImagec ||
-                    "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
-                  }
-                  className="w-8 h-8 md:w-12 md:h-12 border border-black rounded-full"
-                  loading="lazy"
-                  alt=""
-                />
-                <div className="pl-1">
-                  <p className="text-start text-[15px] font-bold capitalize md:pt-0">
-                    {request?.name}
-                  </p>
-                  <p className="text-start text-[14px]">{request?.role}</p>
+            <div className=" gray600 space-y-6 w-12/12 md:w-full">
+              <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
+                Current team member
+              </h1>
+              <div className="w-full py-4 flex my-5  items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
+                <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-4/12 sm:w-3/12 ">
+                  Name
+                </div>
+                <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-3/12 sm:w-4/12 ">
+                  Part
+                </div>
+                <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-2/12 sm:w-2/12 ">
+                  Status
+                </div>
+
+                <div className="text-[15px]  md:text-[21px] w-3/12 sm:w-3/12">
+                  <p className="font-semibold text-center ">Manage</p>
                 </div>
               </div>
-              <div className="capitalize text-[16px] md:text-[18px] border-r-2  text-center sm:w-4/12">
-                {request?.status}
-              </div>
-              <div className="text-[16px] md:text-lg   border-r-2  text-center w-2/12 sm:w-2/12 ">
-                Pending
-              </div>
+              {/* table */}
+              {currentTeamMember
+                ?.filter((request) =>
+                  request.tasks.some(
+                    (task) => task.title === tasks[selectedIndex]?.title
+                  )
+                )
+                .map(
+                  (request, i) =>
+                    request && (
+                      <div
+                        key={i}
+                        className="w-full px-1 py-4  flex my-5 justify-between items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
+                      >
+                        <div className="flex justify-center items-center space-x-1 text-[16px] md:text-lg   border-r-2  text-center w-4/12 sm:w-3/12">
+                          <img
+                            src={
+                              request?.requestedBy?.profilePic ||
+                              "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                            }
+                            className="w-8 h-8 md:w-12 md:h-12 border border-black rounded-full"
+                            loading="lazy"
+                            alt=""
+                          />
+                          <div className="pl-1">
+                            <p className="text-start text-[15px] font-bold capitalize md:pt-0">
+                              {request?.requestedBy?.name?.firstName}{" "}
+                              {request?.requestedBy?.name?.lastName}
+                            </p>
+                            <p className="text-start text-[14px]">
+                              {request?.requestedBy?.role}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="capitalize text-[16px] md:text-[18px] border-r-2  text-center sm:w-4/12">
+                          {tasks[selectedIndex]?.details.slice(0, 20)}
+                        </div>
+                        <div className="text-[16px] md:text-lg   border-r-2  text-center w-2/12 sm:w-2/12 ">
+                          <button className="border border-blue-500 bg-blue-200 text-blue-600 py-1 px-3 rounded-lg text-sm">
+                            In Progress
+                          </button>
+                        </div>
 
-              <div className="flex justify-center xs:space-x-2 items-center text-[16px] md:text-lg   w-2/12 sm:w-3/12 ">
-                <CiEdit className="text-3xl text-blue-500" />
-                <LuTrash2 className="text-xl text-red-500" />
-              </div>
+                        <div className="flex justify-center xs:space-x-2 items-center text-[16px] md:text-lg   w-2/12 sm:w-3/12 ">
+                          <CiEdit onClick={(e)=>handleUpdateStatusDone(e,i)} className="text-3xl text-blue-500" />
+                          <LuTrash2 onClick={()=>deleteMember(request?._id)} className="text-xl text-red-500" />
+                        </div>
+                      </div>
+                    )
+                )}
+             
             </div>
-          ))}
-          {/* {showWalletForm && (
-            <form onSubmit={handleSubmit} className="w-[500px]">
-              <PaymentElement />
-              <button disabled={!stripe}>Submit</button>
-              {errorMessage && <div>{errorMessage}</div>}
-            </form>
-          )} */}
-        </div>
-        {/* task join request */}
-        <div className=" gray600 space-y-6 w-12/12 md:w-full">
-          <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
-            REQUESTS 2
-          </h1>
-          <div className="w-full py-4 flex my-5  items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
-            <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-4/12 sm:w-3/12 ">
-              From
-            </div>
+            {/* task join request */}
+            <div className=" gray600 space-y-6 w-12/12 md:w-full">
+              <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
+                REQUESTS 2
+              </h1>
+              <div className="w-full py-4 flex my-5  items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
+                <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-4/12 sm:w-3/12 ">
+                  From
+                </div>
 
-            <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-2/12 sm:w-7/12 ">
-              Details
-            </div>
+                <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-2/12 sm:w-7/12 ">
+                  Details
+                </div>
 
-            <div className="text-[15px]  md:text-[21px] w-3/12 sm:w-2/12">
-              <p className="font-semibold text-center ">Action</p>
-            </div>
-          </div>
-          {/* table */}
-          {member.map((request, i) => (
-            <div
-              key={i}
-              className="w-full px-1 py-4  flex my-5 justify-between items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
-            >
-              <div className="flex justify-center items-center space-x-1 text-[16px] md:text-lg   border-r-2  text-center w-4/12 sm:w-3/12">
-                <img
-                  src={
-                    request?.profileImagec ||
-                    "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
-                  }
-                  className="w-8 h-8 md:w-10 md:h-10 border border-black rounded-full"
-                  loading="lazy"
-                  alt=""
-                />
-                <div className="pl-1">
-                  <p className="text-start text-[17px] font-bold capitalize md:pt-0">
-                    {request?.name}
-                  </p>
+                <div className="text-[15px]  md:text-[21px] w-3/12 sm:w-2/12">
+                  <p className="font-semibold text-center ">Action</p>
                 </div>
               </div>
-              <div className="capitalize text-[16px] border-r-2  text-start sm:w-7/12">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde
-                pariatur modi delectus ...
-              </div>
 
-              <div className="flex justify-center xs:space-x-2 items-center text-[16px] md:text-lg   w-2/12 sm:w-2/12 ">
-                <CiEdit className="text-3xl text-blue-500" />
-                <LuTrash2 className="text-xl text-red-500" />
-              </div>
+              {/* table */}
             </div>
-          ))}
-        </div>
+
+            {req
+              ?.filter((request) =>
+                request.tasks.some(
+                  (task) => task.title === tasks[selectedIndex]?.title
+                )
+              )
+              .map(
+                (filteredRequest, i) =>
+                  filteredRequest && (
+                    <div
+                      key={i}
+                      className="w-full px-1 py-4 flex my-5 justify-between items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
+                    >
+                      <div className="flex justify-center items-center space-x-1 text-[16px] md:text-lg border-r-2 text-center w-4/12 sm:w-3/12">
+                        <img
+                          src={
+                            filteredRequest.profileImagec ||
+                            "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                          }
+                          className="w-8 h-8 md:w-10 md:h-10 border border-black rounded-full"
+                          loading="lazy"
+                          alt=""
+                        />
+                        <div className="pl-1">
+                          <p className="text-start text-[17px] font-bold capitalize md:pt-0">
+                            {filteredRequest.requestedBy?.name?.firstName}{" "}
+                            {filteredRequest.requestedBy?.name?.lastName}
+                          </p>
+                        </div>
+                      </div>
+                      <p>{tasks[selectedIndex]?.details.slice(0, 90)}...</p>
+                      {/* <div
+          className=""
+          dangerouslySetInnerHTML={{
+            __html: filteredRequest?.details?.slice(0, 100) || '',
+          }}
+        />  */}
+
+                      <div className="flex justify-center xs:space-x-2 items-center text-[16px] md:text-lg w-2/12 sm:w-2/12 ">
+                        <CiEdit className="text-3xl text-blue-500" />
+                        <LuTrash2 className="text-xl text-red-500" />
+                      </div>
+                    </div>
+                  )
+              )}
+          </>
+        )}
         {/* activity log */}
         <div className="p-6 bg-gray-100 rounded-md">
           <div className="flex justify-between items-center mb-4">
@@ -586,18 +795,7 @@ const GeneralProjectDetails = () => {
               </button>
             </div>
           </div>
-          {/* <table className="w-full table-auto bg-white shadow-md rounded-md"> */}
-          {/* <thead>
-              <tr className="bg-gray-50">
-                <th className="px-4 py-2 text-left text-gray-600">Serial.No</th>
-                <th className="px-4 py-2 text-left text-gray-600">Name</th>
-                <th className="px-4 py-2 text-left text-gray-600">Message</th>
-                <th className="px-4 py-2 text-left text-gray-600">Media</th>
-                <th className="px-4 py-2 text-left text-gray-600">Link</th>
-                <th className="px-4 py-2 text-left text-gray-600">Date</th>
-                <th className="px-4 py-2 text-left text-gray-600">Action</th>
-              </tr>
-            </thead> */}
+
           <div className="w-full py-4 flex my-5  items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
             <div className="text-[15px] md:text-[16px]  font-semibold border-r-2 text-center w-[100px]">
               Serial No.
@@ -823,7 +1021,7 @@ const GeneralProjectDetails = () => {
           {/* </table> */}
         </div>
         {/* for worker */}
-        <div className="p-6">
+        {/*  <div className="p-6">
           <h3 className="text-lg font-semibold text-gray-700 mb-2">
             For Project Worker
           </h3>
@@ -939,7 +1137,7 @@ const GeneralProjectDetails = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

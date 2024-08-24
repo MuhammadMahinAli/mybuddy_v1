@@ -1,6 +1,6 @@
 // src/app/modules/projectJoinRequest/projectJoinRequest.routes.js
 import express from "express";
-import { createNewProjectJoinRequest, deleteProjectByRequestedBy, getAllProjectJoinRequests, getProjectRequestedBy, getProjectRequestedTo, updateProjectJoinRequestStatus } from "./projectJoinRequest.controller.js";
+import { createNewProjectJoinRequest, deleteProjectByRequestedBy, getAcceptedProjectRequestedTo, getAllProjectJoinRequests, getProjectRequestedBy, getProjectRequestedTo, updateProjectJoinRequestStatus } from "./projectJoinRequest.controller.js";
 import { validateRequest } from "../../middlewars/validateRequest.js";
 import { createProjectJoinRequestZodSchema, updateStatusZodSchema } from "./projectJoinRequest.validation.js";
 
@@ -10,6 +10,7 @@ router.post("/create-new",  validateRequest(createProjectJoinRequestZodSchema), 
 router.get("/getAll", getAllProjectJoinRequests);
 router.get("/Pending/getProjectOfRequestBy/:id", getProjectRequestedBy);
 router.get("/Pending/getProjectOfRequestTo/:id", getProjectRequestedTo);
+router.get("/Accepted/getProjectOfRequestTo/:id", getAcceptedProjectRequestedTo);
 router.delete("/deleteRequest/:id", deleteProjectByRequestedBy);
 router.put("/updateStatus/:id",updateProjectJoinRequestStatus);
 

@@ -1,22 +1,26 @@
 import { Project } from "./project.model.js";
-import httpStatus from "http-status";import { ApiError } from "../../../handleError/apiError.js"
+import httpStatus from "http-status";
+import { ApiError } from "../../../handleError/apiError.js";
 import { Task } from "../task/task.model.js";
 
 // ************** create project
 
-export const createProject = async(postData) => {
-   try {
-      const result = await Project.create(postData);
-      console.log(result);
-     
-      if (!result) {
-        throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create post");
-      }
-      return result;
-   } catch (error) {
-      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
-   }
-  };
+export const createProject = async (postData) => {
+  try {
+    const result = await Project.create(postData);
+    console.log(result);
+
+    if (!result) {
+      throw new ApiError(
+        httpStatus.INTERNAL_SERVER_ERROR,
+        "Failed to create post"
+      );
+    }
+    return result;
+  } catch (error) {
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
+  }
+};
 
 // export const createProject = async (data) => {
 //   try {
@@ -46,40 +50,90 @@ export const createProject = async(postData) => {
 // };
 // ************** get projects  01815000012
 export const getProjectsService = async (project) => {
-   const projects = await Project.find({project}).populate("user").populate("tasks").sort({ createdAt: -1 });
-   return projects;
-}
+  const projects = await Project.find({ project })
+    .populate("user")
+    .populate("tasks")
+    .sort({ createdAt: -1 });
+  return projects;
+};
 
 export const getProjectByUserService = async (id) => {
-   const projectByUser = await Project.find({user: id}).populate("user").populate("tasks").sort({ createdAt: -1 });
-   return projectByUser;
- };
+  const projectByUser = await Project.find({ user: id })
+    .populate("user")
+    .populate("tasks")
+    .sort({ createdAt: -1 });
+  return projectByUser;
+};
 
- // *************** getspecific project
- export const getSingleProjectService = async (id) => {
-   const project = await Project.findOne({_id: id}).populate("user").populate("tasks");
-   return project;
- };
+// *************** getspecific project
+export const getSingleProjectService = async (id) => {
+  const project = await Project.findOne({ _id: id })
+    .populate("user")
+    .populate("tasks");
+  return project;
+};
 
- export const updateTaskStatusPositional = async (projectId, taskTitle, newStatus) => {
-   try {
-     const project = await Project.findOneAndUpdate(
-       { _id: projectId, "tasks.title": taskTitle },
-       { $set: { "tasks.$.status": newStatus } },
-       { new: true }
-     );
- 
-     if (!project) {
-       throw new ApiError(httpStatus.NOT_FOUND, "Project or task not found.");
-     }
- 
-     return project;
-   } catch (error) {
-     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
-   }
- };
+export const updateTaskStatusPositional = async (
+  projectId,
+  taskTitle,
+  newStatus
+) => {
+  try {
+    const project = await Project.findOneAndUpdate(
+      { _id: projectId, "tasks.title": taskTitle },
+      { $set: { "tasks.$.status": newStatus } },
+      { new: true }
+    );
 
- //------------------ post task in project
+    if (!project) {
+      throw new ApiError(httpStatus.NOT_FOUND, "Project or task not found.");
+    }
+
+    return project;
+  } catch (error) {
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
+  }
+};
+
+//----------------- delete project
+
+ export const deleteProjectService = async (id) => {
+  const result = await Project.findByIdAndDelete({_id: id});
+  return result;
+};
+//------------- delete task from project
+
+export const deleteTaskFromProjectService = async (taskId) => {
+  try {
+    // Find the project containing the task
+    const project = await Project.findOne({ "tasks._id": taskId });
+    if (!project) {
+      throw new Error("Project not found");
+    }
+
+    // Remove the task from the project's tasks array
+    project.tasks = project.tasks.filter((task) => task._id.toString() !== taskId);
+    await project.save();
+
+    return project;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+
+
+
+//----------Update project
+export const updateProjectService = async (id, updateData) => {
+  const updatedProject = await Project.findByIdAndUpdate(id, updateData, { new: true });
+  if (!updatedProject) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  }
+  return updatedProject;
+};
+
+//------------------ post task in project
 
 // export const addTaskToProjectService = async (projectId, taskData) => {
 //   const project = await Project.findById(projectId);
@@ -91,29 +145,27 @@ export const getProjectByUserService = async (id) => {
 //   return project;
 // };
 
-export const addTaskToProjectService = async (projectId, task) => {
+export const addTaskToProjectService = async (id, data) => {
   try {
-    const project = await Project.findById(projectId);
+    const project = await Project.findById(id);
+    console.log('pp',id);
     if (!project) {
       throw new Error("Project not found");
     }
-console.log(project);
-    // Add the new task to the project's tasks array
-    project.tasks.push(task);
-    await project.save();
 
+    project.tasks.push(data);
+    await project.save();
     return project;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-
 //  export const updateTaskStatus = async(projectId, data)=>{
 //    try{
 // const project = await Project.findById(projectId);
 // if(!project){
-//    throw new ApiError(httpStatus.NOT_FOUND, "Project is not found.") 
+//    throw new ApiError(httpStatus.NOT_FOUND, "Project is not found.")
 // }
 // const updatedStatus = await Project.findByIdAndUpdate(
 //    projectId,
@@ -129,4 +181,4 @@ console.log(project);
 //    catch(error){
 // throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
 //    }
- //}
+//}

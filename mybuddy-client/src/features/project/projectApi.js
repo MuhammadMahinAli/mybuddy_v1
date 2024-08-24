@@ -13,13 +13,21 @@ export const projectApi = apiSlice.injectEndpoints({
      invalidateTags: ["Project"],
     }),
     createNewTask: builder.mutation({
-      query: (data) => ({
-        url: "/project/create-task",
+      query: ({id,data}) => ({
+        url: `/project/create-task/${id}`,
         method: "POST",
         body: data,
       }),
      invalidateTags: ["Project"],
     }),
+    deleteTask: builder.mutation({
+      query: (taskId) => ({
+        url: `/project/delete-task/${taskId}`,
+        method: "DELETE",
+      }),
+      invalidateTags: ["Project"],
+    }),
+    
     
     getAllProject: builder.query({
       query: () => ({
@@ -35,11 +43,24 @@ export const projectApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Project"],
     }),
-    
-   
+    deleteProject: builder.mutation({
+      query: (id) => ({
+        url: `/project/deleteProject/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Project"],
+    }),
+    updateProjectInfo: builder.mutation({
+      query: ({id, data}) => ({
+        url: `/project/updateProject/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidateTags: ["Project"],
+    }),
   }),
 });
 
- export const {useCreateNewProjectMutation, useCreateNewTaskMutation , useGetAllProjectQuery, useGetAllProjectByUserQuery } = projectApi;
+ export const {useUpdateProjectInfoMutation, useCreateNewProjectMutation, useCreateNewTaskMutation , useGetAllProjectQuery, useGetAllProjectByUserQuery,useDeleteProjectMutation, useDeleteTaskMutation } = projectApi;
 
 // useGetAllPostQuery

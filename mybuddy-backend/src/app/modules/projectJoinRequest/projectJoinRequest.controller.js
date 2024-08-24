@@ -1,7 +1,7 @@
 // src/app/modules/projectJoinRequest/projectJoinRequest.controller.js
 import httpStatus from 'http-status';
 import { catchAsync } from '../../../utils/catchAsync.js';
-import { createProjectJoinRequestService, deleteProjectByRequestedByService, getAllProjectJoinRequestsService,getProjectByRequestedByService, getProjectByRequestedToService, updateProjectJoinRequestStatusService } from './projectJoinRequest.service.js';
+import { createProjectJoinRequestService, deleteProjectByRequestedByService, getAcceptedProjectByRequestedToService, getAllProjectJoinRequestsService,getProjectByRequestedByService, getProjectByRequestedToService, updateProjectJoinRequestStatusService } from './projectJoinRequest.service.js';
 import { sendResponse } from '../../../utils/sendResponse.js';
 
 export const createNewProjectJoinRequest = catchAsync(async (req, res, next) => {
@@ -53,17 +53,22 @@ export const getProjectRequestedBy = catchAsync(async (req, res) => {
   });
 });
 
-//  get project join requested to
+//  get pending project join requested to
 export const getProjectRequestedTo = catchAsync(async (req, res) => {
   const { id } = req.params;
-  //const status = "Pending"; // Enforce "Pending" status
-  
   const projectJoinRequests = await getProjectByRequestedToService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Pending project join request by requested to retrieved successfully!",
+    data: projectJoinRequests,
+  });
+});
 
-  // if (projectJoinRequests.length === 0) {
-  //   throw new ApiError(httpStatus.NOT_FOUND, "No pending project join request found with the given id");
-  // }
-
+//  get accepted project join requested to
+export const getAcceptedProjectRequestedTo = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const projectJoinRequests = await getAcceptedProjectByRequestedToService(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

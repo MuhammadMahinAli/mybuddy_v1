@@ -54,13 +54,19 @@ export const getProjectByRequestedByService = async (id) => {
    return projectByRequestedBy;
  };
 
-// ***************** get send request by requestedTo
+// ***************** get pending send request by requestedTo
 export const getProjectByRequestedToService = async (id) => {
    const projectByRequestedTo = await ProjectJoinRequest.find({requestedTo: id}).find({ status: "Pending" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
    return projectByRequestedTo;
  };
+// ***************** get accepted send request by requestedTo
+export const getAcceptedProjectByRequestedToService = async (id) => {
+   const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({requestedTo: id}).find({ status: "Accepted" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+   return acceptedProjectByRequestedTo;
+ };
 
  // *******delete request
+
 export const deleteProjectByRequestedByService = async (id) => {
    const result = await ProjectJoinRequest.findByIdAndDelete({_id: id});
    return result;
@@ -78,7 +84,7 @@ export const updateProjectJoinRequestStatusService = async (id, status) => {
    return projectJoinRequest;
   };
 
-  // src/services/stripeService.js
+ 
 
 
-// src/services/stripeService.js
+

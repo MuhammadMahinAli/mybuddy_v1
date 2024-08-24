@@ -1,5 +1,10 @@
 // src/app/modules/projectJoinRequest/projectJoinRequest.validation.js
 import { z } from "zod";
+const StatusEnum = z.enum(["pending", "declined", "completed","accepted","done"]);
+const SubTaskSchema = z.object({
+   todo: z.string().optional(),
+   status: StatusEnum,
+ });
 
 export const createProjectJoinRequestZodSchema = z.object({
 body:z.object({
@@ -25,7 +30,7 @@ body:z.object({
         status: z.string(), 
         startDate: z.string(), 
         endDate: z.string(), 
-        subTask: z.array(z.string())
+        subTask:z.array(SubTaskSchema).optional(),
       })
     ).optional(),
   })

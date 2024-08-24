@@ -21,7 +21,7 @@ const ProjectJoinRequestSchema = new Schema(
     status: {
       type: String,
       required: true,
-      enum: ["Pending", "Accepted", "Rejected","Cancelled"],
+      enum: ["Pending", "Declined", "Completed","Accepted","Done"],
     },
     tasks: [
       {
@@ -49,7 +49,12 @@ const ProjectJoinRequestSchema = new Schema(
         endDate: {
           type: String,
         },
-        subTask: [{ type: String }],
+        subTask: [
+          {
+            todo: { type: String },
+            status: { type: String, default: "pending" },
+          },
+        ],
       },
     ],
   },

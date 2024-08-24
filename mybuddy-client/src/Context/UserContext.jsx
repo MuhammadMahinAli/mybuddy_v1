@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useGetAllUsersQuery, useGetSingleUserQuery, useUpdateCoverPicMutation, useUpdateProfilePicMutation, useUpdateUserInfoMutation } from "../features/auth/authApi";
 import { useSelector } from "react-redux";
 import { useGetSingleUserPostQuery } from "../features/post/postApi";
-import { useCreateNewTaskMutation, useGetAllProjectByUserQuery } from "../features/project/projectApi";
+import { useCreateNewTaskMutation, useDeleteProjectMutation, useDeleteTaskMutation, useGetAllProjectByUserQuery, useUpdateProjectInfoMutation } from "../features/project/projectApi";
 import {
   useAddSkillsMutation,
   useGetSingleUserSkillQuery,
@@ -24,7 +24,7 @@ import {
   useGetUserExperienceQuery,
   useUpdateExperienceMutation,
 } from "../features/experience/experienceApi";
-import { useGetAllProjectByRequestedByQuery, useGetAllProjectByRequestedToQuery } from "../features/projectJoinRequest/projectJoinRequestApi";
+import { useDeleteProjectByRequestedByMutation, useGetAllAcceptedProjectByRequestedToQuery, useGetAllProjectByRequestedByQuery, useGetAllProjectByRequestedToQuery } from "../features/projectJoinRequest/projectJoinRequestApi";
 import { useCreateNewRequestMutation, useGetAcceptedFriendRequestQuery, useGetFriendRequestQuery } from "../features/friend/friendApi";
 
 export const AuthContext = createContext();
@@ -113,6 +113,10 @@ const UserContext = ({ children }) => {
   //------------- get recieve project request
   const { data: allRecieveRequest, isLoading: isFetchingRecievePJRequest, error: recievePJError} =
     useGetAllProjectByRequestedToQuery(userId, { skip: !userId });
+
+  //------------- get accepted recieve project request
+  const { data: allAcceptedRecieveRequest, isLoading: isFetchingAcceptedRecievePJRequest, error: recieveAcceptedPJError} =
+  useGetAllAcceptedProjectByRequestedToQuery(userId, { skip: !userId });
 
 
 
@@ -218,9 +222,39 @@ const UserContext = ({ children }) => {
     { isUpdateUserInfoLoading, error: responseUpdateUserInfoError },
   ] = useUpdateUserInfoMutation();
 
+
+  //---------- update project
+
+    // ---------- update user experience
+    const [
+      updateProjectInfo,
+      { isUpdateProjectLoading, error: responseUpdateProjectError },
+    ] = useUpdateProjectInfoMutation();
+
   //************************************************************************************************************** */
   //********************************************     DELETE   ******************************************************* */
   //************************************************************************************************************** */
+
+  //------------- delete project
+  
+    const [
+      deleteProject,
+      { isdeletingProjectLoading, error: repsponseDeleteProjectError },
+    ] = useDeleteProjectMutation();
+
+  //------------- delete task
+  
+    const [
+      deleteTask,
+      { isDeleteTaskLoading, error: repsponseDeleteTaskError },
+    ] = useDeleteTaskMutation();
+
+  //------------- delete team member
+  
+    const [
+      deleteTeamMember,
+      { isDeleteTeamMemberLoading, error: repsponseDeleteTeamMemberError },
+    ] = useDeleteProjectByRequestedByMutation();
 
   //************************************************************************************************************** */
   //********************************************    FETCH DATA   ************************************************* */
@@ -245,6 +279,7 @@ const UserContext = ({ children }) => {
       isFetchingExperience ||
       isFatchingAddExperience ||
       isUpdateExperienceLoading ||
+      isUpdateProjectLoading ||
       isUpdateCoverPicLoading ||
       isUpdateUserInfoLoading ||
       isUpdateProfilePicLoading ||
@@ -252,7 +287,10 @@ const UserContext = ({ children }) => {
       isFetchingRecievePJRequest ||
       isFatchingCreateNewRequest ||
       isFetchingGetFriendRequest ||
-      isFetchingAcceptedFriendRequest 
+      isFetchingAcceptedFriendRequest ||
+      isdeletingProjectLoading||
+      isDeleteTaskLoading ||
+      isDeleteTeamMemberLoading
     ) {
       setLoading(true);
     } else {
@@ -264,6 +302,7 @@ const UserContext = ({ children }) => {
     isFetchingAllUsers,
     isFetchingPost,
     isFetchingProject,
+    isFetchingAcceptedRecievePJRequest,
     isFetchingSkill,
     isFatchingAddSkill,
     isFatchingAddsocialInfo,
@@ -275,12 +314,16 @@ const UserContext = ({ children }) => {
     isUpdateExperienceLoading,
     isUpdateCoverPicLoading,
     isUpdateProfilePicLoading,
+    isUpdateProjectLoading,
     isUpdateUserInfoLoading,
     isFetchingSentPJRequest,
     isFetchingRecievePJRequest,
     isFatchingCreateNewRequest,
     isFetchingGetFriendRequest,
-    isFetchingAcceptedFriendRequest
+    isFetchingAcceptedFriendRequest,
+    isdeletingProjectLoading,
+    isDeleteTaskLoading,
+    isDeleteTeamMemberLoading
   ]);
 
   //************************************************************************************************************** */
@@ -294,11 +337,13 @@ const UserContext = ({ children }) => {
       allUserError ||
       postError ||
       projectError ||
+      recieveAcceptedPJError||
       skillError ||
       addsocialInfoError ||
       socialInfoError ||
       responseUpdateSkillError ||
       responseUpdateSocialInfoError ||
+      isFetchingAcceptedRecievePJRequest ||
       responseUpdateLicenseError ||
       addLicenseError ||
       licenseError ||
@@ -308,10 +353,13 @@ const UserContext = ({ children }) => {
       responseUpdateCoverPicError ||
       responseUpdateProfilePicError ||
       responseUpdateUserInfoError ||
+      responseUpdateProjectError ||
       recievePJError ||
       createNewRequestError ||
       getFriendRequestError ||
-      acceptedFriendRequestError
+      acceptedFriendRequestError||
+      repsponseDeleteTaskError ||
+      repsponseDeleteTeamMemberError
     ) {
       console.error("Error fetching user data:", {
         userError,
@@ -319,6 +367,7 @@ const UserContext = ({ children }) => {
         allUserError,
         postError,
         projectError,
+        recieveAcceptedPJError,
         skillError,
         addSkillError,
         getSingleUserSocialInfo,
@@ -326,6 +375,7 @@ const UserContext = ({ children }) => {
         responseUpdateSocialInfoError,
         responseUpdateLicenseError,
         addLicenseError,
+        responseUpdateProjectError,
         licenseError,
         experienceError,
         addExperienceError,
@@ -337,7 +387,10 @@ const UserContext = ({ children }) => {
         recievePJError,
         createNewRequestError,
         getFriendRequestError,
-        acceptedFriendRequestError
+        acceptedFriendRequestError,
+        repsponseDeleteProjectError,
+        repsponseDeleteTaskError,
+        repsponseDeleteTeamMemberError
       });
     }
   }, [
@@ -346,6 +399,7 @@ const UserContext = ({ children }) => {
     allUserError,
     postError,
     projectError,
+    recieveAcceptedPJError,
     skillError,
     addsocialInfoError,
     socialInfoError,
@@ -364,7 +418,10 @@ const UserContext = ({ children }) => {
     recievePJError,
     createNewRequestError,
     getFriendRequestError,
-    acceptedFriendRequestError
+    acceptedFriendRequestError,
+    repsponseDeleteProjectError,
+    repsponseDeleteTaskError,
+    repsponseDeleteTeamMemberError
   ]);
 
   //************************************************************************************************************** */
@@ -382,6 +439,7 @@ const UserContext = ({ children }) => {
     singleUser,
     getUserPost,
     getAllProjectByUser,
+    allAcceptedRecieveRequest,
     getAllSkillByUser,
     isFetchingSkill,
     addSkills,
@@ -395,6 +453,7 @@ const UserContext = ({ children }) => {
     getUserExperience,
     addExperience,
     updateExperience,
+    updateProjectInfo,
     updateCoverPic,
     updateProfilePic,
     updateUserInfo,
@@ -403,7 +462,10 @@ const UserContext = ({ children }) => {
     createNewRequest,
     getFriendRequest,
     getAcceptedFriendRequest,
-    isFatchingCreateNewRequest
+    isFatchingCreateNewRequest,
+    deleteProject,
+    deleteTask,
+    deleteTeamMember
   };
 
   return (

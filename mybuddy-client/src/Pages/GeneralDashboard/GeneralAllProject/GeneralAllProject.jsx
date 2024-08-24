@@ -7,6 +7,7 @@ import filter from "../../../assets/filter.png";
 import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import ProjectCard from "../GDashboard/ProjectCard";
 import { IoChevronDown } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const GeneralAllProject = () => {
   // const { getAllProjectByUser } = useContext(AuthContext);
@@ -123,7 +124,7 @@ const GeneralAllProject = () => {
       {projects?.length > 0 ? (
         <>
           <div
-            onClick={() => setShowAll(!showAll)}
+  
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
           >
             {visibleProjects.map((p, i) => (
@@ -169,13 +170,13 @@ const GeneralAllProject = () => {
                       }}
                     />
 
-                    <button
+                    <Link to={`/dashboard/details/${p._id}`}
                       className={`${i}
 
              w-full my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]`}
                     >
                       View More
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -103,7 +103,7 @@ const FindProject = ({
         status: "Pending",
         tasks: selectedTasks,
       };
-      console.log(data);
+      console.log("pro",data);
       createProjectJoinRequest(data);
     }
   };
@@ -150,6 +150,61 @@ const FindProject = ({
   if(isLoading){
     return <Loading/>
   }
+
+//   {
+//     "projectId": "66c6961b64ecba40aedd9a1d",
+//     "requestedBy": "668d10eb5bb2949bedffc34f",
+//     "requestedTo": "6695d0cdf7a393f4697fc845",
+//     "status": "Pending",
+//     "tasks": [
+//         {
+//             "title": "Research Management",
+//             "details": "As a researcher, I want to post my research with a title, description, and the ability to add team members.\nAs a researcher, I want to search for other researchers based on their skills and expertise.\n",
+//             "taskType": "free",
+//             "coin": "0",
+//             "priority": "high",
+//             "status": "pending",
+//             "startDate": "2024-09-11",
+//             "endDate": "2024-09-20",
+//             "subTask": [
+//                 {
+//                     "todo": "Use Redux for state management",
+//                     "status": "pending",
+//                     "_id": "66c6961b64ecba40aedd9a22"
+//                 },
+//                 {
+//                     "todo": "Add Researcher NID info while creating account.",
+//                     "status": "pending",
+//                     "_id": "66c6961b64ecba40aedd9a23"
+//                 }
+//             ],
+//             "_id": "66c6961b64ecba40aedd9a21"
+//         },
+//         {
+//             "title": "User Management",
+//             "details": "As a user, I want to register and create a profile so I can participate in the research community.\nAs a user, I want to edit my profile information (e.g., skills, research interests) to keep it up-to-date.\n",
+//             "taskType": "free",
+//             "coin": "0",
+//             "priority": "medium",
+//             "status": "complete",
+//             "startDate": "2024-08-30",
+//             "endDate": "2024-09-10",
+//             "subTask": [
+//                 {
+//                     "todo": "Neat  code of User management",
+//                     "status": "pending",
+//                     "_id": "66c6961b64ecba40aedd9a1f"
+//                 },
+//                 {
+//                     "todo": "User JWT",
+//                     "status": "pending",
+//                     "_id": "66c6961b64ecba40aedd9a20"
+//                 }
+//             ],
+//             "_id": "66c6961b64ecba40aedd9a1e"
+//         }
+//     ]
+// }
   return (
     <>
       <div className=" py-1 w-12/12 sm:w-full">
