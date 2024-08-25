@@ -9,6 +9,7 @@ import skillReducer from "../features/skill/skillSlice";
 import socialInfoReducer from "../features/social-info/socialInfoSlice"
 import licenseReducer from "../features/license/licenseSlice";
 import experienceReducer from "../features/experience/experienceSlice"
+import commitReducer from "../features/commit/commitSlice"
 
 
 export const store = configureStore({
@@ -23,6 +24,7 @@ export const store = configureStore({
     socialInfo:socialInfoReducer,
     license:licenseReducer,
     experience:experienceReducer,
+    commit:commitReducer,
 
    
   },

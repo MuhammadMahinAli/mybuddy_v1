@@ -64,6 +64,16 @@ export const getAcceptedProjectByRequestedToService = async (id) => {
    const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({requestedTo: id}).find({ status: "Accepted" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
    return acceptedProjectByRequestedTo;
  };
+// ***************** get accepted project team member
+export const getAcceptedProjectTeamMemberService = async (id) => {
+   const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({projectId : id}).find({ status: "Accepted" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+   return acceptedProjectByRequestedTo;
+ };
+// ***************** get accepted send request by requestedBy
+export const getAcceptedProjectByRequestedByService = async (id) => {
+   const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({requestedBy: id}).find({ status: "Accepted" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+   return acceptedProjectByRequestedTo;
+ };
 
  // *******delete request
 
@@ -72,7 +82,7 @@ export const deleteProjectByRequestedByService = async (id) => {
    return result;
  };
  
- //
+ //------------- update status
 
 export const updateProjectJoinRequestStatusService = async (id, status) => {
    const projectJoinRequest = await ProjectJoinRequest.findById({_id:id});

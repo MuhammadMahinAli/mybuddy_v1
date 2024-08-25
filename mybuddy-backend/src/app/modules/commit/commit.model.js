@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 
 const CommitSchema = new Schema(
   {
-    user: {
+    commitBy: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Member",
@@ -12,19 +12,23 @@ const CommitSchema = new Schema(
       required: true,
       ref: "Project",
     },
-    task: {
-      type: String,
-    },
     message: {
       type: String,
       required: true,
     },
-    media: [
-      {
-        type: String,
-      },
-    ],
+    media: {
+      type: String,
+    },
+
     externalLink: {
+      type: String,
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: ["Pending", "Declined", "Approved"],
+    },
+    declineMessage: {
       type: String,
     },
   },

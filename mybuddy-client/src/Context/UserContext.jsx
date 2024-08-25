@@ -24,8 +24,9 @@ import {
   useGetUserExperienceQuery,
   useUpdateExperienceMutation,
 } from "../features/experience/experienceApi";
-import { useDeleteProjectByRequestedByMutation, useGetAllAcceptedProjectByRequestedToQuery, useGetAllProjectByRequestedByQuery, useGetAllProjectByRequestedToQuery } from "../features/projectJoinRequest/projectJoinRequestApi";
+import { useDeleteProjectByRequestedByMutation, useGetAllAcceptedProjectByRequestedByQuery, useGetAllAcceptedProjectByRequestedToQuery, useGetAllProjectByRequestedByQuery, useGetAllProjectByRequestedToQuery } from "../features/projectJoinRequest/projectJoinRequestApi";
 import { useCreateNewRequestMutation, useGetAcceptedFriendRequestQuery, useGetFriendRequestQuery } from "../features/friend/friendApi";
+import { useCreateCommitMutation, useGetAllCommitQuery } from "../features/commit/commitApi";
 
 export const AuthContext = createContext();
 
@@ -114,9 +115,14 @@ const UserContext = ({ children }) => {
   const { data: allRecieveRequest, isLoading: isFetchingRecievePJRequest, error: recievePJError} =
     useGetAllProjectByRequestedToQuery(userId, { skip: !userId });
 
-  //------------- get accepted recieve project request
+  //------------- get accepted recieve project request to
   const { data: allAcceptedRecieveRequest, isLoading: isFetchingAcceptedRecievePJRequest, error: recieveAcceptedPJError} =
   useGetAllAcceptedProjectByRequestedToQuery(userId, { skip: !userId });
+
+
+  //------------- get accepted recieve project request by
+  const { data: allAcceptedSentRequest, isLoading: isFetchingAcceptedSentPJRequest, error: sentAcceptedPJError} =
+  useGetAllAcceptedProjectByRequestedByQuery(userId, { skip: !userId });
 
 
 
@@ -127,6 +133,10 @@ const UserContext = ({ children }) => {
   //------------- get pending friend request
   const { data: getAcceptedFriendRequest, isLoading: isFetchingAcceptedFriendRequest, error: acceptedFriendRequestError } =
   useGetAcceptedFriendRequestQuery(userId, { skip: !userId });
+
+  //------------- get pending friend request
+  const { data: getAllCommit, isLoading: isFetchingGetAllCommit, error: getAllCommitError } =
+ useGetAllCommitQuery(userId, { skip: !userId });
 
 
 
@@ -171,6 +181,12 @@ const UserContext = ({ children }) => {
     createNewRequest,
     { isFatchingCreateNewRequest, error: createNewRequestError },
   ] = useCreateNewRequestMutation();
+
+  //-------------- post commit
+  const [
+    createCommit,
+    { isFatchingCreateCommit, error: createCommitError },
+  ] = useCreateCommitMutation();
 
   //************************************************************************************************************** */
   //********************************************     PUT   ******************************************************* */
@@ -225,7 +241,6 @@ const UserContext = ({ children }) => {
 
   //---------- update project
 
-    // ---------- update user experience
     const [
       updateProjectInfo,
       { isUpdateProjectLoading, error: responseUpdateProjectError },
@@ -268,6 +283,7 @@ const UserContext = ({ children }) => {
       isFetchingPost ||
       isFetchingProject ||
       isFetchingSkill ||
+      isFatchingCreateCommit ||
       isFatchingAddSkill ||
       isFatchingAddsocialInfo ||
       isFetchingSocialInfo ||
@@ -281,6 +297,7 @@ const UserContext = ({ children }) => {
       isUpdateExperienceLoading ||
       isUpdateProjectLoading ||
       isUpdateCoverPicLoading ||
+      isFetchingGetAllCommit||
       isUpdateUserInfoLoading ||
       isUpdateProfilePicLoading ||
       isFetchingSentPJRequest ||
@@ -288,6 +305,7 @@ const UserContext = ({ children }) => {
       isFatchingCreateNewRequest ||
       isFetchingGetFriendRequest ||
       isFetchingAcceptedFriendRequest ||
+      isFetchingAcceptedSentPJRequest ||
       isdeletingProjectLoading||
       isDeleteTaskLoading ||
       isDeleteTeamMemberLoading
@@ -306,10 +324,12 @@ const UserContext = ({ children }) => {
     isFetchingSkill,
     isFatchingAddSkill,
     isFatchingAddsocialInfo,
+    isFatchingCreateCommit,
     isFetchingSocialInfo,
     isUpdateSocialInfoLoading,
     isUpdateSkillLoading,
     isFetchingExperience,
+    isFetchingGetAllCommit,
     isFatchingAddExperience,
     isUpdateExperienceLoading,
     isUpdateCoverPicLoading,
@@ -321,6 +341,7 @@ const UserContext = ({ children }) => {
     isFatchingCreateNewRequest,
     isFetchingGetFriendRequest,
     isFetchingAcceptedFriendRequest,
+    isFetchingAcceptedSentPJRequest,
     isdeletingProjectLoading,
     isDeleteTaskLoading,
     isDeleteTeamMemberLoading
@@ -344,10 +365,13 @@ const UserContext = ({ children }) => {
       responseUpdateSkillError ||
       responseUpdateSocialInfoError ||
       isFetchingAcceptedRecievePJRequest ||
+      sentAcceptedPJError||
       responseUpdateLicenseError ||
       addLicenseError ||
       licenseError ||
+      getAllCommitError ||
       experienceError ||
+      createCommitError||
       addExperienceError ||
       responseUpdateExperienceError ||
       responseUpdateCoverPicError ||
@@ -370,13 +394,16 @@ const UserContext = ({ children }) => {
         recieveAcceptedPJError,
         skillError,
         addSkillError,
+        createCommitError,
         getSingleUserSocialInfo,
         responseUpdateSkillError,
         responseUpdateSocialInfoError,
         responseUpdateLicenseError,
         addLicenseError,
         responseUpdateProjectError,
+        sentAcceptedPJError,
         licenseError,
+        getAllCommitError,
         experienceError,
         addExperienceError,
         responseUpdateExperienceError,
@@ -429,6 +456,7 @@ const UserContext = ({ children }) => {
   //************************************************************************************************************** */
 
   const shareableData = {
+    userId,
     loading,
     createNewTask,
     user,
@@ -440,6 +468,7 @@ const UserContext = ({ children }) => {
     getUserPost,
     getAllProjectByUser,
     allAcceptedRecieveRequest,
+    allAcceptedSentRequest,
     getAllSkillByUser,
     isFetchingSkill,
     addSkills,
@@ -451,10 +480,12 @@ const UserContext = ({ children }) => {
     updateLicense,
     getUserLicense,
     getUserExperience,
+    createCommit,
     addExperience,
     updateExperience,
     updateProjectInfo,
     updateCoverPic,
+    getAllCommit,
     updateProfilePic,
     updateUserInfo,
     allSentRequest,

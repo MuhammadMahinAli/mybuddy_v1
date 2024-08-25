@@ -40,6 +40,20 @@ export const projectJoinRequestApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["ProjectJoinRequest"],
     }),
+    getAllAcceptedProjectByRequestedBy: builder.query({
+      query: (id) => ({
+        url: `/project-join-request/Accepted/getProjectOfRequestBy/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["ProjectJoinRequest"],
+    }),
+    getAllAcceptedProjectTeamMember: builder.query({
+      query: (id) => ({
+        url: `/project-join-request/Accepted/team-member/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["ProjectJoinRequest"],
+    }),
 
     updateJoinRequestStatus: builder.mutation({
       query: ({id, data}) => ({
@@ -61,5 +75,5 @@ export const projectJoinRequestApi = apiSlice.injectEndpoints({
 });
 
  export const {useCreateProjectJoinRequestMutation,useGetAllProjectJoinRequestQuery,
-  useGetAllProjectByRequestedByQuery,useGetAllProjectByRequestedToQuery, useGetAllAcceptedProjectByRequestedToQuery, useDeleteProjectByRequestedByMutation,useUpdateJoinRequestStatusMutation} = projectJoinRequestApi;
+  useGetAllProjectByRequestedByQuery,useGetAllProjectByRequestedToQuery,useGetAllAcceptedProjectTeamMemberQuery,useGetAllAcceptedProjectByRequestedByQuery, useGetAllAcceptedProjectByRequestedToQuery, useDeleteProjectByRequestedByMutation,useUpdateJoinRequestStatusMutation} = projectJoinRequestApi;
 

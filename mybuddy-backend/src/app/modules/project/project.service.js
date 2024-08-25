@@ -161,24 +161,41 @@ export const addTaskToProjectService = async (id, data) => {
   }
 };
 
-//  export const updateTaskStatus = async(projectId, data)=>{
-//    try{
-// const project = await Project.findById(projectId);
-// if(!project){
-//    throw new ApiError(httpStatus.NOT_FOUND, "Project is not found.")
-// }
-// const updatedStatus = await Project.findByIdAndUpdate(
-//    projectId,
-//    {$set:{tasks.status : data.updatedStatus}},
-//    {new:true}
-// );
-// if(!updatedStatus){
-//    throw new ApiError(httpStatus.BAD_REQUEST, "Failed to update task status");
+// Service for updating task status
+export const updateTaskStatusService = async (projectId, taskId, status) => {
+  const project = await Project.findById(projectId);
+  if (!project) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Project not found");
+  }
 
-// }
-// return updatedStatus;
-//    }
-//    catch(error){
-// throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
-//    }
-//}
+  const task = project.tasks.id(taskId);
+  if (!task) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Task not found");
+  }
+
+  task.status = status;
+  await project.save();
+  return task;
+};
+
+// Service for updating subtask status
+export const updateSubTaskStatusService = async (projectId, taskId, subTaskId, status) => {
+  const project = await Project.findById(projectId);
+  if (!project) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Project not found");
+  }
+
+  const task = project.tasks.id(taskId);
+  if (!task) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Task not found");
+  }
+
+  const subTask = task.subTask.id(subTaskId);
+  if (!subTask) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Subtask not found");
+  }
+
+  subTask.status = status;
+  await project.save();
+  return subTask;
+};

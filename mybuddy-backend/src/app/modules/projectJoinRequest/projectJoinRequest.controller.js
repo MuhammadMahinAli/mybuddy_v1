@@ -1,7 +1,7 @@
 // src/app/modules/projectJoinRequest/projectJoinRequest.controller.js
 import httpStatus from 'http-status';
 import { catchAsync } from '../../../utils/catchAsync.js';
-import { createProjectJoinRequestService, deleteProjectByRequestedByService, getAcceptedProjectByRequestedToService, getAllProjectJoinRequestsService,getProjectByRequestedByService, getProjectByRequestedToService, updateProjectJoinRequestStatusService } from './projectJoinRequest.service.js';
+import { createProjectJoinRequestService, deleteProjectByRequestedByService, getAcceptedProjectByRequestedByService, getAcceptedProjectByRequestedToService, getAcceptedProjectTeamMemberService, getAllProjectJoinRequestsService,getProjectByRequestedByService, getProjectByRequestedToService, updateProjectJoinRequestStatusService } from './projectJoinRequest.service.js';
 import { sendResponse } from '../../../utils/sendResponse.js';
 
 export const createNewProjectJoinRequest = catchAsync(async (req, res, next) => {
@@ -73,6 +73,29 @@ export const getAcceptedProjectRequestedTo = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "Pending project join request by requested to retrieved successfully!",
+    data: projectJoinRequests,
+  });
+});
+
+//  get accepted project team member
+export const getAcceptedProjectTeamMemberController = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const projectJoinRequests = await getAcceptedProjectTeamMemberService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Project team member is retrieved successfully!",
+    data: projectJoinRequests,
+  });
+});
+//  get accepted project join requested by
+export const getAcceptedProjectRequestedBy = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const projectJoinRequests = await getAcceptedProjectByRequestedByService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Pending project join request by requested by retrieved successfully!",
     data: projectJoinRequests,
   });
 });

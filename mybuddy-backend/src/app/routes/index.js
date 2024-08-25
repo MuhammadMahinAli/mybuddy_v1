@@ -10,6 +10,7 @@ import { SingleMemberSocialInfoRoutes } from "../modules/socialInformation/socia
 import { SingleMemberSkillRoutes } from "../modules/skills/skills.routes.js";
 import { LicenseRoutes } from "../modules/licence/license.routes.js";
 import { ExperienceRoutes } from "../modules/experience/experience.routes.js";
+import { CommitRoutes } from "../modules/commit/commit.routes.js";
 
 
 const router = express.Router();
@@ -25,6 +26,7 @@ const moduleRoutes = [
     { path:"/skill", route:SingleMemberSkillRoutes},
     { path:"/license", route:LicenseRoutes},
     { path:"/experience", route:ExperienceRoutes},
+    { path:"/commit", route:CommitRoutes},
 
 ];
 

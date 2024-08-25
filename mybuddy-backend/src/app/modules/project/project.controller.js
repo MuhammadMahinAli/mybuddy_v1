@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import { catchAsync } from "../../../utils/catchAsync.js";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { addTaskToProjectService, createProject,deleteProjectService,deleteTaskFromProjectService,getProjectByUserService, getProjectsService, getSingleProjectService, updateProjectService } from "./project.service.js";
+import { addTaskToProjectService, createProject,deleteProjectService,deleteTaskFromProjectService,getProjectByUserService, getProjectsService, getSingleProjectService, updateProjectService, updateSubTaskStatusService, updateTaskStatusService } from "./project.service.js";
 
 
 // ************** create project
@@ -128,7 +128,35 @@ export const updateProjectController = catchAsync(async (req, res) => {
 });
 
 
+// Controller for updating task status
+export const updateTaskStatusController = catchAsync(async (req, res) => {
+  const { projectId, taskId } = req.params;
+  const { status } = req.body;
 
+  const updatedTask = await updateTaskStatusService(projectId, taskId, status);
+  
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Task status updated successfully",
+    data: updatedTask,
+  });
+});
+
+// Controller for updating subtask status
+export const updateSubTaskStatusController = catchAsync(async (req, res) => {
+  const { projectId, taskId, subTaskId } = req.params;
+  const { status } = req.body;
+
+  const updatedSubTask = await updateSubTaskStatusService(projectId, taskId, subTaskId, status);
+  
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Subtask status updated successfully",
+    data: updatedSubTask,
+  });
+});
 
 
 
