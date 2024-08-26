@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import { catchAsync } from "../../../utils/catchAsync.js";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { createCommitService, getAllCommitService, updateCommitStatusService } from "./commit.service.js";
+import { createCommitService, getAllCommitService, getCommitByProjectIdService, updateCommitStatusService } from "./commit.service.js";
 
 export const createCommitController = catchAsync(async (req, res, next) => {
     const data = req.body;
@@ -28,18 +28,17 @@ export const getAllCommitController = catchAsync(async (req, res) => {
     });
   });
 
-  // -------------------- update status
-// export const updateCommitStatusController = catchAsync(async (req, res) => {
-//     const { id } = req.params;
-//     const { status } = req.body;
-//     const updatedCommitStatus = await updateCommitStatusService(id, status);
-//     sendResponse(res, {
-//        statusCode: httpStatus.OK,
-//        success: true,
-//        message: "Commit status updated successfully",
-//        data: updatedCommitStatus,
-//     });
-//    });
+  // -------------------- get commit by project id
+export const getCommitByProjectController= catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const commits = await getCommitByProjectIdService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Commit by project is retrieved successfully!",
+    data: commits,
+  });
+});
 
 // controllers/commitController.js
 

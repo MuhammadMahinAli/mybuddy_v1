@@ -63,9 +63,17 @@ const {createNewTask} = useContext(AuthContext)
         subTask: [{ todo: "", status: "pending" }],
       });
     }
-
-    console.log("tew task",projectId, taskInput);
     createNewTask({ id: projectId, data: taskInput })
+    Swal.fire({
+      icon: "success",
+      title: "Task Created!",
+      text: "Your task has been created successfully.",
+      timer: 2500,
+      showConfirmButton: false,
+    })
+    setTimeout(() => {
+      window.location.reload();
+    }, 2500);
   };
 
   const handleTaskChange = (e) => {

@@ -14,8 +14,8 @@ router.get("/getProjectById/:id", getSingleProjectController);
 router.put('/updateProject/:id', updateProjectController);
 router.delete("/deleteProject/:id", deleteProjectController);
 router.delete("/delete-task/:taskId", deleteTaskFromProjectController);
-router.put("/projects/:projectId/tasks/:taskId/status", updateTaskStatusController);
-router.put("/projects/:projectId/tasks/:taskId/subtasks/:subTaskId/status", updateSubTaskStatusController);
+router.put("/:projectId/tasks/:taskId/status", updateTaskStatusController);
+router.put("/:projectId/tasks/:taskId/subtasks/:subTaskId/status", updateSubTaskStatusController);
 
 
 export const ProjectRoutes = router;

@@ -27,8 +27,15 @@ export const commitApi = apiSlice.injectEndpoints({
       }),
       invalidateTags: ["Commit"],
     }),
+    getCommitByProject: builder.query({
+      query: (id) => ({
+        url: `/commit/getCommitByProject/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Commit"],
+    }),
   }),
 });
 
- export const {useCreateCommitMutation, useGetAllCommitQuery, useUpdateCommitStatusMutation } = commitApi;
+ export const {useCreateCommitMutation, useGetAllCommitQuery, useUpdateCommitStatusMutation,useGetCommitByProjectQuery } = commitApi;
 

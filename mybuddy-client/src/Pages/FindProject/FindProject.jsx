@@ -116,7 +116,9 @@ const FindProject = ({
           title: "Well Done !!!",
           text: "Your request has been sent successfully!",
         });
-      
+        setTimeout(() => {
+          window.location.reload();
+        }, 2500);
 
     } else if (responseError?.data) {
      // console.log("Response Error:", responseError.data)

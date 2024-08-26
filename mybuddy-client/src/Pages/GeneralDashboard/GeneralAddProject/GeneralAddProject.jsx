@@ -97,7 +97,7 @@ const GeneralAddProject = ({ closeModal }) => {
       });
       return;
     }
-    if (pdfFiles?.length === 0 && documents?.length === 0) {
+    if (pdfFiles?.length === 0 || documents?.length === 0) {
       Swal.fire({
         icon: "warning",
         title: "Oops !",

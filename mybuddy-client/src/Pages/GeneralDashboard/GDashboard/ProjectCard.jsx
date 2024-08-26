@@ -5,7 +5,7 @@ const ProjectCard = ({ p, i }) => {
     >
       <div className="flex justify-center items-center h-[90px] ssm:h-[190px] md:h-[140px] xl:h-[180px] rounded-[25px] bg-[#DCE2EA] shadow-[0px_1px_2px_rgba(0,_0,_0,_0.25),_-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)]">
         <img
-          src={p.images[0]}
+          src={p?.images[0]}
           className="rounded-2xl h-[90px] ssm:h-[190px] md:h-[140px] xl:h-[180px] w-full object-cover"
         />
       </div>
@@ -13,20 +13,20 @@ const ProjectCard = ({ p, i }) => {
       <div className="px-2 xs-2 ssm:pt-1 lg:pt-0 3xl:pt-6 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">
         <p className="text-lg 3xl:text-[22px] graish font-bold py-0 xs:py-3">
           {" "}
-          {p.projectName.slice(0, 4)}..
+          {p?.projectName.slice(0, 4)}..
         </p>
 
         <p className="hidden lg:hidden text-xl 3xl:text-[22px] graish font-bold py-2 xs:py-3">
           {p?.projectName.length > 10
-            ? `${p.projectName.slice(0, 7)}...`
-            : p.projectName}
+            ? `${p?.projectName.slice(0, 7)}...`
+            : p?.projectName}
         </p>
         <p className="hidden lg:block 2xl:hidden text-xl 3xl:text-[22px] graish font-bold py-0 xs:py-3 xl:py-0">
           {p?.projectName.slice(0, 7)}...
         </p>
 
         <p className="hidden 2xl:block text-xl 3xl:text-[22px] graish font-bold py-0">
-          {p.projectName}
+          {p?.projectName}
         </p>
 
         <div
@@ -48,7 +48,7 @@ const ProjectCard = ({ p, i }) => {
           }}
         />
         <p className="pb-2 text-[14px] lg:text-[15px] xl:text-xl graish">
-          {p.des}
+          {p?.des}
         </p>
         <button
           className={`${i}

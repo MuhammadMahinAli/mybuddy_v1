@@ -60,8 +60,8 @@ export const projectApi = apiSlice.injectEndpoints({
     }),
     updateTaskStatus: builder.mutation({
       query: ({ projectId, taskId, status }) => ({
-        url: `/projects/${projectId}/tasks/${taskId}/status`,
-        method: "PATCH",
+        url: `/project/${projectId}/tasks/${taskId}/status`,
+        method: "PUT",
         body: { status },
       }),
       invalidateTags: ["Project"],
@@ -69,8 +69,8 @@ export const projectApi = apiSlice.injectEndpoints({
     
     updateSubTaskStatus: builder.mutation({
       query: ({ projectId, taskId, subTaskId, status }) => ({
-        url: `/projects/${projectId}/tasks/${taskId}/subtasks/${subTaskId}/status`,
-        method: "PATCH",
+        url: `/project/${projectId}/tasks/${taskId}/subtasks/${subTaskId}/status`,
+        method: "PUT",
         body: { status },
       }),
       invalidateTags: ["Project"],

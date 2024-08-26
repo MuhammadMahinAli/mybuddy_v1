@@ -24,16 +24,11 @@ export const getAllCommitService = async () => {
   return commits;
 };
 
-//--------------------- update status
-// export const updateCommitStatusService = async (id, status) => {
-//   const updatedCommitStatus = await Commit.findById({_id:id});
-//   if (!updatedCommitStatus) {
-//      throw new ApiError(httpStatus.NOT_FOUND, "Project join request not found");
-//   }
-//   updatedCommitStatus.status = status;
-//   await updatedCommitStatus.save();
-//   return updatedCommitStatus;
-//  };
+// --------------- get commit by projectid
+export const getCommitByProjectIdService = async (id) => {
+  const commits = await Commit.find({project: id}).populate('commitBy').populate('project').sort({ createdAt: -1 });
+  return commits;
+};
 
 // services/commitService.js
 

@@ -3,6 +3,7 @@ import httpStatus from 'http-status';
 import { catchAsync } from '../../../utils/catchAsync.js';
 import { createProjectJoinRequestService, deleteProjectByRequestedByService, getAcceptedProjectByRequestedByService, getAcceptedProjectByRequestedToService, getAcceptedProjectTeamMemberService, getAllProjectJoinRequestsService,getProjectByRequestedByService, getProjectByRequestedToService, updateProjectJoinRequestStatusService } from './projectJoinRequest.service.js';
 import { sendResponse } from '../../../utils/sendResponse.js';
+import { ApiError } from '../../../handleError/apiError.js';
 
 export const createNewProjectJoinRequest = catchAsync(async (req, res, next) => {
     const data = req.body;
