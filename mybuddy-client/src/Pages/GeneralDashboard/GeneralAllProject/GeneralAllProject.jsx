@@ -1,91 +1,102 @@
- import "../GeneralAddProject/editor.css";
- import "react-quill/dist/quill.core.css";
- import { useContext, useState } from "react";
- import { AuthContext } from "../../../Context/UserContext";
- import { FaPlus, FaSearch } from "react-icons/fa";
- import filter from "../../../assets/filter.png";
- import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
- import ProjectCard from "../GDashboard/ProjectCard";
- import { IoChevronDown } from "react-icons/io5";
- import { Link } from "react-router-dom";
+import "../GeneralAddProject/editor.css";
+import "react-quill/dist/quill.core.css";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../Context/UserContext";
+import { FaPlus, FaSearch } from "react-icons/fa";
+import filter from "../../../assets/filter.png";
+import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
+import ProjectCard from "../GDashboard/ProjectCard";
+import { IoChevronDown } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import MyPostedProject from "./MyPostedProject";
 import TeamMemberProject from "./TeamMemberProject";
 
- const GeneralAllProject = () => {
-   const { getAllProjectByUser,allAcceptedSentRequest } = useContext(AuthContext);
-   const projects = getAllProjectByUser?.data;
+const GeneralAllProject = () => {
+  const { getAllProjectByUser, allAcceptedSentRequest } =
+    useContext(AuthContext);
+  const projects = getAllProjectByUser?.data;
 
-   const currentTeamMember = allAcceptedSentRequest?.data;
-   console.log(currentTeamMember);
-   const [showAll, setShowAll] = useState(false);
+  const currentTeamMember = allAcceptedSentRequest?.data;
+  console.log(currentTeamMember);
+  const [showFilterOption, setShowFilterOption] = useState(false);
 
-   const handleShowMore = () => {
-     setShowAll(true);
-   };
+  const handleShowMore = () => {
+    setShowFilterOption(true);
+  };
 
-   const [isOpenMyPostedProject, setIsOpenMyPostedProject] = useState(true);
-   const [isOpenTeamMemberProject, setIsOpenTeamMemberProject] = useState(false);
+  const [isOpenMyPostedProject, setIsOpenMyPostedProject] = useState(true);
+  const [isOpenTeamMemberProject, setIsOpenTeamMemberProject] = useState(false);
 
-   const toggleMyPostedProject = ()=>{
+  const toggleMyPostedProject = () => {
     setIsOpenMyPostedProject(true);
     setIsOpenTeamMemberProject(false);
-   }
-   const toggleTeamMemberProject = ()=>{
+    setShowFilterOption(false);
+  };
+  const toggleTeamMemberProject = () => {
     setIsOpenMyPostedProject(false);
     setIsOpenTeamMemberProject(true);
-   }
+    setShowFilterOption(false);
+  };
 
-   return (
-     <div className="relative gray600">
-       <h1 className=" text-[20px] lg:text-[28px] py-4 font-bold">
-         ALL PROJECTS
-       </h1>
+  return (
+    <div className="relative gray600">
+      <h1 className=" text-[20px] lg:text-[28px] py-4 font-bold">
+        ALL PROJECTS
+      </h1>
 
-       {/* search div */}
+      {/* search div */}
 
-       <div className="pb-5 w-full justify-between  items-center flex flex-row">
-         {/* input */}
-         <div className="w-5/12 flex  justify-center items-center relative   md:w-6/12 xl:w-7/12 2xl:w-6/12 3xl:w-7/12">
-           <input
-             placeholder="Search"
-             className="w-full h-9 outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border  border-solid border-gray-100"
-           />
-           <IoIosSearch className="text-2xl absolute right-1" />
-         </div>
+      <div className="pb-5  w-full justify-between  items-center flex flex-row">
+        {/* input */}
+        <div className="w-5/12 flex  justify-center items-center relative   md:w-6/12 xl:w-7/12 2xl:w-6/12 3xl:w-7/12">
+          <input
+            placeholder="Search"
+            className="w-full h-9 outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border  border-solid border-gray-100"
+          />
+          <IoIosSearch className="text-2xl absolute right-1" />
+        </div>
 
-         {/* buttons */}
-         <div className="flex space-x-2 lg:space-x-3 items-center w-6/12 md:w-6/12 xl:w-5/12 2xl:w-5/12 3xl:w-5/12 md:px-4">
-           <button
-             className={`flex justify-center items-center space-x-1 w-full my-3 px-1 md:px-3 py-1 lg:px-4 md:py-2 text-[12px] xs:text-[14px] md:text-[16px] text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[7px] h-8 [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]`}
-           >
-             <FaPlus /> <span> New Project</span>
-           </button>
-           <button
-             className={`flex justify-center  items-center space-x-1 w-16 my-3 md:px-3 py-1 lg:px-4 md:py-2 text-[14px] md:text-[16px]  font-semibold shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] h-8 rounded-[10px]`}
-           >
-             <img src={filter} />
-             <span className="hidden">Filter</span>
-           </button>
-         </div>
-       </div>
-       <button className="px-3 py-2 bg-blue-500 text-white rounded-lg m-4" onClick={toggleMyPostedProject}>My Posted Project</button>
-       <button className="px-3 py-2 bg-blue-500 text-white rounded-lg m-4" onClick={toggleTeamMemberProject}>Team Member Project</button>
+        {/* buttons */}
+        <div className="flex space-x-2 lg:space-x-3 items-center w-6/12 md:w-6/12 xl:w-5/12 2xl:w-5/12 3xl:w-5/12 md:px-4">
+          <button
+            className={`flex justify-center items-center space-x-1 w-full my-3 px-1 md:px-3 py-1 lg:px-4 md:py-2 text-[12px] xs:text-[14px] md:text-[16px] text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[7px] h-8 [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]`}
+          >
+            <FaPlus /> <span> New Project</span>
+          </button>
+          <button
+            onClick={() => setShowFilterOption(!showFilterOption)}
+            className={`flex justify-center  items-center space-x-1 w-16 my-3 md:px-3 py-1 lg:px-4 md:py-2 text-[14px] md:text-[16px]  font-semibold shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] h-8 rounded-[10px]`}
+          >
+            <img src={filter} />
+            <span className="hidden">Filter</span>
+          </button>
+          {/* filt */}
+          {showFilterOption && (
+            <ul className="w-40 absolute top-32 right-5 float-right  bg-white border rounded-lg border-gray-300 shadow-lg mt-2 z-10">
+              <li
+                onClick={toggleMyPostedProject}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              >
+                My Project
+              </li>
+              <li
+                onClick={toggleTeamMemberProject}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              >
+                Team Project
+              </li>
+            </ul>
+          )}
+        </div>
+      </div>
 
-       {/* cards */}
-     
-      {
-        isOpenMyPostedProject && <MyPostedProject/>
+      {isOpenMyPostedProject && <MyPostedProject />}
+      {isOpenTeamMemberProject && <TeamMemberProject />}
+    </div>
+  );
+};
 
-      }
-      {
-        isOpenTeamMemberProject && <TeamMemberProject />
-      }
-  
-     </div>
-   );
- };
-
- export default GeneralAllProject;
+export default GeneralAllProject;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -100,29 +111,29 @@ import TeamMemberProject from "./TeamMemberProject";
 // import { IoChevronDown } from "react-icons/io5";
 // import { Link } from "react-router-dom";
 // import { CiLight } from "react-icons/ci";
-// 
+//
 // const GeneralAllProject = () => {
 //   const { getAllProjectByUser, allAcceptedSentRequest } = useContext(AuthContext);
-//   
+//
 //   const [selectedOption, setSelectedOption] = useState("myProject"); // Default to "My Project"
 //   const [showAll, setShowAll] = useState(false);
-// 
+//
 //   const projects = allAcceptedSentRequest?.data;
-// 
-// 
+//
+//
 //   const handleShowMore = () => {
 //     setShowAll(true);
 //   };
-// 
+//
 //   const visibleProjects = showAll ? projects : projects?.slice(0, 3);
 //   console.log(visibleProjects);
-// 
+//
 //   return (
 //     <div className="relative gray600">
 //       <h1 className=" text-[20px] lg:text-[28px] py-4 font-bold">
 //         ALL PROJECTS
 //       </h1>
-// 
+//
 //       {/* search div */}
 //       <div className="pb-5 w-full justify-between items-center flex flex-row">
 //         {/* input */}
@@ -133,7 +144,7 @@ import TeamMemberProject from "./TeamMemberProject";
 //           />
 //           <IoIosSearch className="text-2xl absolute right-1" />
 //         </div>
-// 
+//
 //         {/* buttons */}
 //         <div className="flex space-x-2 lg:space-x-3 items-center w-6/12 md:w-6/12 xl:w-5/12 2xl:w-5/12 3xl:w-5/12 md:px-4">
 //           <button
@@ -150,7 +161,7 @@ import TeamMemberProject from "./TeamMemberProject";
 //           </button>
 //         </div>
 //       </div>
-// 
+//
 //       {/* Option Toggle */}
 //       <div className="flex justify-center space-x-4 mb-4">
 //         <button
@@ -166,7 +177,7 @@ import TeamMemberProject from "./TeamMemberProject";
 //           Sent Project
 //         </button>
 //       </div>
-// 
+//
 //       {/* cards */}
 //       {projects?.length > 0 ? (
 //         <>
@@ -181,9 +192,9 @@ import TeamMemberProject from "./TeamMemberProject";
 //                       src={p?.projectId?.images[0]}
 //                       className="rounded-2xl h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[240px] w-full object-cover"
 //                       alt="Project"
-//                     /> 
+//                     />
 //                   </div>
-// 
+//
 //                   <div className="px-2 pt-0 ssm:pt-1 lg:pt-3 xl:pt-3 3xl:pt-3 xl:p-3 md:px-5 lg:py-3 space-y-1 lg:space-y-1">
 //                     <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold py-3 ssm:py-2">
 //                       {p?.projectId?.projectName.length > 15
@@ -192,7 +203,7 @@ import TeamMemberProject from "./TeamMemberProject";
 //                     </p>
 //                     <p className="hidden 2xl:block text-xl 3xl:text-[22px] font-bold py-1">
 //                       {p?.projectId?.projectName}
-//                     </p> 
+//                     </p>
 //                     {/* <div
 //                       className="ssm:hidden pb-3"
 //                       dangerouslySetInnerHTML={{
@@ -201,7 +212,7 @@ import TeamMemberProject from "./TeamMemberProject";
 //                         }`,
 //                       }}
 //                     />
-// 
+//
 //                     <div
 //                       className="hidden ssm:block md:hidden pb-3"
 //                       dangerouslySetInnerHTML={{
@@ -214,7 +225,7 @@ import TeamMemberProject from "./TeamMemberProject";
 //                         __html: p?.projectId?.description.slice(0, 100),
 //                       }}
 //                     />  */}
-// 
+//
 //                     <Link to={`/dashboard/details/${p?.projectId?._id}`}
 //                       className="w-full my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
 //                     >
@@ -224,7 +235,7 @@ import TeamMemberProject from "./TeamMemberProject";
 //                 </div>
 //               </div>
 //             ))}
-//           </div> 
+//           </div>
 //           <div
 //             onClick={() => setShowAll(!showAll)}
 //             className="w-full flex justify-center items-center pt-3"
@@ -238,6 +249,6 @@ import TeamMemberProject from "./TeamMemberProject";
 //     </div>
 //   );
 // };
-// 
+//
 //  export default GeneralAllProject;
-// 
+//

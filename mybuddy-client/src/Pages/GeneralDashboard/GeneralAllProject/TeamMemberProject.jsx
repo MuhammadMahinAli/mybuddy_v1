@@ -47,7 +47,7 @@
                    </div>
  
                    <div className="px-2 pt-0 ssm:pt-1 lg:pt-3 xl:pt-3 3xl:pt-3 xl:p-3 md:px-5 lg:py-3 space-y-1 lg:space-y-1">
-                     <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold py-3 ssm:py-2">
+                     <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold py-3 ssm:py-2 lg:py-0">
                        {p?.projectId?.projectName.length > 15
                          ? `${p?.projectId?.projectName.slice(0, 7)}...`
                          : p?.projectId?.projectName}
@@ -55,10 +55,10 @@
                      <p className="hidden 2xl:block text-xl 3xl:text-[22px] font-bold py-1">
                        {p?.projectId?.projectName}
                      </p> 
-                     {/* <div
+                    <div
                        className="ssm:hidden pb-3"
                        dangerouslySetInnerHTML={{
-                         __html: `${p?.description.slice(0, 100)}${
+                         __html: `${p?.projectId?.description.slice(0, 100)}${
                            p?.projectId?.description.length > 100 ? "..." : ""
                          }`,
                        }}
@@ -69,13 +69,13 @@
                        dangerouslySetInnerHTML={{
                          __html: p?.projectId?.description.slice(0, 300),
                        }}
-                     />
+                     /> 
                      <div
                        className="hidden md:block pb-3"
                        dangerouslySetInnerHTML={{
                          __html: p?.projectId?.description.slice(0, 100),
                        }}
-                     />  */}
+                     /> 
  
                      <Link to={`/dashboard/details/${p?.projectId?._id}`}
                        className="w-full my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
@@ -95,7 +95,7 @@
            </div>
          </>
        ) : (
-         <p className="text-gray-600 text-[16px] md:text-[18px] lg:text-[24px] pb-5 font-medium text-start w-11/12 md:w-[600px] xl:pt-7">{`You've not posted any project yet.`}</p>
+         <p className="text-gray-600 text-[16px] md:text-[18px] lg:text-[24px] pb-5 font-medium text-start w-11/12 md:w-[600px] xl:pt-7">{`You're not working any team project yet.`}</p>
        )}
      </div>
    );
