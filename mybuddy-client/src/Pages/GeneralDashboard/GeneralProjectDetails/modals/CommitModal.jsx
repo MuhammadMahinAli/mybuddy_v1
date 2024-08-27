@@ -4,6 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { fileUpload } from "../../../../utils/cloudinary";
+import { FaCheck } from "react-icons/fa";
 const CommitModal = ({
   userId,
   createCommit,
@@ -115,10 +116,7 @@ const CommitModal = ({
               <Dialog.Panel className="w-full lg:w-9/12 transform overflow-hidden rounded-2xl bg-[#e9f2f9] p-6 text-left align-middle shadow-xl transition-all">
                 <div className="px-[3px] rounded-m bg-[#e9f2f9]">
                   <div className={`graish`}>
-                    <p className="m-[1px] pt-2  text-[15px] md:text-[20px] xl:text-[24px] font-semibold text-start">
-                      Add A New License And Certificate
-                    </p>
-
+                   
                     <div className="p-6  ">
                       <div className=" p-6">
                         <form onSubmit={handleSubmit}>
@@ -149,7 +147,11 @@ const CommitModal = ({
                               htmlFor="mediaUpload"
                               className="p-3 [background:linear-gradient(-44.24deg,#87aaff,#447afc)] text-white rounded-md flex items-center space-x-2 cursor-pointer"
                             >
-                              <svg
+                              {
+                                formData?.media ?
+<FaCheck />
+                                :
+                                <svg
                                 width="29"
                                 height="23"
                                 viewBox="0 0 29 23"
@@ -163,8 +165,11 @@ const CommitModal = ({
                                   strokeLinecap="round"
                                   strokeLinejoin="round"
                                 />
-                              </svg>
-                              <span>Upload</span>
+                              </svg>  
+                              }
+                             
+                              <span>{formData?.media ? "Uploaded": "Upload"}</span>
+                            
                             </label>
                           </div>
                           <div className="flex items-center justify-between mb-4">

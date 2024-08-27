@@ -4,7 +4,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext, useState } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 import Swal from "sweetalert2";
-const UpdateProjectForm = ({ initialData, openUpdateModal, closeProjectUpdateModal }) => {
+const UpdateProjectForm = ({
+  initialData,
+  openUpdateModal,
+  closeProjectUpdateModal,
+}) => {
   const projectId = initialData?._id;
   const { updateProjectInfo } = useContext(AuthContext);
   const [formData, setFormData] = useState({
@@ -23,13 +27,17 @@ const UpdateProjectForm = ({ initialData, openUpdateModal, closeProjectUpdateMod
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    setFormData({
+      ...formData,
+      [name]: name === "description" ? `<p>${value}</p>` : value,
+    });
   };
 
-//   const handleFileChange = (e) => {
-//     const { name, files } = e.target;
-//     setFormData({ ...formData, [name]: Array.from(files) });
-//   };
+  //   const handleFileChange = (e) => {
+  //     const { name, files } = e.target;
+  //     setFormData({ ...formData, [name]: Array.from(files) });
+  //   };
 
   const handleSubmit = (e, id) => {
     e.preventDefault();
@@ -39,13 +47,13 @@ const UpdateProjectForm = ({ initialData, openUpdateModal, closeProjectUpdateMod
     console.log(data);
     updateProjectInfo({ id, data });
     Swal.fire({
-        icon: "success",
-        title: "Well done !",
-        text: "You have updated the project info successfully!",
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
+      icon: "success",
+      title: "Well done !",
+      text: "You have updated the project info successfully!",
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 2500);
   };
 
   return (
@@ -81,100 +89,121 @@ const UpdateProjectForm = ({ initialData, openUpdateModal, closeProjectUpdateMod
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full lg:w-9/12 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <div className="px-[3px] rounded-m bg-white">
+              <Dialog.Panel className="w-full lg:w-9/12 transform overflow-hidden rounded-2xl  bg-[#e8eff7]  p-6 text-left align-middle shadow-xl transition-all">
+                <div className="px-[3px] rounded-m  bg-[#e8eff7] ">
                   <div
                     className={`graish lg:w-[780px] xl:w-[1130px] 2xl:w-[1210px] 3xl:w-[1280px]`}
                   >
-                    <p className="m-[1px] pt-2  text-[15px] md:text-[20px] xl:text-[24px] font-semibold text-start">
-                      Add A New License And Certificate
-                    </p>
+                    <div className="p-5 md:p-3 lg:p-6 w-[320px] sm:w-11/12 space-y-2">
+                      {/* Project Name */}
+                      <div className="pl-6 xs:pl-0 xs:w-full w-11/12 md:w-[430px] lg:w-[460px] flex flex-col space-y-2 font-medium gray600">
+                        <label className="text-[18px] md:text-xl">
+                          Project Name:
+                        </label>
+                        <input
+                          type="text"
+                          name="projectName"
+                          value={formData.projectName}
+                          onChange={handleChange}
+                          className="outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border border-solid border-gray-100"
+                        />
+                      </div>
 
-                    <div>
-                      <label>Project Name:</label>
-                      <input
-                        type="text"
-                        name="projectName"
-                        value={formData.projectName}
-                        onChange={handleChange}
-                      />
+                      {/* Category */}
+                      <div className="pl-6 xs:pl-0 xs:w-full w-11/12 md:w-[430px] lg:w-[460px] flex flex-col space-y-2 font-medium gray600">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between space-y-3 md:space-y-0 md:space-x-3">
+                          <label className="text-[18px] md:text-xl">
+                            Category:
+                          </label>
+                          <select
+                            name="category"
+                            value={formData.category}
+                            onChange={handleChange}
+                            className="lg:mx-9 outline-none rounded-lg py-3 px-2 md:w-[315px] lg:w-[340px] bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+                          >
+                            <option value="">Select</option>
+                            <option value="technology">Technology</option>
+                            <option value="tech">Tech</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* WhatsApp */}
+                      <div className="pl-6 xs:pl-0 xs:w-full w-11/12 md:w-[430px] lg:w-[460px] flex flex-col space-y-2 font-medium gray600">
+                        <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
+                          <label className="text-[18px] md:text-xl">
+                            WhatsApp:
+                          </label>
+                          <input
+                            type="text"
+                            name="whatsApp"
+                            value={formData.whatsApp}
+                            onChange={handleChange}
+                            className="outline-none rounded-lg py-3 px-2 md:w-[380px] bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Discord */}
+                      <div className="pl-6 xs:pl-0 xs:w-full w-11/12 md:w-[430px] lg:w-[460px] flex flex-col space-y-2 font-medium gray600">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between space-y-3 md:space-y-0 md:space-x-3">
+                          <label className="text-[18px] md:text-xl">
+                            Discord:
+                          </label>
+                          <input
+                            type="text"
+                            name="discord"
+                            value={formData.discord}
+                            onChange={handleChange}
+                            className="outline-none rounded-lg py-3 px-2 md:w-[320px] lg:w-[343px] bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Start Date */}
+                      <div className="pl-6 xs:pl-0 xs:w-full w-11/12 md:w-6/12 lg:w-10/12 flex flex-col space-y-2 font-medium gray600">
+                        <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
+                          <label className="text-[18px] md:text-xl lg:mr-6">
+                            Duration:
+                          </label>
+                          <input
+                            name="startDate"
+                            type="date"
+                            value={formData.startDate}
+                            onChange={handleChange}
+                            className="bg-[#e4ecf7] m-[1px] border uppercase outline-none pl-2 md:pt-0 rounded-lg w-11/12 md:w-full md:px-3 text-[15px] font-medium text-start shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[37px] md:h-[57px]"
+                          />
+                          <p>From</p>
+                          <input
+                            name="endDate"
+                            type="date"
+                            value={formData.endDate}
+                            onChange={handleChange}
+                            className="bg-[#e4ecf7] m-[1px] border uppercase outline-none pl-2 md:pt-0 rounded-lg w-11/12 md:w-full md:px-3 text-[15px] font-medium text-start shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[37px] md:h-[57px]"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Description */}
+                      <div className="pl-6 xs:pl-0 xs:w-full xl:w-10/12 flex flex-col space-y-2 w-full font-medium gray600">
+                        <label className="text-[18px] md:text-xl font-bold border-b-2 border-gray-200 py-2">
+                          Description
+                        </label>
+                        <textarea
+                          name="description"
+                          defaultValue={formData.description.replace(
+                            /<p>|<\/p>/g,
+                            ""
+                          )}
+                          // value={formData.description}
+                          onChange={handleChange}
+                          className="h-44 outline-none rounded-lg py-3 px-2 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label>Category:</label>
-                      <select
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                      >
-                        <option value="">Select</option>
-                        <option value="technology">Technology</option>
-                        <option value="tech">Tech</option>
-                        {/* Add other categories */}
-                      </select>
-                    </div>
-                    <div>
-                      <label>WhatsApp:</label>
-                      <input
-                        type="text"
-                        name="whatsApp"
-                        value={formData.whatsApp}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div>
-                      <label>Discord:</label>
-                      <input
-                        type="text"
-                        name="discord"
-                        value={formData.discord}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div>
-                      <label>Start Date:</label>
-                      <input
-                        type="date"
-                        name="startDate"
-                        value={formData.startDate}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div>
-                      <label>End Date:</label>
-                      <input
-                        type="date"
-                        name="endDate"
-                        value={formData.endDate}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div>
-                      <label>Description:</label>
-                      <textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    {/* <div>
-        <label>Documents (Up to 2):</label>
-        <input type="file" name="documents" multiple onChange={handleFileChange} />
-      </div>
-      <div>
-        <label>PDF Files (Up to 2):</label>
-        <input type="file" name="pdfFiles" multiple onChange={handleFileChange} />
-      </div>
-      <div>
-        <label>Images (Up to 3):</label>
-        <input type="file" name="images" multiple onChange={handleFileChange} />
-      </div>
-      <div>
-        <label>Video URL:</label>
-        <input type="text" name="videoUrl" value={formData.videoUrl} onChange={handleChange} />
-      </div> */}
                   </div>
                 </div>
-                <div className="mt-4">
+                <div className="-mt-3">
                   <button
                     type="submit"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"

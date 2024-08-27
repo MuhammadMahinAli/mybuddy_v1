@@ -384,42 +384,74 @@ const handleUpdateStatusReject = (e, index) => {
     console.log("No task found for the selected index.");
   }
 };
+
+//------ count progress bar
+
+const calculateProgress = (task) => {
+  let totalTasks = 1; // Start with the main task itself
+  let completedTasks = task.status === "completed" ? 1 : 0;
+
+  if (task.subTask && task.subTask.length > 0) {
+    totalTasks += task.subTask.length; // Add subtasks to the total count
+
+    // Count completed subtasks
+    task.subTask.forEach((subtask) => {
+      if (subtask.status === "completed") {
+        completedTasks++;
+      }
+    });
+  }
+
+  // Calculate progress as a percentage
+  return (completedTasks / totalTasks) * 100;
+};
+//---------- count total, in progress, done and up coming project
+const today = new Date().toISOString().split("T")[0];
+
+const totalTask = tasks?.length || 0;
+
+const inProgressTasks = tasks?.filter(
+  (task) =>
+    new Date(task.startDate) <= new Date(today) &&
+    new Date(today) <= new Date(task.endDate) &&
+    task.status === "pending"
+).length;
+
+const upcomingTasks = tasks?.filter(
+  (task) => new Date(task.startDate) > new Date(today)
+).length;
+
+const doneTasks = tasks?.filter(task => task.status === "completed").length;
   return (
     <div>
       {ProjectInfo?.user?._id === userId && (
         <div className="flex justify-between items-center py-10">
           <div className="flex space-x-8 text-center">
-            <div className="text-gray-700">
-              <p className="text-[20px] font-bold">45</p>
-              <div className="graish text-[14px] flex items-center space-x-2">
-                {" "}
-                Total Task
-              </div>
-            </div>
-            <div className="text-gray-700">
-              <p className="text-[20px] font-bold">12</p>
-              <div className="text-[14px] flex items-center space-x-2">
-                {" "}
-                <MdOutlineCircle className="mr-1 graish text-[14px]" /> In
-                Progress
-              </div>
-            </div>
-            <div className="text-gray-700">
-              <p className="text-[20px] font-bold">10</p>
-              <div className="text-[14px] flex items-center space-x-2">
-                {" "}
-                <MdOutlineCircle className="mr-1 graish text-[14px]" />
-                Upcoming
-              </div>
-            </div>
-            <div className="text-gray-700">
-              <p className="text-[20px] font-bold">67</p>
-              <div className="text-[14px] flex items-center space-x-2">
-                {" "}
-                <MdOutlineCircle className="mr-1 graish text-[14px]" /> Done
-              </div>
-            </div>
-          </div>
+      <div className="text-gray-700">
+        <p className="text-[20px] font-bold">{totalTask}</p>
+        <div className="graish text-[14px] flex items-center space-x-2">
+          Total Task
+        </div>
+      </div>
+      <div className="text-gray-700">
+        <p className="text-[20px] font-bold">{inProgressTasks}</p>
+        <div className="text-[14px] flex items-center space-x-2">
+          <MdOutlineCircle className="mr-1 graish text-[14px]" /> In Progress
+        </div>
+      </div>
+      <div className="text-gray-700">
+        <p className="text-[20px] font-bold">{upcomingTasks}</p>
+        <div className="text-[14px] flex items-center space-x-2">
+          <MdOutlineCircle className="mr-1 graish text-[14px]" /> Upcoming
+        </div>
+      </div>
+      <div className="text-gray-700">
+        <p className="text-[20px] font-bold">{doneTasks}</p>
+        <div className="text-[14px] flex items-center space-x-2">
+          <MdOutlineCircle className="mr-1 graish text-[14px]" /> Done
+        </div>
+      </div>
+    </div>
           <button
             onClick={()=>setOpenAddTaskModal(true)}
             className="flex items-center px-4 py-2 bg-gradient-to-r from-[#60f5c6] to-teal-400 text-white font-semibold rounded-xl shadow-md hover:shadow-lg focus:outline-none"
@@ -443,6 +475,7 @@ const handleUpdateStatusReject = (e, index) => {
       <div className="grid grid-cols-3 gap-4">
         {tasks?.map((task, index) => {
           const daysLeft = calculateDaysLeft(task.startDate, task.endDate);
+          const progress = calculateProgress(task);
           const { progressColor, daysLeftColor, cardBg } =
             colors[index % colors.length];
 
@@ -519,12 +552,12 @@ const handleUpdateStatusReject = (e, index) => {
       {selectedIndex !== null && (
         <div className="space-y-5 py-9">
           <div>
-            <h1 className="text-[20px] font-bold">Task</h1>
-            <p className="text-lg font-semibold text-gray-800">
+            <h1 className="gray600 text-[20px] lg:text-[28px] font-bold">Task</h1>
+            <p className="text-2xl font-semibold text-gray-500">
               {" "}
               {tasks[selectedIndex].title}
             </p>
-            <p className="text-gray-800 font-semibold pt-3">Description</p>
+            <p className="text-gray-600 text-xl font-semibold pt-3">Description</p>
             <p className="text-gray-500 text-lg">
               {" "}
               {tasks[selectedIndex].details}
@@ -549,8 +582,10 @@ const handleUpdateStatusReject = (e, index) => {
               </button>
             )}
           </div>
-          <div>
-            <h1 className="text-lg font-semibold text-gray-800 pt-5 pb-3">
+          {
+            tasks[selectedIndex].subTask?.length !== 0 &&
+            <div>
+            <h1 className="text-xl font-bold text-gray-500 pt-5 pb-3">
               Sub Tasks
             </h1>
             <ul className={` grid grid-cols-2 gap-5`}>
@@ -577,6 +612,8 @@ const handleUpdateStatusReject = (e, index) => {
               ))}
             </ul>
           </div>
+          }
+         
           {/* commit button */}
           {ProjectInfo?.user?._id !== userId && (
             <>

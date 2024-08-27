@@ -1,6 +1,6 @@
 import { BsHouseDoor } from "react-icons/bs";
 import { FaCaretRight } from "react-icons/fa";
-import OverviewIcon from "../../../icons/OverviewIcon";
+import { AiOutlineFileSearch } from "react-icons/ai";
 import ProjectTaskIcon from "../../../icons/ProjectTaskIcon";
 import ActivityIcon from "../../../icons/ActivityIcon";
 import { useLoaderData, useNavigate } from "react-router-dom";
@@ -85,7 +85,7 @@ const GeneralProjectDetails = () => {
       myself.projectId._id === ProjectInfo?._id // Check if the project IDs match
   );
 
-  console.log("userId", userId,members);
+  console.log("userId", userId, members);
   console.log("req", req);
 
   // open update
@@ -144,27 +144,62 @@ const GeneralProjectDetails = () => {
 
       <div className="p-5 space-y-3">
         {/* tab */}
-        <ul className="flex items-center justify-between bg-[#e9f2f9] py-3 px-3">
+        <ul className="flex items-center justify-between bg-[#e9f2f9] px-3">
           <li
             onClick={toggleOverviewTab}
-            className="flex justify-center items-center space-x-1 bg-blue-400 py-3 w-full"
+            className={`${
+              isOpenOverviewTab
+                ? "bg-[#f6f6f6] text-green-500 border-t-4 border-green-400"
+                : "bg-transparent"
+            } flex justify-center items-center space-x-1 py-3 w-full cursor-pointer`}
           >
-            <OverviewIcon />
-            <p className="graish text-lg">Overview</p>
+            <AiOutlineFileSearch
+              className={`text-[40px] ${
+                isOpenOverviewTab ? "text-[#2ED573]" : "text-[#838487]"
+              }`}
+            />
+            <p
+              className={`${
+                isOpenOverviewTab ? "text-green-500" : "graish"
+              } font-semibold text-lg`}
+            >
+              Overview
+            </p>
           </li>
+
           <li
             onClick={toggleTaskTab}
-            className="flex justify-center items-center space-x-1 bg-blue-300 py-3 w-full"
+            className={`${
+              isOpenTaskTab
+                ? "bg-[#f6f6f6] text-green-500 border-t-4 border-green-400"
+                : "bg-transparent"
+            } flex justify-center items-center space-x-1 py-3 w-full cursor-pointer`}
           >
-            <ProjectTaskIcon />
-            <p className="graish text-lg">Tasks</p>
+            <ProjectTaskIcon isOpenTaskTab={isOpenTaskTab} />
+            <p
+              className={`${
+                isOpenTaskTab === true ? "text-green-500 " : "graish"
+              } font-semibold text-lg`}
+            >
+              Tasks
+            </p>
           </li>
           <li
             onClick={toggleActivityTab}
-            className="flex justify-center items-center space-x-1 bg-blue-200 py-3 w-full"
+            className={`${
+              isOpenActivityTab
+                ? "bg-[#f6f6f6] text-green-500 border-t-4 border-green-400"
+                : "bg-transparent"
+            } flex justify-center items-center space-x-1 py-3 w-full cursor-pointer`}
           >
-            <ActivityIcon />
-            <p className="graish text-lg">Activity</p>
+            <ActivityIcon isOpenActivityTab={isOpenActivityTab} />
+            <p
+              className={`${
+                isOpenActivityTab === true ? "text-green-500 " : "graish"
+              } font-semibold text-lg`}
+            >
+              Activity
+            </p>
           </li>
         </ul>
         {/* overview */}
@@ -203,8 +238,15 @@ const GeneralProjectDetails = () => {
 
         {/* activity log */}
         {isOpenActivityTab && (
-          <ActivityTab    ProjectInfo={ProjectInfo}
-          userId={userId}   projectOwner={projectOwner} formatDate={formatDate} commits={commits} getAllCommit={getAllCommit} filteredMyself={filteredMyself} />
+          <ActivityTab
+            ProjectInfo={ProjectInfo}
+            userId={userId}
+            projectOwner={projectOwner}
+            formatDate={formatDate}
+            commits={commits}
+            getAllCommit={getAllCommit}
+            filteredMyself={filteredMyself}
+          />
         )}
       </div>
     </div>

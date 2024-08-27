@@ -181,16 +181,14 @@ const {createNewTask} = useContext(AuthContext)
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="w-full lg:w-9/12 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-              <div className="px-[3px] rounded-m bg-white">
+            <Dialog.Panel className="w-full lg:w-9/12 transform overflow-hidden rounded-2xl bg-[#e8eff7]  p-6 text-left align-middle shadow-xl transition-all">
+              <div className="px-[3px] rounded-m bg-[#e8eff7] ">
                 <div
                   className={`graish lg:w-[780px] xl:w-[1130px] 2xl:w-[1210px] 3xl:w-[1280px]`}
                 >
-                  <p className="m-[1px] pt-2  text-[15px] md:text-[20px] xl:text-[24px] font-semibold text-start">
-                    Add A New License And Certificate
-                  </p>
+                  
 
-                  <form className="w-full space-y-4 py-2 lg:py-3">
+                  <div className="w-full space-y-4 py-2 lg:py-3">
         <div className=" xs:w-full  md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 md:space-x-3">
             <label className="text-[16px] md:text-xl">Title:</label>
@@ -328,10 +326,10 @@ const {createNewTask} = useContext(AuthContext)
             onClick={addTask}
             className="my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
           >
-            Save Task
+            Add Task
           </button>
         </div>
-      </form>
+      </div>
                 </div>
               </div>
              

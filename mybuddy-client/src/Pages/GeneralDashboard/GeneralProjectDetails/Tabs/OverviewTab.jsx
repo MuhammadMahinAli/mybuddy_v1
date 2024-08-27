@@ -5,8 +5,11 @@ import AddNewTask from "../AddNewTask";
 import UpdateProjectForm from "../UpdateProjectForm";
 import { LuTrash2 } from "react-icons/lu";
 import youtube from "../../../../assets/dashboardpd/ytube.svg";
+import gdrive from "../../../../assets/projectDetail/drive.png";
 import pdf from "../../../../assets/dashboardpd/pdf.svg";
 import docx from "../../../../assets/dashboardpd/document.svg";
+import ProjectDescription from "../../../ProjectDetails/ProjectDescription";
+import ExpandDescription from "../ExpandDescription";
 
 const OverviewTab = ({
   ProjectInfo,
@@ -30,6 +33,7 @@ const OverviewTab = ({
     user,
     startDate,
     endDate,
+    videoUrl,
     images,
     _id,
   } = ProjectInfo;
@@ -57,7 +61,7 @@ const OverviewTab = ({
           {/* left */}
           <div className=" w-4/12 flex flex-col justify-center items-center space-y-1 py-2">
             <img
-              className="h-[68px] w-[68px] rounded-full"
+              className="h-[68px] w-[68px] border-4 border-[#dad8d8] rounded-full"
               src={userProfilePic}
               alt=""
             />
@@ -98,12 +102,7 @@ const OverviewTab = ({
             </ul>
             <div>
               <p className="graish font-bold text-lg">Description</p>
-              <div
-                className=""
-                dangerouslySetInnerHTML={{
-                  __html: description.slice(0, 100),
-                }}
-              />
+              <ExpandDescription description={description} />
             </div>
           </div>
         </div>
@@ -111,11 +110,19 @@ const OverviewTab = ({
         <div className="flex justify-between items-start w-11/12">
           <ul className="flex justify-center items-center  px-4  space-x-4 w-4/12">
             <li className=" ">
-              <img
+
+            <a href={videoUrl} target="blank">
+                      <img
+                        className="w-12 p-2 rounded-lg bg-[#e9f2f9]"
+                        src={videoUrl.includes("youtu.be") ? youtube : gdrive
+                        }
+                      />
+                    </a>
+              {/* <img
                 className="w-12 p-2  rounded-lg bg-[#e9f2f9]"
                 src={youtube}
                 alt=""
-              />
+              /> */}
             </li>
             <li className=" ">
               <img
