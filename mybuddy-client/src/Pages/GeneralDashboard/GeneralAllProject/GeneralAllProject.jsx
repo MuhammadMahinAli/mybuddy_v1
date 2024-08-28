@@ -48,18 +48,18 @@ const GeneralAllProject = () => {
 
       <div className="pb-5  w-full justify-between  items-center flex flex-row">
         {/* input */}
-        <div className="w-5/12 flex  justify-center items-center relative   md:w-6/12 xl:w-7/12 2xl:w-6/12 3xl:w-7/12">
+        <div className="w-5/12 flex  justify-center items-center relative   md:w-8/12 xl:w-7/12 2xl:w-6/12 3xl:w-7/12">
           <input
             placeholder="Search"
-            className="w-full h-9 outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border  border-solid border-gray-100"
+            className="w-full h-9 md:h-10 lg:h-12 outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border  border-solid border-gray-100"
           />
           <IoIosSearch className="text-2xl absolute right-1" />
         </div>
 
         {/* buttons */}
-        <div className="flex space-x-2 lg:space-x-3 items-center w-6/12 md:w-6/12 xl:w-5/12 2xl:w-5/12 3xl:w-5/12 md:px-4">
+        <div className="flex space-x-2 lg:space-x-3 items-center w-6/12 md:w-5/12 xl:w-5/12 2xl:w-5/12 3xl:w-5/12 md:px-4">
           <button
-            className={`flex justify-center items-center space-x-1 w-full my-3 px-1 md:px-3 py-1 lg:px-4 md:py-2 text-[12px] xs:text-[14px] md:text-[16px] text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[7px] h-8 [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]`}
+            className={`flex justify-center items-center space-x-1 w-full my-3 px-1 md:px-3 py-1 lg:px-4 md:py-2 text-[12px] xs:text-[14px] md:text-[16px] text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[7px] h-8 md:h-10 lg:h-10 [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]`}
           >
             <FaPlus /> <span> New Project</span>
           </button>

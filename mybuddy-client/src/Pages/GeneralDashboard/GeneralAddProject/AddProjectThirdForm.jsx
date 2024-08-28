@@ -137,7 +137,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     <div className="w-full">
       {/* table */}
       {tasks?.length > 0 && (
-        <div className="w-[300px] md:w-[630px] lg:w-full overflow-x-auto xl:overflow-hidden">
+        <div className="w-[300px] xs:w-[330px] ssm:w-[370px] sm:w-[570px] md:w-[630px] lg:w-full overflow-x-auto xl:overflow-hidden">
           {/* table head */}
           <div className="min-w-[900px] md:min-w-[900px] xl:min-w-[1000px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
             <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">

@@ -340,7 +340,7 @@ const FindProject = ({
                         
                           <a href={project?.videoUrl} target="blank">
                             <div className="bg-[#f5eefc] p-2 md:p-3 rounded-md">
-                              {project?.videoUrl.includes("docs.google") ? (
+                              {project?.videoUrl.includes("drive_link") ? (
                                 <img
                                   className="h-5 md:h-8 xl:h-10 rounded-md cursor-pointer"
                                   src={gdrive}
@@ -355,6 +355,7 @@ const FindProject = ({
                               <OpenPdf
                                 pdfFiles={project?.pdfFiles}
                                 showPdfList={showPdfList}
+                                setShowPdfList={setShowPdfList}
                               />
                             </div>
                           )}
@@ -363,6 +364,7 @@ const FindProject = ({
                               <OpenDocx
                                 documents={project?.documents}
                                 showDocuments={showDocuments}
+                                setShowDocuments={setShowDocuments}
                               />
                             </div>
                           )}

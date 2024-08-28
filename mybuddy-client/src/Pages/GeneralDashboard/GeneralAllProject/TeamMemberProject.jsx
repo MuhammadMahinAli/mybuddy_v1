@@ -32,7 +32,7 @@
        {/* cards */}
        {projects?.length > 0 ? (
          <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
              {visibleProjects?.map((p, i) => (
                <div key={i}>
                  <div
@@ -47,12 +47,12 @@
                    </div>
  
                    <div className="px-2 pt-0 ssm:pt-1 lg:pt-3 xl:pt-3 3xl:pt-3 xl:p-3 md:px-5 lg:py-3 space-y-1 lg:space-y-1">
-                     <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold py-3 ssm:py-2 lg:py-0">
+                     <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold pt-2 ssm:py-0">
                        {p?.projectId?.projectName.length > 15
                          ? `${p?.projectId?.projectName.slice(0, 7)}...`
                          : p?.projectId?.projectName}
                      </p>
-                     <p className="hidden 2xl:block text-xl 3xl:text-[22px] font-bold py-1">
+                     <p className="hidden 2xl:block text-xl 3xl:text-[22px] font-bold py-0">
                        {p?.projectId?.projectName}
                      </p> 
                     <div
@@ -67,7 +67,7 @@
                      <div
                        className="hidden ssm:block md:hidden pb-3"
                        dangerouslySetInnerHTML={{
-                         __html: p?.projectId?.description.slice(0, 300),
+                         __html: p?.projectId?.description.slice(0, 130),
                        }}
                      /> 
                      <div
@@ -77,11 +77,14 @@
                        }}
                      /> 
  
-                     <Link to={`/dashboard/details/${p?.projectId?._id}`}
+                     <button to={`/dashboard/details/${p?.projectId?._id}`}
                        className="w-full my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
                      >
-                       View More
-                     </Link>
+                      <Link>
+                      View More
+                      </Link>
+                      
+                     </button>
                    </div>
                  </div>
                </div>

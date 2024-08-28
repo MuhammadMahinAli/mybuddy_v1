@@ -11,7 +11,7 @@ const ProjectCard = ({ p, i }) => {
       </div>
 
       <div className="px-2 xs-2 ssm:pt-1 lg:pt-0 3xl:pt-6 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">
-        <p className="text-lg 3xl:text-[22px] graish font-bold py-0 xs:py-3">
+        <p className="text-lg 3xl:text-[22px] graish font-bold py-0 xs:py-3 lg:hidden">
           {" "}
           {p?.projectName.slice(0, 4)}..
         </p>

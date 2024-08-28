@@ -4,7 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import PropTypes from "prop-types";
 
-const OpenPdf = ({ pdfFiles, showPdfList }) => {
+const OpenPdf = ({ pdfFiles, showPdfList,setShowPdfList }) => {
   const [selectedPdfIndex, setSelectedPdfIndex] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,6 +16,7 @@ const OpenPdf = ({ pdfFiles, showPdfList }) => {
   const closePopup = () => {
     setSelectedPdfIndex(null);
     setIsOpen(false);
+    setShowPdfList(false)
   };
 
   return (
@@ -23,9 +24,9 @@ const OpenPdf = ({ pdfFiles, showPdfList }) => {
       {pdfFiles?.length > 0 && (
         <div className="relative">
           {showPdfList && (
-            <ul className="absolute left-0 space-y-3 font-medium text-center mt-2 p-2 lg:p-3 bg-white shadow-lg rounded-md w-16 md:w-20">
+            <ul className=" absolute left-0 space-y-3 text-center mt-2 p-2 lg:p-3  font-bold bg-white hover:bg-gray-100  shadow-lg rounded-md w-16 md:w-20">
               {pdfFiles?.map((item, index) => (
-                <li key={index} className="text-sm">
+                <li key={index} className="xl:text-[17px] graish">
                   <button onClick={() => handlePdfButtonClick(index)}>
                     {`PDF ${index + 1}`}
                   </button>
@@ -83,4 +84,5 @@ export default OpenPdf;
 OpenPdf.propTypes = {
   pdfFiles: PropTypes.array.isRequired,
   showPdfList: PropTypes.bool.isRequired,
+  setShowPdfList: PropTypes.bool.isRequired,
 };

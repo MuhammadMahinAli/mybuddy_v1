@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import PropTypes from "prop-types";
 
 
-const OpenDocx = ({ documents, showDocuments }) => {
+const OpenDocx = ({ documents, showDocuments,setShowDocuments }) => {
   const [selectedDocxIndex, setSelectedDocxIndex] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -17,6 +17,7 @@ const OpenDocx = ({ documents, showDocuments }) => {
   const closePopup = () => {
     setSelectedDocxIndex(null);
     setIsOpen(false);
+    setShowDocuments(false);
   };
 
   return (
@@ -24,9 +25,9 @@ const OpenDocx = ({ documents, showDocuments }) => {
       {documents?.length > 0 && (
         <div className="relative">
           {showDocuments && (
-            <ul className="absolute left-0 space-y-3 font-medium text-center mt-2 p-2 lg:p-3 bg-white shadow-lg rounded-md w-24 md:w-28">
+            <ul className="absolute left-0 space-y-3 font-bold text-center mt-2 p-2 lg:p-3 bg-white hover:bg-gray-100 shadow-lg rounded-md w-28 sm:w-36">
               {documents?.map((item, index) => (
-                <li key={index} className="text-sm">
+                <li key={index} className="xl:text-[19px] graish">
                   <button onClick={() => handleDocxButtonClick(index)}>
                     {`Document ${index + 1}`}
                   </button>

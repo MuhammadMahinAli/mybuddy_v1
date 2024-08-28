@@ -113,6 +113,15 @@ const GeneralAddProject = ({ closeModal }) => {
       });
       return;
     }
+    if (projectData.videoUrl && 
+      !(/youtu|youtube|drive_link/.test(projectData.videoUrl))) {
+    Swal.fire({
+      icon: "warning",
+      title: "Oops !",
+      text: "You can add Youtube / Google Drive link only.",
+    });
+    return;
+  }
     const data = {
       user: user._id,
       ...projectData,

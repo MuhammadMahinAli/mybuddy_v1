@@ -78,7 +78,7 @@ const UserProfileProjectEM = () => {
                     >
                       <img
                         src={p.images[0]}
-                        className="h-[100px] md:h-[100px] xl:h-[130px]"
+                        className=""
                       />
                     </div>
                     <div className="px-2 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">

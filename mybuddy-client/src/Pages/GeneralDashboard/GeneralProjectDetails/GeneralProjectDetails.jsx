@@ -1,5 +1,5 @@
 import { BsHouseDoor } from "react-icons/bs";
-import { FaCaretRight } from "react-icons/fa";
+import { FaCaretRight, FaRegEdit } from "react-icons/fa";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import ProjectTaskIcon from "../../../icons/ProjectTaskIcon";
 import ActivityIcon from "../../../icons/ActivityIcon";
@@ -11,6 +11,7 @@ import { useGetAllAcceptedProjectTeamMemberQuery } from "../../../features/proje
 import ActivityTab from "./Tabs/ActivityTab";
 import OverviewTab from "./Tabs/OverviewTab";
 import TaskTab from "./Tabs/TaskTab";
+import { LuTrash2 } from "react-icons/lu";
 
 const GeneralProjectDetails = () => {
   const [isOpenOverviewTab, setIsOpenOverviewTab] = useState(true);
@@ -35,7 +36,19 @@ const GeneralProjectDetails = () => {
   const { tasks, projectName, _id } = ProjectInfo;
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
+  const [showPdfList, setShowPdfList] = useState(false);
+  const [showDocuments, setShowDocuments] = useState(false);
   const navigate = useNavigate();
+
+  //------------- pdf & docx
+  const togglePdf = () => {
+    setShowPdfList(true);
+    setShowDocuments(false);
+  };
+  const toggleDocx = () => {
+    setShowPdfList(false);
+    setShowDocuments(true);
+  };
 
   //------------- get accepted recieve project request to
   const {
@@ -131,8 +144,8 @@ const GeneralProjectDetails = () => {
   };
 
   return (
-    <div>
-      <div className="flex items-center space-x-1">
+    <>
+      <div className="md:flex items-center space-x-1 hidden">
         <BsHouseDoor className="text-xl text-blue-500" />
         <p className="text-blue-500 text-lg">Dashboard</p>
         <FaCaretRight className="text-xl text-blue-500" />
@@ -140,11 +153,27 @@ const GeneralProjectDetails = () => {
         <FaCaretRight className="text-xl text-blue-500" />
         <p className=" text-lg">{projectName}</p>
       </div>
-      <p className="graish font-bold text-xl py-3">{projectName}</p>
+      <div className="flex justify-between items-center py-3">
+        <p className="graish font-bold text-xl py-3">{projectName}</p>
+        {ProjectInfo?.user?._id === userId && (
+          <div className="md:hidden">
+            <div className="flex items-center space-x-2">
+              <FaRegEdit
+                onClick={openProjectUpdateModal}
+                className="text-xl text-blue-500 cursor-pointer"
+              />
+              <LuTrash2
+                onClick={() => deleteProjectById(_id)}
+                className="text-xl text-red-500 cursor-pointer"
+              />
+            </div>
+          </div>
+        )}
+      </div>
 
-      <div className="p-5 space-y-3">
+      <div className="lg:p-5 space-y-3 w-12/12">
         {/* tab */}
-        <ul className="flex items-center justify-between bg-[#e9f2f9] px-3">
+        <ul className="flex items-center justify-between bg-[#e9f2f9]">
           <li
             onClick={toggleOverviewTab}
             className={`${
@@ -154,14 +183,14 @@ const GeneralProjectDetails = () => {
             } flex justify-center items-center space-x-1 py-3 w-full cursor-pointer`}
           >
             <AiOutlineFileSearch
-              className={`text-[40px] ${
+              className={`md:text-[25px] lg:text-[40px] ${
                 isOpenOverviewTab ? "text-[#2ED573]" : "text-[#838487]"
               }`}
             />
             <p
               className={`${
                 isOpenOverviewTab ? "text-green-500" : "graish"
-              } font-semibold text-lg`}
+              } font-semibold text-[12px] md:text-[15px] lg:text-lg`}
             >
               Overview
             </p>
@@ -179,7 +208,7 @@ const GeneralProjectDetails = () => {
             <p
               className={`${
                 isOpenTaskTab === true ? "text-green-500 " : "graish"
-              } font-semibold text-lg`}
+              } font-semibold text-[12px] md:text-[15px] lg:text-lg`}
             >
               Tasks
             </p>
@@ -196,7 +225,7 @@ const GeneralProjectDetails = () => {
             <p
               className={`${
                 isOpenActivityTab === true ? "text-green-500 " : "graish"
-              } font-semibold text-lg`}
+              } font-semibold text-[12px] md:text-[15px] lg:text-lg`}
             >
               Activity
             </p>
@@ -249,7 +278,7 @@ const GeneralProjectDetails = () => {
           />
         )}
       </div>
-    </div>
+    </>
   );
 };
 

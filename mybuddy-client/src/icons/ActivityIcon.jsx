@@ -3,7 +3,7 @@ const ActivityIcon = ({isOpenActivityTab}) => {
   return (
     <div>
       <svg
-    className="h-8"
+    className="h-4 md:h-5 lg:h-8"
         viewBox="0 0 37 38"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

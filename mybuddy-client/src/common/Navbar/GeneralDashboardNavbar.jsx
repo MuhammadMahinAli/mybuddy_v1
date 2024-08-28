@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../Context/UserContext";
+import { useSelector } from "react-redux";
 
 const GeneralDashboardNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useSelector((state) => state.auth);
   const location = useLocation(); // Get the current location
   const isPageActive = (path) => {
     return location.pathname === path;
@@ -57,7 +59,9 @@ const GeneralDashboardNavbar = () => {
           </li>
           <li>
             <div className="px-3 py-1 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
+            < Link to={user? "/user/edit-profile":"/login"}>
               <img src="/user.svg" className="h-8" />
+              </Link>
             </div>
           </li>
         </ul>

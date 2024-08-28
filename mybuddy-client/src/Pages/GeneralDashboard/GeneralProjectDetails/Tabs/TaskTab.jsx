@@ -297,254 +297,263 @@ const TaskTab = ({
       }
     });
   };
-// Use the mutation hook
-const [updateJoinRequestStatus] = useUpdateJoinRequestStatusMutation();
+  // Use the mutation hook
+  const [updateJoinRequestStatus] = useUpdateJoinRequestStatusMutation();
 
-const handleUpdateStatusAccept = (e, index) => {
-  e.preventDefault();
-  setSelectedRequestIndex(index);
-  const selectedTask = allRecieveRequest?.data[index];
-  if (selectedTask) {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Do you really want to accept the request?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Accept it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const newStatus = "Accepted";
-        console.log({ id: selectedTask._id, data: { status: newStatus } });
-        updateJoinRequestStatus({
-          id: selectedTask._id,
-          data: { status: newStatus },
-        })
-          .unwrap()
-          .then(() => {
-            Swal.fire({
-              icon: "success",
-              title: "Well done !",
-              text: "You have accepted the request successfully!",
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 2500);
+  const handleUpdateStatusAccept = (e, index) => {
+    e.preventDefault();
+    setSelectedRequestIndex(index);
+    const selectedTask = allRecieveRequest?.data[index];
+    if (selectedTask) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you really want to accept the request?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Accept it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const newStatus = "Accepted";
+          console.log({ id: selectedTask._id, data: { status: newStatus } });
+          updateJoinRequestStatus({
+            id: selectedTask._id,
+            data: { status: newStatus },
           })
-          .catch((error) => {
-            alert("Failed to accept the request.");
-            console.error(error);
-          });
-      }
-    });
-  } else {
-    console.log("No task found for the selected index.");
-  }
-};
-const handleUpdateStatusReject = (e, index) => {
-  e.preventDefault();
-  setSelectedRequestIndex(index);
-  const selectedTask = allRecieveRequest?.data[index];
-  if (selectedTask) {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Do you really want to reject the request?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Reject it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const newStatus = "Rejected";
-        console.log({ id: selectedTask._id, data: { status: newStatus } });
-        updateJoinRequestStatus({
-          id: selectedTask._id,
-          data: { status: newStatus },
-        })
-          .unwrap()
-          .then(() => {
-            Swal.fire({
-              icon: "success",
-              title: "Well done !",
-              text: "You have rejected the request successfully!",
+            .unwrap()
+            .then(() => {
+              Swal.fire({
+                icon: "success",
+                title: "Well done !",
+                text: "You have accepted the request successfully!",
+              });
+              setTimeout(() => {
+                window.location.reload();
+              }, 2500);
+            })
+            .catch((error) => {
+              alert("Failed to accept the request.");
+              console.error(error);
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 2500);
+        }
+      });
+    } else {
+      console.log("No task found for the selected index.");
+    }
+  };
+  const handleUpdateStatusReject = (e, index) => {
+    e.preventDefault();
+    setSelectedRequestIndex(index);
+    const selectedTask = allRecieveRequest?.data[index];
+    if (selectedTask) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you really want to reject the request?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Reject it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const newStatus = "Rejected";
+          console.log({ id: selectedTask._id, data: { status: newStatus } });
+          updateJoinRequestStatus({
+            id: selectedTask._id,
+            data: { status: newStatus },
           })
-          .catch((error) => {
-            alert("Failed to reject the request.");
-            console.error(error);
-          });
-      }
-    });
-  } else {
-    console.log("No task found for the selected index.");
-  }
-};
+            .unwrap()
+            .then(() => {
+              Swal.fire({
+                icon: "success",
+                title: "Well done !",
+                text: "You have rejected the request successfully!",
+              });
+              setTimeout(() => {
+                window.location.reload();
+              }, 2500);
+            })
+            .catch((error) => {
+              alert("Failed to reject the request.");
+              console.error(error);
+            });
+        }
+      });
+    } else {
+      console.log("No task found for the selected index.");
+    }
+  };
 
-//------ count progress bar
+  //------ count progress bar
 
-const calculateProgress = (task) => {
-  let totalTasks = 1; // Start with the main task itself
-  let completedTasks = task.status === "completed" ? 1 : 0;
+  const calculateProgress = (task) => {
+    let totalTasks = 1; // Start with the main task itself
+    let completedTasks = task.status === "completed" ? 1 : 0;
 
-  if (task.subTask && task.subTask.length > 0) {
-    totalTasks += task.subTask.length; // Add subtasks to the total count
+    if (task.subTask && task.subTask.length > 0) {
+      totalTasks += task.subTask.length; // Add subtasks to the total count
 
-    // Count completed subtasks
-    task.subTask.forEach((subtask) => {
-      if (subtask.status === "completed") {
-        completedTasks++;
-      }
-    });
-  }
+      // Count completed subtasks
+      task.subTask.forEach((subtask) => {
+        if (subtask.status === "completed") {
+          completedTasks++;
+        }
+      });
+    }
 
-  // Calculate progress as a percentage
-  return (completedTasks / totalTasks) * 100;
-};
-//---------- count total, in progress, done and up coming project
-const today = new Date().toISOString().split("T")[0];
+    // Calculate progress as a percentage
+    return (completedTasks / totalTasks) * 100;
+  };
+  //---------- count total, in progress, done and up coming project
+  const today = new Date().toISOString().split("T")[0];
 
-const totalTask = tasks?.length || 0;
+  const totalTask = tasks?.length || 0;
 
-const inProgressTasks = tasks?.filter(
-  (task) =>
-    new Date(task.startDate) <= new Date(today) &&
-    new Date(today) <= new Date(task.endDate) &&
-    task.status === "pending"
-).length;
+  const inProgressTasks = tasks?.filter(
+    (task) =>
+      new Date(task.startDate) <= new Date(today) &&
+      new Date(today) <= new Date(task.endDate) &&
+      task.status === "pending"
+  ).length;
 
-const upcomingTasks = tasks?.filter(
-  (task) => new Date(task.startDate) > new Date(today)
-).length;
+  const upcomingTasks = tasks?.filter(
+    (task) => new Date(task.startDate) > new Date(today)
+  ).length;
 
-const doneTasks = tasks?.filter(task => task.status === "completed").length;
+  const doneTasks = tasks?.filter((task) => task.status === "completed").length;
   return (
-    <div>
+    <div className="">
       {ProjectInfo?.user?._id === userId && (
-        <div className="flex justify-between items-center py-10">
-          <div className="flex space-x-8 text-center">
-      <div className="text-gray-700">
-        <p className="text-[20px] font-bold">{totalTask}</p>
-        <div className="graish text-[14px] flex items-center space-x-2">
-          Total Task
-        </div>
-      </div>
-      <div className="text-gray-700">
-        <p className="text-[20px] font-bold">{inProgressTasks}</p>
-        <div className="text-[14px] flex items-center space-x-2">
-          <MdOutlineCircle className="mr-1 graish text-[14px]" /> In Progress
-        </div>
-      </div>
-      <div className="text-gray-700">
-        <p className="text-[20px] font-bold">{upcomingTasks}</p>
-        <div className="text-[14px] flex items-center space-x-2">
-          <MdOutlineCircle className="mr-1 graish text-[14px]" /> Upcoming
-        </div>
-      </div>
-      <div className="text-gray-700">
-        <p className="text-[20px] font-bold">{doneTasks}</p>
-        <div className="text-[14px] flex items-center space-x-2">
-          <MdOutlineCircle className="mr-1 graish text-[14px]" /> Done
-        </div>
-      </div>
-    </div>
+        <div className="flex  justify-between items-center py-5 md:py-10">
+          <div className="flex  space-x-8 text-center">
+            <div className="text-gray-700 flex flex-row-reverse md:flex-col">
+              <p className="text-[15px] md:text-[20px] font-bold">
+                {totalTask}
+              </p>
+              <div className="graish text-[14px] md:text-[14px] flex items-center space-x-2 pr-3 md:pr-0">
+                Total Task
+              </div>
+            </div>
+            <div className="text-gray-700 hidden md:block">
+              <p className="text-[15px] md:text-[20px] font-bold">
+                {inProgressTasks}
+              </p>
+              <div className="text-[14px] flex items-center space-x-2">
+                <MdOutlineCircle className="mr-1 graish text-[12px] md:text-[14px]" />{" "}
+                In Progress
+              </div>
+            </div>
+            <div className="text-gray-700 hidden md:block">
+              <p className="text-[15px] md:text-[20px] font-bold">
+                {upcomingTasks}
+              </p>
+              <div className="text-[14px] flex items-center space-x-2">
+                <MdOutlineCircle className="mr-1 graish text-[12px] md:text-[14px]" />{" "}
+                Upcoming
+              </div>
+            </div>
+            <div className="text-gray-700 hidden md:block">
+              <p className="text-[15px] md:text-[20px] font-bold">
+                {doneTasks}
+              </p>
+              <div className="text-[14px] flex items-center space-x-2">
+                <MdOutlineCircle className="mr-1 graish text-[12px] md:text-[14px]" />{" "}
+                Done
+              </div>
+            </div>
+          </div>
           <button
-            onClick={()=>setOpenAddTaskModal(true)}
-            className="flex items-center px-4 py-2 bg-gradient-to-r from-[#60f5c6] to-teal-400 text-white font-semibold rounded-xl shadow-md hover:shadow-lg focus:outline-none"
+            onClick={() => setOpenAddTaskModal(true)}
+            className=" flex items-center px-2 py-1 md:px-4 md:py-2 bg-gradient-to-r from-[#60f5c6] to-teal-400 text-white font-semibold rounded-xl shadow-md hover:shadow-lg focus:outline-none"
           >
             <span className="mr-2">+</span>
             Add New Task
           </button>
-         
         </div>
       )}
- {
-            openAddTaskModal && 
-            <AddNewTask
-            tasks={tasks}
-            openAddTaskModal={openAddTaskModal}
-             closeAddTaskModal={closeAddTaskModal}
-             projectId={ProjectInfo?._id}
-            />
-          }
+      {openAddTaskModal && (
+        <AddNewTask
+          tasks={tasks}
+          openAddTaskModal={openAddTaskModal}
+          closeAddTaskModal={closeAddTaskModal}
+          projectId={ProjectInfo?._id}
+        />
+      )}
       {/* card */}
-      <div className="grid grid-cols-3 gap-4">
-        {tasks?.map((task, index) => {
-          const daysLeft = calculateDaysLeft(task.startDate, task.endDate);
-          const progress = calculateProgress(task);
-          const { progressColor, daysLeftColor, cardBg } =
-            colors[index % colors.length];
+      <div className="flex justify-center md:justify-between items-center ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 py-3 sm:w-full">
+          {tasks?.map((task, index) => {
+            const daysLeft = calculateDaysLeft(task.startDate, task.endDate);
+            const progress = calculateProgress(task);
+            const { progressColor, daysLeftColor, cardBg } =
+              colors[index % colors.length];
 
-          return (
-            <div
-              key={index}
-              className={`rounded-3xl shadow-md p-4 w-64 ${cardBg}`}
-              onClick={() => setSelectedIndex(index)}
-            >
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-gray-500 text-sm">
-                  {formatDate(task.startDate)}
-                </p>
-                {
-                  ProjectInfo?.user?._id === userId &&
-<button className="text-gray-500">
-                  <LuTrash2
-                    onClick={() => deleteTaskById(task?._id)}
-                    className="text-lg text-red-500 cursor-pointer"
-                  />
-                </button>
-                }
-                
-              </div>
-              <h3 className="text-lg font-semibold text-gray-800 text-center">
-                {task.title}
-              </h3>
-              <p className="text-sm text-gray-500 text-center">
-                {task.description}
-              </p>
-              <div className="mt-4">
-                <p className="text-gray-500 text-sm mb-1">Progress</p>
-                <div className="w-full bg-gray-50 rounded-full h-2.5 mb-2">
-                  <div
-                    className={`${progressColor} h-2.5 rounded-full`}
-                    style={{ width: `${progress}%` }}
-                  ></div>
+            return (
+              <div
+                key={index}
+                className={`rounded-3xl shadow-md p-4 w-72 sm:w-64 ${cardBg}`}
+                onClick={() => setSelectedIndex(index)}
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <p className="text-gray-500 text-sm">
+                    {formatDate(task.startDate)}
+                  </p>
+                  {ProjectInfo?.user?._id === userId && (
+                    <button className="text-gray-500">
+                      <LuTrash2
+                        onClick={() => deleteTaskById(task?._id)}
+                        className="text-lg text-red-500 cursor-pointer"
+                      />
+                    </button>
+                  )}
                 </div>
-                <p className="text-gray-500 text-sm text-right">
-                  {progress.toFixed(2)}%
+                <h3 className="text-lg font-semibold text-gray-800 text-center">
+                  {task.title}
+                </h3>
+                <p className="text-sm text-gray-500 text-center">
+                  {task.description}
                 </p>
-              </div>
-              <div className="flex justify-between items-center mt-4">
-                <div className="flex -space-x-2">
-                  <img
-                    className="w-8 h-8 rounded-full border-2 border-white"
-                    src="https://randomuser.me/api/portraits/men/1.jpg"
-                    alt="User 1"
-                  />
-                  <img
-                    className="w-8 h-8 rounded-full border-2 border-white"
-                    src="https://randomuser.me/api/portraits/women/2.jpg"
-                    alt="User 2"
-                  />
+                <div className="mt-4">
+                  <p className="text-gray-500 text-sm mb-1">Progress</p>
+                  <div className="w-full bg-gray-50 rounded-full h-2.5 mb-2">
+                    <div
+                      className={`${progressColor} h-2.5 rounded-full`}
+                      style={{ width: `${progress}%` }}
+                    ></div>
+                  </div>
+                  <p className="text-gray-500 text-sm text-right">
+                    {progress.toFixed(2)}%
+                  </p>
+                </div>
+                <div className="flex justify-between items-center mt-4">
+                  <div className="flex -space-x-2">
+                    <img
+                      className="w-8 h-8 rounded-full border-2 border-white"
+                      src="https://randomuser.me/api/portraits/men/1.jpg"
+                      alt="User 1"
+                    />
+                    <img
+                      className="w-8 h-8 rounded-full border-2 border-white"
+                      src="https://randomuser.me/api/portraits/women/2.jpg"
+                      alt="User 2"
+                    />
+                    <button
+                      className={`w-8 h-8 rounded-full ${progressColor} text-white text-bl flex items-center justify-center border-2 border-white`}
+                    >
+                      +
+                    </button>
+                  </div>
                   <button
-                    className={`w-8 h-8 rounded-full ${progressColor} text-white text-bl flex items-center justify-center border-2 border-white`}
+                    className={`${daysLeftColor}  text-sm px-4 py-1 rounded-full`}
                   >
-                    +
+                    {daysLeft} Days Left
                   </button>
                 </div>
-                <button
-                  className={`${daysLeftColor}  text-sm px-4 py-1 rounded-full`}
-                >
-                  {daysLeft} Days Left
-                </button>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {/* ----------------------------------- Project Owner ---------------------------- */}
@@ -552,12 +561,16 @@ const doneTasks = tasks?.filter(task => task.status === "completed").length;
       {selectedIndex !== null && (
         <div className="space-y-5 py-9">
           <div>
-            <h1 className="gray600 text-[20px] lg:text-[28px] font-bold">Task</h1>
-            <p className="text-2xl font-semibold text-gray-500">
+            <h1 className="gray600 text-[28px] lg:text-[28px] font-bold">
+              Task
+            </h1>
+            <p className="text-xl lg:text-2xl font-semibold text-gray-500">
               {" "}
               {tasks[selectedIndex].title}
             </p>
-            <p className="text-gray-600 text-xl font-semibold pt-3">Description</p>
+            <p className="text-gray-600 text-xl font-semibold pt-3">
+              Description
+            </p>
             <p className="text-gray-500 text-lg">
               {" "}
               {tasks[selectedIndex].details}
@@ -582,41 +595,42 @@ const doneTasks = tasks?.filter(task => task.status === "completed").length;
               </button>
             )}
           </div>
-          {
-            tasks[selectedIndex].subTask?.length !== 0 &&
-            <div>
-            <h1 className="text-xl font-bold text-gray-500 pt-5 pb-3">
-              Sub Tasks
-            </h1>
-            <ul className={` grid grid-cols-2 gap-5`}>
-              {tasks[selectedIndex].subTask?.map((sub, i) => (
-                <li
-                  key={i}
-                  className={`px-3 py-3 flex justify-between items-start shadow-md rounded-xl w-12/12 ${colors[selectedIndex].cardBg}`}
-                >
-                  <div className="flex justify-between items-start space-x-4">
-                    <div
-                      className={`${colors[selectedIndex].progressColor} mt-1 w-3 h-3 rounded-full graish text-[14px]`}
-                    />
-                    <p className="text-gray-500 w-11/12 text-lg">{sub?.todo}</p>
-                  </div>
-                  {ProjectInfo?.user?._id === userId &&  (
-                    <button
-                      onClick={(e) => handleUpdateSubTaskStatus(e, sub)}
-                      className={` ${colors[selectedIndex].progressColor} text-white px-2 py-1 capitalize rounded-lg`}
-                    >
-                      {sub?.status}
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-          }
-         
+          {tasks[selectedIndex].subTask?.length !== 0 && (
+            <div className="">
+              <h1 className="text-xl font-bold text-gray-500  md:pt-5 pb-3">
+                Sub Tasks
+              </h1>
+              <ul className={` grid grid-cols-1 md:grid-cols-2 gap-5`}>
+                {tasks[selectedIndex].subTask?.map((sub, i) => (
+                  <li
+                    key={i}
+                    className={`px-3 py-3 flex justify-between items-start shadow-md rounded-xl w-12/12 ${colors[selectedIndex].cardBg}`}
+                  >
+                    <div className="flex justify-between items-start space-x-4">
+                      <div
+                        className={`${colors[selectedIndex].progressColor} mt-1 w-3 h-3 rounded-full graish text-[14px]`}
+                      />
+                      <p className="text-gray-500 w-11/12 text-lg">
+                        {sub?.todo}
+                      </p>
+                    </div>
+                    {ProjectInfo?.user?._id === userId && (
+                      <button
+                        onClick={(e) => handleUpdateSubTaskStatus(e, sub)}
+                        className={` ${colors[selectedIndex].progressColor} text-white px-2 py-1 capitalize rounded-lg`}
+                      >
+                        {sub?.status}
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* commit button */}
           {ProjectInfo?.user?._id !== userId && (
-            <>
+            <div className="pb-3">
               <button
                 onClick={() => setIsOpenCommitModal(true)}
                 className={`float-right ${colors[selectedIndex].progressColor} text-white text-[18px] px-3 py-1 capitalize rounded-lg`}
@@ -625,105 +639,186 @@ const doneTasks = tasks?.filter(task => task.status === "completed").length;
               </button>
               {isOpenCommitModal && (
                 <CommitModal
-                userId={userId}
-                createCommit={createCommit}
-                ProjectInfo={ProjectInfo}
+                  userId={userId}
+                  createCommit={createCommit}
+                  ProjectInfo={ProjectInfo}
                   closeCommitModal={closeCommitModal}
                   isOpenCommitModal={isOpenCommitModal}
                 />
               )}
-            </>
+            </div>
           )}
           {/* current task member */}
-          {ProjectInfo?.user?._id === userId &&  (
+          {ProjectInfo?.user?._id === userId && (
             <>
               <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
                 Current Task Member
               </h1>
               {currentTeamMember?.filter((request) =>
-    request.tasks.some((task) => task.title === tasks[selectedIndex]?.title)
-  ).length === 0 ? (
-    <p className="text-lg font-semibold text-gray-500">
-      No one is working on this task.
-    </p>
-  ) : (
-    <div className="gray600 space-y-6 w-12/12 md:w-full">
-      <div className="w-full py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
-        <div className="text-[15px] md:text-[21px] font-semibold border-r-2 text-center w-4/12 sm:w-3/12">
-          Name
-        </div>
-        <div className="text-[15px] md:text-[21px] font-semibold border-r-2 text-center w-3/12 sm:w-4/12">
-          Part
-        </div>
-        <div className="text-[15px] md:text-[21px] font-semibold border-r-2 text-center w-2/12 sm:w-2/12">
-          Status
-        </div>
-        <div className="text-[15px] md:text-[21px] w-3/12 sm:w-3/12">
-          <p className="font-semibold text-center">Manage</p>
-        </div>
-      </div>
-      {currentTeamMember
-        ?.filter((request) =>
-          request.tasks.some(
-            (task) => task.title === tasks[selectedIndex]?.title
-          )
-        )
-        .map((request, i) => (
-          <div
-            key={i}
-            className="w-full px-1 py-4 flex my-5 justify-between items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
-          >
-            <div className="flex justify-center items-center space-x-1 text-[16px] md:text-lg border-r-2 text-center w-4/12 sm:w-3/12">
-              <img
-                src={
-                  request?.requestedBy?.profilePic ||
-                  "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
-                }
-                className="w-8 h-8 md:w-12 md:h-12 border border-black rounded-full"
-                loading="lazy"
-                alt=""
-              />
-              <div className="pl-1">
-                <p className="text-start text-[15px] font-bold capitalize md:pt-0">
-                  {request?.requestedBy?.name?.firstName}{" "}
-                  {request?.requestedBy?.name?.lastName}
+                request.tasks.some(
+                  (task) => task.title === tasks[selectedIndex]?.title
+                )
+              ).length === 0 ? (
+                <p className="text-lg font-semibold text-gray-500">
+                  No one is working on this task.
                 </p>
-                <p className="text-start text-[14px]">
-                  {request?.requestedBy?.role}
-                </p>
-              </div>
-            </div>
-            <div className="capitalize text-[16px] md:text-[18px] border-r-2 text-center sm:w-4/12">
-              {tasks[selectedIndex]?.details.slice(0, 20)}
-            </div>
-            <div className="text-[16px] md:text-lg border-r-2 text-center w-2/12 sm:w-2/12">
-              <button className="border border-blue-500 capitalize bg-blue-200 text-blue-600 py-1 px-3 rounded-lg text-sm">
-                {tasks[selectedIndex]?.status === "Accepted"
-                  ? "in progress"
-                  : tasks[selectedIndex]?.status}
-              </button>
-            </div>
-            <div className="flex justify-center xs:space-x-2 items-center text-[16px] md:text-lg w-2/12 sm:w-3/12">
-              <CiEdit
-                onClick={(e) => handleUpdateStatusDone(e, i)}
-                className="text-3xl text-blue-600 cursor-pointer"
-              />
-              <LuTrash2
-                onClick={() => deleteMember(request?._id)}
-                className="text-xl text-red-500 cursor-pointer"
-              />
-            </div>
-          </div>
-        ))}
-    </div>
-  )}
+              ) : (
+                <div className="w-[300px] xs:w-[330px] ssm:w-[370px] sm:w-[570px] md:w-[610px] lg:w-full overflow-x-auto ">
+                  {/* table head */}
+                  <div className="min-w-[600px] md:min-w-[800px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
+                    <div className="text-[14px] md:text-[16px] font-semibold text-center w-4/12 border-r border-[#C8CBD3]">
+                      Name
+                    </div>
+                    <div className="text-[14px] md:text-[16px] font-semibold text-center w-4/12 border-r border-[#C8CBD3]">
+                      Part
+                    </div>
+
+                    <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">
+                      Status
+                    </div>
+                    <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12">
+                      Mannage
+                    </div>
+                  </div>
+                  {/* table data */}
+                  {currentTeamMember
+                    ?.filter((request) =>
+                      request.tasks.some(
+                        (task) => task.title === tasks[selectedIndex]?.title
+                      )
+                    )
+                    .map((request, i) => (
+                      <div
+                        key={i}
+                        className="min-w-[600px] md:min-w-[800px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
+                      >
+                        <div className="flex justify-center items-center text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
+                          <img
+                            src={
+                              request?.requestedBy?.profilePic
+                                ? request?.requestedBy?.profilePic
+                                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                            }
+                            alt="Profile"
+                            className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
+                          />
+                          <div>
+                            <div className="font-semibold text-gray-800 text-[14px] lg:text-[15px] 3xl:text-[19px]">
+                              {request?.requestedBy?.name?.firstName}{" "}
+                              <span>
+                                {request?.requestedBy?.name?.lastName}
+                              </span>
+                            </div>
+                            <div className=" text-gray-500 text-[13px] lg:text-[13px] 3xl:text-[17px]">
+                              {request?.requestedBy?.role}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-[13px] md:text-[16px] 3xl:text-[19px] capitalize text-center w-4/12 border-r border-[#C8CBD3] px-2">
+                          {tasks[selectedIndex]?.details.slice(0, 20)}...
+                        </div>
+
+                        <div className="text-[13px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
+                          <button className="border border-blue-500 capitalize bg-blue-200 text-blue-600 py-1 px-3 rounded-lg text-sm">
+                            {tasks[selectedIndex]?.status === "Accepted"
+                              ? "in progress"
+                              : tasks[selectedIndex]?.status}
+                          </button>
+                        </div>
+                        <div className="w-1/12 flex justify-center items-center ml-5 space-x-1 md:space-x-2">
+                          <CiEdit
+                            onClick={(e) => handleUpdateStatusDone(e, i)}
+                            className="text-3xl text-blue-600 cursor-pointer"
+                          />
+                          <LuTrash2
+                            onClick={() => deleteMember(request?._id)}
+                            className="text-xl text-red-500 cursor-pointer"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
 
               <h1 className="gray600 text-[20px] lg:text-[28px] pt-3 font-bold w-full">
                 Task Join Request
               </h1>
 
               <>
-                {req?.filter((request) =>
+                <div className="w-[300px] xs:w-[330px] ssm:w-[370px] sm:w-[570px] md:w-[610px] lg:w-full overflow-x-auto ">
+                  {/* table head */}
+                  {/* <div className="min-w-[600px] md:min-w-[800px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
+                    <div className="text-[14px] md:text-[16px] font-semibold text-center w-4/12 border-r border-[#C8CBD3]">
+                      From
+                    </div>
+                    <div className="text-[14px] md:text-[16px] font-semibold text-center w-4/12 border-r border-[#C8CBD3]">
+                      Details
+                    </div>
+
+                    <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12">
+                      Action
+                    </div>
+                  </div> */}
+                  {/* table data */}
+                  {req
+                    ?.filter((request) =>
+                      request.tasks.some(
+                        (task) => task?.title === tasks[selectedIndex]?.title
+                      )
+                    )
+                    .map(
+                      (filteredRequest, i) =>
+                        filteredRequest && (
+                          <div
+                            key={i}
+                            className="min-w-[500px] md:min-w-[600px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
+                          >
+                            <div className="flex justify-center items-center text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
+                              <img
+                                src={
+                                  filteredRequest.requestedBy?.profilePic
+                                    ? filteredRequest.requestedBy?.profilePic
+                                    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                                }
+                                alt="Profile"
+                                className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
+                              />
+                              <div>
+                                <div className="font-semibold text-gray-800 text-[14px] lg:text-[15px] 3xl:text-[18px]">
+                                  {filteredRequest.requestedBy?.name?.firstName}{" "}
+                                  <span>
+                                    {
+                                      filteredRequest.requestedBy?.name
+                                        ?.lastName
+                                    }
+                                  </span>
+                                </div>
+                                <div className=" text-gray-500 text-[13px] lg:text-[13px] 3xl:text-[17px]">
+                                  {filteredRequest.requestedBy?.role}
+                                </div>
+                              </div>
+                            </div>
+                            <p className="w-6/12 border-r-2 pl-2 text-[14px] md:text-[15px] lg:text-[16px] text-center 3xl:text-[19px]">
+                              {tasks[selectedIndex]?.details.slice(0, 90)}...
+                            </p>
+
+                            <div className="w-1/12 flex justify-center items-center ml-5 space-x-1 md:space-x-2">
+                              <img
+                                onClick={(e) => handleUpdateStatusAccept(e, i)}
+                                src={rightMark}
+                                className="h-5 md:h-7"
+                              />
+                              <img
+                                onClick={(e) => handleUpdateStatusReject(e, i)}
+                                src={xMark}
+                                className="h-5 md:h-7"
+                              />
+                            </div>
+                          </div>
+                        )
+                    )}
+                </div>
+                {/*   {req?.filter((request) =>
                   request.tasks.some(
                     (task) => task?.title === tasks[selectedIndex]?.title
                   )
@@ -788,22 +883,26 @@ const doneTasks = tasks?.filter(task => task.status === "completed").length;
                               </p>
 
                               <div className="flex justify-center xs:space-x-2 items-center text-[16px] md:text-lg w-2/12 sm:w-2/12">
-                              <img
-                  onClick={(e) => handleUpdateStatusAccept(e, i)}
-                  src={rightMark}
-                  className="h-5 md:h-7"
-                />
-                             <img
-                  onClick={(e) => handleUpdateStatusReject(e, i)}
-                  src={xMark}
-                  className="h-5 md:h-7"
-                />
+                                <img
+                                  onClick={(e) =>
+                                    handleUpdateStatusAccept(e, i)
+                                  }
+                                  src={rightMark}
+                                  className="h-5 md:h-7"
+                                />
+                                <img
+                                  onClick={(e) =>
+                                    handleUpdateStatusReject(e, i)
+                                  }
+                                  src={xMark}
+                                  className="h-5 md:h-7"
+                                />
                               </div>
                             </div>
                           )
                       )}
                   </>
-                )}
+                )}*/}
               </>
             </>
           )}
@@ -811,8 +910,6 @@ const doneTasks = tasks?.filter(task => task.status === "completed").length;
       )}
 
       {/* ----------------------------------- Project Worker ---------------------------- */}
-
-
     </div>
   );
 };
@@ -820,7 +917,6 @@ const doneTasks = tasks?.filter(task => task.status === "completed").length;
 export default TaskTab;
 
 ////////////////////////////////////////////////////////////////////////
-
 
 //   <p className="text-[50px]">Static</p>
 //   {/* current task member */}
@@ -872,7 +968,7 @@ export default TaskTab;
 //                   />
 //                   <p className="text-gray-500 text-lg">{sub?.todo}</p>
 //                 </div>
-//   
+//
 //                 <button
 //                   onClick={(e) => handleUpdateSubTaskStatus(e, sub)}
 //                   className={` ${colors[selectedIndex].progressColor} text-white px-2 py-1 capitalize rounded-lg`}
@@ -884,18 +980,18 @@ export default TaskTab;
 //           </ul>
 //         </div>
 //       </div>
-//   
+//
 //       {/* task with checkbox */}
 //       {/* <div className="py-4">
 //           <h2 className="text-lg font-semibold text-gray-800">
 //             {tasks[selectedIndex].title}
 //           </h2>
-//   
+//
 //           <div className="mt-2">
 //             <p className="text-gray-800 font-semibold">Description</p>
 //             <p className="text-gray-500">{tasks[selectedIndex].details}</p>
 //           </div>
-//   
+//
 //           <div className="mt-2">
 //             <p className="text-gray-800 font-semibold">Deadline</p>
 //             <p className="text-gray-500">
@@ -916,7 +1012,7 @@ export default TaskTab;
 //             ))}
 //           </ul>
 //         </div> */}
-//   
+//
 //       <div className=" gray600 space-y-6 w-12/12 md:w-full">
 //         <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
 //           Current team member
@@ -931,7 +1027,7 @@ export default TaskTab;
 //           <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-2/12 sm:w-2/12 ">
 //             Status
 //           </div>
-//   
+//
 //           <div className="text-[15px]  md:text-[21px] w-3/12 sm:w-3/12">
 //             <p className="font-semibold text-center ">Manage</p>
 //           </div>
@@ -978,7 +1074,7 @@ export default TaskTab;
 //                       In Progress
 //                     </button>
 //                   </div>
-//   
+//
 //                   <div className="flex justify-center xs:space-x-2 items-center text-[16px] md:text-lg   w-2/12 sm:w-3/12 ">
 //                     <CiEdit
 //                       onClick={(e) => handleUpdateStatusDone(e, i)}
@@ -1002,19 +1098,19 @@ export default TaskTab;
 //           <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-4/12 sm:w-3/12 ">
 //             From
 //           </div>
-//   
+//
 //           <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-2/12 sm:w-7/12 ">
 //             Details
 //           </div>
-//   
+//
 //           <div className="text-[15px]  md:text-[21px] w-3/12 sm:w-2/12">
 //             <p className="font-semibold text-center ">Action</p>
 //           </div>
 //         </div>
-//   
+//
 //         {/* table */}
 //       </div>
-//   
+//
 //       {req
 //         ?.filter((request) =>
 //           request.tasks.some(
@@ -1052,7 +1148,7 @@ export default TaskTab;
 //         __html: filteredRequest?.details?.slice(0, 100) || '',
 //       }}
 //     />  */}
-//   
+//
 //                 <div className="flex justify-center xs:space-x-2 items-center text-[16px] md:text-lg w-2/12 sm:w-2/12 ">
 //                   <CiEdit className="text-3xl text-blue-500" />
 //                   <LuTrash2 className="text-xl text-red-500" />
@@ -1062,14 +1158,14 @@ export default TaskTab;
 //         )}
 //     </>
 //   )}
-//   
+//
 //   {/* for worker */}
 //   {filteredMyself?.length > 0 && (
 //     <div className="p-6">
 //       <h3 className="text-lg font-semibold text-gray-700 mb-2">
 //         For Project Worker
 //       </h3>
-//   
+//
 //       {/* <div className="text-gray-600 mb-4">
 //           <span className="font-semibold">Subtask:</span>
 //           <ul className="list-none mt-2 space-y-2">
@@ -1111,7 +1207,7 @@ export default TaskTab;
 //             Commit
 //           </div>
 //         </div> */}
-//   
+//
 //       {/* <div className="p-6 bg-[#e9f2f9] rounded-lg shadow-md">
 //         <div className=" p-6">
 //           <form onSubmit={handleSubmit}>
