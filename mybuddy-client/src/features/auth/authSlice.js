@@ -11,10 +11,18 @@ export const authSlice = createSlice({
     userLoggedIn: (state, action) => {
       state.accessToken = action.payload.accessToken;
       state.user = action.payload.user;
+
+        // Save to localStorage
+        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
     },
     userLoggedOut: (state) => {
       state.accessToken = undefined;
       state.user = undefined;
+
+      // Clear localStorage
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('user');
     }
 
   },

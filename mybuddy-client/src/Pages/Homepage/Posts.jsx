@@ -175,6 +175,15 @@ const Posts = ({ theme }) => {
     };
     console.log("form", postData);
     createPost(postData);
+    Swal.fire({
+      icon: "success",
+      title: "Hurry !",
+      text: "Your post has been published !",
+    });
+ 
+    setTimeout(() => {
+      window.location.reload();
+    }, 2500);
     setFormData({
       description: "",
       image: "",
@@ -184,25 +193,19 @@ const Posts = ({ theme }) => {
     });
   };
 
-  useEffect(() => {
-    if (!responseData?.status) {
-      console.log(responseData?.message);
-    }
-    if (responseError?.data) {
-      console.log(responseError.data);
-    }
-    if (responseData?.success && responseData?.data) {
-      console.log(responseData);
-      Swal.fire({
-        icon: "success",
-        title: "Hurry !",
-        text: "Your post has been published !",
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
-    }
-  }, [responseData, responseError]);
+  // useEffect(() => {
+  //   if (!responseData?.status) {
+  //     console.log(responseData?.message);
+  //   }
+  //   if (responseError?.data) {
+  //     console.log(responseError.data);
+  //   }
+  //   if (responseData?.success && responseData?.data) {
+  //     console.log(responseData);
+    
+    
+  //   }
+  // }, [responseData, responseError]);
 
   const handleRemoveImage = () => {
     setFormData((prevState) => ({

@@ -65,36 +65,48 @@ const TaskTab = ({
   const colors = [
     {
       progressColor: "bg-[#52E0FF]",
+      textColor: "text-[#52E0FF]",
+      borderColor: "border-[#52E0FF]",
       daysLeftTextColor: "text-[#52E0FF]",
       daysLeftColor: "bg-blue-100 text-[#52E0FF]",
       cardBg: "bg-white",
     },
     {
       progressColor: "bg-[#FF6F32]",
+      textColor: "text-[#FF6F32]",
+      borderColor: "border-[#FF6F32]",
       daysLeftTextColor: " text-[#FF6F32]",
       daysLeftColor: "bg-white text-[#FF6F32]",
       cardBg: "bg-[#fee4cb]",
     },
     {
       progressColor: "bg-[#72A7EF]",
+      textColor: "text-[#72A7EF]",
+      borderColor: "border-[#72A7EF]",
       daysLeftTextColor: "text-[#72A7EF]",
       daysLeftColor: "bg-white text-[#72A7EF]",
       cardBg: "bg-[#D5E7FC]",
     },
     {
       progressColor: "bg-[#02CF4B]",
+      textColor: "text-[#02CF4B]",
+      borderColor: "border-[#02CF4B]",
       daysLeftTextColor: "text-[#02CF4B]",
       daysLeftColor: "bg-white text-[#02CF4B]",
       cardBg: "bg-[#BAF3D2]",
     },
     {
       progressColor: "bg-[#FF6FAB]",
+      textColor: "text-[#FF6FAB]",
+      borderColor: "border-[#FF6FAB]",
       daysLeftTextColor: "text-[#FF6FAB]",
       daysLeftColor: "bg-white text-[#FF6FAB]",
       cardBg: "bg-[#FFD3E2]",
     },
     {
       progressColor: "bg-[#02CF4B]",
+      textColor: "text-[#02CF4B]",
+      borderColor: "border-[#02CF4B]",
       daysLeftTextColor: "text-[#02CF4B]",
       daysLeftColor: "bg-white text-[#02CF4B]",
       cardBg: "bg-[#BAF3D2]",
@@ -188,53 +200,6 @@ const TaskTab = ({
     }
   };
 
-  const handleUpdateSubTaskStatus = (e, sub) => {
-    e.preventDefault();
-
-    if (sub.status === "completed") {
-      Swal.fire({
-        icon: "info",
-        title: "You already completed the task",
-        text: "This subtask has already been completed.",
-      });
-    } else if (sub.status === "pending") {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to mark this subtask as completed?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, mark as completed!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const newStatus = "completed";
-
-          updateSubTaskStatus({
-            projectId: ProjectInfo?._id,
-            taskId: tasks[selectedIndex]._id,
-            subTaskId: sub?._id,
-            status: newStatus,
-          })
-            .unwrap()
-            .then(() => {
-              Swal.fire({
-                icon: "success",
-                title: "Subtask completed!",
-                text: "You have successfully marked the subtask as completed.",
-              });
-              setTimeout(() => {
-                window.location.reload();
-              }, 2500);
-            })
-            .catch((error) => {
-              alert("Failed to update subtask status.");
-              console.error(error);
-            });
-        }
-      });
-    }
-  };
 
   const deleteTaskById = (taskId) => {
     console.log(taskId);
@@ -614,14 +579,14 @@ const TaskTab = ({
                         {sub?.todo}
                       </p>
                     </div>
-                    {ProjectInfo?.user?._id === userId && (
+                    
                       <button
-                        onClick={(e) => handleUpdateSubTaskStatus(e, sub)}
+                      
                         className={` ${colors[selectedIndex].progressColor} text-white px-2 py-1 capitalize rounded-lg`}
                       >
                         {sub?.status}
                       </button>
-                    )}
+                    
                   </li>
                 ))}
               </ul>
@@ -639,6 +604,11 @@ const TaskTab = ({
               </button>
               {isOpenCommitModal && (
                 <CommitModal
+                textColor={colors[selectedIndex].textColor}
+                cardBg={colors[selectedIndex].cardBg}
+                buttonColor={colors[selectedIndex].progressColor}
+                borderColor={colors[selectedIndex].borderColor}
+                tasks={tasks[selectedIndex]}
                   userId={userId}
                   createCommit={createCommit}
                   ProjectInfo={ProjectInfo}
@@ -760,7 +730,7 @@ const TaskTab = ({
                     </div>
                   </div> */}
                   {/* table data */}
-                  {req
+                  {/* {req
                     ?.filter((request) =>
                       request.tasks.some(
                         (task) => task?.title === tasks[selectedIndex]?.title
@@ -816,9 +786,9 @@ const TaskTab = ({
                             </div>
                           </div>
                         )
-                    )}
+                    )} */}
                 </div>
-                {/*   {req?.filter((request) =>
+                  {req?.filter((request) =>
                   request.tasks.some(
                     (task) => task?.title === tasks[selectedIndex]?.title
                   )
@@ -902,7 +872,7 @@ const TaskTab = ({
                           )
                       )}
                   </>
-                )}*/}
+                )}
               </>
             </>
           )}

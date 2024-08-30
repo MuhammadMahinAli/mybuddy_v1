@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const ProjectCard = ({ p, i }) => {
   return (
     <div
@@ -55,7 +57,9 @@ const ProjectCard = ({ p, i }) => {
 
      w-full my-3 px-3 xs:px-6 py-1 md:px-8 lg:px-3 md:py-2 text-[11px] xs:text-[16px] md:text-xl lg:text-lg text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]`}
         >
+           <Link to={`/dashboard/details/${p?._id}`}>
           View More
+          </Link>
         </button>
       </div>
     </div>

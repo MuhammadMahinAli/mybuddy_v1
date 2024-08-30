@@ -42,10 +42,19 @@ const HomepageLayout = () => {
     }, 1000);
   }, []);
 
-  if (!user ) {
-    navigate("/");
-    return;
-  }
+  // if (!user ) {
+  //   navigate("/");
+  //   return;
+  // }
+  // Delay check for user authentication
+  useEffect(() => {
+    setTimeout(() => {
+      if (user) {
+        navigate("/home");
+      }
+   
+    }, 3000); // 3-second delay
+  }, [user, navigate]);
 
   return (
     <>

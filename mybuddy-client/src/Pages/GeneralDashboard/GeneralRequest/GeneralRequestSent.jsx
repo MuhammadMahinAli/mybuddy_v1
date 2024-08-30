@@ -42,7 +42,7 @@ const GeneralRequestSent = () => {
         confirmButtonText: 'Yes, cancel it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          const newStatus = "Rejected";
+          const newStatus = "Declined";
           console.log({ id: selectedTask._id, data: { status: newStatus } });
           updateJoinRequestStatus({
             id: selectedTask._id,
@@ -55,6 +55,9 @@ const GeneralRequestSent = () => {
                 title: "Great !",
                 text: "You have cancelled the request successfully!",
               });
+              setTimeout(() => {
+                window.location.reload();
+              }, 2500);
             })
             .catch((error) => {
               alert("Failed to update task status.");

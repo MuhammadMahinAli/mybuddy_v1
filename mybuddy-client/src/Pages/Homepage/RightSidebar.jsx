@@ -168,7 +168,7 @@ const RightSidebar = ({ theme }) => {
                 href={
                   singleUser
                     ? `https://twitter.com/${currentTwitter}`
-                    : "/login"
+                    : "/"
                 }
               >
                 <img className="h-12 pr-1" src={twitter} loading="lazy" alt="" />
@@ -178,7 +178,7 @@ const RightSidebar = ({ theme }) => {
                 href={
                   singleUser
                     ? `https://facebook.com/${currentFacebook}`
-                    : "/login"
+                    : "/"
                 }
               >
                 <img className="h-12" src={facebook} loading="lazy" alt="" />
@@ -189,7 +189,7 @@ const RightSidebar = ({ theme }) => {
                 href={
                   singleUser
                     ? `https://linkedin.com/in/${currentLinkedIn}`
-                    : "/login"
+                    : "/"
                 }
               >
                 <img className="h-[55px]" src={linkedIn} loading="lazy" alt="" />
@@ -197,7 +197,7 @@ const RightSidebar = ({ theme }) => {
               <a
                 target="blank"
                 href={
-                  singleUser ? `https://github.com/${currentGithub}` : "/login"
+                  singleUser ? `https://github.com/${currentGithub}` : "/"
                 }
               >
                 <img className="h-14" src={github} loading="lazy" alt="" />
@@ -278,7 +278,7 @@ const RightSidebar = ({ theme }) => {
           <div className="flex flex-col justify-center items-center py-4">
             <p className="text-xl font-bold pt-3 ">Browse Our</p>
             <p className="text-lg font-normal pb-3">Projects</p>
-            <a href={singleUser ? "/dashboard/create-projects" : "/login"}>
+            <a href={singleUser ? "/dashboard/create-projects" : "/"}>
               {theme === "light" ? (
                 <button className="px-8 py-2 text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)]">
                   Post Project

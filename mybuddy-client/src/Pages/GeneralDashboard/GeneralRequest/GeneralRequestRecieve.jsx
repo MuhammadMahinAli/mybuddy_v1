@@ -59,6 +59,9 @@ const GeneralRequestRecieve = () => {
                 title: "Well done !",
                 text: "You have accepted the request successfully!",
               });
+              setTimeout(() => {
+                window.location.reload();
+              }, 2500);
             })
             .catch((error) => {
               alert("Failed to accept the request.");
@@ -85,7 +88,7 @@ const GeneralRequestRecieve = () => {
         confirmButtonText: "Yes, Reject it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          const newStatus = "Rejected";
+          const newStatus = "Declined";
           console.log({ id: selectedTask._id, data: { status: newStatus } });
           updateJoinRequestStatus({
             id: selectedTask._id,
@@ -98,6 +101,9 @@ const GeneralRequestRecieve = () => {
                 title: "Well done !",
                 text: "You have rejected the request successfully!",
               });
+              setTimeout(() => {
+                window.location.reload();
+              }, 2500);
             })
             .catch((error) => {
               alert("Failed to reject the request.");

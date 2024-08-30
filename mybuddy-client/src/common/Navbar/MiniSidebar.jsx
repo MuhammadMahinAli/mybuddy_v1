@@ -82,7 +82,7 @@ const MiniSidebar = ({ user, theme }) => {
         )}
       </li>
       <li className="relative sidebar-list">
-        <Link to={user ? "/dashboard" : "/login"}>
+        <Link to={user ? "/dashboard" : "/"}>
           <div
             className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
             onMouseEnter={() => setOpenDashboard(true)}

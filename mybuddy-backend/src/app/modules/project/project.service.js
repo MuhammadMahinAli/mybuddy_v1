@@ -97,8 +97,8 @@ export const updateTaskStatusPositional = async (
 
 //----------------- delete project
 
- export const deleteProjectService = async (id) => {
-  const result = await Project.findByIdAndDelete({_id: id});
+export const deleteProjectService = async (id) => {
+  const result = await Project.findByIdAndDelete({ _id: id });
   return result;
 };
 //------------- delete task from project
@@ -112,7 +112,9 @@ export const deleteTaskFromProjectService = async (taskId) => {
     }
 
     // Remove the task from the project's tasks array
-    project.tasks = project.tasks.filter((task) => task._id.toString() !== taskId);
+    project.tasks = project.tasks.filter(
+      (task) => task._id.toString() !== taskId
+    );
     await project.save();
 
     return project;
@@ -121,12 +123,11 @@ export const deleteTaskFromProjectService = async (taskId) => {
   }
 };
 
-
-
-
 //----------Update project
 export const updateProjectService = async (id, updateData) => {
-  const updatedProject = await Project.findByIdAndUpdate(id, updateData, { new: true });
+  const updatedProject = await Project.findByIdAndUpdate(id, updateData, {
+    new: true,
+  });
   if (!updatedProject) {
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
@@ -148,7 +149,7 @@ export const updateProjectService = async (id, updateData) => {
 export const addTaskToProjectService = async (id, data) => {
   try {
     const project = await Project.findById(id);
-    console.log('pp',id);
+    console.log("pp", id);
     if (!project) {
       throw new Error("Project not found");
     }
@@ -178,24 +179,47 @@ export const updateTaskStatusService = async (projectId, taskId, status) => {
   return task;
 };
 
-// Service for updating subtask status
-export const updateSubTaskStatusService = async (projectId, taskId, subTaskId, status) => {
-  const project = await Project.findById(projectId);
-  if (!project) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Project not found");
-  }
 
-  const task = project.tasks.id(taskId);
-  if (!task) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Task not found");
-  }
 
-  const subTask = task.subTask.id(subTaskId);
-  if (!subTask) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Subtask not found");
-  }
+//--------------- uodate project status & sub task status
 
-  subTask.status = status;
-  await project.save();
-  return subTask;
+
+export const updateProjectTasks = async (projectId, completedTask) => {
+  try {
+    const project = await Project.findById(projectId);
+
+    if (!project) {
+      throw new Error("Project not found");
+    }
+    if (!Array.isArray(completedTask)) {
+      throw new Error("completedTasks is not an array");
+    }
+    if (!Array.isArray(project.tasks)) {
+      throw new Error("Tasks array is missing or not an array");
+    }
+
+    const completedTaskTitles = completedTask?.map((task) => task.taskTitle);
+
+    project.tasks = project.tasks.map((task) => {
+      if (completedTaskTitles.includes(task.title)) {
+        task.status = "completed";
+      }
+
+      if (Array.isArray(task.subTask)) {
+        task.subTask = task.subTask.map((subtask) => {
+          if (completedTaskTitles.includes(subtask.todo)) {
+            subtask.status = "completed";
+          }
+          return subtask;
+        });
+      }
+
+      return task;
+    });
+
+    await project.save();
+    console.log("Project tasks updated successfully");
+  } catch (error) {
+    console.error("Error updating project tasks:", error);
+  }
 };

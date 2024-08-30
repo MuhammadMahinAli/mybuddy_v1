@@ -20,7 +20,7 @@ const ActivityTab = ({
   );
   const commitOfProject = getCommitByProject?.data;
 
-  const handleCommitMessage = (message) => {
+  const handleCommitMessage = (message, completedTask) => {
     if (!message) {
       Swal.fire({
         title: "No message Found",
@@ -28,13 +28,17 @@ const ActivityTab = ({
         confirmButtonText: "Close",
       });
     } else {
+      const taskTitles = completedTask?.map(t => t.taskTitle).join(', ') || "No tasks completed";
+      
       Swal.fire({
         title: message,
+        html: `<p><strong>Completed Tasks:</strong> ${taskTitles}</p>`,
         icon: "info",
         confirmButtonText: "Close",
       });
     }
   };
+  
   const handleEmptyMedia = (media) => {
     if (!media) {
       Swal.fire({
@@ -133,7 +137,7 @@ const ActivityTab = ({
           {` No Commit Available To Present Right Now.`}
         </h3>
       ) : (
-        <div className="w-[300px] md:w-[630px] lg:w-[800px] xl:w-[850px] 2xl:w-[900px] 3xl:w-[950px] 4xl:w-[1080px] overflow-x-auto ">
+        <div className="min-h-screen w-[300px] md:w-[630px] lg:w-[800px] xl:w-[850px] 2xl:w-[900px] 3xl:w-[950px] 4xl:w-[1080px] overflow-x-auto ">
           {/* table head */}
           <div className="min-w-[900px] md:min-w-[900px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
             <div className="text-[14px] md:text-[16px] font-semibold text-center w-[120px] border-r border-[#C8CBD3]">
@@ -187,7 +191,7 @@ const ActivityTab = ({
                   </div>
                 </div>
               </div>
-              <div onClick={()=>handleCommitMessage(commit?.message)} className="cursor-pointer text-[13px] md:text-[16px] capitalize text-center w-3/12 border-r border-[#C8CBD3] px-2">
+              <div onClick={()=>handleCommitMessage(commit?.message,commit?.completedTask)} className="cursor-pointer text-[13px] md:text-[16px] capitalize text-center w-3/12 border-r border-[#C8CBD3] px-2">
                 {commit?.message.slice(0, 20)}...
               </div>
               <div

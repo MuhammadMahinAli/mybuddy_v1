@@ -359,9 +359,9 @@ const UpdateAboutModal = ({ isOpenAboutModal, theme, closeAboutModal }) => {
         text: "You've Updated Your Information !",
       });
       closeAboutModal();
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 2500);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
     } catch (error) {
       console.error("Error updating social info:", error);
     }

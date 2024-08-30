@@ -3,7 +3,7 @@ import { FaCaretRight, FaRegEdit } from "react-icons/fa";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import ProjectTaskIcon from "../../../icons/ProjectTaskIcon";
 import ActivityIcon from "../../../icons/ActivityIcon";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 import Swal from "sweetalert2";
@@ -147,9 +147,9 @@ const GeneralProjectDetails = () => {
     <>
       <div className="md:flex items-center space-x-1 hidden">
         <BsHouseDoor className="text-xl text-blue-500" />
-        <p className="text-blue-500 text-lg">Dashboard</p>
+        <Link to="/dashboard" className="text-blue-500 text-lg">Dashboard</Link>
         <FaCaretRight className="text-xl text-blue-500" />
-        <p className="text-blue-500 text-lg">Project</p>
+        <Link to="/dashboard/all-projects" className="text-blue-500 text-lg">Project</Link>
         <FaCaretRight className="text-xl text-blue-500" />
         <p className=" text-lg">{projectName}</p>
       </div>

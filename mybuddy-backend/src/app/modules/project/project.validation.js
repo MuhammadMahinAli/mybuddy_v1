@@ -63,18 +63,4 @@ export const addNewTaskSchema = z.object({
     status:z.string().optional(),
     startDate:z.string().optional()
   })
-})
-
-  // tasks: z.array(
-    //   z.object({
-    //     title: z.string(),
-    //     details: z.string(),
-    //     taskType: z.string(), 
-    //     coin: z.string(), 
-    //     priority: z.string(), 
-    //     status: z.string(), 
-    //     startDate: z.string(), 
-    //     endDate: z.string(), 
-    //     subTask: z.array(z.string())
-    //   })
-    // ).optional(),
+});

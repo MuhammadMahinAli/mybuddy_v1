@@ -40,7 +40,7 @@ export const getCommitByProjectController= catchAsync(async (req, res) => {
   });
 });
 
-// controllers/commitController.js
+//--------- update commit status controller
 
 export const updateCommitStatusController = catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -54,4 +54,5 @@ export const updateCommitStatusController = catchAsync(async (req, res) => {
       data: updatedCommitStatus,
     });
   });
+
   

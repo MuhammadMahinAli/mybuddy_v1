@@ -77,6 +77,9 @@ const GeneralFriendRequest = () => {
                 title: "Well done !",
                 text: "You have rejected the request successfully!",
               });
+              setTimeout(() => {
+                window.location.reload();
+              }, 2500);
             })
             .catch((error) => {
               alert("Failed to reject the request.");

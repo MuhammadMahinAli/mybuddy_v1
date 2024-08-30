@@ -16,10 +16,11 @@ const CommitSchema = new Schema(
       type: String,
       required: true,
     },
-    media: {
-      type: String,
-    },
-
+    media: [
+      {
+        type: String,
+      },
+    ],
     externalLink: {
       type: String,
     },
@@ -31,11 +32,16 @@ const CommitSchema = new Schema(
     declineMessage: {
       type: String,
     },
+    completedTask: [
+      {
+        taskTitle: { type: String },
+      },
+    ], // Array of objects for completed tasks with taskTitle and status
   },
   {
     timestamps: true,
   }
 );
 
-// ----- eporting coommit model
+// ----- exporting commit model
 export const Commit = model("Commit", CommitSchema);

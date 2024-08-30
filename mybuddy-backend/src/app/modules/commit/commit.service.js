@@ -1,6 +1,7 @@
 import httpStatus from "http-status";
 import { ApiError } from "../../../handleError/apiError.js";
 import { Commit } from "./commit.model.js";
+import { Project } from "../project/project.model.js";
 
 export const createCommitService = async (commitData) => {
   try {
@@ -49,3 +50,5 @@ export const updateCommitStatusService = async (id, status, declineMessage = nul
   
   return updatedCommitStatus;
 };
+
+

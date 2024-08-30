@@ -75,9 +75,17 @@ export const projectApi = apiSlice.injectEndpoints({
       }),
       invalidateTags: ["Project"],
     }),
+    updateProjectStatus: builder.mutation({
+      query: ({ projectId, completedTask }) => ({
+        url: `/project/${projectId}/update-tasks`,
+        method: "PUT",
+        body: { completedTask },
+      }),
+      invalidateTags: ["Project"],
+    }),
   }),
 });
 
- export const {useUpdateProjectInfoMutation, useCreateNewProjectMutation, useCreateNewTaskMutation , useGetAllProjectQuery, useGetAllProjectByUserQuery,useDeleteProjectMutation, useDeleteTaskMutation, useUpdateTaskStatusMutation, useUpdateSubTaskStatusMutation } = projectApi;
+ export const {useUpdateProjectInfoMutation, useCreateNewProjectMutation, useCreateNewTaskMutation , useGetAllProjectQuery, useGetAllProjectByUserQuery,useDeleteProjectMutation, useDeleteTaskMutation, useUpdateTaskStatusMutation, useUpdateSubTaskStatusMutation,useUpdateProjectStatusMutation } = projectApi;
 
 // useGetAllPostQuery
