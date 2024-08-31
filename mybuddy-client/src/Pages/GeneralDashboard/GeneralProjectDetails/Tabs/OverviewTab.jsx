@@ -63,13 +63,13 @@ const OverviewTab = ({
   const projectDeadline = formatDate(startDate) + " -" + formatDate(endDate);
   const projectFirstImage = images[0]
     ? images[0]
-    : "https://www.liquidplanner.com/wp-content/uploads/2019/04/HiRes-17-1024x615.jpg";
+    : "https://img.freepik.com/free-vector/hand-drawn-no-photo-sign_23-2149278212.jpg";
   const projectSecoundImage = images[1]
     ? images[1]
-    : "https://www.liquidplanner.com/wp-content/uploads/2019/04/HiRes-17-1024x615.jpg";
+    : "https://img.freepik.com/free-vector/hand-drawn-no-photo-sign_23-2149278212.jpg";
   const projectLastImage = images[2]
     ? images[2]
-    : "https://www.liquidplanner.com/wp-content/uploads/2019/04/HiRes-17-1024x615.jpg";
+    : "https://img.freepik.com/free-vector/hand-drawn-no-photo-sign_23-2149278212.jpg";
   return (
     <div>
       <div className="mt-7 space-y-2 pb-6 rounded-[20px] md:rounded-[15px] relative bg-[#e4ecf7]  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">

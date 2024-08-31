@@ -114,10 +114,11 @@ const TaskTab = ({
   ];
 
   // member status
-  const handleUpdateStatusDone = (e, index) => {
+  const handleUpdateStatusDone = (e, request) => {
     e.preventDefault();
-    setSelectedRequestIndex(index);
-    const selectedTask = allRecieveRequest?.data[index];
+    // setSelectedRequestIndex(index);
+    const selectedTask = request;
+    console.log(selectedTask);
     if (selectedTask) {
       Swal.fire({
         title: "Are you sure?",
@@ -126,7 +127,7 @@ const TaskTab = ({
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, all task are completed!",
+        confirmButtonText: "Yes, Accept it!",
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Done";
@@ -140,11 +141,14 @@ const TaskTab = ({
               Swal.fire({
                 icon: "success",
                 title: "Well done !",
-                text: "You have updated the status successfully!",
+                text: "You have accepted the request successfully!",
               });
+              setTimeout(() => {
+                window.location.reload();
+              }, 2500);
             })
             .catch((error) => {
-              alert("Failed to update status.");
+              alert("Failed to accept the request.");
               console.error(error);
             });
         }
@@ -153,6 +157,50 @@ const TaskTab = ({
       console.log("No task found for the selected index.");
     }
   };
+  // const handleUpdateStatusDone = (e, id) => {
+
+  //   e.preventDefault();
+  //   // setSelectedRequestIndex(index);
+  //   // const selectedTask = allRecieveRequest?.data[index];
+  //   console.log("done",id);
+  //   if (id) {
+  //     Swal.fire({
+  //       title: "Are you sure?",
+  //       text: "Does this member completed his task?",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Yes, all task are completed!",
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         const newStatus = "Done";
+  //         console.log({ id: id, data: { status: newStatus } });
+  //         updateJoinRequestStatus({
+  //           id: id,
+  //           data: { status: newStatus },
+  //         })
+  //           .unwrap()
+  //           .then(() => {
+  //             Swal.fire({
+  //               icon: "success",
+  //               title: "Well done !",
+  //               text: "You have updated the status successfully!",
+  //             });
+  //             setTimeout(() => {
+  //               window.location.reload();
+  //             }, 2500);
+  //           })
+  //           .catch((error) => {
+  //             alert("Failed to update status.");
+  //             console.error(error);
+  //           });
+  //       }
+  //     });
+  //   } else {
+  //     console.log("No task found for the selected index.");
+  //   }
+  // };
 
   //----------- update task, subtask status
   const [updateTaskStatus] = useUpdateTaskStatusMutation();
@@ -199,7 +247,6 @@ const TaskTab = ({
       console.log("No task found for the selected index.");
     }
   };
-
 
   const deleteTaskById = (taskId) => {
     console.log(taskId);
@@ -540,25 +587,13 @@ const TaskTab = ({
               {" "}
               {tasks[selectedIndex].details}
             </p>
-            {ProjectInfo?.user?._id === userId && (
+        
               <button
-                onClick={(e) => {
-                  const taskStatus = tasks[selectedIndex].status;
-                  if (taskStatus === "pending") {
-                    handleUpdateTaskStatus(e, selectedIndex);
-                  } else if (taskStatus === "completed") {
-                    Swal.fire({
-                      icon: "info",
-                      title: "Task Completed",
-                      text: "You already completed the task.",
-                    });
-                  }
-                }}
                 className={`float-right ${colors[selectedIndex].progressColor} text-white px-2 py-1 capitalize rounded-lg`}
               >
                 {tasks[selectedIndex].status}
               </button>
-            )}
+       
           </div>
           {tasks[selectedIndex].subTask?.length !== 0 && (
             <div className="">
@@ -573,20 +608,18 @@ const TaskTab = ({
                   >
                     <div className="flex justify-between items-start space-x-4">
                       <div
-                        className={`${colors[selectedIndex].progressColor} mt-1 w-3 h-3 rounded-full graish text-[14px]`}
-                      />
+                        className={` mt-1 w-3 h-3 rounded-full graish text-[14px]`}
+                      >{i+1}.</div>
                       <p className="text-gray-500 w-11/12 text-lg">
                         {sub?.todo}
                       </p>
                     </div>
-                    
-                      <button
-                      
-                        className={` ${colors[selectedIndex].progressColor} text-white px-2 py-1 capitalize rounded-lg`}
-                      >
-                        {sub?.status}
-                      </button>
-                    
+
+                    <button
+                      className={` ${colors[selectedIndex].progressColor} text-white px-2 py-1 capitalize rounded-lg`}
+                    >
+                      {sub?.status}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -598,17 +631,17 @@ const TaskTab = ({
             <div className="pb-3">
               <button
                 onClick={() => setIsOpenCommitModal(true)}
-                className={`float-right ${colors[selectedIndex].progressColor} text-white text-[18px] px-3 py-1 capitalize rounded-lg`}
+                className={`float-right ${colors[selectedIndex].progressColor} text-white text-[18px] px-3 py-1 capitalize rounded-lg mt-10 `}
               >
                 Commit
               </button>
               {isOpenCommitModal && (
                 <CommitModal
-                textColor={colors[selectedIndex].textColor}
-                cardBg={colors[selectedIndex].cardBg}
-                buttonColor={colors[selectedIndex].progressColor}
-                borderColor={colors[selectedIndex].borderColor}
-                tasks={tasks[selectedIndex]}
+                  textColor={colors[selectedIndex].textColor}
+                  cardBg={colors[selectedIndex].cardBg}
+                  buttonColor={colors[selectedIndex].progressColor}
+                  borderColor={colors[selectedIndex].borderColor}
+                  tasks={tasks[selectedIndex]}
                   userId={userId}
                   createCommit={createCommit}
                   ProjectInfo={ProjectInfo}
@@ -647,7 +680,7 @@ const TaskTab = ({
                       Status
                     </div>
                     <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12">
-                      Mannage
+                      Manage
                     </div>
                   </div>
                   {/* table data */}
@@ -690,16 +723,21 @@ const TaskTab = ({
 
                         <div className="text-[13px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
                           <button className="border border-blue-500 capitalize bg-blue-200 text-blue-600 py-1 px-3 rounded-lg text-sm">
-                            {tasks[selectedIndex]?.status === "Accepted"
+                            {request?.status === "Accepted"
                               ? "in progress"
-                              : tasks[selectedIndex]?.status}
+                              : request?.status}
                           </button>
                         </div>
                         <div className="w-1/12 flex justify-center items-center ml-5 space-x-1 md:space-x-2">
-                          <CiEdit
-                            onClick={(e) => handleUpdateStatusDone(e, i)}
-                            className="text-3xl text-blue-600 cursor-pointer"
-                          />
+                          {request?.status === "Accepted" && (
+                            <CiEdit
+                              onClick={(e) =>
+                                handleUpdateStatusDone(e, request)
+                              }
+                              className="text-3xl text-blue-600 cursor-pointer"
+                            />
+                          )}
+
                           <LuTrash2
                             onClick={() => deleteMember(request?._id)}
                             className="text-xl text-red-500 cursor-pointer"
@@ -788,7 +826,7 @@ const TaskTab = ({
                         )
                     )} */}
                 </div>
-                  {req?.filter((request) =>
+                {req?.filter((request) =>
                   request.tasks.some(
                     (task) => task?.title === tasks[selectedIndex]?.title
                   )

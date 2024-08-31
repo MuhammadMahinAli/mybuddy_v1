@@ -60,10 +60,23 @@ export const getProjectByRequestedToService = async (id) => {
    return projectByRequestedTo;
  };
 // ***************** get accepted send request by requestedTo
+// export const getAcceptedProjectByRequestedToService = async (id) => {
+//    const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({requestedTo: id}).find({ status: "Accepted" }).find({status: "Done"}).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+//    return acceptedProjectByRequestedTo;
+//  };
 export const getAcceptedProjectByRequestedToService = async (id) => {
-   const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({requestedTo: id}).find({ status: "Accepted" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
-   return acceptedProjectByRequestedTo;
+   const acceptedOrDoneProjects = await ProjectJoinRequest.find({
+     requestedTo: id,
+     $or: [{ status: "Accepted" }, { status: "Done" }],
+   })
+   .populate('projectId')
+   .populate('requestedBy')
+   .populate('requestedTo')
+   .sort({ createdAt: -1 });
+ 
+   return acceptedOrDoneProjects;
  };
+ 
 // ***************** get accepted project team member
 export const getAcceptedProjectTeamMemberService = async (id) => {
    const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({projectId : id}).find({ status: "Accepted" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });

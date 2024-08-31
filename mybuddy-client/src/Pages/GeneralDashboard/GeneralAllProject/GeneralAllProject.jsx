@@ -61,7 +61,10 @@ const GeneralAllProject = () => {
           <button
             className={`flex justify-center items-center space-x-1 w-full my-3 px-1 md:px-3 py-1 lg:px-4 md:py-2 text-[12px] xs:text-[14px] md:text-[16px] text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[7px] h-8 md:h-10 lg:h-10 [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]`}
           >
-            <FaPlus /> <span> New Project</span>
+           
+            <FaPlus /> <span>  <Link to='/dashboard/create-projects'>New Project </Link></span>
+      
+          
           </button>
           <button
             onClick={() => setShowFilterOption(!showFilterOption)}

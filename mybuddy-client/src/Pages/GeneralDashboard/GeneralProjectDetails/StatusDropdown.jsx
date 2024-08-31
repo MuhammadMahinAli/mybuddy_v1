@@ -209,7 +209,7 @@ const StatusDropdown = ({
           </span>
           {showDropdown && (
             <div className="relative pt-1">
-              <ul className="absolute bg-white border rounded-lg border-gray-300 shadow-lg mt-2 z-10">
+              <ul className="absolute right-2 bg-white border rounded-lg border-gray-300 shadow-lg mt-2 z-10">
                 <li
                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                   onClick={(e) => handleTaskCompletion(e, "Approved")}

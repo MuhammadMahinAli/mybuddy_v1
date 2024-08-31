@@ -15,7 +15,7 @@ const CommitModal = ({
   tasks,
   cardBg,
   borderColor,
-  textColor
+  textColor,
 }) => {
   const [isFileLoading, setIsFileLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -159,7 +159,9 @@ const CommitModal = ({
                       role="alert"
                       className={`rounded shadow-md border-s-4  ${borderColor} ${cardBg} p-4`}
                     >
-                      <strong className={` block text-lg font-bold ${textColor}`}>
+                      <strong
+                        className={` block text-lg font-bold ${textColor}`}
+                      >
                         {" "}
                         Rules of Commit
                       </strong>
@@ -331,18 +333,21 @@ const CommitModal = ({
                           </label>
                         </div>
 
-                        <div className="grid grid-cols-1 ssm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 pt-4 pb-7">
-                          {formData.media.length > 0 &&
-                            formData.media.map((media, index) => (
-                              <button
-                                key={index}
-                                className={`flex items-center justify-center py-1 space-x-2 ${buttonColor} opacity-85 text-white rounded-md`}
-                              >
-                                <FaCheck />
-                                <span>{index + 1} Selected</span>
-                              </button>
-                            ))}
-                        </div>
+                        {formData.media?.length !== 0 && (
+                          <div className="grid grid-cols-1 ssm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 pt-4 pb-7">
+                            {formData.media.length > 0 &&
+                              formData.media.map((media, index) => (
+                                <button
+                                  key={index}
+                                  className={`flex items-center justify-center py-1 space-x-2 ${buttonColor} opacity-85 text-white rounded-md`}
+                                >
+                                  <FaCheck />
+                                  <span>{index + 1} Selected</span>
+                                </button>
+                              ))}
+                          </div>
+                        )}
+
                         <div className="flex flex-col md:flex-row md:items-center justify-between  mb-4">
                           <label className="block text-gray-700 font-bold mb-2">
                             External Link :

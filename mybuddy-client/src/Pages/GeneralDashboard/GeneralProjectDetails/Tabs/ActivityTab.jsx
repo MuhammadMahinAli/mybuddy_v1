@@ -40,15 +40,56 @@ const ActivityTab = ({
   };
   
   const handleEmptyMedia = (media) => {
-    if (!media) {
+    console.log(media);
+    if (media?.length === 0) {
       Swal.fire({
         title: "No Media Found",
         icon: "info",
         confirmButtonText: "Close",
       });
-    } else {
-      window.open(media, "_blank");
     }
+    
+      else {
+        const limitedMedia = media.slice(0, 10); // Limit to 10 images
+        const rows = [limitedMedia.slice(0, 5), limitedMedia.slice(5, 10)]; // Split into two rows
+    
+        const htmlContent = rows
+          .map(
+            (row, rowIndex) =>
+              `<div style="display: flex; justify-content: center; margin-bottom: 10px;">` +
+              row
+                .map(
+                  (image, index) =>
+                    `<label style="margin: 0 10px;">
+                      <input type="radio" name="imageSelect" value="${image}" style="margin-right: 5px;" />
+                      Image ${rowIndex * 5 + index + 1}
+                    </label>`
+                )
+                .join("") +
+              `</div>`
+          )
+          .join("");
+    
+        Swal.fire({
+          title: "Select an image to view",
+          icon: "info",
+          html: htmlContent,
+          showCancelButton: true,
+          confirmButtonText: "View Image",
+          preConfirm: () => {
+            const selectedImage = document.querySelector('input[name="imageSelect"]:checked');
+            if (!selectedImage) {
+              Swal.showValidationMessage("You need to select an image!");
+              return null;
+            }
+            return selectedImage.value;
+          },
+        }).then((result) => {
+          if (result.isConfirmed && result.value) {
+            window.open(result.value, "_blank");
+          }
+        });
+      }
   };
   const handleEmptyExternalLink = (externalLink) => {
     if (!externalLink) {
@@ -137,7 +178,7 @@ const ActivityTab = ({
           {` No Commit Available To Present Right Now.`}
         </h3>
       ) : (
-        <div className="min-h-screen w-[300px] md:w-[630px] lg:w-[800px] xl:w-[850px] 2xl:w-[900px] 3xl:w-[950px] 4xl:w-[1080px] overflow-x-auto ">
+        <div className="min-h-[800px] w-[300px] md:w-[630px] lg:w-[800px] xl:w-[850px] 2xl:w-[900px] 3xl:w-[950px] 4xl:w-[1080px] overflow-x-auto ">
           {/* table head */}
           <div className="min-w-[900px] md:min-w-[900px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
             <div className="text-[14px] md:text-[16px] font-semibold text-center w-[120px] border-r border-[#C8CBD3]">

@@ -8,15 +8,17 @@ import ResearcherIcon from "../../icons/ResearcherIcon";
 import Hamburger from "../../icons/Hamburger";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-     
 
 const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
   return (
     <div>
- <div data-aos="fade-right"
-     data-aos-anchor="#example-anchor"
-     data-aos-offset="300"
-     data-aos-duration="300" className={`fixed  left-0 top-0 z-50`}>
+      <div
+        data-aos="fade-right"
+        data-aos-anchor="#example-anchor"
+        data-aos-offset="300"
+        data-aos-duration="300"
+        className={`fixed  left-0 top-0 z-50`}
+      >
         {openSidebar && (
           <div className="">
             <div
@@ -35,7 +37,7 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                   openSidebar === false && "hidden"
                 }`}
               >
-                < Link to="/home">
+                <Link to="/home">
                   <img
                     className="h-[32px] w-[30px] md:h-12 md:w-[46px] rounded-lg"
                     src="/logo.png"
@@ -61,7 +63,8 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
               }  w-[200px] space-y-5 lg:rounded-br-xl p-4`}
             >
               <li className="sidebar-list">
-                < Link to="/home"
+                <Link
+                  to="/home"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer box1 [border:none]">
@@ -85,7 +88,8 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                 </Link>
               </li>
               <li className="sidebar-list">
-                < Link to="/find/researcher"
+                <Link
+                  to="/find/researcher"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer box1 [border:none]">
@@ -109,7 +113,8 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                 </Link>
               </li>
               <li className="sidebar-list">
-                < Link to={user ? "/dashboard" : "/"}
+                <Link
+                  to={user ? "/dashboard" : "/"}
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
@@ -133,7 +138,8 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                 </Link>
               </li>
               <li className="sidebar-list">
-                < Link to="/find/project"
+                <Link
+                  to="/find/project"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
@@ -157,7 +163,8 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                 </Link>
               </li>
               <li className="sidebar-list">
-                < Link to="/frnd"
+                <Link
+                  to="/frnd"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
@@ -181,7 +188,8 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                 </Link>
               </li>
               <li className="sidebar-list">
-                < Link to="/meet"
+                <Link
+                  to="/meet"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
