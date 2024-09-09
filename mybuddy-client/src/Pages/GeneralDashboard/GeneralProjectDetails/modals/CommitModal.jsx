@@ -103,7 +103,8 @@ const CommitModal = ({
     };
     console.log("commit", postData);
     try {
-      await createCommit(postData);
+      await createCommit(postData)
+      .unwrap() 
       Swal.fire({
         icon: "success",
         title: "Commit Uploaded!",
@@ -111,7 +112,6 @@ const CommitModal = ({
         timer: 2000,
         showConfirmButton: false,
       });
-
       setTimeout(() => {
         window.location.reload();
       }, 2500);

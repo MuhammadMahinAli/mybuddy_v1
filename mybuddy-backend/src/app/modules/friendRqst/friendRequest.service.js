@@ -5,19 +5,6 @@ import { ApiError } from "../../../handleError/apiError.js";
 
 
 //--------- create friend request
-// export const createFriendRequest = async(postData) => {
-//     try {
-//        const result = await FriendRequest.create(postData);
-     
-//        if (!result) {
-//          throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create friend request");
-//        }
-//        return result;
-//     } catch (error) {
-//        throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
-//     }
-//    };
-
 
 export const createFriendRequest = async(postData) => {
   try {
@@ -45,20 +32,32 @@ export const createFriendRequest = async(postData) => {
 
 
 
-//------------- get friend request with pending status
+//------------- Get all friend requests of  request by
+export const getAllFriendRequestService = async (id) => {
+ const friendRequests = await FriendRequest.find({requestedBy: id}).populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+  return friendRequests;
+};
+
+//------------- get friend request with pending status of requested by
+export const getPendingFriendRequestByService = async (id) => {
+  const friendRequests = await FriendRequest.find({requestedBy: id}).find({ status: "Pending" }).populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+  return friendRequests;
+};
+
+//------------- get friend request with pending status of requested to
    export const getPendingFriendRequestService = async (id) => {
       const friendRequests = await FriendRequest.find({requestedTo: id}).find({ status: "Pending" }).populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
       return friendRequests;
     };
 
 
-//------------- get friend request with accepted status
+//------------- get friend request with accepted status requested to
    export const getAcceptedFriendRequestService = async (id) => {
       const friendRequests = await FriendRequest.find({requestedTo: id}).find({ status: "Accepted" }).populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
       return friendRequests;
     };
 
-//------------- get other's friend request with accepted status
+//------------- get other's friend request with accepted status requested by
    export const getOthersAcceptedFriendRequestService = async (id) => {
       const friendRequests = await FriendRequest.find({requestedBy: id}).find({ status: "Accepted" }).populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
       return friendRequests;
@@ -77,5 +76,10 @@ export const createFriendRequest = async(postData) => {
   };
 
 
-  ////////////
+//----------------- delete friend request
+
+export const deleteFriendRequestService = async (id) => {
+  const result = await FriendRequest.findByIdAndDelete({ _id: id });
+  return result;
+};
   

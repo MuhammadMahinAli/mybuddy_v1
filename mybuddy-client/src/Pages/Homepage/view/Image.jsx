@@ -6,7 +6,7 @@ const Image = ({image,i}) => {
     console.log("Rendering Image component at index:", i);
   }, [i]);
     return (
-        <div className="flex justify-center items-center  ">
+        <div className="flex justify-center items-center ">
         <div className="flex justify-center items-center ">
        {
         image &&

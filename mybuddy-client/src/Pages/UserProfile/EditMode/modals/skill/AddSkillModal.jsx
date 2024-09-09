@@ -178,7 +178,8 @@ const AddSkillModal = ({ isOpen, closeModal }) => {
     }
     console.log(data);
   
-      await addSkills(data);
+      await addSkills(data)
+      .unwrap() 
       Swal.fire({
         icon: "success",
         title: "Good Job !",
@@ -187,8 +188,7 @@ const AddSkillModal = ({ isOpen, closeModal }) => {
       closeModal();
       setTimeout(() => {
         window.location.reload();
-      }, 2500); // Close the modal after successful submission
-    
+      }, 2500);
   };
 
 

@@ -1,10 +1,17 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 import { useUpdateFriendRequestStatusMutation } from "../../../features/friend/friendApi";
 import Swal from "sweetalert2";
+import filter from "../../../assets/filter.png";
+import RecieveFriendRequest from "./RecieveFriendRequest";
+import SentFriendRequest from "./SentFriendRequest";
 
 const GeneralFriendRequest = () => {
-  const { getFriendRequest } = useContext(AuthContext);
+  const {
+    getFriendRequest,
+    getAllSentPendingFriendRequest,
+    deleteFriendRequest,
+  } = useContext(AuthContext);
   const [updateFriendRequestStatus] = useUpdateFriendRequestStatusMutation();
 
   const handleUpdateStatusAccept = (e, index) => {
@@ -12,13 +19,13 @@ const GeneralFriendRequest = () => {
     const selectedTask = getFriendRequest?.data[index];
     if (selectedTask) {
       Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "Do you really want to accept the request?",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Accept it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Accept it!",
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Accepted";
@@ -37,14 +44,12 @@ const GeneralFriendRequest = () => {
               setTimeout(() => {
                 window.location.reload();
               }, 2500);
-              // refetch()
             })
             .catch((error) => {
               alert("Failed to accept the request.");
               console.error(error);
             });
         }
-        
       });
     } else {
       console.log("No task found for the selected index.");
@@ -55,13 +60,13 @@ const GeneralFriendRequest = () => {
     const selectedTask = getFriendRequest?.data[index];
     if (selectedTask) {
       Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "Do you really want to reject the request?",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Reject it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Reject it!",
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Rejected";
@@ -92,47 +97,109 @@ const GeneralFriendRequest = () => {
     }
   };
 
-  //{r?.requestedBy?.name?.firstName}
+  // delete friend request
+
+  const handleDeleteFriendRequest = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Are you sure to cancel your request?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteFriendRequest(id)
+          .unwrap()
+          .then(() => {
+            Swal.fire(
+              "Cancelled!",
+              "Your request has been cancelled.",
+              "success"
+            );
+            setTimeout(() => {
+              window.location.reload();
+            }, 2500);
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire(
+              "Error!",
+              "There was an issue to cancelled request.",
+              "error"
+            );
+          });
+      }
+    });
+  };
+  const [showFilterOption, setShowFilterOption] = useState(false);
+
+  const [isOpenSentRequest, setIsOpenSentRequest] = useState(true);
+  const [isOpenRecieveRequest, setIsOpenRecieveRequest] = useState(false);
+
+  const toggleSentRequest = () => {
+    setIsOpenSentRequest(true);
+    setIsOpenRecieveRequest(false);
+    setShowFilterOption(false);
+  };
+  const toggleRecieveRequest = () => {
+    setIsOpenSentRequest(false);
+    setIsOpenRecieveRequest(true);
+    setShowFilterOption(false);
+  };
 
   const requests = getFriendRequest?.data;
+  const sentRequests = getAllSentPendingFriendRequest?.data;
 
   console.log(getFriendRequest?.data?.length);
   return (
-    <div className="">
+    <div className="relative">
       <h1 className="gray600 text-[20px] lg:text-[28px] md:pb-5 font-bold w-full pb-3 xl:pb-7">
         FRIEND REQUESTS
       </h1>
-      {getFriendRequest?.data?.length === 0  && 
-      <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not recieved any request yet.`}</p>
-      }
-      {requests?.map((request,i) => (
-        <div
-          key={request._id}
-          className=" p-3 md:p-7 mb-3 ssm:mb-5 xl:mb-6 w-full rounded-[20px] bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]"
-        >
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col md:flex-row justify-center items-start md:items-center space-x-0 md:space-x-4">
-              <img
-                src={request?.requestedBy?.profilePic || "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"}
-                className="w-8 h-8 md:w-10 md:h-10 3xl:h-14 3xl:w-14 rounded-full"
-                loading="lazy" alt=""
-              />
-              <div>
-                <p className="text-sm md:text-xl font-semibold text-gray-600 capitalize">{request?.requestedBy?.name?.firstName} {request?.requestedBy?.name?.lastName}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-0 md:space-x-4">
-              <button  onClick={(e) => handleUpdateStatusAccept(e, i)} className="mr-3 text-sm md:text-xl px-2 py-1 md:px-6 md:py-3 font-semibold rounded-[10px] bg-[#95bff6] text-white shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
-                Confirm
-              </button>
-              <button  onClick={(e) => handleUpdateStatusReject(e,i)} className="text-sm md:text-xl px-2 py-1 md:px-6 md:py-3 font-semibold bg-[#e7edf2] rounded-[10px] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      ))}
+      <button
+        onClick={() => setShowFilterOption(!showFilterOption)}
+        className={`flex justify-center  items-center space-x-1 w-16 my-3 md:px-3 py-1 lg:px-4 md:py-2 text-[14px] md:text-[16px]  font-semibold shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] h-8 rounded-[10px]`}
+      >
+        <img src={filter} />
+        <span className="hidden">Filter</span>
+      </button>
+      {/* filt */}
+      {showFilterOption && (
+        <ul className="w-40 absolute top-32 left-5  bg-white border rounded-lg border-gray-300 shadow-lg mt-2 z-10">
+          <li
+            onClick={toggleSentRequest}
+            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+          >
+            Sent Request
+          </li>
+          <li
+            onClick={toggleRecieveRequest}
+            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+          >
+            Recieve Request
+          </li>
+        </ul>
+      )}
+      {/* recieve friend request */}
+      {isOpenRecieveRequest && (
+        <RecieveFriendRequest
+          getFriendRequest={getFriendRequest}
+          requests={requests}
+          handleUpdateStatusAccept={handleUpdateStatusAccept}
+          handleUpdateStatusReject={handleUpdateStatusReject}
+        />
+      )}
+      {/* sent friend request */}
+      {isOpenSentRequest && (
+        <SentFriendRequest
+          getAllSentPendingFriendRequest={getAllSentPendingFriendRequest}
+          sentRequests={sentRequests}
+          handleDeleteFriendRequest={handleDeleteFriendRequest}
+        />
+      )}
     </div>
   );
 };

@@ -352,7 +352,8 @@ const UpdateAboutModal = ({ isOpenAboutModal, theme, closeAboutModal }) => {
     console.log("data", data);
 
     try {
-      await updateUserInfo({ id, data });
+      await updateUserInfo({ id, data })
+      .unwrap() 
       Swal.fire({
         icon: "success",
         title: "Good Job !",

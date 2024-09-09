@@ -249,7 +249,7 @@ const UserProfileSocialTabEM = () => {
                           : "bg-[#223055] text-white"
                       } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                     >
-                      {currentPersonalWebsite}
+                      {currentPersonalWebsite?.length > 10 ? currentPersonalWebsite.slice(0,22)+".." : currentPersonalWebsite}
                     </p>
                   </div>
                 </div>

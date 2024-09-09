@@ -1,7 +1,7 @@
 // src/app/modules/projectJoinRequest/projectJoinRequest.controller.js
 import httpStatus from 'http-status';
 import { catchAsync } from '../../../utils/catchAsync.js';
-import { createProjectJoinRequestService, deleteProjectByRequestedByService, getAcceptedProjectByRequestedByService, getAcceptedProjectByRequestedToService, getAcceptedProjectTeamMemberService, getAllProjectJoinRequestsService,getProjectByRequestedByService, getProjectByRequestedToService, updateProjectJoinRequestStatusService } from './projectJoinRequest.service.js';
+import { createProjectJoinRequestService, deleteProjectByRequestedByService, getAcceptedProjectByRequestedByService, getAcceptedProjectByRequestedToService, getAcceptedProjectTeamMemberService, getAllProjectJoinRequestsService,getAllSentProjectByRequestedByService,getProjectByRequestedByService, getProjectByRequestedToService, updateProjectJoinRequestStatusService } from './projectJoinRequest.service.js';
 import { sendResponse } from '../../../utils/sendResponse.js';
 import { ApiError } from '../../../handleError/apiError.js';
 
@@ -25,16 +25,6 @@ export const getAllProjectJoinRequests = async (req, res) => {
 
 // ************* get project join requestedby
 
-// export const getProjectRequestedBy = catchAsync(async (req, res) => {
-//   const RequestedBy = await getProjectByRequestedByService (req?.params?.id);
-
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Project RequestedBy retrieved successfully!",
-//     data: RequestedBy,
-//   });
-// });
 
 export const getProjectRequestedBy = catchAsync(async (req, res) => {
   const { id } = req.params;
@@ -54,6 +44,17 @@ export const getProjectRequestedBy = catchAsync(async (req, res) => {
   });
 });
 
+//  get all send project join requested to
+export const getAllSentProjectByRequestedByController = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const projectJoinRequests = await getAllSentProjectByRequestedByService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "All Project join request by requested by retrieved successfully!",
+    data: projectJoinRequests,
+  });
+});
 //  get pending project join requested to
 export const getProjectRequestedTo = catchAsync(async (req, res) => {
   const { id } = req.params;

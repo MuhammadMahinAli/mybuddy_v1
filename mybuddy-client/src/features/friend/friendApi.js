@@ -20,6 +20,20 @@ export const friendApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["Friend"],
     }),
+    getAllStatusFriendRequest: builder.query({
+      query: (id) => ({
+        url: `/friend/getAll/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Friend"],
+    }),
+    getAllSentPendingFriendRequest: builder.query({
+      query: (id) => ({
+        url: `/friend/Pending/getAll/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Friend"],
+    }),
 
     getAcceptedFriendRequest: builder.query({
       query: (id) => ({
@@ -45,10 +59,17 @@ export const friendApi = apiSlice.injectEndpoints({
       }),
       invalidateTags: ["Friend"],
     }),
+    deleteFriendRequest: builder.mutation({
+      query: (id) => ({
+        url: `/friend/deleteFriendRequest/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Friend"],
+    }),
    
   }),
 });
 
- export const {useCreateNewRequestMutation, useGetFriendRequestQuery,useGetAcceptedFriendRequestQuery, useGetOthersAcceptedFriendRequestQuery,useUpdateFriendRequestStatusMutation } = friendApi;
+ export const {useCreateNewRequestMutation, useDeleteFriendRequestMutation ,useGetAllSentPendingFriendRequestQuery,useGetAllStatusFriendRequestQuery, useGetFriendRequestQuery,useGetAcceptedFriendRequestQuery, useGetOthersAcceptedFriendRequestQuery,useUpdateFriendRequestStatusMutation } = friendApi;
 
 // useGetAllPostQuery

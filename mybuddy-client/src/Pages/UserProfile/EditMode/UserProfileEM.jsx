@@ -55,7 +55,7 @@ const UserProfileEM = () => {
     : "Add your bio.";
   const userFriend = getAcceptedFriendRequest?.data?.length;
 
-  console.log(getAcceptedFriendRequest);
+  console.log("frnd",getAcceptedFriendRequest);
 
   // update cover
   const [coverImage, setCoverImage] = useState(null);
@@ -89,18 +89,19 @@ const UserProfileEM = () => {
       };
       console.log("Data to be uploaded:", data);
       try {
-        await updateCoverPic({ id, data });
+        await updateCoverPic({ id, data })
+        .unwrap() 
         console.log("Cover photo updated successfully");
         Swal.fire({
           icon: "success",
           title: "Cover Photo Updated",
           text: "Your cover photo has been updated successfully!",
         });
-        setCoverImage(null);
-        setPreviewCoverImage("");
         setTimeout(() => {
           window.location.reload();
         }, 2500);
+        setCoverImage(null);
+        setPreviewCoverImage("");
       } catch (error) {
         console.error("Error uploading cover photo:", error);
       }
@@ -140,18 +141,19 @@ const UserProfileEM = () => {
       };
       console.log("Data to be uploaded:", data);
       try {
-        await updateProfilePic({ id, data });
+        await updateProfilePic({ id, data })
+        .unwrap() 
         console.log("Profile photo updated successfully");
         Swal.fire({
           icon: "success",
           title: "Profile Photo Updated",
           text: "Your Profile photo has been updated successfully!",
         });
-        setProfileImage(null);
-        setPreviewProfileImage("");
         setTimeout(() => {
           window.location.reload();
         }, 2500);
+        setProfileImage(null);
+        setPreviewProfileImage("");
       } catch (error) {
         console.error("Error uploading Profile photo:", error);
       }

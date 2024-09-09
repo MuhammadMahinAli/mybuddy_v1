@@ -564,7 +564,8 @@ const AddExperienceModal = ({ theme, isOpenAddExperience, closeAddExperienceModa
       ...formData,
     };
     try {
-      await addExperience(data);
+      await addExperience(data)
+      .unwrap() 
       Swal.fire({
         icon: "success",
         title: "Good Job!",

@@ -1,4 +1,4 @@
-import {createFriendRequest,  getAcceptedFriendRequestService,  getOthersAcceptedFriendRequestService,  getPendingFriendRequestService,  updateFriendRequestStatusService} from "./friendRequest.service.js";
+import {createFriendRequest,  deleteFriendRequestService,  getAcceptedFriendRequestService,  getAllFriendRequestService,  getOthersAcceptedFriendRequestService,  getPendingFriendRequestByService,  getPendingFriendRequestService,  updateFriendRequestStatusService} from "./friendRequest.service.js";
 import {catchAsync} from "../../../utils/catchAsync.js";
 import {sendResponse} from "../../../utils/sendResponse.js";
 import httpStatus from "http-status";
@@ -46,7 +46,31 @@ export const createNewFriendRequest = catchAsync(async (req, res, next) => {
   }
 });
 
-//----- pending
+//----- all request
+  export const getAllFriendRequestController = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const friendRequests = await getAllFriendRequestService(id);
+  
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "All friend request is retrieved successfully!",
+      data: friendRequests,
+    });
+  });
+//----- pending requested by
+  export const getAllPendingFriendRequestByController = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const friendRequests = await getPendingFriendRequestByService(id);
+  
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Pending Friend request is retrieved successfully!",
+      data: friendRequests,
+    });
+  });
+//----- pending requested of
   export const getPendingFriendRequestController = catchAsync(async (req, res) => {
     const { id } = req.params;
     const friendRequests = await getPendingFriendRequestService(id);
@@ -97,3 +121,18 @@ export const createNewFriendRequest = catchAsync(async (req, res, next) => {
      data: updateFriendRequest,
   });
  });
+
+ //----------------- delete friend request
+
+export const deleteFriendRequestController = catchAsync(async (req, res) => {
+  const id = req.params.id;
+
+  const project = await deleteFriendRequestService(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Friend request deleted successfully!",
+    data: project,
+  });
+});

@@ -45,7 +45,8 @@ const UpdateProjectForm = ({
       ...formData,
     };
     console.log(data);
-    updateProjectInfo({ id, data });
+    updateProjectInfo({ id, data })
+    .unwrap() 
     Swal.fire({
       icon: "success",
       title: "Well done !",

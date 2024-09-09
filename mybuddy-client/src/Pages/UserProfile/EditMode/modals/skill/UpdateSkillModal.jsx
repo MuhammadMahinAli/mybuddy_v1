@@ -180,7 +180,8 @@ const UpdateSkillModal = ({ isUpdateOpen, closeUpdateModal,allSkill }) => {
       skillArray: formData.skillArray,
     };
     try {
-      await updateSkills({ id, data });
+      await updateSkills({ id, data })
+      .unwrap() 
       Swal.fire({
         icon: "success",
         title: "Good Job !",

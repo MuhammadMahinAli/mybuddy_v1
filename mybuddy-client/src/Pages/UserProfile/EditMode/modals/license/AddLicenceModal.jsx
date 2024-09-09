@@ -26,16 +26,17 @@ const AddLicenceModal = ({ theme, isOpenAddLicence, closeAddLicenceModal }) => {
     try {
     
 
-      await addLicense(data);
+      await addLicense(data)
+      .unwrap() 
       Swal.fire({
         icon: "success",
         title: "Good Job !",
         text: "You've Added A New Certificate !",
       });
      closeAddLicenceModal();
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500); // Close the modal after successful submission
+     setTimeout(() => {
+      window.location.reload();
+    }, 2500);
     } catch (error) {
       console.error("Error submitting form data:", error);
     }

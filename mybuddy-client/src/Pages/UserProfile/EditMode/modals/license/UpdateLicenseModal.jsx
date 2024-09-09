@@ -58,7 +58,8 @@ const UpdateLicenseModal = ({theme,isOpenUpdateLicence,currentLicenseId,closeUpd
     console.log(formData);
 
     console.log('data',data);
-     updateLicense({id,data});
+     updateLicense({id,data})
+     .unwrap() 
     Swal.fire({
       icon: "success",
       title: "Good Job !",

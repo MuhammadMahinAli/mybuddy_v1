@@ -172,15 +172,15 @@ const Posts = ({ theme }) => {
     const postData = {
       ...formData,
       postedBy: user._id,
-    };
+    }
     console.log("form", postData);
-    createPost(postData);
+    createPost(postData)
+    .unwrap() 
     Swal.fire({
       icon: "success",
       title: "Hurry !",
       text: "Your post has been published !",
     });
- 
     setTimeout(() => {
       window.location.reload();
     }, 2500);

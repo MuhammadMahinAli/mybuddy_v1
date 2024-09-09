@@ -39,16 +39,17 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
       user:user?._id,
       ...formData
     }
-    addSocialInfo(data);
+    addSocialInfo(data)
+    .unwrap() 
     Swal.fire({
       icon: "success",
       title: "Good Job !",
       text: "You updated your social information !",
     });
     closeAddSocialModal();
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2500);
   };
 
   return (

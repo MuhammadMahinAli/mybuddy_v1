@@ -163,9 +163,6 @@ setUserData(singleUser);
           text: "Logged out successfully!",
         });
         navigate("/");
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 2500);
       }
     };
   return (

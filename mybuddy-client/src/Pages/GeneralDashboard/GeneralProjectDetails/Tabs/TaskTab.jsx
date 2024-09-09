@@ -261,6 +261,7 @@ const TaskTab = ({
     }).then((result) => {
       if (result.isConfirmed) {
         deleteTask(taskId)
+        .unwrap() 
           .then(() => {
             Swal.fire("Deleted!", "Your task has been deleted.", "success");
             setTimeout(() => {
@@ -292,6 +293,7 @@ const TaskTab = ({
     }).then((result) => {
       if (result.isConfirmed) {
         deleteTeamMember(id)
+        .unwrap() 
           .then(() => {
             Swal.fire("Deleted!", "This member has been deleted.", "success");
             setTimeout(() => {
@@ -695,7 +697,7 @@ const TaskTab = ({
                         key={i}
                         className="min-w-[600px] md:min-w-[800px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
                       >
-                        <div className="flex justify-center items-center text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
+                        <div className="flex justify-start pl-2 text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
                           <img
                             src={
                               request?.requestedBy?.profilePic
@@ -863,7 +865,7 @@ const TaskTab = ({
                               key={i}
                               className="w-full px-1 py-4 flex my-5 justify-between items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
                             >
-                              <div className="flex justify-center items-center space-x-1 text-[16px] md:text-lg border-r-2 text-center w-4/12 sm:w-3/12">
+                              <div className="flex justify-start pl-2   space-x-1 text-[16px] md:text-lg border-r-2 text-center w-4/12 sm:w-3/12">
                                 <img
                                   src={
                                     filteredRequest.profileImagec ||

@@ -19,7 +19,8 @@ import Swal from "sweetalert2";
 const UserProfileVM = () => {
   const { user } = useSelector((state) => state.auth);
   const theme = useSelector((state) => state.theme.theme);
-  const { createNewRequest,isFetchingSkill } = useContext(AuthContext);
+  const { createNewRequest, isFetchingSkill, getAllStatusFriendRequest } =
+    useContext(AuthContext);
   const requestedId = user?._id;
   const [data, setData] = useState(null);
   const { id } = useParams();
@@ -123,12 +124,32 @@ const UserProfileVM = () => {
     ? allSocialInfo?.facebook
     : "";
 
-  const isFriend = userInfo.friends.some(
-    (friend) => friend.requestedBy._id === requestedId
-  );
 
-  console.log("p", userData?._id);
-  console.log(allFriend);
+  // Function to get friend status based on `requestedId`
+  const friendId = userData?._id;
+
+  // Function to get the friend request status
+  const getFriendStatus = () => {
+    const friend = getAllStatusFriendRequest?.data?.find(
+      (frnd) =>
+        frnd.requestedBy._id === friendId || frnd.requestedTo._id === friendId
+    );
+
+    return friend
+      ? { status: friend.status, friend }
+      : { status: "No friend request found.", friend: null };
+  };
+
+  const { status, friend } = getFriendStatus();
+
+  const buttonText =
+    status === "Accepted"
+      ? "Friend"
+      : status === "Pending"
+      ? "Request Sent"
+      : status === "Rejected"
+      ? "Rejected"
+      : "Send Request";
 
   const sentFriendRequest = () => {
     const datas = {
@@ -136,7 +157,8 @@ const UserProfileVM = () => {
       requestedTo: userData?._id,
       status: "Pending",
     };
-    createNewRequest(datas);
+    createNewRequest(datas)
+    .unwrap() 
     Swal.fire({
       icon: "success",
       title: "Well done !",
@@ -147,13 +169,10 @@ const UserProfileVM = () => {
     }, 2500);
   };
 
-
-
   //console.log(datas);
 
   return (
     <div>
-    
       {/* cover photo  3e4246 */}
 
       <div
@@ -294,20 +313,35 @@ const UserProfileVM = () => {
                     </p>
                   )} */}
                   {/* <p>{isFriend ? "Friend" : " Friend Request"}</p> */}
+                  {/* friend request button test*/}
+
                   {/* friend request button */}
+
                   {theme === "light" ? (
-                    <div
-                      onClick={isFriend ? undefined : sentFriendRequest}
-                      className="lg:text-sm xl:text-lg text-white font-semibold rounded-[13px] px-3 py-2 xl:px-4 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]"
-                    >
-                      {isFriend ? "Friend" : "Add Friend"}
-                    </div>
+                    buttonText === "Send Request" ? (
+                      <button
+                        onClick={sentFriendRequest}
+                        className="lg:text-sm xl:text-lg rounded-[13px] font-semibold px-3 py-2 xl:px-4 xl:py-2 bg-gradient-to-l from-[#2adba4] to-[#69f9cc] text-white"
+                      >
+                        {buttonText}
+                      </button>
+                    ) : (
+                      <div className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
+                        <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
+                          {buttonText}
+                        </button>
+                      </div>
+                    )
                   ) : (
                     <button
-                      onClick={isFriend ? undefined : sentFriendRequest}
+                      onClick={
+                        buttonText === "Send Request"
+                          ? sentFriendRequest
+                          : undefined
+                      }
                       className="profileFriendRequestBtn"
                     >
-                      <p>{isFriend ? "Friend" : "Add Friend"}</p>
+                      <p>{buttonText}</p>
                     </button>
                   )}
 
@@ -547,7 +581,7 @@ const UserProfileVM = () => {
         </div>
       </div>
       <MobileTabFormetVM
-      isFetchingSkill={isFetchingSkill}
+        isFetchingSkill={isFetchingSkill}
         allExperience={allExperience}
         allLicense={allLicense}
         allPost={allPost}
@@ -557,7 +591,7 @@ const UserProfileVM = () => {
         theme={theme}
       />
       <DekstopFormatVM
-      isFetchingSkill={isFetchingSkill}
+        isFetchingSkill={isFetchingSkill}
         allExperience={allExperience}
         allLicense={allLicense}
         allPost={allPost}

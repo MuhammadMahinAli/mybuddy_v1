@@ -87,11 +87,10 @@ const Images = ({setImages, images}) => {
       <div className="flex flex-col space-y-5 md:space-y-0 font-medium gray600">
         <div>
           <label className="text-[16px] md:text-xl capitalize font-bold">images (up to 3)</label>
-          <p className="text-[12px] md:text-lg font-normal pt-1 md:pb-3">Lorem ipsum dolor sit amet consectetur.</p>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           {/* image one   */}
-          <div className="relative">
+          <div className="relative pt-2">
             {previewImage.imageOne  ? (
               <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100  custom-shadow">
                 <img className="object-cover h-full rounded-md" src={previewImage.imageOne} alt="" />

@@ -71,7 +71,8 @@ const UpdateSocialInfoModal = ({
     console.log(formData);
 
     console.log('data',data);
-     updateSocialInfo({id,data});
+     updateSocialInfo({id,data})
+     .unwrap() 
     Swal.fire({
       icon: "success",
       title: "Good Job !",

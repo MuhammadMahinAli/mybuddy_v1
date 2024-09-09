@@ -80,8 +80,8 @@ const StatusDropdown = ({
             await updateCommitStatus({
               id: selectedTask._id,
               data: postData,
-            }).unwrap();
-
+            })
+            .unwrap();
             Swal.fire({
               icon: "success",
               title: "Status Updated",
@@ -90,7 +90,6 @@ const StatusDropdown = ({
               timerProgressBar: true,
               showConfirmButton: false,
             });
-
             setTimeout(() => {
               window.location.reload();
             }, 2500);
@@ -161,8 +160,8 @@ const StatusDropdown = ({
             await updateProjectStatus({
               projectId: selectedProject,
               completedTask: completedTask,
-            }).unwrap();
-
+            })
+            .unwrap();
             Swal.fire({
               icon: "success",
               title: "Status Updated",
@@ -171,7 +170,6 @@ const StatusDropdown = ({
               timerProgressBar: true,
               showConfirmButton: false,
             });
-
             setTimeout(() => {
               window.location.reload();
             }, 2500);

@@ -49,7 +49,6 @@ console.log(friendRequests);
               setTimeout(() => {
                 window.location.reload();
               }, 2500);
-              // refetch()
             })
             .catch((error) => {
               alert("Failed to accept the request.");
@@ -61,6 +60,8 @@ console.log(friendRequests);
       console.log("No task found for the selected index.");
     }
   };
+
+  
   const handleUpdateFRStatusReject = (e, index) => {
     e.preventDefault();
     const selectedTask = getFriendRequest?.data[index];

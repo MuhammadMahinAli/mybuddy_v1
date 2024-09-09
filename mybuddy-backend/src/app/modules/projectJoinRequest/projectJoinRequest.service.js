@@ -48,7 +48,13 @@ export const getAllProjectJoinRequestsService = async () => {
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
  }
 };
-// ***************** get send request by requestedBy
+// ***************** get all send request by requestedBy
+export const getAllSentProjectByRequestedByService = async (id) => {
+   const projectByRequestedBy = await ProjectJoinRequest.find({requestedBy: id}).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+   return projectByRequestedBy;
+ };
+
+// ***************** get pending send request by requestedBy
 export const getProjectByRequestedByService = async (id) => {
    const projectByRequestedBy = await ProjectJoinRequest.find({requestedBy: id}).find({ status: "Pending" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
    return projectByRequestedBy;

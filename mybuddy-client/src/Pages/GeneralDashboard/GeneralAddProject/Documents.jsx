@@ -64,9 +64,8 @@ const Documents = ({ setDocuments}) => {
       <div className="flex flex-col space-y-5 md:space-y-0  font-medium gray600">
         <div className="">
           <label className="text-[16px] md:text-xl capitalize font-bold">Document (up to 2)</label>
-          <p className="text-[12px] md:text-lg font-normal pt-1 md:pb-3">Lorem ipsum dolor sit amet consectetur.</p>
         </div>
-        <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-10 lg:space-x-11 xl:space-x-8 2xl:space-x-16 3xl:space-x-12 4xl:space-x-28 ">
+        <div className="pt-2 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-10 lg:space-x-11 xl:space-x-8 2xl:space-x-16 3xl:space-x-12 4xl:space-x-28 ">
           {/* doc one  */}
           <div className="relative ">
             {previewImage.docOne !== "" ? (

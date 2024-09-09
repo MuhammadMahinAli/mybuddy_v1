@@ -78,7 +78,7 @@ const UserProfileActivityEM = () => {
             {allPosts?.length > 6 && (
               <div className="flex justify-center items-center py-5">
                 {theme === "light" ? (
-                  <div className="w-36 flex items-center space-x-2 justify-center lg:text-sm xl:text-lg text-white font-semibold rounded-[10px] px-2 py-1 xl:px-4 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
+                  <div className="w-42 flex items-center space-x-2 justify-center lg:text-sm xl:text-lg text-white font-semibold rounded-[10px] px-2 py-1 xl:px-4 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
                     <p className="text-sm capitalize">see all posts</p>
                     <RightArrowIcon theme={theme} />
                   </div>

@@ -333,7 +333,8 @@ const UpdateExperienceModal = ({ theme, isOpenUpdateExperience, closeUpdateExper
     };
 
     try {
-      await updateExperience({ id: experienceId, data });
+      await updateExperience({ id: experienceId, data })
+      .unwrap() 
       Swal.fire({
         icon: "success",
         title: "Good Job!",

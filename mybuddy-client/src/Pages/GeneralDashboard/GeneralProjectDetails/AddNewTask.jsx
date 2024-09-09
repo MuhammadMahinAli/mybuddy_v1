@@ -64,6 +64,7 @@ const {createNewTask} = useContext(AuthContext)
       });
     }
     createNewTask({ id: projectId, data: taskInput })
+    .unwrap() 
     Swal.fire({
       icon: "success",
       title: "Task Created!",

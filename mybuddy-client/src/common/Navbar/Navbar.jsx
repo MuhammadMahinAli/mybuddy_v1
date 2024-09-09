@@ -57,9 +57,6 @@ const Navbar = ({ darkMode, toggleSidebar, openSidebar, theme }) => {
         text: "Logged out successfully!",
       });
       navigate("/");
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 2500);
     }
   };
 
