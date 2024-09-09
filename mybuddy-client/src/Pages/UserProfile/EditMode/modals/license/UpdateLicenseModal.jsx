@@ -2,10 +2,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../Context/UserContext";
 import Swal from "sweetalert2";
+import { useUpdateLicenseMutation } from "../../../../../features/license/licenseApi";
 
 const UpdateLicenseModal = ({theme,isOpenUpdateLicence,currentLicenseId,closeUpdateLicenceModal}) => {
       // Initialize form data state
-  const{updateLicense,getUserLicense,user}=useContext(AuthContext);
+  const{getUserLicense,user}=useContext(AuthContext);
   const licenseInfo = getUserLicense?.data[0];
   const lisenseId  = getUserLicense?.data[0]?._id
       const [formData, setFormData] = useState({
@@ -50,28 +51,65 @@ const UpdateLicenseModal = ({theme,isOpenUpdateLicence,currentLicenseId,closeUpd
   };
 
  // Handle form submission
-  const handleSubmit = (e,id) => {
-    e.preventDefault();
-    const data ={
-      ...formData
-    }
-    console.log(formData);
+ 
 
-    console.log('data',data);
-     updateLicense({id,data})
-     .unwrap() 
+//   const handleSubmit = (e,id) => {
+//     e.preventDefault();
+//     const data ={
+//       ...formData
+//     }
+//     console.log(formData);
+
+//     console.log('data',data);
+//      updateLicense({id,data}).unwrap() 
+//     Swal.fire({
+//       icon: "success",
+//       title: "Good Job !",
+//       text: "You've Updated Your License Information !",
+//     });
+//     closeUpdateLicenceModal();
+//     // setTimeout(() => {
+//     //   window.location.reload();
+//     // }, 2500);
+
+//     console.log(formData);
+// }
+
+const [updateLicense, { isLoading, isSuccess, isError, error }] = useUpdateLicenseMutation();
+const handleSubmit = async ( id) => {
+
+  
+  const data = {
+    ...formData,
+  };
+
+  console.log(formData);
+  console.log('data', data);
+
+  try {
+    // Await the `unwrap` to handle the resolved/rejected state properly
+    await updateLicense({ id, data }).unwrap();
+    
     Swal.fire({
       icon: "success",
-      title: "Good Job !",
-      text: "You've Updated Your License Information !",
+      title: "Good Job!",
+      text: "You've Updated Your License Information!",
     });
+    
     closeUpdateLicenceModal();
-    setTimeout(() => {
-      window.location.reload();
-    }, 2500);
+  } catch (error) {
+    console.error('Failed to update license:', error);
+    
+    Swal.fire({
+      icon: "error",
+      title: "Error!",
+      text: "Failed to update your license information. Please try again.",
+    });
+  }
 
-    console.log(formData);
-}
+  console.log(formData);
+};
+
 
 
     return (
@@ -89,7 +127,7 @@ const UpdateLicenseModal = ({theme,isOpenUpdateLicence,currentLicenseId,closeUpd
             <div className="fixed inset-0 bg-black/25" />
           </Transition.Child>
   
-          <form className="fixed inset-0 overflow-y-auto" onSubmit={(e)=>handleSubmit(e,lisenseId)}>
+          <div className="fixed inset-0 overflow-y-auto" >
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
@@ -218,7 +256,7 @@ const UpdateLicenseModal = ({theme,isOpenUpdateLicence,currentLicenseId,closeUpd
                   </div>
                   <div className="mt-4">
                     <button
-                      type="submit"
+                    onClick={()=>handleSubmit(lisenseId)}
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                     >
                       Save
@@ -227,7 +265,7 @@ const UpdateLicenseModal = ({theme,isOpenUpdateLicence,currentLicenseId,closeUpd
                 </Dialog.Panel>
               </Transition.Child>
             </div>
-          </form>
+          </div>
         </Dialog>
       </Transition>
     );

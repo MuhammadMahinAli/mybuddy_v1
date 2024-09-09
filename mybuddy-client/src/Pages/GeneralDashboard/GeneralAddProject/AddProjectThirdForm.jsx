@@ -56,7 +56,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
         status: "pending",
         startDate: "",
         endDate: "",
-        subTask: [{ todo: "", status: "pending" }],
+        subTask: [{ todo: "Describe the sub task", status: "pending" }],
       });
     }
   };
@@ -80,13 +80,15 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
   // };
 
   const handleSubTaskChange = (index, event) => {
+    event.preventDefault();
     const { name, value } = event.target;
     const newSubTasks = [...taskInput.subTask];
     newSubTasks[index] = { ...newSubTasks[index], [name]: value };
     setTaskInput((prev) => ({ ...prev, subTask: newSubTasks }));
   };
 
-  const addSubTask = () => {
+  const addSubTask = (e) => {
+    e.preventDefault();
     setTaskInput((prev) => ({
       ...prev,
       subTask: [
@@ -178,7 +180,7 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
                   ? `${task.details.slice(0, 22)}...`
                   : task.details}
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-[#C8CBD3] px-2">
+              <div onClick={(e)=>e.preventDefault()} className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-[#C8CBD3] px-2">
                 <p className=" px-3 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
                   Free
                 </p>
@@ -187,9 +189,9 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
                 {formatDate(task.endDate)}
               </div>
               <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
-                <button className={buttonClasses(task.priority)}>
+                <p className={task.priority === "high" ? "bg-red-200 text-red-600  border-red-600 py-2 rounded-lg mx-5 border" : task.priority === "medium" ? "bg-[#ffe9d4] text-orange-600  border-orange-600 py-2 rounded-lg mx-5 border": "bg-blue-200 text-blue-600  border-blue-600 py-2 rounded-lg mx-5 border"}>
                   {task.priority}
-                </button>
+                </p>
               </div>
               <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-[#C8CBD3]">
                 {task.subTask.length}
@@ -237,9 +239,9 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
             <label className="text-[16px] md:text-xl md:pr-2 lg:pr-5">
               Budget:
             </label>
-            <button className=" px-5 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
+            <p className=" px-5 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
               Free
-            </button>
+            </p>
           </div>
         </div>
 

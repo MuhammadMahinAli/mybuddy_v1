@@ -19,7 +19,7 @@ export const licenseApi = apiSlice.injectEndpoints({
         url: `/license/getLicenseByUser/${id}`,
         method: "GET",
       }),
-      providesTags: ["SingleMemberLicense"],
+      providesTags: ["License"],
     }),
 
     updateLicense: builder.mutation({

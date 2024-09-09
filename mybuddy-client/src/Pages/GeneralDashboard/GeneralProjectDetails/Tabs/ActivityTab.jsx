@@ -288,6 +288,7 @@ const ActivityTab = ({
                 {formatDate(commit?.createdAt)}
               </div>
               <div className="text-[13px] md:text-[16px] capitalize text-center w-2/12 flex justify-center items-center">
+            
                 <StatusDropdown
                   filteredMyself={filteredMyself}
                   commit={commit}
@@ -297,6 +298,7 @@ const ActivityTab = ({
                   ProjectInfo={ProjectInfo}
                   userId={userId}
                 />
+          
               </div>
             </div>
           ))}

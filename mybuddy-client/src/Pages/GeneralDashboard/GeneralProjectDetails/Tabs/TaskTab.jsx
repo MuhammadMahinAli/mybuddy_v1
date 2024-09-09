@@ -589,7 +589,9 @@ const TaskTab = ({
               {" "}
               {tasks[selectedIndex].details}
             </p>
-        
+            <p className="text-gray-600 text-xl font-semibold pt-3">
+             Coin:  Free
+            </p>
               <button
                 className={`float-right ${colors[selectedIndex].progressColor} text-white px-2 py-1 capitalize rounded-lg`}
               >

@@ -205,7 +205,7 @@ const StatusDropdown = ({
           >
             {commit?.status === "Pending" ? "Select" : commit?.status}
           </span>
-          {showDropdown && (
+          {showDropdown && commit?.status === "Pending" && (
             <div className="relative pt-1">
               <ul className="absolute right-2 bg-white border rounded-lg border-gray-300 shadow-lg mt-2 z-10">
                 <li

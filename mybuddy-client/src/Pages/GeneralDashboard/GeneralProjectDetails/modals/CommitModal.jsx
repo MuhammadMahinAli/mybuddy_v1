@@ -246,47 +246,6 @@ const CommitModal = ({
                             placeholder="Enter your message"
                           />
                         </div>
-                        {/* <div className="flex flex-col md:flex-row md:items-center md:space-x-14 xl:space-x-[90px] 2xl:space-x-[97px] 3xl:space-x-[110px] 4xl:space-x-[120px] 5xl:space-x-[130px] 6xl:space-x-[170px] mb-4">
-                          <label className="block text-gray-700 font-semibold mb-2">
-                            Media :
-                          </label>
-                          <input
-                            type="file"
-                            onChange={handlePreviewImage}
-                            className="hidden"
-                            id="mediaUpload"
-                          />
-                          <label
-                            htmlFor="mediaUpload"
-                            className="p-3 w-32 [background:linear-gradient(-44.24deg,#87aaff,#447afc)] text-white rounded-md flex items-center space-x-2 cursor-pointer"
-                          >
-                            {formData?.media ? (
-                              <FaCheck />
-                            ) : (
-                              <svg
-                                width="29"
-                                height="23"
-                                viewBox="0 0 29 23"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M14.3448 21.7148V11.3779M14.3448 11.3779L11.0222 14.8235M14.3448 11.3779L17.6674 14.8235M6.37063 19.992C3.43462 19.992 1.0545 17.5678 1.0545 14.5775C1.0545 12.1133 2.67058 10.0337 4.88209 9.37803C4.97606 9.35012 5.0416 9.26255 5.0416 9.16288C5.0416 4.67729 8.61176 1.04102 13.0158 1.04102C17.4198 1.04102 20.99 4.67729 20.99 9.16288C20.99 9.24882 21.0691 9.31261 21.1515 9.29386C21.5272 9.20806 21.9179 9.16288 22.319 9.16288C25.255 9.16288 27.6351 11.5871 27.6351 14.5775C27.6351 17.5678 25.255 19.992 22.319 19.992H6.37063Z"
-                                  stroke="white"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                />
-                              </svg>
-                            )}
-                            <span>
-                              {isFileLoading
-                                ? "Uploading..."
-                                : formData?.media
-                                ? "Media Added"
-                                : "Upload Media"}
-                            </span>
-                          </label>
-                        </div> */}
                         <div className="flex flex-col md:flex-row md:items-center md:space-x-3 xl:space-x-[44px] 2xl:space-x-[55px] 3xl:space-x-[60px] 4xl:space-x-[70px] 5xl:space-x-[80px] 6xl:space-x-[170px] mb-4">
                           <label className="block w-28 text-gray-700 font-bold mb-2">
                             Media :
