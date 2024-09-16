@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
+ 
   return (
     <div>
       <div
@@ -114,6 +115,7 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
               </li>
               <li className="sidebar-list">
                 <Link
+                   
                   to={user ? "/dashboard" : "/"}
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
@@ -164,13 +166,13 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
               </li>
               <li className="sidebar-list">
                 <Link
-                  to="/frnd"
+                  to="/user/friend"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
                     <div
                       className={`${
-                        isPageActive("/frnd") || theme === "light"
+                        isPageActive("/user/friend") || theme === "light"
                           ? "shadow-[1px_3px_24px_#fff_inset]"
                           : "shadow-[1px_3px_24px_rgba(170,_170,_170,_0.45)_inset]"
                       } box2 py-2 px-3 shadow-[1px_3px_24px_#fff_inset] rounded-[5px]`}
@@ -189,13 +191,13 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
               </li>
               <li className="sidebar-list">
                 <Link
-                  to="/meet"
+                  to="/user/meeting"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">
                     <div
                       className={`${
-                        isPageActive("/meet") || theme === "light"
+                        isPageActive("/user/meeting") || theme === "light"
                           ? "shadow-[1px_3px_24px_#fff_inset]"
                           : "shadow-[1px_3px_24px_rgba(170,_170,_170,_0.45)_inset]"
                       } box2 py-2 px-3 shadow-[1px_3px_24px_#fff_inset] rounded-[5px]`}

@@ -55,7 +55,8 @@ const Login = () => {
     setPasswordType("password");
   };
 
- 
+  console.log("mrmber",formData);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -132,7 +133,44 @@ const Login = () => {
       console.log(error);
     }
   };
-  //bg-[url('https://i.ibb.co/jkHs6rF/page-1.png')]
+ 
+  // forget password
+
+  const handleForgotPassword = () => {
+    Swal.fire({
+      title: "Forgot Password?",
+      text: "Please enter your email to reset your password:",
+      input: "email",
+      inputPlaceholder: "Enter your email",
+      showCancelButton: true,
+      confirmButtonText: "Send Reset Link",
+      showLoaderOnConfirm: true,
+      preConfirm: async (email) => {
+        try {
+          const response = await axios.post(
+            "http://localhost:3000/api/v1/member/sendResetPasswordEmail",
+            { email }
+          );
+          return response.data.message;
+        } catch (error) {
+          Swal.showValidationMessage(
+            `Request failed: ${
+              error.response?.data?.message || "Something went wrong"
+            }`
+          );
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          text: `Password reset link has been sent to your email and is valid for 5 minutes.`,
+        });
+      }
+    });
+  };
+
   return (
     <div className="flex justify-center items-center  bg-no-repeat bg-cover min-h-screen">
       <div className="py-5 md:py-0 md:mx-10 lg:mx-20 w-full flex flex-col md:flex-row justify-between items-center   rounded-[20px]  shadow-[-7px_-7px_19px_rgba(255,_255,_255,_0.6),_9px_9px_16px_rgba(163,_177,_198,_0.6)] box-border border-[0.8px] border-solid border-gray">
@@ -205,6 +243,16 @@ const Login = () => {
               "Login"
             )}
           </button>
+
+          {/* Forgot Password Button */}
+          <button
+            type="button"
+            className="text-blue-600 font-semibold cursor-pointer"
+            onClick={handleForgotPassword}
+          >
+            Forgot Password?
+          </button>
+          
           <p className="text-center">
             {"Don't have any account ? "}
             <Link

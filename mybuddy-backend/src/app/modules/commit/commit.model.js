@@ -32,11 +32,10 @@ const CommitSchema = new Schema(
     declineMessage: {
       type: String,
     },
-    completedTask: [
-      {
-        taskTitle: { type: String },
-      },
-    ], // Array of objects for completed tasks with taskTitle and status
+    completedTask: {
+      task: { type: String },
+      subTask: [{ type: String }],
+    },
   },
   {
     timestamps: true,

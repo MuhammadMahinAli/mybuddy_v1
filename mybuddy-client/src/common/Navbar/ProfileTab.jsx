@@ -57,7 +57,7 @@ const ProfileTab = ({ openProfile, logout }) => {
         </Link>
       </div>
       {/* quick links 1 */}
-      <div className="my-1 p-2 border-gray-400  border-t">
+      {/* <div className="my-1 p-2 border-gray-400  border-t">
         <p className=" text-[12px] lg:text-[14px] capitalize font-semibold">
           account
         </p>
@@ -69,9 +69,9 @@ const ProfileTab = ({ openProfile, logout }) => {
             language
           </li>
         </ul>
-      </div>
+      </div> */}
       {/* quick links 2 */}
-      <div className="my-1 p-2 border-gray-400  border-t">
+      {/* <div className="my-1 p-2 border-gray-400  border-t">
         <p className="text-[12px] lg:text-[14px] capitalize font-semibold">
           meeting
         </p>
@@ -83,7 +83,7 @@ const ProfileTab = ({ openProfile, logout }) => {
             timeline
           </li>
         </ul>
-      </div>
+      </div> */}
       {/* quick links 3 */}
       <div className="my-1 p-2 border-gray-400  border-t">
         <p className="text-[12px] lg:text-[14px] capitalize font-semibold">

@@ -20,6 +20,25 @@ const ActivityTab = ({
   );
   const commitOfProject = getCommitByProject?.data;
 
+  // const handleCommitMessage = (message, completedTask) => {
+  //   if (!message) {
+  //     Swal.fire({
+  //       title: "No message Found",
+  //       icon: "info",
+  //       confirmButtonText: "Close",
+  //     });
+  //   } else {
+  //     const taskTitles = completedTask?.map(t => t.taskTitle).join(', ') || "No tasks completed";
+      
+  //     Swal.fire({
+  //       title: message,
+  //       html: `<p><strong>Completed Tasks:</strong> ${taskTitles}</p>`,
+  //       icon: "info",
+  //       confirmButtonText: "Close",
+  //     });
+  //   }
+  // };
+
   const handleCommitMessage = (message, completedTask) => {
     if (!message) {
       Swal.fire({
@@ -28,16 +47,31 @@ const ActivityTab = ({
         confirmButtonText: "Close",
       });
     } else {
-      const taskTitles = completedTask?.map(t => t.taskTitle).join(', ') || "No tasks completed";
-      
+      // Extract task and subtasks from completedTask
+      const taskTitle = completedTask?.task || "No task completed";
+      const subTasks = completedTask?.subTask || [];
+  
+      // Format subtasks into an ordered list
+      const subTaskList = subTasks.length
+        ? `<ul>${subTasks.map((sub, index) => `<li>${index + 1}. ${sub}</li>`).join("")}</ul>`
+        : "<p>No subtasks completed</p>";
+  
+      // Construct the HTML content for the alert
+      const alertHtml = `
+      <strong>Task:</strong>
+        <p> ${taskTitle}</p>
+        <p><strong>Sub Task:</strong></p>
+        ${subTaskList}
+      `;
       Swal.fire({
         title: message,
-        html: `<p><strong>Completed Tasks:</strong> ${taskTitles}</p>`,
+        html: alertHtml,
         icon: "info",
         confirmButtonText: "Close",
       });
     }
   };
+  
   
   const handleEmptyMedia = (media) => {
     console.log(media);

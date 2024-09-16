@@ -97,7 +97,7 @@ const GeneralAddProject = ({ closeModal }) => {
       });
       return;
     }
-    if (pdfFiles?.length === 0 || documents?.length === 0) {
+    if (!pdfFiles?.length && !documents?.length) {
       Swal.fire({
         icon: "warning",
         title: "Oops !",
@@ -105,7 +105,7 @@ const GeneralAddProject = ({ closeModal }) => {
       });
       return;
     }
-    if (pdfFiles?.length === 0) {
+    if (!images?.length) {
       Swal.fire({
         icon: "warning",
         title: "Oops !",
@@ -114,7 +114,7 @@ const GeneralAddProject = ({ closeModal }) => {
       return;
     }
     if (projectData.videoUrl && 
-      !(/youtu|youtube|drive_link/.test(projectData.videoUrl))) {
+      !(/youtu|youtube|drive.google.com|docs.google.com|sheets.google.com|slides.google.com|drive_link/.test(projectData.videoUrl))) {
     Swal.fire({
       icon: "warning",
       title: "Oops !",
@@ -130,7 +130,7 @@ const GeneralAddProject = ({ closeModal }) => {
       pdfFiles,
       tasks,
     };
-    console.log(data);
+    console.log("add project data",data);
     createNewProject(data);
   };
 

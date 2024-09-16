@@ -1,13 +1,26 @@
-import {createMemberService,getAllMemberService,getSingleMember,resendEmailService,updateMemberCoverPicService,updateMemberInfoService,updateMemberProfilePicService,updateMemberService, verifyEmailService} from "./member.service.js";
-import {catchAsync} from "../../../utils/catchAsync.js";
-import {sendResponse} from "../../../utils/sendResponse.js";
+import {
+  createMemberService,
+  getAllMemberService,
+  getSingleMember,
+  resendEmailService,
+  resetPasswordService,
+  sendForgetPasswordEmailService,
+  updateMemberCoverPicService,
+  updateMemberInfoService,
+  updateMemberProfilePicService,
+  updateMemberService,
+  verifyEmailService,
+} from "./member.service.js";
+import { catchAsync } from "../../../utils/catchAsync.js";
+import { sendResponse } from "../../../utils/sendResponse.js";
 import httpStatus from "http-status";
 import { Member } from "./member.model.js";
 import { ApiError } from "../../../handleError/apiError.js";
 
 //------create an user
-export const createMember= catchAsync(async (req, res, next) => {
+export const createMember = catchAsync(async (req, res, next) => {
   const data = req.body;
+  console.log("memberdata", data);
   const newMember = await createMemberService(data);
 
   sendResponse(res, {
@@ -45,7 +58,6 @@ export const createMember= catchAsync(async (req, res, next) => {
 //   });
 // });
 
-
 // export const verifyEmail = catchAsync(async (req, res, next) => {
 //  // Log received token
 
@@ -59,7 +71,7 @@ export const createMember= catchAsync(async (req, res, next) => {
 //     message: "Token holder retrieved successfully!",
 //     data: user,
 //   });
-  
+
 // });
 export const verifyEmail = catchAsync(async (req, res, next) => {
   const { token } = req.query;
@@ -70,14 +82,14 @@ export const verifyEmail = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Email verified successfully!',
+      message: "Email verified successfully!",
       data: userDetails,
     });
   } catch (error) {
     res.status(400).json({
       success: false,
       message: error.message,
-      errorMessages: [{ path: '', message: error.message }],
+      errorMessages: [{ path: "", message: error.message }],
     });
   }
 });
@@ -88,7 +100,6 @@ export const resendVerificationEmail = catchAsync(async (req, res) => {
   const result = await resendEmailService(email);
   res.status(200).json(result);
 });
-
 
 //-------get all users
 export const getAllMembers = catchAsync(async (req, res) => {
@@ -115,7 +126,6 @@ export const getSingleMemberById = catchAsync(async (req, res) => {
     data: user,
   });
 });
-
 
 //------------update member
 export const updateMemberById = catchAsync(async (req, res) => {
@@ -144,12 +154,14 @@ export const updateMemberCoverPicController = catchAsync(async (req, res) => {
   });
 });
 
-
-// ------------- update profile pic 
+// ------------- update profile pic
 
 export const updateMemberProfilePicController = catchAsync(async (req, res) => {
   const data = req.body;
-  const updatedMember = await updateMemberProfilePicService(req.params.id, data);
+  const updatedMember = await updateMemberProfilePicService(
+    req.params.id,
+    data
+  );
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -170,15 +182,52 @@ export const updateMemberInfoController = catchAsync(async (req, res) => {
   });
 });
 
-//////////////////
+// -------- send reset password email
+
+export const sendForgetPasswordEmailController = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const result = await sendForgetPasswordEmailService(email);
+    
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: result.message,
+      data: { timeRemaining: result.timeRemaining }, // Include timeRemaining in response
+    });
+  } catch (error) {
+    sendResponse(res, {
+      statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 
-// export const getExcludedFriends = async (req, res) => {
-//   try {
-//     const { memberId } = req.params;
-//     const excludedMembers = await getExcludedFriendsService(memberId);
-//     res.status(200).json(excludedMembers);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
+//--------------  resetting the password
+export const resetPasswordController = async (req, res) => {
+  const { id } = req.query; 
+  const { newPassword, token } = req.body;
+
+  try {
+    const result = await resetPasswordService(id, token, newPassword);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Password updated successfully!",
+      data: result,
+    });
+  } catch (error) {
+    sendResponse(res, {
+      statusCode: httpStatus.BAD_REQUEST,
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
+
+
+

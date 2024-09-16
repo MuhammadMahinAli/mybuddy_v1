@@ -88,7 +88,7 @@ const Feed = () => {
           break;
         case "project":
           data = await apiFetch(
-            `http://localhost:3000/api/v1/project/getUserProjects/${userId}`,
+            `http://localhost:3000/api/v1/project/getUserProjectById/${userId}`,
             "GET"
           );
           setUserData((prevState) => ({
@@ -158,10 +158,6 @@ const Feed = () => {
       ? { status: friend.status, friend }
       : { status: "No friend request found.", friend: null };
   };
-
-
-
-
 
   return (
     <div className="space-y-4">

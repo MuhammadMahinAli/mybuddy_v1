@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../Layout/MainLayout";
 import Homepage from "../Pages/Homepage/Homepage";
 import Feed from "../Pages/Feed/Feed";
-import ProjectDetails from "../Pages/ProjectDetails/ProjectDetails";
 import GDashboard from "../Pages/GeneralDashboard/GDashboard/GDashboard";
 import GeneralLayout from "../Layout/GeneralLayout";
 import GeneralFriendRequest from "../Pages/GeneralDashboard/GeneralFriendRequest/GeneralFriendRequest";
@@ -27,6 +26,9 @@ import EmailVarification from "../Pages/Email/EmailVarification";
 import VerificationSuccess from "../Pages/Email/VerificationSuccess";
 import AddTaskForm from "../Pages/Try/AddTaskForm";
 import GeneralProjectDetails from "../Pages/GeneralDashboard/GeneralProjectDetails/GeneralProjectDetails";
+import ResetPassword from "../Pages/Login/ResetPassword";
+import Friends from "../Pages/UpcomingPages/Friends";
+import Meeting from "../Pages/UpcomingPages/Meeting";
 
 
 const router = createBrowserRouter([
@@ -39,10 +41,7 @@ const router = createBrowserRouter([
         element: <Homepage /> ,
       },
 
-      {
-        path: "/home/find-projects",
-        element: <ProjectDetails />,
-      },
+      
     ],
   },
   {
@@ -74,6 +73,14 @@ const router = createBrowserRouter([
       {
         path: "/user/edit-profile",
         element: <UserProfileEM />,
+      },
+      {
+        path: "/user/friend",
+        element: <Friends />,
+      },
+      {
+        path: "/user/meeting",
+        element: <Meeting />,
       },
     ],
   },
@@ -144,6 +151,10 @@ const router = createBrowserRouter([
   {
     path: "/verify-your-email",
     element: <EmailVarification />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
   },
   {
     path: "/verified-email/:token",

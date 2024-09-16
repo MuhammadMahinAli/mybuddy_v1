@@ -70,6 +70,12 @@ const MemberSchema = new Schema(
     verificationToken: {
       type: String,
     },
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
+    },
   },
   {
     timestamps: true,
@@ -79,7 +85,7 @@ const MemberSchema = new Schema(
 MemberSchema.methods.isMemberExist = async function (email) {
   const user = await Member.findOne(
     { email },
-    { _id: 1, email: 1, password: 1, role: 1,emailVerified:1 }
+    { _id: 1, email: 1, password: 1, role: 1,emailVerified:1,resetPasswordToken:1, resetPasswordExpires:1 }
   );
   return user;
 };
@@ -87,6 +93,9 @@ MemberSchema.methods.isMemberExist = async function (email) {
 //------------ pass match checking
 
 MemberSchema.methods.isPasswordMatched = async function (givenPass) {
+  console.log("Stored password:", this.password);
+  console.log("given password:", givenPass);
+
   // Check if both givenPass and this.password are provided
   if (!givenPass || !this.password) {
     throw new Error(
@@ -95,6 +104,9 @@ MemberSchema.methods.isPasswordMatched = async function (givenPass) {
   }
   return await bcrypt.compare(givenPass, this.password);
 };
+
+
+
 
 //-------------- hasing password
 MemberSchema.pre("save", async function (next) {

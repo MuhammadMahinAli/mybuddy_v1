@@ -1,5 +1,6 @@
 import {apiSlice} from "../api/apiSlice";
  import { userLoggedIn} from "./authSlice";
+ import { userLoggedOut } from "./authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -29,6 +30,27 @@ export const authApi = apiSlice.injectEndpoints({
         } catch (err) {
           //nothing to do
           console.log(err);
+        }
+      },
+    }),
+    updatePassword: builder.mutation({
+      query: (data) => ({
+        url: "/auth/update-password",
+        method: "PUT",
+        body: data, // data should contain userId and newPassword
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          console.log("Password update successful", result.data);
+    
+          // Optionally, if you want to log out the user after a password update:
+          localStorage.removeItem("auth");
+          dispatch(userLoggedOut());
+    
+          // Show a success message or navigate the user as needed
+        } catch (err) {
+          console.log("Password update error:", err);
         }
       },
     }),
@@ -100,8 +122,15 @@ export const authApi = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    resetPassword: builder.mutation({
+      query: ({ id, newPassword, token }) => ({
+        url: `/member/reset-password?id=${id}`,
+        method: 'PUT', // Using PUT for password updates
+        body: { newPassword, token },
+      }),
+  }),
   }),
 });
 
- export const {useLoginMutation,useSignUpMutation,useUpdateCoverPicMutation, useUpdateUserInfoMutation,useUpdateProfilePicMutation,useGetAllUsersQuery,useGetFilteredUsersQuery,useGetSingleUserQuery,useDeleteUserMutation,  useVerifyEmailQuery} = authApi;
+ export const {useResetPasswordMutation, useUpdatePasswordMutation,useLoginMutation,useSignUpMutation,useUpdateCoverPicMutation, useUpdateUserInfoMutation,useUpdateProfilePicMutation,useGetAllUsersQuery,useGetFilteredUsersQuery,useGetSingleUserQuery,useDeleteUserMutation,  useVerifyEmailQuery} = authApi;
 

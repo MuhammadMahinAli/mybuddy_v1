@@ -390,18 +390,32 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
                     leaveTo="opacity-0 scale-95"
                   >
                     <Dialog.Panel className="w-full  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all lg:w-[600px] 3xl:w-[800px] cursor-pointer">
-                      <div className="pt-9">
+                      <div className="py-7">
                         <h2 className="text-xl lg:text-2xl font-bold mb-4 cursor-pointer">
                           Task {String.fromCharCode(65 + selectedTaskIndex)}{" "}
                         </h2>
-                        <h4 className="text-lg lg:text-xl font-bold mb-4">
-                          {tasks[selectedTaskIndex]?.title} [ Budget $
-                          {tasks[selectedTaskIndex]?.coin} ]
+                        <h4 className="text-lg lg:text-xl graish capitalize font-bold ">
+                          {tasks[selectedTaskIndex]?.title} [ Coin: Free ]
                         </h4>
 
-                        <p className="lg:text-[20px]">
+                        <p className="lg:text-[20px] mt-2 mb-5 text-gray-500">
                           {tasks[selectedTaskIndex]?.details}
                         </p>
+                        {                         
+                            tasks[selectedTaskIndex]?.subTask?.length !== 0 &&
+                            <>
+                            <h4 className="text-lg lg:text-xl capitalize font-bold graish">
+                              Sub Tasks
+                            </h4>
+                            <ul className="pl-2">
+                              {tasks[selectedTaskIndex]?.subTask?.map(
+                                (t, i) => (
+                                  <li className="lg:text-[19px] text-gray-500" key={i}><span className="font-bold pr-2">{i+1}.</span>{t?.todo}</li>
+                                )
+                              )}
+                            </ul>
+                          </>
+                        }
                         <p className="lg:text-[20px]"></p>
                       </div>
                     </Dialog.Panel>

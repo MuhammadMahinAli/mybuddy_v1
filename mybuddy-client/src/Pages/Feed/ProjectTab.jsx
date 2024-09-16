@@ -1,7 +1,12 @@
 //import project from "../../assets/office-team-working-on-a-project-together 1.png";
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/UserContext";
 
-const ProjectTab = ({ theme,user }) => {
+const ProjectTab = ({ theme, user, projects }) => {
+  console.log("up", projects);
+  const { getAllProjectByUser } = useContext(AuthContext);
+  //const projects = getAllProjectByUser?.data;
   // const projects = [
   //   {
   //     image: project,
@@ -40,19 +45,22 @@ const ProjectTab = ({ theme,user }) => {
       >
         Projects
       </h1>
-      <p
-        className={` ${
-          theme === "light" ? "text-gray-700" : "text-white"
-        }  text-[16px] xl:text-[20px] pb-5 `}
-      >
-      {defaultProjectMissingMessage}
-      </p>
-      {/* <div
+      {projects?.length === 0 && (
+        <p
+          className={` ${
+            theme === "light" ? "text-gray-700" : "text-white"
+          }  text-[16px] xl:text-[20px] pb-5 `}
+        >
+          {defaultProjectMissingMessage}
+        </p>
+      )}
+
+      <div
         data-aos="fade-down"
         data-aos-duration="1500"
         className="-pt-7 md:pt-0 lg:py-1 px-7 md:px-10 lg:px-10 xl:px-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-12 lg:gap-9 xl:gap-16"
       >
-        {projects.map((p, i) => (
+        {projects?.map((p, i) => (
           <div
             key={i}
             className={`${
@@ -74,25 +82,35 @@ const ProjectTab = ({ theme,user }) => {
                 theme === "light"
                   ? "bg-[#fff] rounded-[25px] shadow-[3px_-2px_5px_-5px_rgba(0,_0,_0,_0.2)_inset,_0px_3px_4px_rgba(0,_0,_0,_0.08)_inset]"
                   : "bg-[#4d6366] rounded-t-xl"
-              } flex justify-center items-center h-[120px] md:h-[140px] xl:h-[180px]  `}
+              } flex justify-center items-center h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[200px]  `}
             >
-              <img
-                src={p.image}
-                className="h-[100px] md:h-[120px] xl:h-[160px]"
-              />
+              <div className="flex justify-center items-center w-full h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[200px] rounded-[25px] bg-[#DCE2EA] shadow-[0px_1px_2px_rgba(0,_0,_0,_0.25),_-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)]">
+                <img
+                  src={p.images[0]}
+                  className="rounded-2xl h-[180px] ssm:h-[220px]  sm:h-[260px] md:h-[240px] xl:h-[200px] w-full object-cover"
+                />
+              </div>
             </div>
             <div className=" px-2 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">
-            
               <p className="font-semibold pb-2 text-[14px] lg:text-[15px] xl:text-xl">
-                {p.title.slice(0, 18)}
+                {p.projectName.slice(0, 18)}
               </p>
-              <p
+
+              <div
+                      className={`${
+                        theme === "light" ? "text-gray-500" : "text-white"
+                      } pb-2 lg:pb-3 text-[14px] lg:text-[15px] xl:text-[15px] `}
+                      dangerouslySetInnerHTML={{
+                        __html: p?.description.slice(0, 54),
+                      }}
+                    />
+              {/* <p
                 className={`${
                   theme === "light" ? "text-gray-500" : "text-white"
                 } pb-2 lg:pb-3 text-[14px] lg:text-[15px] xl:text-[15px] `}
               >
                 {p.description.slice(0, 54)}
-              </p>
+              </p> */}
               {theme === "light" ? (
                 <button
                   className={`${
@@ -124,7 +142,7 @@ const ProjectTab = ({ theme,user }) => {
             </div>
           </div>
         ))}
-      </div> */}
+      </div>
     </>
   );
 };
@@ -135,8 +153,10 @@ ProjectTab.propTypes = {
   user: PropTypes.object.isRequired,
 };
 
-  {/* <div
+{
+  /* <div
            dangerouslySetInnerHTML={{
              __html: p?.description.slice(0, 200),
            }}
-         /> */}
+         /> */
+}

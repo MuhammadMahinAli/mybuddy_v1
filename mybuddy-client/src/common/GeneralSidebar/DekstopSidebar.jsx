@@ -101,8 +101,7 @@ const DekstopSidebar = ({
               } bg-[#e4ecf7] h-5 rounded-br-[60px]`}
             ></div>
 
-            <Link
-              to="/dashboard/sent-request"
+            <div
               className={`${
                 openRequestOption === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -139,7 +138,7 @@ const DekstopSidebar = ({
                   openRequestOption ? "right-5 top-4" : " right-5 top-6"
                 } h-3 absolute`}
               />
-            </Link>
+            </div>
 
             <div
               className={`${

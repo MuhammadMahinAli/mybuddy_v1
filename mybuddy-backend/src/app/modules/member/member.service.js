@@ -1,8 +1,10 @@
 import httpStatus from "http-status";
-import {ApiError} from "../../../handleError/apiError.js";
-import {Member} from "./member.model.js";
-import crypto from 'crypto';
+import { ApiError } from "../../../handleError/apiError.js";
+import { Member } from "./member.model.js";
+import bcrypt from "bcrypt";
+import crypto from "crypto";
 import { sendEmail } from "../../../utils/emaillService.js";
+import { sendPasswordResetEmail } from "../../../utils/forgetPassword.js";
 
 // create user / signUp user
 // export const createMemberService = async (userInfo) => {
@@ -14,7 +16,7 @@ import { sendEmail } from "../../../utils/emaillService.js";
 //   return newUser;
 // };
 export const createMemberService = async (userInfo) => {
-  const verificationToken = crypto.randomBytes(32).toString('hex');
+  const verificationToken = crypto.randomBytes(32).toString("hex");
   userInfo.verificationToken = verificationToken;
 
   const result = (await Member.create(userInfo)).toObject();
@@ -22,14 +24,15 @@ export const createMemberService = async (userInfo) => {
     throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create user");
   }
   const { password, ...newUser } = result;
-
+  console.log("result", result);
+  console.log("userinfo", userInfo);
 
   const verificationUrl = `http://localhost:5173/verified-email/${verificationToken}`;
 
   // Send verification email
   await sendEmail({
     to: newUser.email,
-    subject: 'Verify Your Email Address',
+    subject: "Verify Your Email Address",
     html: `
      <div style="font-family: Arial, sans-serif;">
       <img src="https://i.ibb.co/g9fcnQq/logo.png" alt="Research Buddy" style="width: 50px; height: auto;"/>
@@ -52,7 +55,7 @@ export const createMemberService = async (userInfo) => {
 export const verifyEmailService = async (token) => {
   const user = await Member.findOne({ verificationToken: token });
   if (!user) {
-    throw new Error('Invalid or expired verification token');
+    throw new Error("Invalid or expired verification token");
   }
 
   user.emailVerified = true;
@@ -81,15 +84,15 @@ export const resendEmailService = async (email) => {
     throw new ApiError(httpStatus.BAD_REQUEST, "Email is already verified");
   }
 
-  const verificationToken = member.verificationToken
+  const verificationToken = member.verificationToken;
 
   //member.verificationToken = verificationToken;
   await member.save();
 
-  const verificationLink =  `http://localhost:5173/verified-email/${verificationToken}`;
+  const verificationLink = `http://localhost:5173/verified-email/${verificationToken}`;
   await sendEmail({
     to: email,
-    subject: 'Verify Your Email Address',
+    subject: "Verify Your Email Address",
     html: `
      <div style="font-family: Arial, sans-serif;">
       <img src="https://i.ibb.co/g9fcnQq/logo.png" alt="Research Buddy" style="width: 50px; height: auto;"/>
@@ -104,26 +107,25 @@ export const resendEmailService = async (email) => {
     `,
   });
 
-  return { message: 'Verification email sent' };
+  return { message: "Verification email sent" };
 };
-
-
-
 
 ///get all users
 export const getAllMemberService = async () => {
-  const users = await Member.find({})
+  const users = await Member.find({});
   return users;
 };
 
 export const getSingleMember = async (id) => {
-  const user = await Member.findOne({_id: id});
+  const user = await Member.findOne({ _id: id });
   return user;
 };
 
 //----------Update user
 export const updateMemberService = async (id, updateData) => {
-  const updatedMember = await Member.findByIdAndUpdate(id, updateData, { new: true });
+  const updatedMember = await Member.findByIdAndUpdate(id, updateData, {
+    new: true,
+  });
   if (!updatedMember) {
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
@@ -145,7 +147,10 @@ export const updateMemberProfilePicService = async (userId, data) => {
     );
 
     if (!updatedMember) {
-      throw new ApiError(httpStatus.BAD_REQUEST, "Failed to update profile pic");
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        "Failed to update profile pic"
+      );
     }
 
     return updatedMember;
@@ -154,7 +159,7 @@ export const updateMemberProfilePicService = async (userId, data) => {
   }
 };
 
-//--------------- update cover pic
+//--------------- update cover pic  01827399405
 export const updateMemberCoverPicService = async (userId, data) => {
   try {
     const member = await Member.findById(userId);
@@ -196,7 +201,7 @@ export const updateMemberInfoService = async (userId, data) => {
       phoneNumber: data.phoneNumber,
       phoneNumberPrivacy: data.phoneNumberPrivacy,
       address: data.address,
-      addressPrivacy:data.addressPrivacy,
+      addressPrivacy: data.addressPrivacy,
       country: data.country,
     };
 
@@ -207,7 +212,10 @@ export const updateMemberInfoService = async (userId, data) => {
     );
 
     if (!updatedMember) {
-      throw new ApiError(httpStatus.BAD_REQUEST, "Failed to update user information");
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        "Failed to update user information"
+      );
     }
 
     return updatedMember;
@@ -216,3 +224,60 @@ export const updateMemberInfoService = async (userId, data) => {
   }
 };
 
+// -------- send reset password email
+
+export const sendForgetPasswordEmailService = async (email) => {
+  const user = await Member.findOne({ email });
+  if (!user) {
+    throw new Error("Member not found");
+  }
+
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  const resetPasswordExpires = Date.now() + 5 * 60 * 1000; // 5 minutes
+
+  user.resetPasswordToken = resetToken;
+  user.resetPasswordExpires = resetPasswordExpires;
+  await user.save();
+
+  const timeRemaining = resetPasswordExpires - Date.now();
+
+  console.log(user?._id, resetToken, timeRemaining);
+
+  // Create the reset URL with token
+  const resetUrl = `http://localhost:5173/reset-password?id=${user._id}&token=${resetToken}&timeRemaining=${timeRemaining}`;
+
+  // Send email using utility function
+  await sendPasswordResetEmail(user.email, user, resetUrl);
+
+  return {
+    message: "Password reset email sent successfully. Please check your inbox.",
+    timeRemaining,
+  };
+};
+
+//--------------  resetting the password
+
+export const resetPasswordService = async (id, token, newPassword) => {
+  const user = await Member.findOne({
+    _id: id,
+    resetPasswordToken: token,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+  console.log("user 377", user);
+  if (!user) {
+    throw new Error(
+      "Invalid or expired reset token. Please generate a new one."
+    );
+  }
+  // Hash the new password before saving
+  //user.password = await bcrypt.hash(newPassword, 10);
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  console.log('Hashed password:', hashedPassword);
+  
+  user.password = hashedPassword;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+  await user.save();
+  console.log('Password updated successfully');
+  return { message: "Password has been reset successfully." };
+};

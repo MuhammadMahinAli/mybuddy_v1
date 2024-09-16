@@ -172,10 +172,9 @@ const Posts = ({ theme }) => {
     const postData = {
       ...formData,
       postedBy: user._id,
-    }
+    };
     console.log("form", postData);
-    createPost(postData)
-    .unwrap() 
+    createPost(postData).unwrap();
     Swal.fire({
       icon: "success",
       title: "Hurry !",
@@ -192,20 +191,6 @@ const Posts = ({ theme }) => {
       pdf: "",
     });
   };
-
-  // useEffect(() => {
-  //   if (!responseData?.status) {
-  //     console.log(responseData?.message);
-  //   }
-  //   if (responseError?.data) {
-  //     console.log(responseError.data);
-  //   }
-  //   if (responseData?.success && responseData?.data) {
-  //     console.log(responseData);
-    
-    
-  //   }
-  // }, [responseData, responseError]);
 
   const handleRemoveImage = () => {
     setFormData((prevState) => ({
@@ -416,7 +401,7 @@ const Posts = ({ theme }) => {
                   </div>
                 )}
               </div>
-
+              {/* <button>Open Modal</button> */}
               {theme === "light" ? (
                 <button
                   onClick={handleSubmit}

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 const AboutTab = ({ theme, user, userPersonalInfo }) => {
-  console.log("s", userPersonalInfo);
+ // console.log("s", userPersonalInfo);
   const capitalize = (str) => {
     return str.replace(/\b\w/g, (char) => char.toUpperCase());
   };

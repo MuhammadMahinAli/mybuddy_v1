@@ -70,49 +70,7 @@ const Sign = () => {
   };
   console.log(formData);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const emailValid = validateEmail(formData?.email);
-  //   const passwordValid = validatePass(formData?.password);
-  //   if (!emailValid) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Invalid Email !!",
-  //       text: "Please use a valid email address to ensure the email verification after signup",
-  //     });
-  //   } else if (!passwordValid) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Invalid Password !!",
-  //       text: "Password must contain at least 1 uppercase and lowercase alphabetical character, 1 numeric character, 1 special character & must be 8 characters or longer",
-  //     });
-  //   } else {
-  //     signUp(formData);
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (!responseData?.status) {
-  //     console.log("er", responseError?.data);
-  //   }
-  //   if (responseError?.data) {
-  //     console.log(responseError.data);
-  //   }
-  //   if (responseError?.data?.message === "User created successfully!") {
-  //     Swal.fire({
-  //       icon: "success",
-  //       title: "Well Done !!!",
-  //       text: "Account has been created successfully!",
-  //     });
-  //     navigate(`/verify-your-email`);
-  //   }
-  //   if (responseError?.data?.message === "Duplicate key Error") {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Email Already Used",
-  //       text: "The email address you entered is already associated with another account. Please use a different email address or verify your email if you haven't done so.",
-  //     });
-  //   }
-  // }, [responseData, responseError]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -134,6 +92,7 @@ const Sign = () => {
       setIsLoader(true);
       try {
         await signUp(formData);
+        console.log("form data", formData);
       } catch (error) {
         // Handle error
       } finally {
@@ -152,7 +111,7 @@ const Sign = () => {
           title: "Well Done !!!",
           text: "Account has been created successfully!",
         });
-        navigate(`/verify-your-email`);
+       // navigate(`/verify-your-email`);
       }
 
     } else if (responseError?.data) {

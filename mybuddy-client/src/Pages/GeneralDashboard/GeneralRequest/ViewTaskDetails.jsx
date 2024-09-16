@@ -46,10 +46,7 @@ const ViewTaskDetails = ({ isOpenModal, tasks, closeModal }) => {
                         <span className="font-semibold py-1">About Task:</span>{" "}
                         {t?.details}
                       </p>
-                      <p className="pb-7">
-                        <span className="font-semibold">Budget:</span> $
-                        {t?.budget}
-                      </p>
+                     
                     </div>
                   ))}
                   {/* {tasks?.map((task, index) => (

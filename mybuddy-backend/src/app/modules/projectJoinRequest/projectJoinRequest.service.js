@@ -3,10 +3,21 @@ import { ProjectJoinRequest } from './projectJoinRequest.model.js';
 import { ApiError } from "../../../handleError/apiError.js";
 import httpStatus from "http-status";
 
+
 // export const createProjectJoinRequestService = async(projectData) => {
 //    try {
+//       // Check if a join request already exists for the given user and project
+//       const existingRequest = await ProjectJoinRequest.findOne({
+//          projectId: projectData.projectId,
+//          requestedBy: projectData.requestedBy
+//       });
+
+//       if (existingRequest) {
+//          throw new ApiError(httpStatus.CONFLICT, "You have already requested to join this project.");
+//       }
+
 //       const result = await ProjectJoinRequest.create(projectData);
-//       console.log(result);
+      
 //       if (!result) {
 //         throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create post");
 //       }
@@ -14,32 +25,100 @@ import httpStatus from "http-status";
 //    } catch (error) {
 //       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
 //    }
-//   };
+// };
 
-export const createProjectJoinRequestService = async(projectData) => {
+// export const createProjectJoinRequestService = async (projectData) => {
+//    try {
+//      // Check if a join request already exists for the given user and project
+//      const existingRequest = await ProjectJoinRequest.findOne({
+//        projectId: projectData.projectId,
+//        requestedBy: projectData.requestedBy,
+//      });
+ 
+//      // If a request already exists, check for duplicate subtasks
+//      if (existingRequest) {
+//        // Flatten the existing subtasks into a single array
+//        const existingSubTasks = existingRequest.tasks.flatMap(task =>
+//          task.subTask.map(sub => sub.todo)
+//        );
+ 
+//        // Flatten the new subtasks into a single array
+//        const newSubTasks = projectData.tasks.flatMap(task =>
+//          task.subTask.map(sub => sub.todo)
+//        );
+ 
+//        // Check if any new subtask already exists in the previous request
+//        const duplicateSubTask = newSubTasks.find(subTask =>
+//          existingSubTasks.includes(subTask)
+//        );
+ 
+//        if (duplicateSubTask) {
+//          throw new ApiError(
+//            httpStatus.CONFLICT,
+//            `Subtask "${duplicateSubTask}" has already been requested for this project.`
+//          );
+//        }
+//      }
+ 
+     // If no existing request or no duplicate subtask, create a new request
+//      const result = await ProjectJoinRequest.create(projectData);
+ 
+//      if (!result) {
+//        throw new ApiError(
+//          httpStatus.INTERNAL_SERVER_ERROR,
+//          "Failed to create join request"
+//        );
+//      }
+//      return result;
+//    } catch (error) {
+//      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
+//    }
+//  };
+
+
+export const createProjectJoinRequestService = async (projectData) => {
    try {
-      // Check if a join request already exists for the given user and project
-      const existingRequest = await ProjectJoinRequest.findOne({
-         projectId: projectData.projectId,
-         requestedBy: projectData.requestedBy
-      });
-
-      if (existingRequest) {
-         throw new ApiError(httpStatus.CONFLICT, "You have already requested to join this project.");
-      }
-
-      const result = await ProjectJoinRequest.create(projectData);
-      
-      if (!result) {
-        throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create post");
-      }
-      return result;
+     // Check if a join request already exists for the given user and project
+     const existingRequest = await ProjectJoinRequest.findOne({
+       projectId: projectData.projectId,
+       requestedBy: projectData.requestedBy,
+     });
+ 
+     if (existingRequest) {
+       // Extract task titles from existing and new requests
+       const existingTaskTitles = existingRequest.tasks.map((task) => task.title.toLowerCase());
+       const newTaskTitles = projectData.tasks.map((task) => task.title.toLowerCase());
+ 
+       // Find all matching task titles
+       const duplicateTitles = newTaskTitles.filter((title) =>
+         existingTaskTitles.includes(title)
+       );
+ 
+       if (duplicateTitles.length > 0) {
+         // Capitalize each duplicate title
+         const capitalizeTitle = (title) => title.replace(/\b\w/g, (char) => char.toUpperCase());
+         const duplicateTitlesList = duplicateTitles.map(capitalizeTitle).join(', ');
+ 
+         throw new ApiError(
+           httpStatus.CONFLICT,
+           `You have already requested to join this project with the same task title(s): ${duplicateTitlesList}.`
+         );
+       }
+     }
+ 
+     const result = await ProjectJoinRequest.create(projectData);
+ 
+     if (!result) {
+       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create project join request");
+     }
+     return result;
    } catch (error) {
-      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
+     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
    }
-};
+ };
+ 
 
-
+ 
 export const getAllProjectJoinRequestsService = async () => {
  try {
     const requests = await ProjectJoinRequest.find({}).populate('projectId').populate('requestedBy').populate('requestedTo');

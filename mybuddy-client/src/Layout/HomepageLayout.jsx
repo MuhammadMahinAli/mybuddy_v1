@@ -8,6 +8,9 @@ import RightSidebar from "../Pages/Homepage/RightSidebar";
 import BottomNavbar from "../common/BottomNavbar/BottomNavbar";
 
 const HomepageLayout = () => {
+
+
+  //-------------------------------------------
   let [isOpen, setIsOpen] = useState(true);
   const theme = useSelector((state) => state.theme.theme);
   const { user } = useSelector((state) => state.auth);
@@ -42,15 +45,15 @@ const HomepageLayout = () => {
     }, 1000);
   }, []);
 
-  // if (!user ) {
-  //   navigate("/");
-  //   return;
-  // }
+ 
   // Delay check for user authentication
   useEffect(() => {
     setTimeout(() => {
       if (user) {
         navigate("/home");
+      }
+      else {
+        navigate("/");
       }
    
     }, 3000); // 3-second delay

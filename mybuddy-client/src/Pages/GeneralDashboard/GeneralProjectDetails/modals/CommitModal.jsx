@@ -53,22 +53,32 @@ const CommitModal = ({
     }
   };
 
-  const handleTaskCheckboxChange = (e, taskTitle) => {
+  const handleTaskCheckboxChange = (e, title, type) => {
     const isChecked = e.target.checked;
 
     setFormData((prevState) => {
-      const updatedCompletedTask = [...prevState.completedTask];
-      const taskIndex = updatedCompletedTask.findIndex(
-        (task) => task.taskTitle === taskTitle
-      );
+      const updatedCompletedTask = { ...prevState.completedTask };
 
-      if (isChecked) {
-        if (taskIndex === -1) {
-          updatedCompletedTask.push({ taskTitle });
+      if (type === "task") {
+        if (isChecked) {
+          updatedCompletedTask.task = title;
+        } else {
+          updatedCompletedTask.task = "";
         }
-      } else {
-        if (taskIndex > -1) {
-          updatedCompletedTask.splice(taskIndex, 1);
+      } else if (type === "subTask") {
+        updatedCompletedTask.subTask = updatedCompletedTask.subTask || [];
+
+        if (isChecked) {
+          if (!updatedCompletedTask.subTask.includes(title)) {
+            updatedCompletedTask.subTask = [
+              ...updatedCompletedTask.subTask,
+              title,
+            ];
+          }
+        } else {
+          updatedCompletedTask.subTask = updatedCompletedTask.subTask.filter(
+            (sub) => sub !== title
+          );
         }
       }
 
@@ -79,8 +89,14 @@ const CommitModal = ({
     });
   };
 
-  const isTaskChecked = (taskTitle) => {
-    return formData.completedTask.some((task) => task.taskTitle === taskTitle);
+  // Utility function to check if a task or subTask is checked
+  const isTaskChecked = (title, type) => {
+    if (type === "task") {
+      return formData.completedTask.task === title;
+    } else if (type === "subTask") {
+      return formData.completedTask.subTask?.includes(title) || false;
+    }
+    return false;
   };
 
   const handleSubmit = async (e) => {
@@ -103,8 +119,7 @@ const CommitModal = ({
     };
     console.log("commit", postData);
     try {
-      await createCommit(postData)
-      .unwrap() 
+      await createCommit(postData).unwrap();
       Swal.fire({
         icon: "success",
         title: "Commit Uploaded!",
@@ -178,11 +193,11 @@ const CommitModal = ({
                             type="checkbox"
                             checked={
                               tasks?.status === "pending"
-                                ? isTaskChecked(tasks?.title)
+                                ? isTaskChecked(tasks?.title, "task")
                                 : true
                             }
                             onChange={(e) =>
-                              handleTaskCheckboxChange(e, tasks?.title)
+                              handleTaskCheckboxChange(e, tasks?.title, "task")
                             }
                           />
                           <p
@@ -209,11 +224,15 @@ const CommitModal = ({
                                   type="checkbox"
                                   checked={
                                     sub?.status === "pending"
-                                      ? isTaskChecked(sub?.todo)
+                                      ? isTaskChecked(sub?.todo, "subTask")
                                       : true
                                   }
                                   onChange={(e) =>
-                                    handleTaskCheckboxChange(e, sub?.todo)
+                                    handleTaskCheckboxChange(
+                                      e,
+                                      sub?.todo,
+                                      "subTask"
+                                    )
                                   }
                                 />
                                 <p
