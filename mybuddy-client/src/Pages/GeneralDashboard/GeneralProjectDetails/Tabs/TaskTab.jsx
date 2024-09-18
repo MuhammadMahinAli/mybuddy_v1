@@ -9,13 +9,14 @@ import {
   useUpdateSubTaskStatusMutation,
   useUpdateTaskStatusMutation,
 } from "../../../../features/project/projectApi";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../Context/UserContext";
 import { useUpdateJoinRequestStatusMutation } from "../../../../features/projectJoinRequest/projectJoinRequestApi";
 import xMark from "../../../../assets/xmark.png";
 import rightMark from "../../../../assets/checkmark.png";
 import CommitModal from "../modals/CommitModal";
 import AddNewTask from "../AddNewTask";
+import { apiFetch } from "../../../../utils/apiFetch";
 
 const TaskTab = ({
   ProjectInfo,
@@ -27,6 +28,7 @@ const TaskTab = ({
   allRecieveRequest,
   filteredMyself,
   projectOwner,
+ 
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isOpenCommitModal, setIsOpenCommitModal] = useState(false);
@@ -131,9 +133,9 @@ const TaskTab = ({
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Done";
-          console.log({ id: selectedTask._id, data: { status: newStatus } });
+          console.log({ id: selectedTask?._id, data: { status: newStatus } });
           updateJoinRequestStatus({
-            id: selectedTask._id,
+            id: selectedTask?._id,
             data: { status: newStatus },
           })
             .unwrap()
@@ -157,50 +159,45 @@ const TaskTab = ({
       console.log("No task found for the selected index.");
     }
   };
-  // const handleUpdateStatusDone = (e, id) => {
 
-  //   e.preventDefault();
-  //   // setSelectedRequestIndex(index);
-  //   // const selectedTask = allRecieveRequest?.data[index];
-  //   console.log("done",id);
-  //   if (id) {
-  //     Swal.fire({
-  //       title: "Are you sure?",
-  //       text: "Does this member completed his task?",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Yes, all task are completed!",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         const newStatus = "Done";
-  //         console.log({ id: id, data: { status: newStatus } });
-  //         updateJoinRequestStatus({
-  //           id: id,
-  //           data: { status: newStatus },
-  //         })
-  //           .unwrap()
-  //           .then(() => {
-  //             Swal.fire({
-  //               icon: "success",
-  //               title: "Well done !",
-  //               text: "You have updated the status successfully!",
-  //             });
-  //             setTimeout(() => {
-  //               window.location.reload();
-  //             }, 2500);
-  //           })
-  //           .catch((error) => {
-  //             alert("Failed to update status.");
-  //             console.error(error);
-  //           });
-  //       }
-  //     });
-  //   } else {
-  //     console.log("No task found for the selected index.");
-  //   }
-  // };
+  // is Matching useGetAllAcceptedProjectTeamMemberQuery
+
+
+
+  const [teamMembers, setTeamMembers] = useState(null);
+
+  const projectId = ProjectInfo?._id
+
+  useEffect(() => {
+    if (!projectId) {
+      return;
+    }
+    const fetchData = async () => {
+      const res = await apiFetch(
+        `http://localhost:3000/api/v1/project-join-request/Accepted/team-member/${projectId}`,
+        "GET"
+      );
+      setTeamMembers(res?.data ?? {});
+      console.log(res?.data);
+    };
+    fetchData();
+  }, [projectId]);
+
+
+
+ // access of commit 
+
+  const currentTaskid = tasks[selectedIndex]?._id;
+
+  const isMatchingMember = teamMembers?.some(
+    (member) => 
+      member?.requestedBy?._id === userId &&
+      member?.tasks?.some(task => task?._id === currentTaskid) // Check if any task's title matches
+  );
+
+ 
+
+
 
   //----------- update task, subtask status
   const [updateTaskStatus] = useUpdateTaskStatusMutation();
@@ -330,9 +327,9 @@ const TaskTab = ({
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Accepted";
-          console.log({ id: selectedTask._id, data: { status: newStatus } });
+          console.log({ id: selectedTask?._id, data: { status: newStatus } });
           updateJoinRequestStatus({
-            id: selectedTask._id,
+            id: selectedTask?._id,
             data: { status: newStatus },
           })
             .unwrap()
@@ -372,9 +369,9 @@ const TaskTab = ({
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Rejected";
-          console.log({ id: selectedTask._id, data: { status: newStatus } });
+          console.log({ id: selectedTask?._id, data: { status: newStatus } });
           updateJoinRequestStatus({
-            id: selectedTask._id,
+            id: selectedTask?._id,
             data: { status: newStatus },
           })
             .unwrap()
@@ -398,6 +395,7 @@ const TaskTab = ({
       console.log("No task found for the selected index.");
     }
   };
+
 
   //------ count progress bar
 
@@ -630,8 +628,8 @@ const TaskTab = ({
             </div>
           )}
 
-          {/* commit button */}
-          {ProjectInfo?.user?._id !== userId && (
+          {/* commit button  ProjectInfo?.user?._id !== userId && */}
+          {   tasks[selectedIndex].title && isMatchingMember && (
             <div className="pb-3">
               <button
                 onClick={() => setIsOpenCommitModal(true)}
@@ -639,7 +637,7 @@ const TaskTab = ({
               >
                 Commit
               </button>
-              {isOpenCommitModal && (
+              {isMatchingMember && (
                 <CommitModal
                   textColor={colors[selectedIndex].textColor}
                   cardBg={colors[selectedIndex].cardBg}

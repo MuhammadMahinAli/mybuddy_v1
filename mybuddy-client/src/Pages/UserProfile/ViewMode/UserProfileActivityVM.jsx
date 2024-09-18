@@ -36,7 +36,7 @@ const UserProfileActivityVM = ({ allPost }) => {
         </div>
         {allPost?.length === 0 ? (
           <p className="text-[13px] md:text-[16px] capitalize font-medium py-8 text-center">
-            {"You've not posted anything yet."}
+            {"No activity available to show"}
           </p>
         ) : (
           <>

@@ -43,7 +43,7 @@ const AddProject = () => {
             <div
               type="button"
               onClick={openModal}
-              key={list._id}
+              key={list?._id}
               className="flex items-center justify-between px-1 cursor-pointer bg-[#e6f3f3] rounded-xl shadow-[2px_2px_5px_2px_rgba(155,_155,_155,_0.3)] filter:blur(2px) backdrop-filter:blur(20px)"
             >
               {/* left */}

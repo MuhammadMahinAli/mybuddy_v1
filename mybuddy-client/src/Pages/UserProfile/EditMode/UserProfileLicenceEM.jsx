@@ -70,19 +70,19 @@ const UserProfileLicenceEM = () => {
           <div className="px-5">
             {/* Display the first item */}
             {getUserLicense?.data?.length > 0 && (
-              <div key={getUserLicense.data[0]?._id} className="space-y-2 p-3">
+              <div key={getUserLicense?.data[0]?._id} className="space-y-2 p-3">
                 <p className=" capitalize text-[17px] font-semibold">
-                  {getUserLicense.data[0]?.title}
+                  {getUserLicense?.data[0]?.title}
                 </p>
                 <p className=" capitalize text-[16px]">
-                  {getUserLicense.data[0]?.organization}
+                  {getUserLicense?.data[0]?.organization}
                 </p>
                 <p className=" capitalize text-[16px]">
-                  issued {getUserLicense.data[0]?.issueDate}
+                  issued {getUserLicense?.data[0]?.issueDate}
                 </p>
                 <div className="md:w-4/12 xl:w-9/12 p-[2px]  rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]  lg:mt-[210px] xl:mt-[200px] lg:mr-1 3xl:mr-4">
                   <a
-                    href={getUserLicense.data[0]?.credentialLink}
+                    href={getUserLicense?.data[0]?.credentialLink}
                     target="blank"
                     className={`${
                       theme === "light" ? "bg-[#fff]" : "bg-[#13688a]"
@@ -100,19 +100,19 @@ const UserProfileLicenceEM = () => {
             {/* Display the rest of the items based on the showAll state */}
             {showAll &&
               getUserLicense?.data?.slice(1).map((c) => (
-                <div key={c._id} className="py-5 border-b">
+                <div key={c?._id} className="py-5 border-b">
                   <div className="flex justify-between items-center">
                     <p className=" capitalize text-[17px] font-semibold">
-                      {c.title}
+                      {c?.title}
                     </p>
 
-                    <button onClick={() => openUpdateLicenseModal(c._id)}>
+                    <button onClick={() => openUpdateLicenseModal(c?._id)}>
                       <UploadIcon2 theme={theme} />
                     </button>
                   </div>
 
-                  <p className=" capitalize text-[16px]">{c.organization}</p>
-                  <p className=" capitalize text-[16px]">{c.issueDate}</p>
+                  <p className=" capitalize text-[16px]">{c?.organization}</p>
+                  <p className=" capitalize text-[16px]">{c?.issueDate}</p>
                 </div>
               ))}
             <div className="w-12/12 md:w-3/12">
@@ -186,16 +186,16 @@ const UserProfileLicenceEM = () => {
             {/* Display the first item */}
             {getUserLicense?.data?.length > 0 && (
               <div
-                key={getUserLicense.data[0]._id}
+                key={getUserLicense?.data[0]?._id}
                 className="border-b space-y-1 py-5"
               >
                 <div className="flex justify-between items-center">
                   <p className=" capitalize text-[17px] font-semibold">
-                    {getUserLicense.data[0]?.title}
+                    {getUserLicense?.data[0]?.title}
                   </p>
                   <button
                     onClick={() =>
-                      openUpdateLicenseModal(getUserLicense.data[0]?._id)
+                      openUpdateLicenseModal(getUserLicense?.data[0]?._id)
                     }
                   >
                     <UploadIcon2 theme={theme} />
@@ -203,14 +203,14 @@ const UserProfileLicenceEM = () => {
                 </div>
 
                 <p className=" capitalize text-[16px]">
-                  {getUserLicense.data[0]?.organization}
+                  {getUserLicense?.data[0]?.organization}
                 </p>
                 <p className=" capitalize text-[16px]">
-                  issued {getUserLicense.data[0]?.issueDate}
+                  issued {getUserLicense?.data[0]?.issueDate}
                 </p>
                 <div className="md:w-4/12 xl:w-9/12 p-[2px]  rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]  lg:mt-[210px] xl:mt-[200px] lg:mr-1 3xl:mr-4">
                   <a
-                    href={getUserLicense.data[0]?.credentialLink}
+                    href={getUserLicense?.data[0]?.credentialLink}
                     target="blank"
                     className={`${
                       theme === "light" ? "bg-[#fff]" : "bg-[#13688a]"
@@ -226,18 +226,18 @@ const UserProfileLicenceEM = () => {
             {/* Display the rest of the items based on the showAll state */}
             {showAll &&
               getUserLicense?.data?.slice(1).map((c) => (
-                <div key={c._id} className="py-5 space-y-1 border-b">
+                <div key={c?._id} className="py-5 space-y-1 border-b">
                   <div className="flex justify-between items-center">
                     <p className=" capitalize text-[17px] font-semibold">
-                      {c.title}
+                      {c?.title}
                     </p>
 
-                    <button onClick={() => openUpdateLicenseModal(c._id)}>
+                    <button onClick={() => openUpdateLicenseModal(c?._id)}>
                       <UploadIcon2 theme={theme} />
                     </button>
                   </div>
 
-                  <p className=" capitalize text-[16px]">{c.organization}</p>
+                  <p className=" capitalize text-[16px]">{c?.organization}</p>
                   <p className=" capitalize text-[16px]">
                     issued {c?.issueDate}
                   </p>

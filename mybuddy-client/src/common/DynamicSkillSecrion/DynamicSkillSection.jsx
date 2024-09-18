@@ -1025,7 +1025,7 @@ const DynamicSkillSection = ({
     <>
       {skillArray && skillArray?.length < 0 ? (
         <p className="text-[13px] md:text-[16px] text-center capitalize font-medium">
-          {"You've not add any skill yet."}
+          {"No skill available to show."}
         </p>
       ) : (
         <>

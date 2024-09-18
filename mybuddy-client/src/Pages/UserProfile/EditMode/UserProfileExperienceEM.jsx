@@ -73,16 +73,16 @@ const UserProfileExperienceEM = () => {
             {/* Display the first item */}
             {getUserExperience?.data?.length > 0 && (
               <div
-                key={getUserExperience.data[0]._id}
+                key={getUserExperience?.data[0]?._id}
                 className="border-b py-5 space-y-1"
               >
                 <div className="flex justify-between items-center">
                   <p className=" capitalize text-[17px] font-semibold">
-                    {getUserExperience.data[0]?.role}
+                    {getUserExperience?.data[0]?.role}
                   </p>
                   <button
                     onClick={() =>
-                      openUpdateExperienceModal(getUserExperience.data[0]?._id)
+                      openUpdateExperienceModal(getUserExperience?.data[0]?._id)
                     }
                   >
                     <UploadIcon2 theme={theme} />
@@ -90,24 +90,24 @@ const UserProfileExperienceEM = () => {
                 </div>
 
                 <p className=" capitalize text-[16px]">
-                  {getUserExperience.data[0]?.companyName},{" "}
-                  {getUserExperience.data[0]?.companyLocation}
+                  {getUserExperience?.data[0]?.companyName},{" "}
+                  {getUserExperience?.data[0]?.companyLocation}
                 </p>
                 {getUserExperience.data[0]?.endDate === "Currently Working" ? (
                   <p className=" capitalize text-[16px]">
-                    {getUserExperience.data[0]?.endDate} as{" "}
-                    {getUserExperience.data[0]?.employeeType}
+                    {getUserExperience?.data[0]?.endDate} as{" "}
+                    {getUserExperience?.data[0]?.employeeType}
                   </p>
                 ) : (
                   <p className=" capitalize text-[16px]">
-                    {getUserExperience.data[0]?.startDate}{" "}
-                    {getUserExperience.data[0]?.endDate}
+                    {getUserExperience?.data[0]?.startDate}{" "}
+                    {getUserExperience?.data[0]?.endDate}
                   </p>
                 )}
 
                 {getUserExperience.data[0]?.endDate !== "Currently Working" && (
                   <p className=" capitalize text-[16px]">
-                    Worked as {getUserExperience.data[0]?.employeeType}
+                    Worked as {getUserExperience?.data[0]?.employeeType}
                   </p>
                 )}
               </div>
@@ -116,34 +116,34 @@ const UserProfileExperienceEM = () => {
             {/* Display the rest of the items based on the showAll state */}
             {showAll &&
               getUserExperience?.data?.slice(1).map((c) => (
-                <div key={c._id} className="py-5 border-b">
+                <div key={c?._id} className="py-5 border-b">
                   <div className="flex justify-between items-center">
                     <p className=" capitalize text-[17px] font-semibold">
                       {c.role}
                     </p>
 
-                    <button onClick={() => openUpdateExperienceModal(c._id)}>
+                    <button onClick={() => openUpdateExperienceModal(c?._id)}>
                       <UploadIcon2 theme={theme} />
                     </button>
                   </div>
 
                   <p className=" capitalize text-[16px]">
-                    {c.companyName}, {c.companyLocation}
+                    {c?.companyName}, {c?.companyLocation}
                   </p>
-                  {c.endDate === "Currently Working" ? (
+                  {c?.endDate === "Currently Working" ? (
                     <p className=" capitalize text-[16px]">
-                      {c.endDate} as {c.employeeType}
+                      {c?.endDate} as {c?.employeeType}
                     </p>
                   ) : (
                     <p className=" capitalize text-[16px]">
-                      {"("} {c.startDate}
-                      {"-"} {c.endDate} {")"}
+                      {"("} {c?.startDate}
+                      {"-"} {c?.endDate} {")"}
                     </p>
                   )}
 
-                  {c.endDate !== "Currently Working" && (
+                  {c?.endDate !== "Currently Working" && (
                     <p className=" capitalize text-[16px]">
-                      Worked as {c.employeeType}
+                      Worked as {c?.employeeType}
                     </p>
                   )}
                 </div>
@@ -221,16 +221,16 @@ const UserProfileExperienceEM = () => {
             {/* Display the first item */}
             {getUserExperience?.data?.length > 0 && (
               <div
-                key={getUserExperience.data[0]._id}
+                key={getUserExperience?.data[0]?._id}
                 className="border-b space-y-1 py-5"
               >
                 <div className="flex justify-between items-center">
                   <p className=" capitalize text-[17px] font-semibold">
-                    {getUserExperience.data[0]?.role}
+                    {getUserExperience?.data[0]?.role}
                   </p>
                   <button
                     onClick={() =>
-                      openUpdateExperienceModal(getUserExperience.data[0]?._id)
+                      openUpdateExperienceModal(getUserExperience?.data[0]?._id)
                     }
                   >
                     <UploadIcon2 theme={theme} />
@@ -238,24 +238,24 @@ const UserProfileExperienceEM = () => {
                 </div>
 
                 <p className=" capitalize text-[16px]">
-                  {getUserExperience.data[0]?.companyName},{" "}
-                  {getUserExperience.data[0]?.companyLocation}
+                  {getUserExperience?.data[0]?.companyName},{" "}
+                  {getUserExperience?.data[0]?.companyLocation}
                 </p>
-                {getUserExperience.data[0]?.endDate === "Currently Working" ? (
+                {getUserExperience?.data[0]?.endDate === "Currently Working" ? (
                   <p className=" capitalize text-[16px]">
-                    {getUserExperience.data[0]?.endDate} as{" "}
-                    {getUserExperience.data[0]?.employeeType}
+                    {getUserExperience?.data[0]?.endDate} as{" "}
+                    {getUserExperience?.data[0]?.employeeType}
                   </p>
                 ) : (
                   <p className=" capitalize text-[16px]">
-                    {getUserExperience.data[0]?.startDate}{" "}
-                    {getUserExperience.data[0]?.endDate}
+                    {getUserExperience?.data[0]?.startDate}{" "}
+                    {getUserExperience?.data[0]?.endDate}
                   </p>
                 )}
 
-                {getUserExperience.data[0]?.endDate !== "Currently Working" && (
+                {getUserExperience?.data[0]?.endDate !== "Currently Working" && (
                   <p className=" capitalize text-[16px]">
-                    Worked as {getUserExperience.data[0]?.employeeType}
+                    Worked as {getUserExperience?.data[0]?.employeeType}
                   </p>
                 )}
               </div>
@@ -264,10 +264,10 @@ const UserProfileExperienceEM = () => {
             {/* Display the rest of the items based on the showAll state */}
             {showAll &&
               getUserExperience?.data?.slice(1).map((c) => (
-                <div key={c._id} className="py-5 space-y-1 border-b">
+                <div key={c?._id} className="py-5 space-y-1 border-b">
                   <div className="flex justify-between items-center">
                     <p className=" capitalize text-[17px] font-semibold">
-                      {c.role}
+                      {c?.role}
                     </p>
 
                     <button onClick={() => openUpdateExperienceModal(c._id)}>
@@ -276,22 +276,22 @@ const UserProfileExperienceEM = () => {
                   </div>
 
                   <p className=" capitalize text-[16px]">
-                    {c.companyName}, {c.companyLocation}
+                    {c?.companyName}, {c?.companyLocation}
                   </p>
-                  {c.endDate === "Currently Working" ? (
+                  {c?.endDate === "Currently Working" ? (
                     <p className=" capitalize text-[16px]">
-                      {c.endDate} as {c.employeeType}
+                      {c?.endDate} as {c?.employeeType}
                     </p>
                   ) : (
                     <p className=" capitalize text-[16px]">
-                      {"("} {c.startDate}
-                      {"-"} {c.endDate} {")"}
+                      {"("} {c?.startDate}
+                      {"-"} {c?.endDate} {")"}
                     </p>
                   )}
 
-                  {c.endDate !== "Currently Working" && (
+                  {c?.endDate !== "Currently Working" && (
                     <p className=" capitalize text-[16px]">
-                      Worked as {c.employeeType}
+                      Worked as {c?.employeeType}
                     </p>
                   )}
                 </div>

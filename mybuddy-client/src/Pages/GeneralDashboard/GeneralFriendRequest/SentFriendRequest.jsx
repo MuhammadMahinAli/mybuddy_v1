@@ -11,7 +11,7 @@ const SentFriendRequest = ({
         )}
         {sentRequests?.map((request, i) => (
           <div
-            key={request._id}
+            key={request?._id}
             className=" p-3 md:p-7 mb-3 ssm:mb-5 xl:mb-6 w-full rounded-[20px] bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]"
           >
             <div className="flex justify-between items-center">

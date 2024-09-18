@@ -139,14 +139,81 @@ export const getProjectByRequestedByService = async (id) => {
    return projectByRequestedBy;
  };
 
+
+
+// export const getProjectByRequestedByService = async (id) => {
+//   // Fetch all join requests for the requestedBy user
+//   const projectByRequestedBy = await ProjectJoinRequest.find({ requestedBy: id, status: "Pending"  })
+//     .populate('projectId')
+//     .populate('requestedBy')
+//     .populate('requestedTo')
+//     .sort({ createdAt: -1 });
+
+//   // Group requests by projectId and combine tasks
+//   const groupedProjects = projectByRequestedBy.reduce((acc, request) => {
+//     const projectId = request.projectId._id.toString();
+    
+//     // If the projectId already exists in the accumulator, combine tasks
+//     if (!acc[projectId]) {
+//       acc[projectId] = {
+//         projectId: request.projectId,
+//         requestedBy: request.requestedBy,
+//         requestedTo: request.requestedTo,
+//         tasks: [], // Initialize tasks as an empty array
+//       };
+//     }
+
+//     // Flatten all tasks into a single array
+//     acc[projectId].tasks = acc[projectId].tasks.concat(request.tasks);
+
+//     return acc;
+//   }, {});
+
+//   // Convert the grouped projects object back to an array
+//   return Object.values(groupedProjects);
+// };
+
+
 // ***************** get pending send request by requestedTo
 export const getProjectByRequestedToService = async (id) => {
    const projectByRequestedTo = await ProjectJoinRequest.find({requestedTo: id}).find({ status: "Pending" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
    return projectByRequestedTo;
  };
+
+// export const getProjectByRequestedToService = async (id) => {
+//   const projectByRequestedBy = await ProjectJoinRequest.find({ requestedTo: id, status: "Pending"  })
+//     .populate('projectId')
+//     .populate('requestedBy')
+//     .populate('requestedTo')
+//     .sort({ createdAt: -1 });
+
+ 
+//   const groupedProjects = projectByRequestedBy.reduce((acc, request) => {
+//     const projectId = request.projectId._id.toString();
+    
+ 
+//     if (!acc[projectId]) {
+//       acc[projectId] = {
+//         projectId: request.projectId,
+//         requestedBy: request.requestedBy,
+//         requestedTo: request.requestedTo,
+//         tasks: [], 
+//       };
+//     }
+
+    
+//     acc[projectId].tasks = acc[projectId].tasks.concat(request.tasks);
+
+//     return acc;
+//   }, {});
+
+//   return Object.values(groupedProjects);
+// };
+
+
 // ***************** get accepted send request by requestedTo
 // export const getAcceptedProjectByRequestedToService = async (id) => {
-//    const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({requestedTo: id}).find({ status: "Accepted" }).find({status: "Done"}).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+//    const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({requestedTo: id}).find({ status: "Accepted" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
 //    return acceptedProjectByRequestedTo;
 //  };
 export const getAcceptedProjectByRequestedToService = async (id) => {

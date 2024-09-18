@@ -78,7 +78,7 @@ const UserProfileProjectEM = () => {
                     >
                       <img
                         src={p.images[0]}
-                        className=""
+                        className="h-[120px] md:h-[140px] xl:h-[180px] w-full object-cover"
                       />
                     </div>
                     <div className="px-2 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">

@@ -5,28 +5,7 @@ import { AuthContext } from "../../Context/UserContext";
 
 const ProjectTab = ({ theme, user, projects }) => {
   console.log("up", projects);
-  const { getAllProjectByUser } = useContext(AuthContext);
-  //const projects = getAllProjectByUser?.data;
-  // const projects = [
-  //   {
-  //     image: project,
-  //     title: "1 Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-  //     description:
-  //       "Lorem ipsum dolor sit amet conse ctetur adipisicing elit. Suscipit aliquid eligendi",
-  //   },
-  //   {
-  //     image: project,
-  //     title: "2 Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-  //     description:
-  //       "Lorem ipsum dolor sit amet conse ctetur adipisicing elit. Suscipit aliquid eligendi",
-  //   },
-  //   {
-  //     image: project,
-  //     title: "3 Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-  //     description:
-  //       "Lorem ipsum dolor sit amet conse ctetur adipisicing elit. Suscipit aliquid eligendi",
-  //   },
-  // ];
+
 
   const capitalize = (str) => {
     return str.replace(/\b\w/g, (char) => char.toUpperCase());

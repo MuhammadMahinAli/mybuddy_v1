@@ -123,7 +123,7 @@ const Feed = () => {
   useEffect(() => {
     const defaultTabs = {};
     allUsers?.forEach((user) => {
-      defaultTabs[user._id] = "description";
+      defaultTabs[user?._id] = "description";
     });
     setActiveTab(defaultTabs);
   }, [allUsers]);
@@ -151,7 +151,7 @@ const Feed = () => {
   const getFriendStatus = (friendId) => {
     const friend = getAllStatusFriendRequest?.data?.find(
       (frnd) =>
-        frnd.requestedBy._id === friendId || frnd.requestedTo._id === friendId
+        frnd?.requestedBy?._id === friendId || frnd?.requestedTo?._id === friendId
     );
 
     return friend
@@ -163,7 +163,7 @@ const Feed = () => {
     <div className="space-y-4">
       {allUsers?.map((user) => {
         // Get friend status for each user
-        const { status, friend } = getFriendStatus(user._id);
+        const { status, friend } = getFriendStatus(user?._id);
         const buttonText =
         status === "Accepted"
           ? "Friend"

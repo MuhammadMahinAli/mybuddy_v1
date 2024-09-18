@@ -123,7 +123,7 @@ const GeneralAddProject = ({ closeModal }) => {
     return;
   }
     const data = {
-      user: user._id,
+      user: user?._id,
       ...projectData,
       images,
       documents,

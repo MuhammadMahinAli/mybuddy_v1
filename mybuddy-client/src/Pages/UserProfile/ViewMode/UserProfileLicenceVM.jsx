@@ -145,7 +145,7 @@ const UserProfileLicenceVM = ({allLicense}) => {
             {/* Display the first item */}
             {allLicense?.length > 0 && (
               <div
-                key={allLicense[0]._id}
+                key={allLicense[0]?._id}
                 className="border-b space-y-1 py-5"
               >
                 <div className="flex justify-between items-center">

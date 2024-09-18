@@ -35,7 +35,7 @@ const UserProfileProjectVM = ({ allProject }) => {
                 theme === "light" ? "text-gray-600" : "text-white"
               } py-8  font-semibold text-sm md:text-lg capitalize text-center`}
             >
-              {"You've not posted any project yet."}
+              {"No project available to show."}
             </p>
           ) : (
             <div className="p-5 xl:px-5 xl:py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-12 lg:gap-9 xl:gap-5">
@@ -65,7 +65,7 @@ const UserProfileProjectVM = ({ allProject }) => {
                   >
                     <img
                       src={p.images[0]}
-                      className=""
+                      className="h-[120px] md:h-[140px] xl:h-[180px] w-full object-cover"
                     />
                   </div>
                   <div className=" px-2 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">

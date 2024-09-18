@@ -34,9 +34,9 @@ console.log(friendRequests);
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Accepted";
-          console.log({ id: selectedTask._id, data: { status: newStatus } });
+          console.log({ id: selectedTask?._id, data: { status: newStatus } });
           updateFriendRequestStatus({
-            id: selectedTask._id,
+            id: selectedTask?._id,
             data: { status: newStatus },
           })
             .unwrap()
@@ -77,9 +77,9 @@ console.log(friendRequests);
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Rejected";
-          console.log({ id: selectedTask._id, data: { status: newStatus } });
+          console.log({ id: selectedTask?._id, data: { status: newStatus } });
           updateFriendRequestStatus({
-            id: selectedTask._id,
+            id: selectedTask?._id,
             data: { status: newStatus },
           })
             .unwrap()

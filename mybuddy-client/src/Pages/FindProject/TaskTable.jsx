@@ -1,14 +1,16 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import man from "../../assets/dummy.png";
 import "../GeneralDashboard/GeneralAddProject/editor.css";
 import { Dialog, Transition } from "@headlessui/react";
 import ProjectIcon1 from "../../icons/ProjectIcon1";
 import PropTypes from "prop-types";
+import { LuDivideCircle } from "react-icons/lu";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
+const TaskTable = ({ tasks, setSelectedTasks, theme, setIsOpen, isOpen }) => {
   const [checkedStates, setCheckedStates] = useState(tasks?.map(() => false));
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
+
   // const theme = useSelector((state) => state.theme.theme);
   const handleTaskButtonClick = (index) => {
     setSelectedTaskIndex(index);
@@ -42,7 +44,7 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
   };
 
   return (
-    <div className="md:-my-3 xl:m-0 py-5">
+    <div className={` md:-my-3 xl:m-0 py-5`}>
       <div>
         {/* table for mobile & tab */}
         <form className="w-full xl:hidden md:px-10 md:py-5 space-y-6 md:space-y-9">
@@ -141,7 +143,7 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
                     <p
                       className={`${
                         theme === "light" ? "graish" : "text-white"
-                      } text-[16px] font-semibold`}
+                      } text-[16px] capitalize font-semibold`}
                     >
                       {" "}
                       {tasks[index]?.title.slice(0, 14)} ...
@@ -149,7 +151,7 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
                     <p
                       className={`${
                         theme === "light" ? "text-gray-500" : "text-white"
-                      } text-[15px] font-semibold`}
+                      } text-[15px] capitalize font-semibold`}
                     >
                       {" "}
                       {tasks[index]?.details.slice(0, 13)} ...
@@ -241,7 +243,7 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
                         <p
                           className={`${
                             theme === "light" ? "graish" : "text-white"
-                          } text-[16px] font-semibold`}
+                          } text-[16px] capitalize font-semibold`}
                         >
                           {" "}
                           {tasks[index]?.title.slice(0, 10)} ...
@@ -249,7 +251,7 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
                         <p
                           className={`${
                             theme === "light" ? "text-gray-500" : "text-white"
-                          } text-[15px] font-semibold`}
+                          } text-[15px] capitalize font-semibold`}
                         >
                           {" "}
                           {tasks[index]?.details.slice(0, 10)} ...
@@ -337,7 +339,7 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
                         <p
                           className={`${
                             theme === "light" ? "graish" : "text-white"
-                          } text-[16px] font-semibold`}
+                          } text-[16px] capitalize font-semibold`}
                         >
                           {" "}
                           {tasks[index]?.title.slice(0, 10)} ...
@@ -345,7 +347,7 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
                         <p
                           className={`${
                             theme === "light" ? "text-gray-500" : "text-white"
-                          } text-[15px] font-semibold`}
+                          } text-[15px] capitalize font-semibold`}
                         >
                           {" "}
                           {tasks[index]?.details.slice(0, 10)} ...
@@ -361,71 +363,46 @@ const TaskTable = ({ tasks, setSelectedTasks, theme }) => {
               )
           )}
         </div>
-
-        {/* Popup Modal */}
-        {selectedTaskIndex !== null && (
-          <Transition.Root show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closePopup}>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="fixed inset-0 bg-black/25" />
-              </Transition.Child>
-
-              <div className="fixed inset-0 overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4 text-center">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 scale-95"
-                    enterTo="opacity-100 scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 scale-100"
-                    leaveTo="opacity-0 scale-95"
-                  >
-                    <Dialog.Panel className="w-full  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all lg:w-[600px] 3xl:w-[800px] cursor-pointer">
-                      <div className="py-7">
-                        <h2 className="text-xl lg:text-2xl font-bold mb-4 cursor-pointer">
-                          Task {String.fromCharCode(65 + selectedTaskIndex)}{" "}
-                        </h2>
-                        <h4 className="text-lg lg:text-xl graish capitalize font-bold ">
-                          {tasks[selectedTaskIndex]?.title} [ Coin: Free ]
-                        </h4>
-
-                        <p className="lg:text-[20px] mt-2 mb-5 text-gray-500">
-                          {tasks[selectedTaskIndex]?.details}
-                        </p>
-                        {                         
-                            tasks[selectedTaskIndex]?.subTask?.length !== 0 &&
-                            <>
-                            <h4 className="text-lg lg:text-xl capitalize font-bold graish">
-                              Sub Tasks
-                            </h4>
-                            <ul className="pl-2">
-                              {tasks[selectedTaskIndex]?.subTask?.map(
-                                (t, i) => (
-                                  <li className="lg:text-[19px] text-gray-500" key={i}><span className="font-bold pr-2">{i+1}.</span>{t?.todo}</li>
-                                )
-                              )}
-                            </ul>
-                          </>
-                        }
-                        <p className="lg:text-[20px]"></p>
-                      </div>
-                    </Dialog.Panel>
-                  </Transition.Child>
-                </div>
-              </div>
-            </Dialog>
-          </Transition.Root>
-        )}
       </div>
+      {/* Popup Modal */}
+      {selectedTaskIndex !== null && (
+        <div className="fixed top-0 left-0 lg:left-20 flex justify-center items-center bg-black/25 bg-opacity-50 w-screen h-screen overflow-y-scroll">
+          <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all md:w-[600px] 3xl:w-[800px] cursor-pointer">
+            <IoIosCloseCircleOutline
+              onClick={() => setSelectedTaskIndex(null)}
+              className="text-xl float-right"
+            />
+            <div className="py-7">
+              <h2 className="text-xl lg:text-2xl font-bold mb-4 cursor-pointer">
+                Task {String.fromCharCode(65 + selectedTaskIndex)}{" "}
+              </h2>
+              <h4 className="text-lg lg:text-xl graish capitalize font-bold ">
+                {tasks[selectedTaskIndex]?.title} [ Coin: Free ]
+              </h4>
+
+              <p className="lg:text-[20px] mt-2 mb-5 text-gray-500">
+                {tasks[selectedTaskIndex]?.details}
+              </p>
+              {tasks[selectedTaskIndex]?.subTask?.length !== 0 && (
+                <>
+                  <h4 className="text-lg lg:text-xl capitalize font-bold graish">
+                    Sub Tasks
+                  </h4>
+                  <ul className="pl-2">
+                    {tasks[selectedTaskIndex]?.subTask?.map((t, i) => (
+                      <li className="lg:text-[19px] text-gray-500" key={i}>
+                        <span className="font-bold pr-2">{i + 1}.</span>
+                        {t?.todo}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              <p className="lg:text-[20px]"></p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -437,22 +414,65 @@ TaskTable.propTypes = {
   tasks: PropTypes.array.isRequired,
 };
 
-// ${
-//   index === 0
-//     ? "bg-[#ffff] border"
-//     : index === 1
-//     ? "bg-[#e6f5f8]"
-//     : index === 2
-//     ? "  bg-[#fcebf4]"
-//     : index === 3
-//     ? "  bg-[#faf3d6]"
-//     : index === 4
-//     ? " bg-[#f7e1f1]"
-//     : index === 7
-//     ? " bg-[#f7e1f1]"
-//     : index === 5
-//     ? "  bg-[#ddd6bc]"
-//     : index === 6
-//     ? "  bg-[#ddd6bc]"
-//     : "  bg-[#d9c6f1]"
-// }
+// {selectedTaskIndex !== null && (
+//   <Transition.Root show={isOpen} as={Fragment}>
+//     <Dialog as="div" className="relative z-10" onClose={closePopup}>
+//       <Transition.Child
+//         as={Fragment}
+//         enter="ease-out duration-300"
+//         enterFrom="opacity-0"
+//         enterTo="opacity-100"
+//         leave="ease-in duration-200"
+//         leaveFrom="opacity-100"
+//         leaveTo="opacity-0"
+//       >
+//         <div className="fixed inset-0 bg-black/25" />
+//       </Transition.Child>
+//
+//       <div className="fixed inset-0 overflow-y-auto">
+//         <div className="flex min-h-full items-center justify-center p-4 text-center">
+//           <Transition.Child
+//             as={Fragment}
+//             enter="ease-out duration-300"
+//             enterFrom="opacity-0 scale-95"
+//             enterTo="opacity-100 scale-100"
+//             leave="ease-in duration-200"
+//             leaveFrom="opacity-100 scale-100"
+//             leaveTo="opacity-0 scale-95"
+//           >
+//             <Dialog.Panel className="w-full  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all lg:w-[600px] 3xl:w-[800px] cursor-pointer">
+//               <div className="py-7">
+//                 <h2 className="text-xl lg:text-2xl font-bold mb-4 cursor-pointer">
+//                   Task {String.fromCharCode(65 + selectedTaskIndex)}{" "}
+//                 </h2>
+//                 <h4 className="text-lg lg:text-xl graish capitalize font-bold ">
+//                   {tasks[selectedTaskIndex]?.title} [ Coin: Free ]
+//                 </h4>
+//
+//                 <p className="lg:text-[20px] mt-2 mb-5 text-gray-500">
+//                   {tasks[selectedTaskIndex]?.details}
+//                 </p>
+//                 {
+//                     tasks[selectedTaskIndex]?.subTask?.length !== 0 &&
+//                     <>
+//                     <h4 className="text-lg lg:text-xl capitalize font-bold graish">
+//                       Sub Tasks
+//                     </h4>
+//                     <ul className="pl-2">
+//                       {tasks[selectedTaskIndex]?.subTask?.map(
+//                         (t, i) => (
+//                           <li className="lg:text-[19px] text-gray-500" key={i}><span className="font-bold pr-2">{i+1}.</span>{t?.todo}</li>
+//                         )
+//                       )}
+//                     </ul>
+//                   </>
+//                 }
+//                 <p className="lg:text-[20px]"></p>
+//               </div>
+//             </Dialog.Panel>
+//           </Transition.Child>
+//         </div>
+//       </div>
+//     </Dialog>
+//   </Transition.Root>
+// )}

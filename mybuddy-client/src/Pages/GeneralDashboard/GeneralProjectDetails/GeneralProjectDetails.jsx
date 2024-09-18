@@ -88,14 +88,14 @@ const GeneralProjectDetails = () => {
 
   const filteredMyself = members?.filter(
     (myself) =>
-      myself.requestedBy._id === userId &&
-      myself.projectId._id === ProjectInfo?._id
+      myself?.requestedBy?._id === userId &&
+      myself?.projectId?._id === ProjectInfo?._id
   );
 
   const projectOwner = members?.filter(
     (myself) =>
-      myself.requestedTo._id === userId && // Check if the current user is the project owner
-      myself.projectId._id === ProjectInfo?._id // Check if the project IDs match
+      myself?.requestedTo?._id === userId && // Check if the current user is the project owner
+      myself?.projectId?._id === ProjectInfo?._id // Check if the project IDs match
   );
 
   console.log("userId", userId, members);
@@ -262,7 +262,7 @@ const GeneralProjectDetails = () => {
             req={req}
             projectOwner={projectOwner}
             allRecieveRequest={allRecieveRequest}
-          />
+            userId={ userId}          />
         )}
 
         {/* activity log */}

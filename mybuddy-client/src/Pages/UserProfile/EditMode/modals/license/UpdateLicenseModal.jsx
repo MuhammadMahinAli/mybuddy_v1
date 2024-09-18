@@ -30,7 +30,7 @@ const UpdateLicenseModal = ({theme,isOpenUpdateLicence,currentLicenseId,closeUpd
   }, [licenseInfo]);
 
   useEffect(() => {
-    const licenseInfo = getUserLicense?.data.find(exp => exp._id === currentLicenseId);
+    const licenseInfo = getUserLicense?.data.find(exp => exp?._id === currentLicenseId);
     if (licenseInfo) {
       setFormData({
         title: licenseInfo?.title || '',

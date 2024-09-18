@@ -29,9 +29,9 @@ const GeneralFriendRequest = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Accepted";
-          console.log({ id: selectedTask._id, data: { status: newStatus } });
+          console.log({ id: selectedTask?._id, data: { status: newStatus } });
           updateFriendRequestStatus({
-            id: selectedTask._id,
+            id: selectedTask?._id,
             data: { status: newStatus },
           })
             .unwrap()
@@ -70,9 +70,9 @@ const GeneralFriendRequest = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Rejected";
-          console.log({ id: selectedTask._id, data: { status: newStatus } });
+          console.log({ id: selectedTask?._id, data: { status: newStatus } });
           updateFriendRequestStatus({
-            id: selectedTask._id,
+            id: selectedTask?._id,
             data: { status: newStatus },
           })
             .unwrap()
@@ -102,21 +102,21 @@ const GeneralFriendRequest = () => {
   const handleDeleteFriendRequest = (id) => {
     console.log(id);
     Swal.fire({
-      title: "Are you sure to cancel your request?",
+      title: "Are you sure to delete it ?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, cancel it!",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
         deleteFriendRequest(id)
           .unwrap()
           .then(() => {
             Swal.fire(
-              "Cancelled!",
-              "Your request has been cancelled.",
+              "Well done!",
+              "Your request has been deleted.",
               "success"
             );
             setTimeout(() => {
@@ -189,7 +189,7 @@ const GeneralFriendRequest = () => {
           getFriendRequest={getFriendRequest}
           requests={requests}
           handleUpdateStatusAccept={handleUpdateStatusAccept}
-          handleUpdateStatusReject={handleUpdateStatusReject}
+          handleDeleteFriendRequest={handleDeleteFriendRequest}
         />
       )}
       {/* sent friend request */}

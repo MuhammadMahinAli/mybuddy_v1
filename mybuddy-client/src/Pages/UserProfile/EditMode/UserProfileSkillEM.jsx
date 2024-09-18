@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import AddSkillModal from "./modals/skill/AddSkillModal";
 import UpdateSkillModal from "./modals/skill/UpdateSkillModal";
 import { AuthContext } from "../../../Context/UserContext";
+import Loading from "../../Loading/Loading";
 
 const UserProfileSkillEM = () => {
   const theme = useSelector((state) => state.theme.theme);
@@ -24,6 +25,15 @@ const UserProfileSkillEM = () => {
   const closeUpdateModal = () => {
     setIsUpdateOpen(false);
   };
+
+  
+  if (isFetchingSkill) {
+    return (
+      <div className="flex justify-center items-center -pt-20">
+        <Loading />
+      </div>
+    );
+  }
   return (
     <>
       <div

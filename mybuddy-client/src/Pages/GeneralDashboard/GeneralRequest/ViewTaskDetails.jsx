@@ -36,8 +36,8 @@ const ViewTaskDetails = ({ isOpenModal, tasks, closeModal }) => {
                   <h2 className="text-xl font-bold mb-4">Task Details</h2>
 
                   {tasks.map((t, i) => (
-                    <div className="space-x-2" key={t.title}>
-                      <p className="text-lg font-semibold">Task No: {i + 1}</p>
+                    <div className="space-y-2 pb-8 " key={t.title}>
+                      <p className="text-xl font-semibold">Task No: {i + 1}</p>
                       <p>
                         <span className="font-semibold">Title of task:</span>{" "}
                         {t?.title}
@@ -46,23 +46,27 @@ const ViewTaskDetails = ({ isOpenModal, tasks, closeModal }) => {
                         <span className="font-semibold py-1">About Task:</span>{" "}
                         {t?.details}
                       </p>
-                     
+                      <p>
+                        <span className="font-semibold py-1">Coin:</span> Free
+                      </p>
+                      {t?.subTask !== 0 && (
+                        <>
+                          <p>
+                            <span className="font-semibold py-1">
+                              Sub Tasks:
+                            </span>{" "}
+                          </p>
+                          <ol className="pl-7">
+                            {t?.subTask?.map((tt, i) => (
+                              <li type="A" key={i}>
+                                {tt?.todo}
+                              </li>
+                            ))}
+                          </ol>
+                        </>
+                      )}
                     </div>
                   ))}
-                  {/* {tasks?.map((task, index) => (
-                    <div key={index}>
-                      <h3 className="text-lg font-bold mb-2">
-                        Request {index + 1} Tasks:
-                      </h3>
-                      {tasks?.map((singleTask, taskIndex) => (
-                        <div key={taskIndex}>
-                          <p>Title: {singleTask?.title}</p>
-                          <p>Details: {singleTask?.details}</p>
-                          <p>Budget: ${singleTask?.budget}</p>
-                        </div>
-                      ))} */}
-                  {/* </div> */}
-                  {/* ))} */}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

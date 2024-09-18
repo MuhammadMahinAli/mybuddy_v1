@@ -132,7 +132,7 @@ const UserProfileVM = () => {
   const getFriendStatus = () => {
     const friend = getAllStatusFriendRequest?.data?.find(
       (frnd) =>
-        frnd.requestedBy._id === friendId || frnd.requestedTo._id === friendId
+        frnd?.requestedBy?._id === friendId || frnd?.requestedTo?._id === friendId
     );
 
     return friend

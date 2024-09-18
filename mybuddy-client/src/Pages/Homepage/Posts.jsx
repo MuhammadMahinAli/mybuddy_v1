@@ -171,7 +171,7 @@ const Posts = ({ theme }) => {
     }
     const postData = {
       ...formData,
-      postedBy: user._id,
+      postedBy: user?._id,
     };
     console.log("form", postData);
     createPost(postData).unwrap();

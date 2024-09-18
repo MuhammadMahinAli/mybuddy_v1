@@ -288,7 +288,7 @@ const UpdateExperienceModal = ({ theme, isOpenUpdateExperience, closeUpdateExper
   const [currentlyWorking, setCurrentlyWorking] = useState(false);
 
   useEffect(() => {
-    const experienceInfo = getUserExperience?.data.find(exp => exp._id === experienceId);
+    const experienceInfo = getUserExperience?.data.find(exp => exp?._id === experienceId);
     if (experienceInfo) {
       setFormData({
         companyName: experienceInfo?.companyName || '',

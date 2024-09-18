@@ -123,7 +123,7 @@ const ViewPosts = ({ theme }) => {
 
   const getFriendStatus = (friendId) => {
     const friend = getAllStatusFriendRequest?.data?.find(
-      (frnd) => frnd.requestedTo._id === friendId
+      (frnd) => frnd?.requestedTo?._id === friendId
     );
 
     return friend
@@ -134,7 +134,7 @@ const ViewPosts = ({ theme }) => {
   return (
     <div className="space-y-3 py-3">
       {posts?.map((post, i) => {
-        const { status } = getFriendStatus(post?.postedBy._id);
+        const { status } = getFriendStatus(post?.postedBy?._id);
         const buttonText =
           status === "Accepted"
             ? "Friend"

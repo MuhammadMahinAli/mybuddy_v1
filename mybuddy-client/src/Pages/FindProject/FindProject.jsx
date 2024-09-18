@@ -53,6 +53,7 @@ const FindProject = ({
   const [showDocuments, setShowDocuments] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   console.log(
@@ -62,7 +63,7 @@ const FindProject = ({
 
   const getRequestStatus = (projectID) => {
     const friend = getAllSentProjectJoinRequest?.data?.find(
-      (frnd) => frnd.projectId._id === projectID
+      (frnd) => frnd?.projectId?._id === projectID
     );
 
     return friend
@@ -151,10 +152,10 @@ const FindProject = ({
   if (isLoading) {
     return <Loading />;
   }
-
+//fixed bg-black bg-opacity-50 w-screen h-screen overflow-y-scroll
   return (
     <>
-      <div className="py-1 w-12/12 sm:w-full">
+      <div className={` py-1 w-12/12 sm:w-full`}>
         <div className="mx-3 md:mx-6 3xl:mx-20 my-5 p-3 xl:p-3 space-y-5">
           {projects?.map((project, i) => {
             const { status } = getRequestStatus(project?._id);
@@ -257,38 +258,44 @@ const FindProject = ({
                     </button>
                   )}
                 </div> */}
-                    {theme === "light" ? (
-                      buttonText === "Join" ? (
-                        <div>
-                          <button
-                            onClick={() => handleJoinClick(project)}
-                            className="flex items-center space-x-2 lg:text-sm xl:text-lg rounded-[13px] font-semibold px-3 py-2 xl:px-4 xl:py-2 bg-gradient-to-l from-[#2adba4] to-[#69f9cc] text-white"
-                          >
+                {
+                  project?.user?._id !== requestedId &&
+<>
+                  {theme === "light" ? (
+                    buttonText === "Join" ? (
+                      <div>
+                        <button
+                          onClick={() => handleJoinClick(project)}
+                          className="flex items-center space-x-2 lg:text-sm xl:text-lg rounded-[13px] font-semibold px-3 py-2 xl:px-4 xl:py-2 bg-gradient-to-l from-[#2adba4] to-[#69f9cc] text-white"
+                        >
+                          {buttonText}
+                          <FaPlus className="text-[15px] md:text-lg ml-1 md:ml-2" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <div onClick={() => handleJoinClick(project)} className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
+                          <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
                             {buttonText}
-                            <FaPlus className="text-[15px] md:text-lg ml-1 md:ml-2" />
                           </button>
                         </div>
-                      ) : (
-                        <div>
-                          <div onClick={() => handleJoinClick(project)} className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
-                            <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
-                              {buttonText}
-                            </button>
-                          </div>
-                        </div>
-                      )
-                    ) : (
-                      <button
-                        onClick={
-                          buttonText === "Join"
-                            ? handleJoinClick(project)
-                            : undefined
-                        }
-                        className="profileFriendRequestBtn"
-                      >
-                        <p>{buttonText}</p>
-                      </button>
-                    )}
+                      </div>
+                    )
+                  ) : (
+                    <button
+                      onClick={
+                        buttonText === "Join"
+                          ? handleJoinClick(project)
+                          : undefined
+                      }
+                      className="profileFriendRequestBtn"
+                    >
+                      <p>{buttonText}</p>
+                    </button>
+                  )}
+                  </>
+                }
+                   
                   </div>
 
                   {/* Task Table */}
@@ -297,6 +304,8 @@ const FindProject = ({
                     selectedTasks={selectedTasks}
                     setSelectedTasks={setSelectedTasks}
                     theme={theme}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
                   />
 
                   {/* bor=ttom div */}

@@ -43,7 +43,7 @@ const UserProfileExperienceVM = ({allExperience}) => {
             {/* Display the first item */}
             {allExperience?.length > 0 && (
               <div
-                key={allExperience[0]._id}
+                key={allExperience[0]?._id}
                 className="border-b py-5 space-y-1"
               >
                   <p className=" capitalize text-[17px] font-semibold">
@@ -75,28 +75,28 @@ const UserProfileExperienceVM = ({allExperience}) => {
             {/* Display the rest of the items based on the showAll state */}
             {showAll &&
               allExperience?.slice(1).map((c) => (
-                <div key={c._id} className="py-5 border-b">
+                <div key={c?._id} className="py-5 border-b">
             
                     <p className=" capitalize text-[17px] font-semibold">
-                      {c.role}
+                      {c?.role}
                     </p>
                   <p className=" capitalize text-[16px]">
-                    {c.companyName}, {c.companyLocation}
+                    {c?.companyName}, {c?.companyLocation}
                   </p>
-                  {c.endDate === "Currently Working" ? (
+                  {c?.endDate === "Currently Working" ? (
                     <p className=" capitalize text-[16px]">
-                      {c.endDate} as {c.employeeType}
+                      {c?.endDate} as {c?.employeeType}
                     </p>
                   ) : (
                     <p className=" capitalize text-[16px]">
-                      {"("} {c.startDate}
-                      {"-"} {c.endDate} {")"}
+                      {"("} {c?.startDate}
+                      {"-"} {c?.endDate} {")"}
                     </p>
                   )}
 
-                  {c.endDate !== "Currently Working" && (
+                  {c?.endDate !== "Currently Working" && (
                     <p className=" capitalize text-[16px]">
-                      Worked as {c.employeeType}
+                      Worked as {c?.employeeType}
                     </p>
                   )}
                 </div>
@@ -154,7 +154,7 @@ const UserProfileExperienceVM = ({allExperience}) => {
             {/* Display the first item */}
             {allExperience?.length > 0 && (
               <div
-                key={allExperience[0]._id}
+                key={allExperience[0]?._id}
                 className="border-b space-y-1 py-5"
               >
                 <div className="flex justify-between items-center">
@@ -188,29 +188,29 @@ const UserProfileExperienceVM = ({allExperience}) => {
             {/* Display the rest of the items based on the showAll state */}
             {showAll &&
               allExperience?.slice(1).map((c) => (
-                <div key={c._id} className="py-5 space-y-1 border-b">
+                <div key={c?._id} className="py-5 space-y-1 border-b">
                   <div className="flex justify-between items-center">
                     <p className=" capitalize text-[17px] font-semibold">
-                      {c.role}
+                      {c?.role}
                     </p>
                   </div>
                   <p className=" capitalize text-[16px]">
-                    {c.companyName}, {c.companyLocation}
+                    {c?.companyName}, {c?.companyLocation}
                   </p>
-                  {c.endDate === "Currently Working" ? (
+                  {c?.endDate === "Currently Working" ? (
                     <p className=" capitalize text-[16px]">
-                      {c.endDate} as {c.employeeType}
+                      {c?.endDate} as {c?.employeeType}
                     </p>
                   ) : (
                     <p className=" capitalize text-[16px]">
-                      {"("} {c.startDate}
-                      {"-"} {c.endDate} {")"}
+                      {"("} {c?.startDate}
+                      {"-"} {c?.endDate} {")"}
                     </p>
                   )}
 
-                  {c.endDate !== "Currently Working" && (
+                  {c?.endDate !== "Currently Working" && (
                     <p className=" capitalize text-[16px]">
-                      Worked as {c.employeeType}
+                      Worked as {c?.employeeType}
                     </p>
                   )}
                 </div>

@@ -78,7 +78,7 @@ const MyPostedProject = () => {
 
              w-full my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]`}
                     >
-                      <Link to={`/dashboard/details/${p._id}`}>View More</Link>
+                      <Link to={`/dashboard/details/${p?._id}`}>View More</Link>
                     </button>
                   </div>
                 </div>

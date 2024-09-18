@@ -13,40 +13,44 @@ const ProjectCard = ({ p, i }) => {
       </div>
 
       <div className="px-2 xs-2 ssm:pt-1 lg:pt-0 3xl:pt-6 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">
-        <p className="text-lg 3xl:text-[22px] graish font-bold py-0 xs:py-3 lg:hidden">
+        <p className="text-lg 3xl:text-[22px] graish font-bold py-0 xs:py-3 md:hidden">
           {" "}
-          {p?.projectName.slice(0, 4)}..
+          {p?.projectName?.slice(0, 4)}..
+        </p>
+        <p className="hidden md:block  text-lg 3xl:text-[22px] graish font-bold py-0 xs:py-3 lg:hidden">
+          {" "}
+          {p?.projectName?.length > 16 ? `${p?.projectName?.slice(0, 15)}...` : p?.projectName}
         </p>
 
         <p className="hidden lg:hidden text-xl 3xl:text-[22px] graish font-bold py-2 xs:py-3">
-          {p?.projectName.length > 10
-            ? `${p?.projectName.slice(0, 7)}...`
+          {p?.projectName?.length > 10
+            ? `${p?.projectName?.slice(0, 7)}...`
             : p?.projectName}
         </p>
         <p className="hidden lg:block 2xl:hidden text-xl 3xl:text-[22px] graish font-bold py-0 xs:py-3 xl:py-0">
-          {p?.projectName.slice(0, 7)}...
+          {p?.projectName?.slice(0, 7)}...
         </p>
 
         <p className="hidden 2xl:block text-xl 3xl:text-[22px] graish font-bold py-0">
-          {p?.projectName}
+        {p?.projectName?.slice(0, 7)}...
         </p>
 
         <div
           className="lg:hidden text-[13px]"
           dangerouslySetInnerHTML={{
-            __html: p?.description.slice(0, 39),
+            __html: p?.description?.slice(0, 39),
           }}
         />
         <div
           className="hidden lg:hidden"
           dangerouslySetInnerHTML={{
-            __html: p?.description.slice(0, 80),
+            __html: p?.description?.slice(0, 80),
           }}
         />
         <div
           className="hidden lg:block"
           dangerouslySetInnerHTML={{
-            __html: p?.description.slice(0, 40),
+            __html: p?.description?.slice(0, 40),
           }}
         />
         <p className="pb-2 text-[14px] lg:text-[15px] xl:text-xl graish">

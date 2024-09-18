@@ -37,7 +37,7 @@ const StatusDropdown = ({
 
   const handleStatusChange = async (status) => {
     const selectedTask = getAllCommit?.data.find(
-      (commit) => commit._id === commitId
+      (commit) => commit?._id === commitId
     );
 
     if (selectedTask) {
@@ -78,7 +78,7 @@ const StatusDropdown = ({
 
           try {
             await updateCommitStatus({
-              id: selectedTask._id,
+              id: selectedTask?._id,
               data: postData,
             })
             .unwrap();
@@ -111,8 +111,8 @@ const StatusDropdown = ({
   const handleTaskCompletion = async (e, status) => {
     e.preventDefault();
     const selectedProject = ProjectInfo?._id;
-    const selectedTask = getAllCommit?.data.find(
-      (commit) => commit._id === commitId
+    const selectedTask = getAllCommit?.data?.find(
+      (commit) => commit?._id === commitId
     );
 
     if (selectedProject) {
@@ -154,7 +154,7 @@ const StatusDropdown = ({
 
             // Call your update service here to update the project status
             await updateCommitStatus({
-              id: selectedTask._id,
+              id: selectedTask?._id,
               data: postData,
             }).unwrap();
             await updateProjectStatus({

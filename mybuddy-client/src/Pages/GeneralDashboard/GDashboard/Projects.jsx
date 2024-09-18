@@ -172,7 +172,7 @@ const Projects = () => {
         //   </div>
         // </>
       )}
-      {projects?.length === 3 && (
+      {projects?.length > 3 && (
         <div className="w-full flex justify-center items-center pt-3">
           <Link to="/dashboard/all-projects">
             <img src="/more2.svg" className="h-14 md:h-20 top-32" />

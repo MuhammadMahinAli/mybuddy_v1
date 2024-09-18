@@ -2,7 +2,7 @@
 import xMark from "../../../assets/xmark.png";
 import { useContext, useState } from "react";
 import ViewTaskDetails from "./ViewTaskDetails";
-import { useUpdateJoinRequestStatusMutation } from "../../../features/projectJoinRequest/projectJoinRequestApi";
+import { useDeleteProjectByRequestedByMutation, useUpdateJoinRequestStatusMutation } from "../../../features/projectJoinRequest/projectJoinRequestApi";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../Context/UserContext";
 
@@ -27,6 +27,7 @@ const GeneralRequestSent = () => {
   // Use the mutation hook
   const [updateJoinRequestStatus] = useUpdateJoinRequestStatusMutation();
 
+
   const handleUpdateStatus = (e, index) => {
     e.preventDefault();
     setSelectedRequestIndex(index);
@@ -43,9 +44,9 @@ const GeneralRequestSent = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = "Declined";
-          console.log({ id: selectedTask._id, data: { status: newStatus } });
+          console.log({ id: selectedTask?._id, data: { status: newStatus } });
           updateJoinRequestStatus({
-            id: selectedTask._id,
+            id: selectedTask?._id,
             data: { status: newStatus },
           })
             .unwrap()
@@ -70,7 +71,8 @@ const GeneralRequestSent = () => {
     }
   };
 
-  console.log("l", allSentRequest?.data);
+  
+  console.log("sent request", allSentRequest?.data);
   return (
     <>
       <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
@@ -124,7 +126,7 @@ const GeneralRequestSent = () => {
                 {request?.projectId?.projectName.slice(0, 6)}..
               </div>
               <div className="text-[16px] md:text-lg   border-r-2  text-center w-4/12 md:w-2/12 lg:w-2/12">
-                Task {request?.tasks?.length}
+                 {request?.tasks?.length}
               </div>
               <div
                 onClick={(e) => openModal(e, i)}

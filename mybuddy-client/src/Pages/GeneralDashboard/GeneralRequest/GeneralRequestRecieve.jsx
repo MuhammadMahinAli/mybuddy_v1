@@ -31,6 +31,7 @@ const GeneralRequestRecieve = () => {
   // Use the mutation hook
   const [updateJoinRequestStatus] = useUpdateJoinRequestStatusMutation();
 
+ 
   const handleUpdateStatusAccept = (e, index) => {
     e.preventDefault();
     setSelectedRequestIndex(index);
@@ -49,7 +50,7 @@ const GeneralRequestRecieve = () => {
           const newStatus = "Accepted";
           console.log({ id: selectedTask._id, data: { status: newStatus } });
           updateJoinRequestStatus({
-            id: selectedTask._id,
+            id: selectedTask?._id,
             data: { status: newStatus },
           })
             .unwrap()
@@ -104,7 +105,7 @@ const GeneralRequestRecieve = () => {
               setTimeout(() => {
                 window.location.reload();
               }, 2500);
-            })
+           })
             .catch((error) => {
               alert("Failed to reject the request.");
               console.error(error);
@@ -161,7 +162,7 @@ const GeneralRequestRecieve = () => {
                   loading="lazy" alt=""
                 />
                 <p className=" capitalize pt-1 md:pt-0">
-                  {request?.requestedBy?.name?.firstName.slice(0,3)} <span className="hidden lg:inline-block">{request?.requestedBy?.name?.lastName.length > 3 ? request?.requestedBy?.name?.lastName.length : request?.requestedBy?.name?.lastName.slice(0,3)}</span> 
+                  {request?.requestedBy?.name?.firstName} <span className="hidden lg:inline-block">{request?.requestedBy?.name?.lastName.length > 3 ?  request?.requestedBy?.name?.lastName.slice(0,3) : request?.requestedBy?.name?.lastName}</span> 
                 </p>
               </div>
               <div className="capitalize text-[16px] md:text-[18px] border-r-2  text-center sm:w-3/12 lg:hidden">

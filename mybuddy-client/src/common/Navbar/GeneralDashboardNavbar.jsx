@@ -19,7 +19,7 @@ const GeneralDashboardNavbar = () => {
   // Close the menu whenever the location (URL) changes
   useEffect(() => {
     setIsMenuOpen(false);
-  }, [location.pathname])
+  }, [location.pathname]);
 
   return (
     <div className="px-2 py-4 mx-auto  bg-tr md:pr-8 sm:px-5 lg:px-8 gray500 bg-[#DFF1FE] sm:bg-[#EFF4FA]">
@@ -39,7 +39,6 @@ const GeneralDashboardNavbar = () => {
             <div className="block py-1 px-2 lg:p-1 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
               <img src="/logo.png" className="w-5" />
             </div>
-            
           </Link>
         </div>
         <ul className="flex items-center hidden space-x-8 md:flex ">
@@ -59,8 +58,8 @@ const GeneralDashboardNavbar = () => {
           </li>
           <li>
             <div className="px-3 py-1 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
-            < Link to={user? "/user/edit-profile":"/"}>
-              <img src="/user.svg" className="h-8" />
+              <Link to={user ? "/user/edit-profile" : "/"}>
+                <img src="/user.svg" className="h-8" />
               </Link>
             </div>
           </li>
