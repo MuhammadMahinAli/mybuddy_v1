@@ -15,7 +15,7 @@ export const loginUserService = async (payload) => {
   const isMemberExist = await member.isMemberExist(email);
 
 
-  console.log("mrmber",isMemberExist);
+ // console.log("mrmber",isMemberExist);
 
   
   if (!isMemberExist) {
@@ -28,11 +28,11 @@ export const loginUserService = async (payload) => {
       throw new ApiError(httpStatus.UNAUTHORIZED, "Email is not verified");
     }
 
-    console.log("new hash", isMemberExist.isPasswordMatched(password))
+    //console.log("new hash", isMemberExist.isPasswordMatched(password))
   //--------- Checking password match
 
   const isValid = await isMemberExist.isPasswordMatched(password);
-  console.log('Password validity:', isValid);
+ // console.log('Password validity:', isValid);
   
   if (!isValid) {
     console.log('Password is incorrect');
@@ -80,7 +80,7 @@ export const refreshTokenService = async (token) => {
 //--------- update pass 
 
 export const updatePasswordService = async (userId, newPassword) => {
-  console.log('Updating password for user:', userId);
+ //console.log('Updating password for user:', userId);
   
   const user = await Member.findById(userId);
 
@@ -92,7 +92,7 @@ export const updatePasswordService = async (userId, newPassword) => {
   user.password = newPassword;
   await user.save();
   
-  console.log('Password updated successfully');
+ // console.log('Password updated successfully');
 
   // Generate new tokens after updating the password
   const { email: memberEmail, role, _id: memberId, emailVerified } = user;

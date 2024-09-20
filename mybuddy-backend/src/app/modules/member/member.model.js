@@ -93,8 +93,8 @@ MemberSchema.methods.isMemberExist = async function (email) {
 //------------ pass match checking
 
 MemberSchema.methods.isPasswordMatched = async function (givenPass) {
-  console.log("Stored password:", this.password);
-  console.log("given password:", givenPass);
+ // console.log("Stored password:", this.password);
+ // console.log("given password:", givenPass);
 
   // Check if both givenPass and this.password are provided
   if (!givenPass || !this.password) {
