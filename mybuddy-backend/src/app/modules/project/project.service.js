@@ -184,6 +184,45 @@ export const updateTaskStatusService = async (projectId, taskId, status) => {
 //--------------- uodate project status & sub task status
 
 
+// export const updateProjectTasks = async (projectId, completedTask) => {
+//   try {
+//     const project = await Project.findById(projectId);
+
+//     if (!project) {
+//       throw new Error("Project not found");
+//     }
+//     if (!Array.isArray(completedTask)) {
+//       throw new Error("completedTasks is not an array");
+//     }
+//     if (!Array.isArray(project.tasks)) {
+//       throw new Error("Tasks array is missing or not an array");
+//     }
+
+//     const completedTaskTitles = completedTask?.map((task) => task.taskTitle);
+
+//     project.tasks = project.tasks.map((task) => {
+//       if (completedTaskTitles.includes(task.title)) {
+//         task.status = "completed";
+//       }
+
+//       if (Array.isArray(task.subTask)) {
+//         task.subTask = task.subTask.map((subtask) => {
+//           if (completedTaskTitles.includes(subtask.todo)) {
+//             subtask.status = "completed";
+//           }
+//           return subtask;
+//         });
+//       }
+
+//       return task;
+//     });
+
+//     await project.save();
+//     console.log("Project tasks updated successfully");
+//   } catch (error) {
+//     console.error("Error updating project tasks:", error);
+//   }
+// };
 export const updateProjectTasks = async (projectId, completedTask) => {
   try {
     const project = await Project.findById(projectId);
@@ -191,30 +230,28 @@ export const updateProjectTasks = async (projectId, completedTask) => {
     if (!project) {
       throw new Error("Project not found");
     }
-    if (!Array.isArray(completedTask)) {
-      throw new Error("completedTasks is not an array");
-    }
-    if (!Array.isArray(project.tasks)) {
-      throw new Error("Tasks array is missing or not an array");
+    
+    if (typeof completedTask !== 'object') {
+      throw new Error("completedTask is not an object");
     }
 
-    const completedTaskTitles = completedTask?.map((task) => task.taskTitle);
+    const { task, subTask } = completedTask;
 
-    project.tasks = project.tasks.map((task) => {
-      if (completedTaskTitles.includes(task.title)) {
-        task.status = "completed";
+    project.tasks = project.tasks.map((projTask) => {
+      if (projTask.title === task) {
+        projTask.status = "completed";
       }
 
-      if (Array.isArray(task.subTask)) {
-        task.subTask = task.subTask.map((subtask) => {
-          if (completedTaskTitles.includes(subtask.todo)) {
-            subtask.status = "completed";
+      if (Array.isArray(projTask.subTask)) {
+        projTask.subTask = projTask.subTask.map((projSubTask) => {
+          if (subTask.includes(projSubTask.todo)) {
+            projSubTask.status = "completed";
           }
-          return subtask;
+          return projSubTask;
         });
       }
 
-      return task;
+      return projTask;
     });
 
     await project.save();
@@ -223,3 +260,4 @@ export const updateProjectTasks = async (projectId, completedTask) => {
     console.error("Error updating project tasks:", error);
   }
 };
+

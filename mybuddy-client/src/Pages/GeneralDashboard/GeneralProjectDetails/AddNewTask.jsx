@@ -221,9 +221,9 @@ const {createNewTask} = useContext(AuthContext)
             <label className="text-[16px] md:text-xl md:pr-2 lg:pr-5">
               Budget:
             </label>
-            <button className=" px-5 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
+            <p className=" px-5 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
               Free
-            </button>
+            </p>
           </div>
         </div>
 

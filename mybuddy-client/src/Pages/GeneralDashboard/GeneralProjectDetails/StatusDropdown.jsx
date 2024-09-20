@@ -108,86 +108,170 @@ const StatusDropdown = ({
     }
   };
 
+  // const handleTaskCompletion = async (e, status) => {
+  //   e.preventDefault();
+  //   const selectedProject = ProjectInfo?._id;
+  //   const selectedTask = getAllCommit?.data?.find(
+  //     (commit) => commit?._id === commitId
+  //   );
+
+  //   if (selectedProject) {
+  //     let swalOptions = {
+  //       title: "Are you sure?",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Yes, update status!",
+  //     };
+
+  //     if (status === "Declined") {
+  //       swalOptions = {
+  //         ...swalOptions,
+  //         text: "Please provide a reason for declining:",
+  //         input: "text",
+  //         inputPlaceholder: "Enter your reason",
+  //         inputValidator: (value) => {
+  //           if (!value) {
+  //             return "You need to write something!";
+  //           }
+  //         },
+  //       };
+  //     } else {
+  //       swalOptions.text = `Does this member's task deserve to be marked as "${status}"?`;
+  //     }
+
+  //     Swal.fire(swalOptions).then(async (result) => {
+  //       if (result.isConfirmed) {
+  //         const declineMessage = result.value || "";
+  //         const postData = {
+  //           status,
+  //           ...(status === "Declined" && { declineMessage }),
+  //         };
+
+  //         console.log('commit',{ id: selectedProject, data: postData },    " completedTask ",completedTask);
+
+  //         try {
+  //           console.log({ id: selectedProject, data: postData });
+
+  //           // Call your update service here to update the project status
+  //           await updateCommitStatus({
+  //             id: selectedTask?._id,
+  //             data: postData,
+  //           }).unwrap();
+  //           await updateProjectStatus({
+  //             projectId: selectedProject,
+  //             completedTask: completedTask,
+  //           })
+  //           .unwrap();
+  //           Swal.fire({
+  //             icon: "success",
+  //             title: "Status Updated",
+  //             text: `You have successfully updated the status to "${status}".`,
+  //             timer: 2000,
+  //             timerProgressBar: true,
+  //             showConfirmButton: false,
+  //           });
+  //           // setTimeout(() => {
+  //           //   window.location.reload();
+  //           // }, 2500);
+  //         } catch (error) {
+  //           Swal.fire({
+  //             icon: "error",
+  //             title: "Failed to Update",
+  //             text: "There was an error updating the project status.",
+  //           });
+  //           console.error(error);
+  //         }
+  //       }
+  //     });
+  //   } else {
+  //     console.log("No project found for the selected project ID.");
+  //   }
+  // };
+
   const handleTaskCompletion = async (e, status) => {
     e.preventDefault();
     const selectedProject = ProjectInfo?._id;
     const selectedTask = getAllCommit?.data?.find(
       (commit) => commit?._id === commitId
     );
-
-    if (selectedProject) {
-      let swalOptions = {
-        title: "Are you sure?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, update status!",
-      };
-
-      if (status === "Declined") {
-        swalOptions = {
-          ...swalOptions,
-          text: "Please provide a reason for declining:",
-          input: "text",
-          inputPlaceholder: "Enter your reason",
-          inputValidator: (value) => {
-            if (!value) {
-              return "You need to write something!";
-            }
-          },
-        };
-      } else {
-        swalOptions.text = `Does this member's task deserve to be marked as "${status}"?`;
-      }
-
-      Swal.fire(swalOptions).then(async (result) => {
-        if (result.isConfirmed) {
-          const declineMessage = result.value || "";
-          const postData = {
-            status,
-            ...(status === "Declined" && { declineMessage }),
-          };
-
-          try {
-            console.log({ id: selectedProject, data: postData });
-
-            // Call your update service here to update the project status
-            await updateCommitStatus({
-              id: selectedTask?._id,
-              data: postData,
-            }).unwrap();
-            await updateProjectStatus({
-              projectId: selectedProject,
-              completedTask: completedTask,
-            })
-            .unwrap();
-            Swal.fire({
-              icon: "success",
-              title: "Status Updated",
-              text: `You have successfully updated the status to "${status}".`,
-              timer: 2000,
-              timerProgressBar: true,
-              showConfirmButton: false,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 2500);
-          } catch (error) {
-            Swal.fire({
-              icon: "error",
-              title: "Failed to Update",
-              text: "There was an error updating the project status.",
-            });
-            console.error(error);
-          }
-        }
-      });
-    } else {
-      console.log("No project found for the selected project ID.");
+  
+    if (!selectedProject || !selectedTask) {
+      console.log("No project or task found.");
+      return;
     }
-  };
+  
+    let swalOptions = {
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update status!",
+    };
+  
+    if (status === "Declined") {
+      swalOptions = {
+        ...swalOptions,
+        text: "Please provide a reason for declining:",
+        input: "text",
+        inputPlaceholder: "Enter your reason",
+        inputValidator: (value) => {
+          if (!value) {
+            return "You need to write something!";
+          }
+        },
+      };
+    } else {
+      swalOptions.text = `Does this member's task deserve to be marked as "${status}"?`;
+    }
+  
+    Swal.fire(swalOptions).then(async (result) => {
+      if (result.isConfirmed) {
+        const declineMessage = result.value || "";
+        const postData = {
+          status,
+          ...(status === "Declined" && { declineMessage }),
+        };
 
+        console.log( "projectId:", selectedProject,"completedTask: ",completedTask, );
+  
+        try {
+          // First, update commit status
+          await updateCommitStatus({
+            id: selectedTask?._id,
+            data: postData,
+          }).unwrap();
+  
+          // Then update project status
+          await updateProjectStatus({
+            projectId: selectedProject,
+            completedTask: completedTask,  // Ensure completedTask is defined properly
+          }).unwrap();
+  
+          Swal.fire({
+            icon: "success",
+            title: "Status Updated",
+            text: `You have successfully updated the status to "${status}".`,
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+          setTimeout(() => {
+                          window.location.reload();
+                        }, 2500);
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Failed to Update",
+            text: "There was an error updating the project status.",
+          });
+          console.error(error);
+        }
+      }
+    });
+  };
   
   return (
     <td className="px-4 py-4">
