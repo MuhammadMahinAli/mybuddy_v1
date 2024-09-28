@@ -142,7 +142,7 @@ const ViewPosts = ({ theme }) => {
             ? "Sent"
             : status === "Rejected"
             ? "Rejected"
-            : "Add Friend";
+            : "Add";
         return (
           <div
             key={i}
@@ -214,7 +214,7 @@ const ViewPosts = ({ theme }) => {
                         className="flex items-center my-3 px-4 py-1 md:px-4 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
                       >
                         <span className="pr-1">
-                          {buttonText === "Add Friend" && <FaPlus />}
+                          {buttonText === "Add" && <FaPlus />}
                         </span>
                         {buttonText}
                       </button>
@@ -222,7 +222,7 @@ const ViewPosts = ({ theme }) => {
                       <button className="newBtn">
                         <p>
                           <span className="pr-1">
-                            {buttonText === "Add Friend" && <FaPlus />}
+                            {buttonText === "Add" && <FaPlus />}
                           </span>{" "}
                           {buttonText}
                         </p>

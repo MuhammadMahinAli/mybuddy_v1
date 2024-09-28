@@ -111,7 +111,7 @@ const Sign = () => {
           title: "Well Done !!!",
           text: "Account has been created successfully!",
         });
-       // navigate(`/verify-your-email`);
+        navigate(`/verify-your-email`);
       }
 
     } else if (responseError?.data) {

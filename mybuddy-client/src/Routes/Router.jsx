@@ -16,7 +16,8 @@ import Login from "../Pages/Login/Login";
 import Try from "../Pages/Try/Try";
 import HomepageLayout from "../Layout/HomepageLayout";
 import UserProfileLayout from "../Layout/UserProfileLayout";
-import FindProjectPage from "../Pages/FindProject/FindProjectPage";
+//import FindProjectPage from "../Pages/FindProject/FindProjectPage";
+import FindProject from "../Pages/FindProject/FindProject";
 import UserProfileVM from "../Pages/UserProfile/ViewMode/UserProfileVM";
 import UserProfileEM from "../Pages/UserProfile/EditMode/UserProfileEM";
 import GeneralRequestSent from "../Pages/GeneralDashboard/GeneralRequest/GeneralRequestSent";
@@ -29,6 +30,8 @@ import GeneralProjectDetails from "../Pages/GeneralDashboard/GeneralProjectDetai
 import ResetPassword from "../Pages/Login/ResetPassword";
 import Friends from "../Pages/UpcomingPages/Friends";
 import Meeting from "../Pages/UpcomingPages/Meeting";
+import PaymentSuccess from "../Pages/FindProject/PaymentSuccess.jsX";
+import PaymentFailed from "../Pages/FindProject/PaymentFailed";
 
 
 const router = createBrowserRouter([
@@ -50,7 +53,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/find/project",
-        element: <FindProjectPage />,
+        element: <FindProject />,
       },
       {
         path: "/find/researcher",
@@ -147,6 +150,14 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path: "/success",
+    element: <PaymentSuccess />,
+  },
+  {
+    path: "/funding-failed",
+    element: <PaymentFailed />,
   },
   {
     path: "/verify-your-email",

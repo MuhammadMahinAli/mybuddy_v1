@@ -31,7 +31,6 @@ const GeneralRequestRecieve = () => {
   // Use the mutation hook
   const [updateJoinRequestStatus] = useUpdateJoinRequestStatusMutation();
 
- 
   const handleUpdateStatusAccept = (e, index) => {
     e.preventDefault();
     setSelectedRequestIndex(index);
@@ -105,7 +104,7 @@ const GeneralRequestRecieve = () => {
               setTimeout(() => {
                 window.location.reload();
               }, 2500);
-           })
+            })
             .catch((error) => {
               alert("Failed to reject the request.");
               console.error(error);
@@ -120,14 +119,13 @@ const GeneralRequestRecieve = () => {
   console.log("l", allRecieveRequest?.data);
   return (
     <>
-     <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
-          RECIEVE  REQUESTS
-          </h1>
+      <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
+        RECIEVE REQUESTS
+      </h1>
       {allRecieveRequest?.data?.length === 0 ? (
         <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-12/12 md:w-[600px] pt-7">{`You've not recieved any request yet.`}</p>
       ) : (
         <div className=" gray600 space-y-6 w-12/12 md:w-full">
-         
           <div className="w-full py-4 flex my-5  items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
             <div className="text-[15px] md:text-[21px]  font-semibold border-r-2 text-center w-4/12 sm:w-3/12 ">
               From
@@ -159,10 +157,16 @@ const GeneralRequestRecieve = () => {
                     "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
                   }
                   className="w-8 h-8 md:w-10 md:h-10 rounded-full"
-                  loading="lazy" alt=""
+                  loading="lazy"
+                  alt=""
                 />
                 <p className=" capitalize pt-1 md:pt-0">
-                  {request?.requestedBy?.name?.firstName} <span className="hidden lg:inline-block">{request?.requestedBy?.name?.lastName.length > 3 ?  request?.requestedBy?.name?.lastName.slice(0,3) : request?.requestedBy?.name?.lastName}</span> 
+                  {request?.requestedBy?.name?.firstName}{" "}
+                  <span className="hidden lg:inline-block">
+                    {request?.requestedBy?.name?.lastName.length > 3
+                      ? request?.requestedBy?.name?.lastName.slice(0, 3)
+                      : request?.requestedBy?.name?.lastName}
+                  </span>
                 </p>
               </div>
               <div className="capitalize text-[16px] md:text-[18px] border-r-2  text-center sm:w-3/12 lg:hidden">
@@ -172,7 +176,7 @@ const GeneralRequestRecieve = () => {
                 {request?.projectId?.projectName.slice(0, 12)}..
               </div>
               <div className="text-[16px] md:text-lg   border-r-2  text-center w-2/12 sm:w-2/12 ">
-               {request?.tasks?.length}
+                {request?.tasks?.length}
               </div>
               <div
                 onClick={(e) => openModal(e, i)}
@@ -191,7 +195,6 @@ const GeneralRequestRecieve = () => {
                 />
               )}
               <div className="flex justify-center xs:space-x-2 items-center text-[16px] md:text-lg   w-2/12 sm:w-3/12 ">
-              
                 <img
                   onClick={(e) => handleUpdateStatusAccept(e, i)}
                   src={rightMark}

@@ -27,7 +27,7 @@ export const createMemberService = async (userInfo) => {
   console.log("result", result);
   console.log("userinfo", userInfo);
 
-  const verificationUrl = `https://researchbdy.com/verified-email/${verificationToken}`;
+  const verificationUrl = `esearchbdy.com/verified-email/${verificationToken}`;
 
   // Send verification email
   await sendEmail({

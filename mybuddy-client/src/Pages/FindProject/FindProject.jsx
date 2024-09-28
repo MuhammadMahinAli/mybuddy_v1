@@ -31,12 +31,23 @@ import LikeIcon from "../../icons/LikeIcon";
 import CommentIcon from "../../icons/CommentIcon";
 import FundIcon from "../../icons/FundIcon";
 import ShareIcon from "../../icons/ShareIcon";
-import { IoIosArrowDown, IoIosArrowUp, IoLogoYoutube } from "react-icons/io";
+import {
+  IoIosArrowDown,
+  IoIosArrowUp,
+  IoIosCloseCircleOutline,
+  IoLogoYoutube,
+} from "react-icons/io";
 import feedWhiteBorder from "../../assets/home/feed-w-b.png";
 import feedDarkBorder from "../../assets/home/feed-d-b.png";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { AuthContext } from "../../Context/UserContext";
+import { loadStripe } from "@stripe/stripe-js";
+import FundSlider from "./FundSlider";
+
+const stripePromise = loadStripe(
+  "pk_test_51Q2kJiGGKSeS74MyQwATubkvrfrB2w6nSam4Th7JXf3KAVCJMiVLtax06wgH2oYPBGEMhXC8O0PYWgcckpjqZZL500sqvvLOFL"
+);
 
 const FindProject = ({
   amounts,
@@ -54,6 +65,7 @@ const FindProject = ({
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isPayModalOpen, setIsPayModalOpen] = useState(false);
   const navigate = useNavigate();
 
   console.log(
@@ -115,11 +127,9 @@ const FindProject = ({
       };
       console.log("pro", data);
       createProjectJoinRequest(data);
-      
     }
   };
-  
-  
+
   useEffect(() => {
     if (responseData) {
       console.log("Response Data:", responseData);
@@ -130,14 +140,13 @@ const FindProject = ({
         text: "Your request has been sent successfully!",
       });
     } else if (responseError?.data) {
-
       Swal.fire({
         icon: "error",
         title: "Request failed",
         text: responseError?.data?.message,
       });
       // console.log("Response Error:", responseError.data)
-      } 
+    }
   }, [responseData, responseError, navigate]);
   console.log(responseError, responseData);
   const togglePdf = () => {
@@ -149,10 +158,172 @@ const FindProject = ({
     setShowDocuments(true);
   };
   console.log(projects);
+
+  const requestedBy = requestedId;
+  const [amount, setAmount] = useState("");
+
+  //------------ paymnet start
+
+  const [loading, setLoading] = useState(false);
+
+  // const handlePayment = async (requestedTo, projectId) => {
+  //   setLoading(true);
+
+  //   try {
+
+  //     if (!requestedTo || !projectId || !amount || amount <= 0) {
+  //       console.error("Invalid data: Amount is not available or less than 0");
+  //       setLoading(false);
+  //       return;
+  //     }
+
+  //     const response = await fetch(
+  //       "http://localhost:3000/api/v1/fund/new-request",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           requestedBy,
+  //           requestedTo,
+  //           projectId,
+  //           amount,
+  //         }),
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error("Failed to create payment session");
+  //     }
+
+  //     const { id } = await response.json();
+
+  //     const stripe = await stripePromise;
+  //     const result = await stripe.redirectToCheckout({ sessionId: id });
+
+  //     if (result.error) {
+  //       console.error(result.error.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error in payment:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const handlePayment = async (requestedTo, projectId) => {
+  //   setLoading(true);
+
+  //   try {
+  //     // Validation: Check if requestedTo, projectId, and amount are valid
+  //     if (!requestedTo || !projectId || !amount || amount <= 0) {
+  //       console.error("Invalid data: Amount is not available or less than 0");
+  //       setLoading(false);
+  //       return;
+  //     }
+
+  //     // Create a payment session by making a POST request to the backend
+  //     const response = await fetch(
+  //       "http://localhost:3000/api/v1/fund/new-request",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           requestedBy,  // Ensure requestedBy is available in the component
+  //           requestedTo,
+  //           projectId,
+  //           amount,
+  //         }),
+  //       }
+  //     );
+
+  //     // Check if the response is OK, otherwise throw an error
+  //     if (!response.ok) {
+  //       throw new Error("Failed to create payment session");
+  //     }
+
+  //     const { sessionId } = await response.json();
+
+  //     // Initialize Stripe and redirect to the checkout page
+  //     const stripe = await stripePromise;
+  //     const result = await stripe.redirectToCheckout({ sessionId });
+
+  //     if (result.error) {
+  //       console.error(result.error.message);
+  //     }
+  //   } catch (error) {
+  //     // Catch any errors and log them
+  //     console.error("Error in payment:", error);
+  //   } finally {
+  //     // Stop loading indicator
+  //     setLoading(false);
+  //   }
+  // };
+
+  const handlePayment = async (requestedTo, projectId) => {
+    setLoading(true);
+
+    try {
+      if (!requestedTo || !projectId) {
+        console.error("Invalid data: Amount is not available or less than 0");
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch(
+        "http://localhost:3000/api/v1/fund/new-request",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            requestedBy,
+            requestedTo,
+            projectId,
+            amount,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to create payment session");
+      }
+
+      const { sessionId } = await response.json();
+
+      // Redirect to Stripe checkout
+      const stripe = await stripePromise;
+      const result = await stripe.redirectToCheckout({ sessionId });
+
+      if (result.error) {
+        console.error(result.error.message);
+      }
+    } catch (error) {
+      console.error("Error in payment:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //------------ paymnet end
+  //------------ switch start
+  const [selectedOption, setSelectedOption] = useState("donation"); // default selection
+  //const [loading, setLoading] = useState(false);
+
+  // Pure function to handle option change
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
+  //------------ switch end
+
   if (isLoading) {
     return <Loading />;
   }
-//fixed bg-black bg-opacity-50 w-screen h-screen overflow-y-scroll
+
   return (
     <>
       <div className={` py-1 w-12/12 sm:w-full`}>
@@ -160,7 +331,14 @@ const FindProject = ({
           {projects?.map((project, i) => {
             const { status } = getRequestStatus(project?._id);
             console.log(project);
-            const buttonText = status === "Pending" ||status === "Declined"||status === "Completed"||status === "Accepted"|| status === "Done" ? "Sent" : "Join";
+            const buttonText =
+              status === "Pending" ||
+              status === "Declined" ||
+              status === "Completed" ||
+              status === "Accepted" ||
+              status === "Done"
+                ? "Sent"
+                : "Join";
 
             return (
               <div
@@ -236,66 +414,45 @@ const FindProject = ({
                       </div>
                     </Link>
 
-                    {/* <div onClick={() => handleJoinClick(project)}>
-                  {theme === "light" ? (
-                    <div
-                      className={`${
-                        selectedTasks?.length > 0
-                          ? "cursor-pointer"
-                          : "cursor-not-allowed"
-                      } flex justify-center items-center px-3 py-1 md:px-6 md:py-3 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)] rounded-[25px] md:rounded-[27px] [background:linear-gradient(-84.24deg,_#2adba4,_#65f7c9)]`}
-                    >
-                      <p className="text-[14px] md:text-[16px] xl:text-[20px] font-semibold pr-1">
-                      {buttonText}
-                      </p>
-                      <FaPlus className="text-[15px] md:text-lg ml-1 md:ml-2" />
-                    </div>
-                  ) : (
-                    <button className="joinBtn">
-                      <p>
-                      {buttonText} <FaPlus className="text-[15px] ml-1 md:ml-2" />
-                      </p>
-                    </button>
-                  )}
-                </div> */}
-                {
-                  project?.user?._id !== requestedId &&
-<>
-                  {theme === "light" ? (
-                    buttonText === "Join" ? (
-                      <div>
-                        <button
-                          onClick={() => handleJoinClick(project)}
-                          className="flex items-center space-x-2 lg:text-sm xl:text-lg rounded-[13px] font-semibold px-3 py-2 xl:px-4 xl:py-2 bg-gradient-to-l from-[#2adba4] to-[#69f9cc] text-white"
-                        >
-                          {buttonText}
-                          <FaPlus className="text-[15px] md:text-lg ml-1 md:ml-2" />
-                        </button>
-                      </div>
-                    ) : (
-                      <div>
-                        <div onClick={() => handleJoinClick(project)} className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
-                          <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
-                            {buttonText}
+                    {project?.user?._id !== requestedId && (
+                      <>
+                        {theme === "light" ? (
+                          buttonText === "Join" ? (
+                            <div>
+                              <button
+                                onClick={() => handleJoinClick(project)}
+                                className="flex items-center space-x-2 lg:text-sm xl:text-lg rounded-[13px] font-semibold px-3 py-2 xl:px-4 xl:py-2 bg-gradient-to-l from-[#2adba4] to-[#69f9cc] text-white"
+                              >
+                                {buttonText}
+                                <FaPlus className="text-[15px] md:text-lg ml-1 md:ml-2" />
+                              </button>
+                            </div>
+                          ) : (
+                            <div>
+                              <div
+                                onClick={() => handleJoinClick(project)}
+                                className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]"
+                              >
+                                <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
+                                  {buttonText}
+                                </button>
+                              </div>
+                            </div>
+                          )
+                        ) : (
+                          <button
+                            onClick={
+                              buttonText === "Join"
+                                ? () => handleJoinClick(project)
+                                : undefined
+                            }
+                            className="profileFriendRequestBtn"
+                          >
+                            <p>{buttonText}</p>
                           </button>
-                        </div>
-                      </div>
-                    )
-                  ) : (
-                    <button
-                      onClick={
-                        buttonText === "Join"
-                          ? handleJoinClick(project)
-                          : undefined
-                      }
-                      className="profileFriendRequestBtn"
-                    >
-                      <p>{buttonText}</p>
-                    </button>
-                  )}
-                  </>
-                }
-                   
+                        )}
+                      </>
+                    )}
                   </div>
 
                   {/* Task Table */}
@@ -429,14 +586,17 @@ const FindProject = ({
                   <div
                     className={`${
                       theme === "light" ? "graish" : "text-white"
-                    } flex justify-between items-center border-b pb-3`}
+                    } flex  justify-between items-center border-b pb-3`}
                   >
                     <p className="text-[14px] lg:text-[16px] 3xl:text-[20px] font-medium">
                       React [5]
                     </p>
-                    <p className="text-[14px] lg:text-[16px] 3xl:text-[20px] font-medium">
-                      2 Comments, 5 Shares
-                    </p>
+                    <div className="flex items-center space-x-2">
+                      <FundSlider projectId={project?._id} />
+                      <p className="text-[14px] lg:text-[16px] 3xl:text-[20px] font-medium">
+                        2 Comments, 5 Shares
+                      </p>
+                    </div>
                   </div>
 
                   <ul
@@ -450,12 +610,37 @@ const FindProject = ({
                         Like
                       </p>
                     </li>
-                    <li className="flex items-center space-x-2">
+
+                    {/* <li
+
+                      onClick={() => setIsPayModalOpen(true)}
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <FundIcon theme={theme} />
+                      <p className=" hidden sm:block text-[10px] md:text-[14px] lg:text-[16px] 3xl:text-[20px]  font-medium">
+                        Fund
+                      </p>
+                    </li> */}
+                    <li
+                      onClick={() => {
+                        if (project?.user?._id === requestedId) {
+                          Swal.fire({
+                            icon: "warning",
+                            title: "Oops!",
+                            text: "You can't fund your own project.",
+                          });
+                        } else {
+                          setIsPayModalOpen(true);
+                        }
+                      }}
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
                       <FundIcon theme={theme} />
                       <p className=" hidden sm:block text-[10px] md:text-[14px] lg:text-[16px] 3xl:text-[20px]  font-medium">
                         Fund
                       </p>
                     </li>
+
                     <li className="flex items-center space-x-2">
                       <CommentIcon theme={theme} />
                       <p className="hidden sm:block text-[10px] md:text-[14px] lg:text-[16px] 3xl:text-[20px]  font-medium">
@@ -469,6 +654,115 @@ const FindProject = ({
                       </p>
                     </li>
                   </ul>
+                  {/* Popup Modal */}
+                  {isPayModalOpen === true && (
+                    <div className="fixed top-0 left-0 lg:left-20 flex justify-center items-center bg-black/5 bg-opacity-50 w-screen h-screen overflow-y-scroll">
+                      <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all md:w-[600px] 3xl:w-[800px] cursor-pointer">
+                        <IoIosCloseCircleOutline
+                          onClick={() => setIsPayModalOpen(false)}
+                          className="text-xl float-right"
+                        />
+                        {/* <div className="flex flex-col py-7">
+                          <h2 className="text-xl lg:text-2xl font-bold mb-10 cursor-pointer">
+                            Enter an amount for funding
+                          </h2>
+
+                          <input
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            className="payment-input w-[200px] lg:w-[400px] mb-6"
+                            placeholder="Enter Amount"
+                          />
+
+                          <button
+                            onClick={() =>
+                              handlePayment(project?.user?._id, project?._id)
+                            }
+                            disabled={loading}
+                            className="fancy w-44"
+                          >
+                            <span className="top-key"></span>
+                            <span className="text">
+                              {" "}
+                              {loading ? "Processing..." : "Pay Now"}
+                            </span>
+                            <span className="bottom-key-1"></span>
+                            <span className="bottom-key-2"></span>
+                          </button>
+                        </div> */}
+                        <div className="flex flex-col py-7">
+                          <h2 className="text-xl lg:text-2xl font-bold mb-6">
+                            Enter an amount for funding
+                          </h2>
+
+                          {/* Radio Buttons for selecting funding type */}
+                          <div className="mb-6 flex items-center space-x-6">
+                            <div className="flex items-center space-x-2">
+                              <label>
+                                <input
+                                  value="donation"
+                                  checked={selectedOption === "donation"}
+                                  onChange={handleOptionChange}
+                                  type="checkbox"
+                                  className="pay-input"
+                                />
+                                <span className="custom-checkbox"></span>
+                              </label>
+                              <p className="ml-2">Donation</p>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <label>
+                                <input
+                                  value="buyStack"
+                                  checked={selectedOption === "buyStack"}
+                                  onChange={handleOptionChange}
+                                  type="checkbox"
+                                  className="pay-input"
+                                />
+                                <span className="custom-checkbox"></span>
+                              </label>
+                              <p className="ml-2">Buy Stack</p>
+                            </div>
+                          </div>
+
+                          {/* Conditionally render based on selected option */}
+                          {selectedOption === "donation" ? (
+                            <>
+                              <input
+                                value={amount}
+                                onChange={(e) => setAmount(e.target.value)}
+                                className="payment-input w-[200px] lg:w-[400px] mb-6"
+                                placeholder="Enter Amount"
+                              />
+                              <button
+                                onClick={() =>
+                                  handlePayment(
+                                    project?.user?._id,
+                                    project?._id
+                                  )
+                                }
+                                disabled={loading}
+                                className="fancy w-44"
+                              >
+                                <span className="top-key"></span>
+                                <span className="text">
+                                  {" "}
+                                  {loading ? "Processing..." : "Pay Now"}
+                                </span>
+                                <span className="bottom-key-1"></span>
+                                <span className="bottom-key-2"></span>
+                              </button>
+                            </>
+                          ) : (
+                            <p className="text-2xl font-semibold py-3">
+                              Coming Soon
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             );
@@ -487,6 +781,7 @@ export default FindProject;
 //  "p-[1px] bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90%  rounded-[27px]"
 //}`}
 //>
+
 //<div
 //  key={i}
 //  className={`${

@@ -58,6 +58,7 @@ export const createNewFriendRequest = catchAsync(async (req, res, next) => {
       data: friendRequests,
     });
   });
+  
 //----- pending requested by
   export const getAllPendingFriendRequestByController = catchAsync(async (req, res) => {
     const { id } = req.params;
