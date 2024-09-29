@@ -17,9 +17,13 @@ const FundProposalSchema = new Schema(
       required: true,
       ref: "Project",
     },
-
-    amount: {
+    status: {
       type: String,
+      required: true,
+      enum: ["Pending", "Accepted", "Rejected"],
+    },
+    amount: {
+      type: Number,
       required: true,
     },
 

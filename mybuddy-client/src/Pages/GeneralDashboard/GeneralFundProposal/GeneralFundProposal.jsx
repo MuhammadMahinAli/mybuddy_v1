@@ -12,20 +12,60 @@
 
 // export default GeneralFundProposal;
 
-import { useContext } from "react";
-import rightMark from "../../../assets/checkmark.png";
+import { useContext, useState } from "react";
+import filter from "../../../assets/filter.png";
 import xMark from "../../../assets/xmark.png";
 import { AuthContext } from "../../../Context/UserContext";
 const GeneralFundProposal = () => {
   const { getFundByRequestedBy } = useContext(AuthContext);
-  console.log("getFundByRequestedBy", getFundByRequestedBy?.data);
+  //console.log("getFundByRequestedBy", getFundByRequestedBy?.data);
   const allFundRequest = getFundByRequestedBy?.data;
+
+  const [showFilterOption, setShowFilterOption] = useState(false);
+  const [isOpenSentRequest, setIsOpenSentRequest]  = useState(true);
+  const [isOpenRecieveRequest, setIsOpenRecieveRequest] = useState(false);
+
+  const toggleSentRequest = ()=>{
+    setIsOpenSentRequest(true);
+    setIsOpenRecieveRequest(false);
+    setShowFilterOption(false);
+  }
+
+  const toggleRecieveRequest = ()=>{
+    setIsOpenSentRequest(false);
+    setIsOpenRecieveRequest(true);
+    setShowFilterOption(false);
+  }
 
   return (
     <div className=" gray600 space-y-6 w-11/12 md:w-full pb-6">
       <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
         FUND PROPOSAL
       </h1>
+      <button
+        onClick={() => setShowFilterOption(!showFilterOption)}
+        className={`flex justify-center  items-center space-x-1 w-16 my-3 md:px-3 py-1 lg:px-4 md:py-2 text-[14px] md:text-[16px]  font-semibold shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] h-8 rounded-[10px]`}
+      >
+        <img src={filter} />
+        <span className="hidden">Filter</span>
+      </button>
+      {/* filt */}
+      {showFilterOption && (
+        <ul className="w-40 absolute top-32 left-5  bg-white border rounded-lg border-gray-300 shadow-lg mt-2 z-10">
+          <li
+            onClick={toggleSentRequest}
+            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+          >
+            Sent Request
+          </li>
+          <li
+            onClick={toggleRecieveRequest}
+            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+          >
+            Recieve Request
+          </li>
+        </ul>
+      )}
       {allFundRequest?.length === 0 ? (
         <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not sent any fund proposal yet.`}</p>
       ) : (

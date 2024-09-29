@@ -134,8 +134,8 @@ const GeneralFriendRequest = () => {
       }
     });
   };
-  const [showFilterOption, setShowFilterOption] = useState(false);
 
+  const [showFilterOption, setShowFilterOption] = useState(false);
   const [isOpenSentRequest, setIsOpenSentRequest] = useState(true);
   const [isOpenRecieveRequest, setIsOpenRecieveRequest] = useState(false);
 

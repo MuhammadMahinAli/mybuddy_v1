@@ -1,32 +1,19 @@
 import { catchAsync } from "../../../utils/catchAsync.js";
 import httpStatus from "http-status";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import {  confirmPaymentService, createPaymentSessionService, getAllFundRequestByProjectService, getAllFundRequestByRequestedByService } from "./fundProposal.service.js";
+import {  confirmPaymentService, createPaymentSessionService, getAllFundRequestByProjectService, getAllFundRequestByRequestedByService, getAllFundRequestByRequestedToService } from "./fundProposal.service.js";
 
-// export const createPaymentSessionController = async (req, res) => {
-//   try {
-//     const { requestedBy, requestedTo, projectId, amount } = req.body;
-//     const result = await createPaymentSessionService({ requestedBy, requestedTo, projectId, amount });
-
-//     return res.status(200).json({ sessionId: result.session.id, fundProposal: result.fundProposal });
-//   } catch (error) {
-//     console.error('Error in controller:', error);
-//     return res.status(500).json({ error: error.message });
-//   }
-// };
-
-
-// Controller for creating a Stripe payment session
-// fundProposal.controller.js
+//--
 
 export const createPaymentSessionController = async (req, res) => {
-  const { requestedBy, requestedTo, projectId, amount } = req.body;
+  const { requestedBy, requestedTo, projectId, status,amount } = req.body;
 
   try {
     const paymentSession = await createPaymentSessionService({
       requestedBy,
       requestedTo,
       projectId,
+      status,
       amount,
     });
 
@@ -37,8 +24,8 @@ export const createPaymentSessionController = async (req, res) => {
   }
 };
 
-// Controller for confirming payment and creating a fund proposal
-// fundProposal.controller.js
+//
+
 
 export const confirmPaymentController = async (req, res) => {
   const { session_id } = req.query;
@@ -100,3 +87,18 @@ export const getAllFundRequestByRequestedByController = catchAsync(async (req, r
     data: sentFundRequests,
   });
 });
+
+
+// --
+
+export const getAllFundRequestByRequestedToController = catchAsync(async (req, res) => {
+  const {id} = req.params;
+  const recieveFundRequest = await getAllFundRequestByRequestedToService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success:true,
+    message:"All recieve fund request is retrived successfully!",
+    data: recieveFundRequest,
+
+  })
+})

@@ -55,10 +55,10 @@ const FindProject = ({
   selectedTasks,
   setSelectedTasks,
 }) => {
-  const { user } = useSelector((state) => state.auth);
+  //const { user } = useSelector((state) => state.auth);
   const theme = useSelector((state) => state.theme.theme);
-  const { getAllSentProjectJoinRequest } = useContext(AuthContext);
-  const requestedId = user?._id;
+  const { getAllSentProjectJoinRequest, userId } = useContext(AuthContext);
+  //const requestedId = user?._id;
   const [openDescriptionIndex, setOpenDescriptionIndex] = useState(null);
   const [showPdfList, setShowPdfList] = useState(false);
   const [showDocuments, setShowDocuments] = useState(false);
@@ -68,10 +68,10 @@ const FindProject = ({
   const [isPayModalOpen, setIsPayModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  console.log(
-    "getAllSentProjectJoinRequest",
-    getAllSentProjectJoinRequest?.data
-  );
+  // console.log(
+  //   "getAllSentProjectJoinRequest",
+  //   getAllSentProjectJoinRequest?.data
+  // );
 
   const getRequestStatus = (projectID) => {
     const friend = getAllSentProjectJoinRequest?.data?.find(
@@ -108,7 +108,7 @@ const FindProject = ({
   };
   //   window.location.href = "https://buy.stripe.com/test_7sIfZP7d6bha3Qs5kk";
   const handleJoinClick = (project) => {
-    if (!user) {
+    if (!userId) {
       navigate("/");
     } else if (selectedTasks?.length === 0) {
       Swal.fire({
@@ -120,19 +120,19 @@ const FindProject = ({
       setSelectedProject(project);
       const data = {
         projectId: project?._id,
-        requestedBy: requestedId,
+        requestedBy: userId,
         requestedTo: project?.user?._id,
         status: "Pending",
         tasks: selectedTasks,
       };
-      console.log("pro", data);
+      // console.log("pro", data);
       createProjectJoinRequest(data);
     }
   };
 
   useEffect(() => {
     if (responseData) {
-      console.log("Response Data:", responseData);
+      // console.log("Response Data:", responseData);
 
       Swal.fire({
         icon: "success",
@@ -148,7 +148,7 @@ const FindProject = ({
       // console.log("Response Error:", responseError.data)
     }
   }, [responseData, responseError, navigate]);
-  console.log(responseError, responseData);
+  //console.log(responseError, responseData);
   const togglePdf = () => {
     setShowPdfList(true);
     setShowDocuments(false);
@@ -157,10 +157,10 @@ const FindProject = ({
     setShowPdfList(false);
     setShowDocuments(true);
   };
-  console.log(projects);
+  //console.log(projects);
 
-  const requestedBy = requestedId;
-  const [amount, setAmount] = useState("");
+  const requestedBy = userId;
+  const [amount, setAmount] = useState(0);
 
   //------------ paymnet start
 
@@ -262,12 +262,47 @@ const FindProject = ({
   //     setLoading(false);
   //   }
   // };
+  //console.log("my", userId);
+  //console.log(projects[0]);
+  const handleOpenModal = (project) => {
+    setSelectedProject(project);
+    if (project?.user?._id === userId) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops!",
+        text: "You can't fund your own project.",
+      });
+    } else {
+      setIsPayModalOpen(true);
+    }
+  };
 
-  const handlePayment = async (requestedTo, projectId) => {
+  const handlePayment = async (project) => {
+    setSelectedProject(project);
     setLoading(true);
+    //console.log("selected project", project);
+    
+    if (amount <= 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Amount',
+        text: '0 is not acceptable!',
+      });
+      return; // Stop further execution
+    }
+
+    const paymentData = {
+      requestedBy: userId,
+      requestedTo: project?.user?._id,
+      projectId: project?._id,
+      status: "Pending",
+      amount: amount,
+    };
+
+   // console.log("Payment data being sent:", paymentData);
 
     try {
-      if (!requestedTo || !projectId) {
+      if (!project?.user?._id || !project?._id) {
         console.error("Invalid data: Amount is not available or less than 0");
         setLoading(false);
         return;
@@ -280,12 +315,7 @@ const FindProject = ({
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            requestedBy,
-            requestedTo,
-            projectId,
-            amount,
-          }),
+          body: JSON.stringify(paymentData),
         }
       );
 
@@ -330,7 +360,7 @@ const FindProject = ({
         <div className="mx-3 md:mx-6 3xl:mx-20 my-5 p-3 xl:p-3 space-y-5">
           {projects?.map((project, i) => {
             const { status } = getRequestStatus(project?._id);
-            console.log(project);
+            //console.log(project);
             const buttonText =
               status === "Pending" ||
               status === "Declined" ||
@@ -414,7 +444,7 @@ const FindProject = ({
                       </div>
                     </Link>
 
-                    {project?.user?._id !== requestedId && (
+                    {project?.user?._id !== userId && (
                       <>
                         {theme === "light" ? (
                           buttonText === "Join" ? (
@@ -610,29 +640,8 @@ const FindProject = ({
                         Like
                       </p>
                     </li>
-
-                    {/* <li
-
-                      onClick={() => setIsPayModalOpen(true)}
-                      className="flex items-center space-x-2 cursor-pointer"
-                    >
-                      <FundIcon theme={theme} />
-                      <p className=" hidden sm:block text-[10px] md:text-[14px] lg:text-[16px] 3xl:text-[20px]  font-medium">
-                        Fund
-                      </p>
-                    </li> */}
                     <li
-                      onClick={() => {
-                        if (project?.user?._id === requestedId) {
-                          Swal.fire({
-                            icon: "warning",
-                            title: "Oops!",
-                            text: "You can't fund your own project.",
-                          });
-                        } else {
-                          setIsPayModalOpen(true);
-                        }
-                      }}
+                      onClick={() => handleOpenModal(project)}
                       className="flex items-center space-x-2 cursor-pointer"
                     >
                       <FundIcon theme={theme} />
@@ -662,34 +671,6 @@ const FindProject = ({
                           onClick={() => setIsPayModalOpen(false)}
                           className="text-xl float-right"
                         />
-                        {/* <div className="flex flex-col py-7">
-                          <h2 className="text-xl lg:text-2xl font-bold mb-10 cursor-pointer">
-                            Enter an amount for funding
-                          </h2>
-
-                          <input
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                            className="payment-input w-[200px] lg:w-[400px] mb-6"
-                            placeholder="Enter Amount"
-                          />
-
-                          <button
-                            onClick={() =>
-                              handlePayment(project?.user?._id, project?._id)
-                            }
-                            disabled={loading}
-                            className="fancy w-44"
-                          >
-                            <span className="top-key"></span>
-                            <span className="text">
-                              {" "}
-                              {loading ? "Processing..." : "Pay Now"}
-                            </span>
-                            <span className="bottom-key-1"></span>
-                            <span className="bottom-key-2"></span>
-                          </button>
-                        </div> */}
                         <div className="flex flex-col py-7">
                           <h2 className="text-xl lg:text-2xl font-bold mb-6">
                             Enter an amount for funding
@@ -731,17 +712,13 @@ const FindProject = ({
                             <>
                               <input
                                 value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
+                                type="number"
+                                onChange={(e) => setAmount(parseFloat(e.target.value) || '')}
                                 className="payment-input w-[200px] lg:w-[400px] mb-6"
                                 placeholder="Enter Amount"
                               />
                               <button
-                                onClick={() =>
-                                  handlePayment(
-                                    project?.user?._id,
-                                    project?._id
-                                  )
-                                }
+                                onClick={() => handlePayment(selectedProject)}
                                 disabled={loading}
                                 className="fancy w-44"
                               >
