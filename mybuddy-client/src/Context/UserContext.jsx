@@ -27,7 +27,7 @@ import {
 import { useDeleteProjectByRequestedByMutation, useGetAllAcceptedProjectByRequestedByQuery, useGetAllAcceptedProjectByRequestedToQuery, useGetAllProjectByRequestedByQuery, useGetAllProjectByRequestedToQuery, useGetAllSentProjectJoinRequestQuery } from "../features/projectJoinRequest/projectJoinRequestApi";
 import { useCreateNewRequestMutation, useDeleteFriendRequestMutation, useGetAcceptedFriendRequestQuery, useGetAllSentPendingFriendRequestQuery, useGetAllStatusFriendRequestQuery, useGetFriendRequestQuery } from "../features/friend/friendApi";
 import { useCreateCommitMutation, useGetAllCommitQuery } from "../features/commit/commitApi";
-import { useGetFundByRequestedByQuery } from "../features/fund/fundApi";
+import { useGetFundByRequestedByQuery, useGetFundByRequestedToQuery } from "../features/fund/fundApi";
 
 export const AuthContext = createContext();
 
@@ -154,6 +154,10 @@ const UserContext = ({ children }) => {
   //------------- get fund friend by requested by
   const { data: getFundByRequestedBy, isLoading: isFetchingGetFundByRequestedBy, error: getFundByRequestedByError } =
   useGetFundByRequestedByQuery(userId, { skip: !userId });
+
+  //------------- get fund friend by requested by
+  const { data: getFundByRequestedTo, isLoading: isFetchingGetFundByRequestedTo, error: getFundByRequestedToError } =
+  useGetFundByRequestedToQuery(userId, { skip: !userId });
 
 
 
@@ -337,7 +341,8 @@ const UserContext = ({ children }) => {
       isFetchingGetAllSentPendingFriendRequest ||
       isDeleteFriendRequestLoading ||
       isFetchingGetAllSentProjectJoinRequest ||
-      isFetchingGetFundByRequestedBy
+      isFetchingGetFundByRequestedBy ||
+      isFetchingGetFundByRequestedTo
     ) {
       setLoading(true);
     } else {
@@ -379,7 +384,8 @@ const UserContext = ({ children }) => {
     isDeleteFriendRequestLoading,
     repsponseDeleteFriendRequestError,
     isFetchingGetAllSentProjectJoinRequest,
-    isFetchingGetFundByRequestedBy
+    isFetchingGetFundByRequestedBy,
+    isFetchingGetFundByRequestedTo
   ]);
 
   //************************************************************************************************************** */
@@ -423,7 +429,8 @@ const UserContext = ({ children }) => {
       getAllSentPendingFriendRequestError ||
       repsponseDeleteFriendRequestError ||
       getAllSentProjectJoinRequestError ||
-      getFundByRequestedByError
+      getFundByRequestedByError ||
+      getFundByRequestedToError
     ) {
       console.error("Error fetching user data:", {
         userError,
@@ -462,7 +469,8 @@ const UserContext = ({ children }) => {
         getAllSentPendingFriendRequestError,
         repsponseDeleteFriendRequestError,
         getAllSentProjectJoinRequestError,
-        getFundByRequestedByError 
+        getFundByRequestedByError ,
+        getFundByRequestedToError
       });
     }
   }, [
@@ -498,7 +506,8 @@ const UserContext = ({ children }) => {
     getAllSentPendingFriendRequestError,
     repsponseDeleteFriendRequestError,
     getAllSentProjectJoinRequestError ,
-    getFundByRequestedByError
+    getFundByRequestedByError,
+    getFundByRequestedToError
   ]);
 
   //************************************************************************************************************** */
@@ -551,7 +560,8 @@ const UserContext = ({ children }) => {
     deleteTeamMember,
     deleteFriendRequest,
     getAllSentProjectJoinRequest,
-    getFundByRequestedBy
+    getFundByRequestedBy,
+    getFundByRequestedTo
   };
 
   return (

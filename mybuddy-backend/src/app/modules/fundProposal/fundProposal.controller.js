@@ -1,9 +1,9 @@
 import { catchAsync } from "../../../utils/catchAsync.js";
 import httpStatus from "http-status";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import {  confirmPaymentService, createPaymentSessionService, getAllFundRequestByProjectService, getAllFundRequestByRequestedByService, getAllFundRequestByRequestedToService } from "./fundProposal.service.js";
+import {  confirmPaymentService, createPaymentSessionService, deleteFundRequestService, getAllFundRequestByProjectService, getAllFundRequestByRequestedByService, getAllFundRequestByRequestedToService } from "./fundProposal.service.js";
 
-//--
+//------- create payment session in stripe
 
 export const createPaymentSessionController = async (req, res) => {
   const { requestedBy, requestedTo, projectId, status,amount } = req.body;
@@ -24,7 +24,7 @@ export const createPaymentSessionController = async (req, res) => {
   }
 };
 
-//
+//---------- save payment info in database
 
 
 export const confirmPaymentController = async (req, res) => {
@@ -61,8 +61,6 @@ export const confirmPaymentController = async (req, res) => {
 
 //----- all fund request by project
 
-
-
 export const getAllFundRequestByProjectController = catchAsync(async (req, res) => {
   const { id } = req.params;
   const fundRequests = await getAllFundRequestByProjectService(id);
@@ -75,7 +73,8 @@ export const getAllFundRequestByProjectController = catchAsync(async (req, res) 
   });
 });
 
-//-------
+//------- get sent fundProposal [ requestedby ] 
+
 export const getAllFundRequestByRequestedByController = catchAsync(async (req, res) => {
   const { id } = req.params;
   const sentFundRequests = await getAllFundRequestByRequestedByService(id);
@@ -89,7 +88,7 @@ export const getAllFundRequestByRequestedByController = catchAsync(async (req, r
 });
 
 
-// --
+// -------------  get recieve fundProposal [ requestedTo ]
 
 export const getAllFundRequestByRequestedToController = catchAsync(async (req, res) => {
   const {id} = req.params;
@@ -101,4 +100,19 @@ export const getAllFundRequestByRequestedToController = catchAsync(async (req, r
     data: recieveFundRequest,
 
   })
+})
+
+//-------- delete fund request
+
+export const deleteFundRequestController = catchAsync(async (req,res)=>{
+  const id = req.params.id;
+
+  const requests = await deleteFundRequestService(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Fund request deleted successfully!",
+    data: requests,
+  });
 })

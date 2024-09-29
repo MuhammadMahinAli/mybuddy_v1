@@ -6,8 +6,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // ---------- create payment and store stripe
 export const createPaymentSessionService = async (paymentData) => {
-  const { requestedBy, requestedTo, projectId, amount,status } = paymentData;
-//console.log("Paym", paymentData);
+  const { requestedBy, requestedTo, projectId, amount, status } = paymentData;
+  //console.log("Paym", paymentData);
   try {
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
@@ -28,7 +28,7 @@ export const createPaymentSessionService = async (paymentData) => {
       mode: "payment",
       success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`, // Use session ID in the success URL
       cancel_url: `http://localhost:5173/funding-failed`,
-      metadata: { requestedBy, requestedTo, projectId, status, amount}, // Include metadata for later use
+      metadata: { requestedBy, requestedTo, projectId, status, amount }, // Include metadata for later use
     });
 
     return { sessionId: session.id };
@@ -37,41 +37,6 @@ export const createPaymentSessionService = async (paymentData) => {
     throw error;
   }
 };
-
-// ---------- create payment and save databse
-// export const confirmPaymentService = async (sessionId) => {
-//   try {
-//     // Retrieve session details from Stripe
-//     const session = await stripe.checkout.sessions.retrieve(sessionId);
-
-//     if (!session) {
-//       throw new Error("Session not found");
-//     }
-
-//     // Check if payment was successful
-//     if (session.payment_status !== "paid") {
-//       throw new Error("Payment was not successful");
-//     }
-
-//     const { requestedBy, requestedTo, projectId, status , amount } = session.metadata;
-//     console.log("session", session.metadata);
-
-//     // Save the funding proposal to the database after successful payment
-//     const fundProposal = await FundProposal.create({
-//       requestedBy,
-//       requestedTo,
-//       projectId,
-//       status,
-//       amount,
-//     });
-
-//     return { message: "Payment successful and proposal created", fundProposal };
-//   } catch (error) {
-//     console.error("Error confirming payment:", error);
-//     throw error;
-//   }
-// };
-
 
 export const confirmPaymentService = async (sessionId) => {
   try {
@@ -87,8 +52,9 @@ export const confirmPaymentService = async (sessionId) => {
       throw new Error("Payment was not successful");
     }
 
-    const { requestedBy, requestedTo, projectId, status, amount } = session.metadata;
-   // console.log("session", session.metadata);
+    const { requestedBy, requestedTo, projectId, status, amount } =
+      session.metadata;
+    // console.log("session", session.metadata);
 
     // Check for existing proposal to prevent duplicates
     const existingProposal = await FundProposal.findOne({
@@ -100,7 +66,7 @@ export const confirmPaymentService = async (sessionId) => {
     });
 
     if (existingProposal) {
-      throw new Error('Payment proposal already exists');
+      throw new Error("Payment proposal already exists");
     }
 
     // Save the funding proposal to the database after successful payment
@@ -119,7 +85,6 @@ export const confirmPaymentService = async (sessionId) => {
   }
 };
 
-
 //--------- get fundProposal by project Id
 
 export const getAllFundRequestByProjectService = async (id) => {
@@ -131,7 +96,7 @@ export const getAllFundRequestByProjectService = async (id) => {
   return fundRequests;
 };
 
-//--------- get sent fundProposal [ requestedby ] 
+//--------- get sent fundProposal [ requestedby ]
 
 export const getAllFundRequestByRequestedByService = async (id) => {
   const sentFundRequests = await FundProposal.find({ requestedBy: id })
@@ -144,7 +109,19 @@ export const getAllFundRequestByRequestedByService = async (id) => {
 //--------- get recieve fundProposal [ requestedTo ]
 
 export const getAllFundRequestByRequestedToService = async (id) => {
-  const recieveFundRequests = await FundProposal.find({requestedTo:id}).sort({createdAt:-1})
+  const recieveFundRequests = await FundProposal.find({ requestedTo: id })
+  .populate("requestedBy")
+  .populate("requestedTo")
+  .populate("projectId")
+  .sort(
+    { createdAt: -1 }
+  );
   return recieveFundRequests;
-}
+};
 
+//--------- delete fund request
+
+export const deleteFundRequestService = async(id)=>{
+  const result = await FundProposal.findByIdAndDelete({_id:id});
+  return result;
+}
