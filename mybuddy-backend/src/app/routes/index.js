@@ -12,6 +12,7 @@ import { LicenseRoutes } from "../modules/licence/license.routes.js";
 import { ExperienceRoutes } from "../modules/experience/experience.routes.js";
 import { CommitRoutes } from "../modules/commit/commit.routes.js";
 import { FundRequestRoutes } from "../modules/fundProposal/fundProposal.routes.js";
+import { MeetingRoutes } from "../modules/meeting/meeting.routes.js";
 
 
 const router = express.Router();
@@ -29,6 +30,7 @@ const moduleRoutes = [
     { path:"/experience", route:ExperienceRoutes},
     { path:"/commit", route:CommitRoutes},
     { path:"/fund", route:FundRequestRoutes},
+    { path:"/meeting", route:MeetingRoutes},
 
 ];
 

@@ -32,6 +32,7 @@ import Friends from "../Pages/UpcomingPages/Friends";
 import Meeting from "../Pages/UpcomingPages/Meeting";
 import PaymentSuccess from "../Pages/FindProject/PaymentSuccess.jsX";
 import PaymentFailed from "../Pages/FindProject/PaymentFailed";
+import MeetingForm from "../Pages/GeneralDashboard/GeneralMeetingSchedule/MeetingForm";
 
 
 const router = createBrowserRouter([
@@ -130,6 +131,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/meeting-s",
         element: <CalenderPage />,
+      },
+      {
+        path: "/dashboard/meeting",
+        element: <MeetingForm />,
       },
       {
         path: "/dashboard/details/:id",

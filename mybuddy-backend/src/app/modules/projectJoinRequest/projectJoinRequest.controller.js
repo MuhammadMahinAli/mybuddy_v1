@@ -1,7 +1,7 @@
 // src/app/modules/projectJoinRequest/projectJoinRequest.controller.js
 import httpStatus from 'http-status';
 import { catchAsync } from '../../../utils/catchAsync.js';
-import { createProjectJoinRequestService, deleteProjectByRequestedByService, getAcceptedProjectByRequestedByService, getAcceptedProjectByRequestedToService, getAcceptedProjectTeamMemberService, getAllProjectJoinRequestsService,getAllSentProjectByRequestedByService,getProjectByRequestedByService, getProjectByRequestedToService, updateProjectJoinRequestStatusService } from './projectJoinRequest.service.js';
+import { createProjectJoinRequestService, deleteProjectByRequestedByService, getAcceptedProjectByRequestedByService, getAcceptedProjectByRequestedToService, getAcceptedProjectTeamMemberOfAProjectService, getAcceptedProjectTeamMemberService, getAllProjectJoinRequestsService,getAllSentProjectByRequestedByService,getProjectByRequestedByService, getProjectByRequestedToService, updateProjectJoinRequestStatusService } from './projectJoinRequest.service.js';
 import { sendResponse } from '../../../utils/sendResponse.js';
 import { ApiError } from '../../../handleError/apiError.js';
 
@@ -90,6 +90,19 @@ export const getAcceptedProjectTeamMemberController = catchAsync(async (req, res
     data: projectJoinRequests,
   });
 });
+//  get accepted project team member of a project
+export const getAcceptedProjectTeamMemberOfAProjectController = catchAsync(async (req, res) => {
+  const { projectId, id } = req.params; // keep consistent naming as 'projectId'
+  const projectJoinRequests = await getAcceptedProjectTeamMemberOfAProjectService(projectId, id);
+  
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Project team member of a project is retrieved successfully!",
+    data: projectJoinRequests,
+  });
+});
+
 //  get accepted project join requested by
 export const getAcceptedProjectRequestedBy = catchAsync(async (req, res) => {
   const { id } = req.params;

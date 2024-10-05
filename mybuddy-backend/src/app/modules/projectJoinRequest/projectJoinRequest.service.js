@@ -4,77 +4,6 @@ import { ApiError } from "../../../handleError/apiError.js";
 import httpStatus from "http-status";
 
 
-// export const createProjectJoinRequestService = async(projectData) => {
-//    try {
-//       // Check if a join request already exists for the given user and project
-//       const existingRequest = await ProjectJoinRequest.findOne({
-//          projectId: projectData.projectId,
-//          requestedBy: projectData.requestedBy
-//       });
-
-//       if (existingRequest) {
-//          throw new ApiError(httpStatus.CONFLICT, "You have already requested to join this project.");
-//       }
-
-//       const result = await ProjectJoinRequest.create(projectData);
-      
-//       if (!result) {
-//         throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create post");
-//       }
-//       return result;
-//    } catch (error) {
-//       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
-//    }
-// };
-
-// export const createProjectJoinRequestService = async (projectData) => {
-//    try {
-//      // Check if a join request already exists for the given user and project
-//      const existingRequest = await ProjectJoinRequest.findOne({
-//        projectId: projectData.projectId,
-//        requestedBy: projectData.requestedBy,
-//      });
- 
-//      // If a request already exists, check for duplicate subtasks
-//      if (existingRequest) {
-//        // Flatten the existing subtasks into a single array
-//        const existingSubTasks = existingRequest.tasks.flatMap(task =>
-//          task.subTask.map(sub => sub.todo)
-//        );
- 
-//        // Flatten the new subtasks into a single array
-//        const newSubTasks = projectData.tasks.flatMap(task =>
-//          task.subTask.map(sub => sub.todo)
-//        );
- 
-//        // Check if any new subtask already exists in the previous request
-//        const duplicateSubTask = newSubTasks.find(subTask =>
-//          existingSubTasks.includes(subTask)
-//        );
- 
-//        if (duplicateSubTask) {
-//          throw new ApiError(
-//            httpStatus.CONFLICT,
-//            `Subtask "${duplicateSubTask}" has already been requested for this project.`
-//          );
-//        }
-//      }
- 
-     // If no existing request or no duplicate subtask, create a new request
-//      const result = await ProjectJoinRequest.create(projectData);
- 
-//      if (!result) {
-//        throw new ApiError(
-//          httpStatus.INTERNAL_SERVER_ERROR,
-//          "Failed to create join request"
-//        );
-//      }
-//      return result;
-//    } catch (error) {
-//      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
-//    }
-//  };
-
 
 export const createProjectJoinRequestService = async (projectData) => {
    try {
@@ -234,6 +163,22 @@ export const getAcceptedProjectTeamMemberService = async (id) => {
    const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({projectId : id}).find({ status: "Accepted" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
    return acceptedProjectByRequestedTo;
  };
+// ***************** get accepted project team member of a project
+export const getAcceptedProjectTeamMemberOfAProjectService = async (projectID, id) => {
+  const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({
+     projectId: projectID,
+     requestedTo: id,
+     status: "Accepted"
+  })
+  .populate('projectId')
+  .populate('requestedBy')
+  .populate('requestedTo')
+  .sort({ createdAt: -1 });
+  
+  return acceptedProjectByRequestedTo;
+};
+
+
 // ***************** get accepted send request by requestedBy
 export const getAcceptedProjectByRequestedByService = async (id) => {
    const acceptedProjectByRequestedTo = await ProjectJoinRequest.find({requestedBy: id}).find({ status: "Accepted" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });

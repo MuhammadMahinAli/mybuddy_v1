@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import app from "./app.js";
 import config from "./config/index.js";
-// import {server, socketConnection} from "./socket.js";
-
-// const server = createServer(app);
  const port =  process.env.PORT || 8000 ;
+
+
+
 
 
 
