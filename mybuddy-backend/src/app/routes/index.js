@@ -13,6 +13,8 @@ import { ExperienceRoutes } from "../modules/experience/experience.routes.js";
 import { CommitRoutes } from "../modules/commit/commit.routes.js";
 import { FundRequestRoutes } from "../modules/fundProposal/fundProposal.routes.js";
 import { MeetingRoutes } from "../modules/meeting/meeting.routes.js";
+import { PostReactRoutes } from "../modules/PostReact/PostReact.routes.js";
+import { PaypalPayoInfoRoutes } from "../modules/paypalInfo/paypalPayoInfo.routes.js";
 
 
 const router = express.Router();
@@ -31,6 +33,8 @@ const moduleRoutes = [
     { path:"/commit", route:CommitRoutes},
     { path:"/fund", route:FundRequestRoutes},
     { path:"/meeting", route:MeetingRoutes},
+    { path:"/PostReact", route:PostReactRoutes},
+    { path:"/paypalPayo", route:PaypalPayoInfoRoutes},
 
 ];
 

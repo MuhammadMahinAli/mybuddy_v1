@@ -11,6 +11,8 @@ import licenseReducer from "../features/license/licenseSlice";
 import experienceReducer from "../features/experience/experienceSlice"
 import commitReducer from "../features/commit/commitSlice";
 import fundReducer from "../features/fund/fundSlice";
+import meetingReducer from "../features/meeting/meetingSlice";
+import postReactReducer from "../features/postReact/postReactSlice";
 
 
 export const store = configureStore({
@@ -27,6 +29,8 @@ export const store = configureStore({
     experience:experienceReducer,
     commit:commitReducer,
     fund:fundReducer,
+    meeting:meetingReducer,
+    postReact:postReactReducer
 
    
   },

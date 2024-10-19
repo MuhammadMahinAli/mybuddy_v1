@@ -33,6 +33,10 @@ import Meeting from "../Pages/UpcomingPages/Meeting";
 import PaymentSuccess from "../Pages/FindProject/PaymentSuccess.jsX";
 import PaymentFailed from "../Pages/FindProject/PaymentFailed";
 import MeetingForm from "../Pages/GeneralDashboard/GeneralMeetingSchedule/MeetingForm";
+import Attendence from "../Pages/GeneralDashboard/GeneralMeetingSchedule/Attendence";
+import Pre from "../Pages/GeneralDashboard/GeneralMeetingSchedule/Pre";
+import PrivateRoute from "../Context/PrivateRoute";
+import SettingForm from "../Pages/GeneralDashboard/Setting/SettingForm";
 
 
 const router = createBrowserRouter([
@@ -129,6 +133,10 @@ const router = createBrowserRouter([
         element: <GeneralFundProposal />,
       },
       {
+        path: "/dashboard/setting",
+        element: <SettingForm />,
+      },
+      {
         path: "/dashboard/meeting-s",
         element: <CalenderPage />,
       },
@@ -167,6 +175,17 @@ const router = createBrowserRouter([
   {
     path: "/verify-your-email",
     element: <EmailVarification />,
+  },
+  {
+    path: "/pre?meetingId:id",
+    element: <PrivateRoute>
+ <Pre />
+
+    </PrivateRoute>,
+  },
+  {
+    path: "/attendance",
+    element: <Attendence />,
   },
   {
     path: "/reset-password",

@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import RightSidebar from "../Pages/Homepage/RightSidebar";
 import BottomNavbar from "../common/BottomNavbar/BottomNavbar";
+import Loading from "../Pages/Loading/Loading";
 
 const HomepageLayout = () => {
 
@@ -45,19 +46,23 @@ const HomepageLayout = () => {
     }, 1000);
   }, []);
 
- 
-  // Delay check for user authentication
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false); 
       if (user) {
         navigate("/home");
-      }
-      else {
+      } else {
         navigate("/");
       }
-   
-    }, 3000); // 3-second delay
+    }, 5000); // 5-second delay
+
+    // Clean up the timer
+    return () => clearTimeout(timer);
   }, [user, navigate]);
+
+  if (isLoading) {
+    return <Loading />; 
+  }
 
   return (
     <>

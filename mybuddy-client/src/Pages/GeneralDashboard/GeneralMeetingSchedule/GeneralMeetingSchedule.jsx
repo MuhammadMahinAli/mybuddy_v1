@@ -1,71 +1,56 @@
-
+import { useState } from "react";
+import CreatorTab from "./CreatorTab";
+import MeetingMemberTab from "./MeetingMemberTab";
+import filter from "../../../assets/filter.png";
 
 const GeneralMeetingSchedule = () => {
+  const [showFilterOption, setShowFilterOption] = useState(false);
+  const [isOpenCreatorTab, setIsOpenCreatorTab] = useState(true);
+  const [isOpenMeetingMember, setIsOpenMeetingMember] = useState(false);
+
+  const toggleCreatorTab = () => {
+    setIsOpenCreatorTab(true);
+    setIsOpenMeetingMember(false);
+    setShowFilterOption(false);
+  };
+  const toggleMeetingMember = () => {
+    setIsOpenCreatorTab(false);
+    setIsOpenMeetingMember(true);
+    setShowFilterOption(false);
+  };
 
   return (
-    <div
-    data-aos="fade-left"
-    data-aos-duration="1200"
-    className="flex flex-col-reverse md:flex-row justify-between   lg:space-x-6 items-start md:items-center lg:py-10 gray500 mr-4"
-  >
-    <h1 className="text-3xl font-semibold">Coming Soon ...</h1>
-  </div>
+    <div className="relative">
+      <div className="flex space-x-2 lg:space-x-3 items-center w-6/12 md:w-5/12 xl:w-5/12 2xl:w-5/12 3xl:w-5/12 md:px-4">
+        <button
+          onClick={() => setShowFilterOption(!showFilterOption)}
+          className={`flex justify-center  items-center space-x-1 w-16 my-3 md:px-3 py-1 lg:px-4 md:py-2 text-[14px] md:text-[16px]  font-semibold shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] h-8 rounded-[10px]`}
+        >
+          <img src={filter} />
+          <span className="hidden">Filter</span>
+        </button>
+        {/* filter option */}
+        {showFilterOption && (
+          <ul className="w-40 absolute top-12 left-2 float-right  bg-white border rounded-lg border-gray-300 shadow-lg mt-2 z-10">
+            <li
+              onClick={toggleCreatorTab}
+              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+            >
+              My Meeitng
+            </li>
+            <li
+              onClick={toggleMeetingMember}
+              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+            >
+              Member Meeting
+            </li>
+          </ul>
+        )}
+      </div>
+      {isOpenCreatorTab && <CreatorTab />}
+      {isOpenMeetingMember && <MeetingMemberTab  />}
+    </div>
   );
 };
 
 export default GeneralMeetingSchedule;
-// import { useState } from "react";
-// import ScheduleTab from "./ScheduleTab";
-// import TimelineTab from "./TimelineTab";
-
-// const GeneralMeetingSchedule = () => {
-//   const [openTimelineTab, setOpenTimelineTab] = useState(true);
-//   const [openScheduleTab, setOpenScheduleTab] = useState(false);
-//   const toggleTimelineTab = () => {
-//     setTimeout(() => {
-//       setOpenTimelineTab(true);
-//       setOpenScheduleTab(false); 
-//     }, 500);
-//   };
-//   const toggleScheduleTab = () => {
-//     setTimeout(() => {
-//       setOpenScheduleTab(true);
-//       setOpenTimelineTab(false);
-//     }, 500);
-//   };
-//   return (
-//     <div className="text-gray-700 min-h-screen">
-//       <h1 className="gray600 text-[20px] lg:text-[28px] font-bold uppercase">
-//         {openScheduleTab ? "Meeting Schedule" : "Timeline"}
-//       </h1>
-//       <div className="py-5">
-//         <ul className="flex justify-center items-center space-x-3 p-2 md:p-3 rounded-xl bg-[#9ec9e2] shadow-[0px_4px_4px_rgba(255,_255,_255,_0.25),_-2px_-2px_20px_5px_rgba(255,_255,_255,_0.5),_-10px_-10px_55px_26px_rgba(255,_255,_255,_0.2),_17px_17px_38px_rgba(0,_0,_0,_0.31)] cursor-pointer duration-200  backdrop-filter:blur(20px); w-52">
-//           <li
-//             className={`transition-colors  ease-in-out cursor-pointer hover:bg-[#e7edf2] p-2 rounded-xl font-semibold ${
-//               openTimelineTab === true ? "bg-[#e7edf2]" : " bg-transparent"
-//             }`}
-//             onClick={toggleTimelineTab}
-//           >
-//             <h1 className="text-[17px] md:text-lg font-semibold inline-block capitalize">
-//               timeline
-//             </h1>
-//           </li>
-//           <li
-//             className={`transition-colors ease-in-out cursor-pointer hover:bg-[#e7edf2] p-2 rounded-xl font-semibold ${
-//               openScheduleTab === true ? "bg-[#e7edf2]" : " bg-transparent"
-//             }`}
-//             onClick={toggleScheduleTab}
-//           >
-//             <h1 className="text-[17px] md:text-lg font-semibold inline-block capitalize">
-//               schedule
-//             </h1>
-//           </li>
-//         </ul>
-//       </div> 
-//       {openTimelineTab && <TimelineTab />}
-//       {openScheduleTab && <ScheduleTab />}
-//     </div>
-//   );
-// };
-
-// export default GeneralMeetingSchedule;

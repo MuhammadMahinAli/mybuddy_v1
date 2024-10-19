@@ -16,7 +16,7 @@ const MeetingSchema = new Schema(
       {
         memberId: { 
           type: Schema.Types.ObjectId, 
-          ref: "ProjectJoinRequest", 
+          ref: "Member", 
           required: true,
         },
         attendance: [
@@ -52,7 +52,7 @@ const MeetingSchema = new Schema(
       },
     },
     duration: {
-      type: String,
+      type: Number,
       required: true,
     },
     meetingTime: {

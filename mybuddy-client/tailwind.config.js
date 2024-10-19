@@ -26,7 +26,7 @@ export default {
         '6xl': '1920px',
       },
     },
-    plugins: [require('tailwind-scrollbar-hide')],
+    plugins: [require('tailwind-scrollbar-hide'),require('tailwindcss-animated') ],
   },
 }
   // /** @type {import('tailwindcss').Config} */
