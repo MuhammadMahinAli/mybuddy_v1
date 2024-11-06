@@ -14,7 +14,11 @@ import { CommitRoutes } from "../modules/commit/commit.routes.js";
 import { FundRequestRoutes } from "../modules/fundProposal/fundProposal.routes.js";
 import { MeetingRoutes } from "../modules/meeting/meeting.routes.js";
 import { PostReactRoutes } from "../modules/PostReact/PostReact.routes.js";
-import { PaypalPayoInfoRoutes } from "../modules/paypalInfo/paypalPayoInfo.routes.js";
+import { PaypalInfoRoutes } from "../modules/paypalInfo/paypalInfo.routes.js";
+import { PayoneerInfoRoutes } from "../modules/payoneerInfo/payoneerInfo.routes.js";
+import { PaypalFundInfoRoutes } from "../modules/paypalfund/paypalfund.routes.js";
+import { PayoneerFundInfoRoutes } from "../modules/payoneerfund/payoneerfund.routes.js";
+import { BankTransferFundInfoRoutes  } from "../modules/banktransferfund/bankTransferfund.routes.js";
 
 
 const router = express.Router();
@@ -34,7 +38,11 @@ const moduleRoutes = [
     { path:"/fund", route:FundRequestRoutes},
     { path:"/meeting", route:MeetingRoutes},
     { path:"/PostReact", route:PostReactRoutes},
-    { path:"/paypalPayo", route:PaypalPayoInfoRoutes},
+    { path:"/paypal", route:PaypalInfoRoutes},
+    { path:"/payoneer", route:PayoneerInfoRoutes},
+    { path:"/paypalFund", route:PaypalFundInfoRoutes},
+    { path:"/payoneerFund", route:PayoneerFundInfoRoutes},
+    { path:"/bankTransferFund", route:BankTransferFundInfoRoutes},
 
 ];
 

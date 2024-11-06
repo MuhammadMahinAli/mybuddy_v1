@@ -647,7 +647,7 @@ body.dark .noti {
 
 .payment-input:invalid {
   animation: justshake 0.3s forwards;
-  color: red;
+ 
 }
 
 @keyframes justshake {

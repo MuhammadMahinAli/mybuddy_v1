@@ -14,6 +14,8 @@ import ImageSliders from "../ImageSliders/ImageSliders";
 import { useState } from "react";
 import OpenPdf from "../../../FindProject/OpenPdf";
 import OpenDocx from "../../../FindProject/OpenDocx";
+import { useUpdateProjectMemberRequestMutation } from "../../../../features/project/projectApi";
+import Swal from "sweetalert2";
 
 const OverviewTab = ({
   ProjectInfo,
@@ -41,11 +43,13 @@ const OverviewTab = ({
     images,
     pdfFiles,
     documents,
+    uniqueId,
     _id,
+    isMemberRequestAccept
   } = ProjectInfo;
   const [showPdfList, setShowPdfList] = useState(false);
   const [showDocuments, setShowDocuments] = useState(false);
-
+const [ updateProjectMemberRequest ] = useUpdateProjectMemberRequestMutation()
   const togglePdf = () => {
     setShowPdfList(!showPdfList);
     setShowDocuments(false);
@@ -70,6 +74,70 @@ const OverviewTab = ({
   const projectLastImage = images[2]
     ? images[2]
     : "https://img.freepik.com/free-vector/hand-drawn-no-photo-sign_23-2149278212.jpg";
+
+  const [isChecked, setIsChecked] = useState(isMemberRequestAccept);
+
+  const projectId = uniqueId? uniqueId: "project Id"
+
+  // const handleToggle = (project) => {
+  //   const newStatus = !isChecked;
+
+  //   // Now update the state
+  //   setIsChecked(newStatus);
+  
+  //   // Log the correct new status
+  //   console.log("New Status:", newStatus);
+  
+  //   // Use the new status in your logic/API call
+  //   console.log({
+  //     id: project?._id,
+  //     isChecked: newStatus
+      
+  //   });
+  //   updateProjectMemberRequest({
+  //     id:project?._id,
+  //     data: { isChecked: newStatus }, 
+  //   })
+  // };
+
+  const handleToggle = (project) => {
+    const newStatus = !isChecked;
+  
+    // Define the confirmation message based on the new status
+    const confirmationText = newStatus
+      ? "Are you sure you want to **allow users to send project join requests** for this project? This will enable others to request to join."
+      : "Are you sure you want to **stop accepting project join requests** for this project? Users will no longer be able to send requests to join.";
+  
+    // Show SweetAlert with the confirmation message
+    Swal.fire({
+      title: "Confirm Action",
+      text: confirmationText,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, confirm!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If confirmed, proceed with updating the status
+        setIsChecked(newStatus);
+  
+        // Call your API logic here
+        updateProjectMemberRequest({
+          id: project?._id,
+          data: { isChecked: newStatus },
+        });
+  
+        // Optionally, show a success message
+        Swal.fire(
+          "Updated!",
+          `The project is now ${newStatus ? "accepting" : "not accepting"} join requests.`,
+          "success"
+        );
+      }
+    });
+  };
+console.log(isChecked);
   return (
     <div>
       <div className="mt-7 space-y-2 pb-6 rounded-[20px] md:rounded-[15px] relative bg-[#e4ecf7]  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">
@@ -125,13 +193,21 @@ const OverviewTab = ({
                 </p>
               </li>
             </ul>
-            <ul className="flex justify-between items-center w-full space-y-1 md:space-y-0">
+            <ul className="flex space-x-36 items-center w-full space-y-1 md:space-y-0">
               <li className="flex flex-row md:flex-col space-x-1 md:space-x-0">
                 <p className="graish font-bold md:text-[14px] lg:text-lg">
                   WhatsApp:
                 </p>
                 <p className="graish md:text-[13px] lg:text-[16px] md:pt-[3px]">
                   {whatsApp}
+                </p>
+              </li>
+              <li className="flex flex-row md:flex-col space-x-1 md:space-x-0">
+                <p className="graish font-bold md:text-[14px] lg:text-lg">
+                  Project Id:
+                </p>
+                <p className="graish md:text-[13px] lg:text-[16px] md:pt-[3px]">
+                  {projectId}
                 </p>
               </li>
             </ul>
@@ -150,7 +226,7 @@ const OverviewTab = ({
               <a href={videoUrl} target="blank">
                 <img
                   className="w-[44px] md:w-12 p-2 md:p-2 rounded-lg bg-[#e9f2f9]"
-                  src={videoUrl.includes("drive_link") ?  gdrive: youtube }
+                  src={videoUrl.includes("drive_link") ? gdrive : youtube}
                 />
               </a>
               {/* <img
@@ -185,12 +261,15 @@ const OverviewTab = ({
                 alt=""
               />
               {showDocuments && (
-              <div className="absolute -left-4 ssm:left-2 md:left-1 lg:left-2 xl:top-12 xl:left-2 z-40 md:z-0">
-                <OpenDocx documents={documents} showDocuments={showDocuments} setShowDocuments={setShowDocuments} />
-              </div>
-            )}
+                <div className="absolute -left-4 ssm:left-2 md:left-1 lg:left-2 xl:top-12 xl:left-2 z-40 md:z-0">
+                  <OpenDocx
+                    documents={documents}
+                    showDocuments={showDocuments}
+                    setShowDocuments={setShowDocuments}
+                  />
+                </div>
+              )}
             </li>
-            
           </ul>
 
           <ImageSliders images={images} />
@@ -221,7 +300,27 @@ const OverviewTab = ({
         {/* edit delete */}
         {ProjectInfo?.user?._id === userId && (
           <div className="absolute right-5 top-3">
-            <div className="md:flex items-center space-x-2 hidden">
+            <div className="md:flex items-center space-x-3 hidden">
+              <label
+                htmlFor="AcceptConditions"
+                className={`relative inline-block h-6 w-10 cursor-pointer rounded-full transition ${
+                  isChecked ? "bg-blue-500" : "bg-gray-300"
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  id="AcceptConditions"
+                  className="sr-only"
+                  checked={isChecked}
+                  onChange={()=>handleToggle(ProjectInfo)}
+                />
+
+                <span
+                  className={`absolute inset-y-0 m-1 size-4 rounded-full bg-white transition-all ${
+                    isChecked ? "start-4" : "start-0"
+                  }`}
+                ></span>
+              </label>
               <FaRegEdit
                 onClick={openProjectUpdateModal}
                 className="text-2xl text-blue-500 cursor-pointer"

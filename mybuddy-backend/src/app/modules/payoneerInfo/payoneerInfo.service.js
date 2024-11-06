@@ -1,26 +1,26 @@
 import httpStatus from "http-status";
 import { ApiError } from "../../../handleError/apiError.js";
-import { PaypalPayoInfo } from "./paypalPayoInfo.model.js";
+import { PayoneerInfo } from "./payoneerInfo.model.js";
 
 
 // // ---------- create payment and store stripe
-export const savePaypalInfoService = async (formData) => {
-    try {
-      const result = await PaypalPayoInfo.create(formData);
-      if (!result) {
-        throw new ApiError(
-          httpStatus.INTERNAL_SERVER_ERROR,
-          "Failed to save paypalInfo."
-        );
-      }
-      return result;
-    } catch (error) {
-      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
-    }
-  };
+// export const savePaypalInfoService = async (formData) => {
+//     try {
+//       const result = await PayoneerInfo.create(formData);
+//       if (!result) {
+//         throw new ApiError(
+//           httpStatus.INTERNAL_SERVER_ERROR,
+//           "Failed to save paypalInfo."
+//         );
+//       }
+//       return result;
+//     } catch (error) {
+//       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
+//     }
+//   };
 export const savePayoneerInfoService = async (formData) => {
     try {
-      const result = await PaypalPayoInfo.create(formData);
+      const result = await PayoneerInfo.create(formData);
       if (!result) {
         throw new ApiError(
           httpStatus.INTERNAL_SERVER_ERROR,
@@ -32,6 +32,50 @@ export const savePayoneerInfoService = async (formData) => {
       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
     }
   };
+
+  //------- get paypal link by user
+
+  export const getPayoneerLinkService = async(id) => {
+    const getLink = await PayoneerInfo.findOne({member:id})
+    .populate("member")
+    .sort({createdAt:-1});
+    return getLink;
+  }
+
+//------- update paypal link
+// export const updatePaypalLinkService = async (id, newPaypalLink) => {
+//   try {
+//     const updatedInfo = await PayoneerInfo.findByIdAndUpdate(
+//       id,
+//       { paypalLink: newPaypalLink },
+//       { new: true }
+//     );
+//     return updatedInfo;
+//   } catch (error) {
+//     throw new Error('Error updating PayPal link: ' + error.message);
+//   }
+// }
+//------- update Payoneer link
+export const updatePayoneerLinkService = async (id, newPayoneerLink) => {
+  try {
+    const updatedInfo = await PayoneerInfo.findByIdAndUpdate(
+      id,
+      { payoneerLink: newPayoneerLink },
+      { new: true }
+    );
+    return updatedInfo;
+  } catch (error) {
+    throw new Error('Error updating Payoneer link: ' + error.message);
+  }
+}
+
+// ------ delete paypal
+
+export const deletePayoneerLinkService = async(id)=>{
+  const result = await PayoneerInfo.findByIdAndDelete({_id:id});
+  return result;
+}
+
 
 // export const confirmPaymentService = async (sessionId) => {
 //   try {

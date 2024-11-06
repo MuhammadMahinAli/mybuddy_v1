@@ -1,10 +1,7 @@
 import { Schema, model } from "mongoose";
 
-const PaypalPayoInfoSchema = new Schema(
+const PayoneerInfoSchema = new Schema(
   {
-   paypalLink: {
-      type: String,
-    },
    payoneerLink: {
       type: String,
     },
@@ -19,5 +16,5 @@ const PaypalPayoInfoSchema = new Schema(
   }
 );
 
-//create PaypalPayoInfo model
-export const PaypalPayoInfo = model("PaypalPayoInfo", PaypalPayoInfoSchema);
+//create PayoneerInfo model
+export const PayoneerInfo = model("PayoneerInfo", PayoneerInfoSchema);

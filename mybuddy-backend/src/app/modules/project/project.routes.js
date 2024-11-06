@@ -1,5 +1,5 @@
 import express from "express";
-import { createNewProject, getAllProjects, getAllProjectByUserController, getSingleProjectController, addTaskToProjectController, deleteProjectController, updateProjectController, deleteTaskFromProjectController, updateTaskStatusController, updateProjectTasksController } from "./project.controller.js";
+import { createNewProject, getAllProjects, getAllProjectByUserController, getSingleProjectController, addTaskToProjectController, deleteProjectController, updateProjectController, deleteTaskFromProjectController, updateTaskStatusController, updateProjectTasksController, updateProjetRequestStatusController, getAllProjectController } from "./project.controller.js";
 import { createProjectZodSchema } from "./project.validation.js";
 import { validateRequest } from "../../middlewars/validateRequest.js";
 
@@ -15,8 +15,8 @@ router.put('/updateProject/:id', updateProjectController);
 router.delete("/deleteProject/:id", deleteProjectController);
 router.delete("/delete-task/:taskId", deleteTaskFromProjectController);
 router.put("/:projectId/tasks/:taskId/status", updateTaskStatusController);
-
-
+router.put('/:projectId/member-request-status', updateProjetRequestStatusController);
 router.put("/:projectId/update-tasks", updateProjectTasksController);
+router.get("/getAllProject", getAllProjectController);
 
 export const ProjectRoutes = router;

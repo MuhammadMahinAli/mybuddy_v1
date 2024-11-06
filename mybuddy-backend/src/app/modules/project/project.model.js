@@ -12,6 +12,12 @@ const ProjectSchema = new Schema(
       type: String,
       required: true,
     },
+
+    uniqueId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     whatsApp: {
       type: String,
       required: true,
@@ -36,7 +42,11 @@ const ProjectSchema = new Schema(
       type: String,
       required: true,
     },
-
+    isMemberRequestAccept: {
+      type: Boolean,
+      default: true,
+      required:true
+    },
     documents: [
       {
         type: String,

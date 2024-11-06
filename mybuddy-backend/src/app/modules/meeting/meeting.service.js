@@ -242,7 +242,7 @@ export const sendAndScheduleAttendanceEmailService = async (meeting) => {
           //  Update the attendance link of the meeting and schedule link nullification
           const updatedMeeting = await Meeting.findByIdAndUpdate(
             meetingId,
-            { $set: { attendenceLink: otp } },
+            { $set: { attendenceLink: otp }},
             { new: true }
           );
 

@@ -5,8 +5,15 @@ import { Task } from "../task/task.model.js";
 
 // ************** create project
 
+// utils.js
+export const generateUniqueId = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString(); // Generates a 6-digit number
+};
+
 export const createProject = async (postData) => {
   try {
+    postData.uniqueId = generateUniqueId();
+    postData.isMemberRequestAccept = true;
     const result = await Project.create(postData);
     console.log(result);
 
@@ -49,11 +56,11 @@ export const createProject = async (postData) => {
 //   }
 // };
 // ************** get projects  01815000012
-export const getProjectsService = async (project) => {
-  const projects = await Project.find({ project })
+export const getProjectsService = async () => {
+  const projects = await Project.find({ })
     .populate("user")
     .populate("tasks")
-    .sort({ createdAt: -1 });
+    // .sort({ createdAt: -1 });
   return projects;
 };
 
@@ -101,6 +108,7 @@ export const deleteProjectService = async (id) => {
   const result = await Project.findByIdAndDelete({ _id: id });
   return result;
 };
+
 //------------- delete task from project
 
 export const deleteTaskFromProjectService = async (taskId) => {
@@ -134,17 +142,7 @@ export const updateProjectService = async (id, updateData) => {
   return updatedProject;
 };
 
-//------------------ post task in project
-
-// export const addTaskToProjectService = async (projectId, taskData) => {
-//   const project = await Project.findById(projectId);
-//   if (!project) {
-//     throw new ApiError(httpStatus.NOT_FOUND, "Project not found");
-//   }
-//   project.tasks.push(taskData);
-//   await project.save();
-//   return project;
-// };
+//------------------ post task in projec
 
 export const addTaskToProjectService = async (id, data) => {
   try {
@@ -179,50 +177,8 @@ export const updateTaskStatusService = async (projectId, taskId, status) => {
   return task;
 };
 
-
-
 //--------------- uodate project status & sub task status
 
-
-// export const updateProjectTasks = async (projectId, completedTask) => {
-//   try {
-//     const project = await Project.findById(projectId);
-
-//     if (!project) {
-//       throw new Error("Project not found");
-//     }
-//     if (!Array.isArray(completedTask)) {
-//       throw new Error("completedTasks is not an array");
-//     }
-//     if (!Array.isArray(project.tasks)) {
-//       throw new Error("Tasks array is missing or not an array");
-//     }
-
-//     const completedTaskTitles = completedTask?.map((task) => task.taskTitle);
-
-//     project.tasks = project.tasks.map((task) => {
-//       if (completedTaskTitles.includes(task.title)) {
-//         task.status = "completed";
-//       }
-
-//       if (Array.isArray(task.subTask)) {
-//         task.subTask = task.subTask.map((subtask) => {
-//           if (completedTaskTitles.includes(subtask.todo)) {
-//             subtask.status = "completed";
-//           }
-//           return subtask;
-//         });
-//       }
-
-//       return task;
-//     });
-
-//     await project.save();
-//     console.log("Project tasks updated successfully");
-//   } catch (error) {
-//     console.error("Error updating project tasks:", error);
-//   }
-// };
 export const updateProjectTasks = async (projectId, completedTask) => {
   try {
     const project = await Project.findById(projectId);
@@ -230,8 +186,8 @@ export const updateProjectTasks = async (projectId, completedTask) => {
     if (!project) {
       throw new Error("Project not found");
     }
-    
-    if (typeof completedTask !== 'object') {
+
+    if (typeof completedTask !== "object") {
       throw new Error("completedTask is not an object");
     }
 
@@ -259,5 +215,47 @@ export const updateProjectTasks = async (projectId, completedTask) => {
   } catch (error) {
     console.error("Error updating project tasks:", error);
   }
+};
+
+// Update project 'isMemberRequestAccept' status
+export const updateProjetRequestStatusService = async (projectId, isChecked) => {
+  try {
+    const project = await Project.findById(projectId);
+
+    if (!project) {
+      throw new Error('Project not found');
+    }
+
+    project.isMemberRequestAccept = isChecked;
+    await project.save();
+
+    return project;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+// Modified service function to get members with pagination and uniqueId filter
+export const getAllProjectService = async (page, limit, uniqueId) => {
+  const skip = (page - 1) * limit;
+
+  // If uniqueId is provided, search for that specific project/member
+  if (uniqueId) {
+    const project = await Project.findOne({ uniqueId });
+    if (!project) {
+      return { message: "No project matched with the provided uniqueId." };
+    }
+    return { projects: [project], totalPages: 1, currentPage: page };
+  } 
+
+  // If no uniqueId, fetch paginated results
+  const projects = await Project.find().skip(skip).limit(limit);
+  const totalMembers = await Project.countDocuments();
+
+  return {
+    projects,
+    totalPages: Math.ceil(totalMembers / limit),
+    currentPage: page,
+  };
 };
 

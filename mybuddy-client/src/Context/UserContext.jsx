@@ -29,6 +29,8 @@ import { useCreateNewRequestMutation, useDeleteFriendRequestMutation, useGetAcce
 import { useCreateCommitMutation, useGetAllCommitQuery } from "../features/commit/commitApi";
 import { useGetFundByRequestedByQuery, useGetFundByRequestedToQuery } from "../features/fund/fundApi";
 import { useGetAllMeetingByCreatorQuery, useGetMeetingByMeetingMemberQuery } from "../features/meeting/meetingApi";
+import { useGetUsersPaypalLinkQuery } from "../features/paypal/paypalApi";
+import { useGetUsersPayoneerLinkQuery } from "../features/payoneer/payoneerApi";
 
 export const AuthContext = createContext();
 
@@ -60,9 +62,6 @@ const UserContext = ({ children }) => {
     isLoading: isFetchingAllUsers,
     error: allUserError,
   } = useGetAllUsersQuery(userId, { skip: !userId });
-
-
-
 
   //-------------- get each user's post
   const {
@@ -169,6 +168,15 @@ const UserContext = ({ children }) => {
   //------------- get meeting by meeting member
   const { data: getAllMeetingByCreator, isLoading: isFetchingGetAllMeetingByCreator, error: getAllMeetingByCreatorError } =
   useGetAllMeetingByCreatorQuery(userId, { skip: !userId });
+
+
+  //------------- get paypal  info of user
+  const { data: getUsersPaypalLink, isLoading: isFetchingGetUsersPaypalLink, error: getUsersPaypalLinkError } =
+  useGetUsersPaypalLinkQuery(userId, { skip: !userId });
+
+  //------------- get  payoneer info of user
+  const { data: getUsersPayoneerLink, isLoading: isFetchingGetUsersPayoneerLink, error: getUsersPayoneerLinkError } =
+  useGetUsersPayoneerLinkQuery(userId, { skip: !userId });
 
 
 
@@ -355,7 +363,9 @@ const UserContext = ({ children }) => {
       isFetchingGetFundByRequestedBy ||
       isFetchingGetFundByRequestedTo ||
       isFetchingGetMeetingByMeetingMember ||
-      isFetchingGetAllMeetingByCreator
+      isFetchingGetAllMeetingByCreator ||
+      isFetchingGetUsersPaypalLink,
+      isFetchingGetUsersPayoneerLink
     ) {
       setLoading(true);
     } else {
@@ -400,7 +410,9 @@ const UserContext = ({ children }) => {
     isFetchingGetFundByRequestedBy,
     isFetchingGetFundByRequestedTo,
     isFetchingGetMeetingByMeetingMember,
-    isFetchingGetAllMeetingByCreator
+    isFetchingGetAllMeetingByCreator,
+    isFetchingGetUsersPaypalLink,
+    isFetchingGetUsersPayoneerLink
   ]);
 
   //************************************************************************************************************** */
@@ -447,7 +459,9 @@ const UserContext = ({ children }) => {
       getFundByRequestedByError ||
       getFundByRequestedToError ||
       getMeetingByMeetingMemberError ||
-      getAllMeetingByCreatorError
+      getAllMeetingByCreatorError ||
+      getUsersPaypalLinkError ||
+      getUsersPayoneerLinkError
     ) {
       console.error("Error fetching user data:", {
         userError,
@@ -488,7 +502,9 @@ const UserContext = ({ children }) => {
         getAllSentProjectJoinRequestError,
         getFundByRequestedByError ,
         getFundByRequestedToError,
-        getMeetingByMeetingMemberError
+        getMeetingByMeetingMemberError,
+        getUsersPaypalLinkError,
+        getUsersPayoneerLinkError
       });
     }
   }, [
@@ -527,7 +543,9 @@ const UserContext = ({ children }) => {
     getFundByRequestedByError,
     getFundByRequestedToError,
     getMeetingByMeetingMemberError,
-    getAllMeetingByCreatorError
+    getAllMeetingByCreatorError,
+    getUsersPaypalLinkError,
+    getUsersPayoneerLinkError
   ]);
 
   //************************************************************************************************************** */
@@ -583,7 +601,9 @@ const UserContext = ({ children }) => {
     getFundByRequestedBy,
     getFundByRequestedTo,
     getMeetingByMeetingMember,
-    getAllMeetingByCreator
+    getAllMeetingByCreator,
+    getUsersPaypalLink,
+    getUsersPayoneerLink
   };
 
   return (

@@ -2,10 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 import { apiFetch } from "../../../utils/apiFetch";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 const Attendence = () => {
   const [otp, setOtp] = useState(""); //
-  const { userId } = useContext(AuthContext);
+ // const { userId } = useContext(AuthContext);
   const queryParams = new URLSearchParams(location.search);
   const meeting = queryParams.get("meeting");
   const meetingId = queryParams.get("meetingId");
@@ -55,23 +56,24 @@ const Attendence = () => {
     };
     fetchData();
   }, [meetingId]);
-
- console.log(fund.attendenceLink); 
+  const { user } = useSelector((state) => state.auth);
+  const userId = user?._id;
+ console.log(userId); 
   const handleOtpChange = (event) => {
     setOtp(event.target.value); // Update the OTP state as the user types
   };
-console.log("ot",otp,fund?.attendenceLink );
+console.log("ot",fund?.attendenceLink );
   //http://localhost:5173/attendance?otp=384128&meetingId=66fe38de724207f81ec75cc3&date=2024-10-03
   const handleAttendClick = async () => {
     // Log meeting details for debugging
     console.log({
       meetingId,
-      meetingTime:date,
+      meetingTime:dateString,
       otp,
       memberId: userId,
     });
   
-    // Check if the provided OTP matches the attendance link
+    //Check if the provided OTP matches the attendance link
     if (fund?.attendenceLink === otp) {
       try {
         const response = await fetch(
@@ -83,7 +85,7 @@ console.log("ot",otp,fund?.attendenceLink );
             },
             body: JSON.stringify({
               meetingId,
-              meetingTime:date,
+              meetingTime:dateString,
               otp,
               memberId: userId,
             }),
@@ -110,13 +112,13 @@ console.log("ot",otp,fund?.attendenceLink );
         console.error("Error updating attendance:", error.message);
       }
     } else {
-      // Show an alert if the OTP is invalid
+  
       Swal.fire({
         icon: "error",
         title:"Invalid OTP. Please try again."
       });
       
-    }
+   }
   };
   
 
@@ -133,7 +135,7 @@ console.log("ot",otp,fund?.attendenceLink );
                   </h2>
                   <div className="space-y-3">
                     <input
-                      // value={meeting?.title}
+                      // value={meeting}
                       value={meeting}
                       className="bg-white h-10 w-full text-center rounded-lg capitalize"
                       readOnly

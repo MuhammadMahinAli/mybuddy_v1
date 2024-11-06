@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import { catchAsync } from "../../../utils/catchAsync.js";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { addTaskToProjectService, createProject,deleteProjectService,deleteTaskFromProjectService,getProjectByUserService, getProjectsService, getSingleProjectService, updateProjectService, updateProjectTasks, updateTaskStatusService } from "./project.service.js";
+import { addTaskToProjectService, createProject,deleteProjectService,deleteTaskFromProjectService,getAllProjectService,getProjectByUserService, getProjectsService, getSingleProjectService, updateProjectService, updateProjectTasks, updateProjetRequestStatusService, updateTaskStatusService } from "./project.service.js";
 
 
 // ************** create project
@@ -161,6 +161,54 @@ export const updateProjectTasksController = async (req, res, next) => {
 };
 
 
+//********** Update project status controller
+export const updateProjetRequestStatusController = async (req, res) => {
+  const { projectId } = req.params;
+  const { isChecked } = req.body;
+
+  console.log(projectId,isChecked);
+
+  try {
+    const updatedProject = await updateProjetRequestStatusService(projectId, isChecked);
+    return res.status(200).json({
+      success: true,
+      message: 'Project request status updated successfully',
+      project: updatedProject,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
+
+// // Controller function to handle pagination and uniqueId filter
+export const getAllProjectController = catchAsync(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 6;
+  const uniqueId = req.query.uniqueId || null;
+
+  const result = await getAllProjectService(page, limit, uniqueId);
+
+  if (result.message) {
+    return sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: result.message,
+      data: [],
+    });
+  }
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Members retrieved successfully!",
+    data: result,
+  });
+});
 
 
 

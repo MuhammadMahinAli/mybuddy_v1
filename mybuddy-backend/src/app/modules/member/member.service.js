@@ -281,3 +281,29 @@ export const resetPasswordService = async (id, token, newPassword) => {
   console.log('Password updated successfully');
   return { message: "Password has been reset successfully." };
 };
+
+// // Modified service function to get members with pagination and uniqueId filter
+export const getAllMemberByFilterService = async (page, limit, uniqueId) => {
+  const skip = (page - 1) * limit;
+
+  // If uniqueId is provided, search for that specific project/member
+  if (uniqueId) {
+    const user = await Member.findOne({ uniqueId });
+    if (!user) {
+      return { message: "No project matched with the provided uniqueId." };
+    }
+    return { users: [user], totalPages: 1, currentPage: page };
+  } 
+
+  // If no uniqueId, fetch paginated results
+  const users = await Member.find().skip(skip).limit(limit);
+  const totalUsers = await Member.countDocuments();
+
+  return {
+    users,
+    totalPages: Math.ceil(totalUsers / limit),
+    currentPage: page,
+  };
+};
+
+

@@ -10,7 +10,7 @@ import AddProject from "../Pages/GeneralDashboard/GeneralAddProject/AddProject";
 import GeneralAddProject from "../Pages/GeneralDashboard/GeneralAddProject/GeneralAddProject";
 import GeneralMeetingSchedule from "../Pages/GeneralDashboard/GeneralMeetingSchedule/GeneralMeetingSchedule";
 import GeneralFundProposal from "../Pages/GeneralDashboard/GeneralFundProposal/GeneralFundProposal";
-import CalenderPage from "../Pages/GeneralDashboard/GeneralMeetingSchedule/CalenderPage";
+//import CalenderPage from "../Pages/GeneralDashboard/GeneralMeetingSchedule/CalenderPage";
 import Sign from "../Pages/SignUp/Sign";
 import Login from "../Pages/Login/Login";
 import Try from "../Pages/Try/Try";
@@ -37,6 +37,9 @@ import Attendence from "../Pages/GeneralDashboard/GeneralMeetingSchedule/Attende
 import Pre from "../Pages/GeneralDashboard/GeneralMeetingSchedule/Pre";
 import PrivateRoute from "../Context/PrivateRoute";
 import SettingForm from "../Pages/GeneralDashboard/Setting/SettingForm";
+import AdminLayout from "../Layout/AdminLayout";
+import AdminDashboard from "../Pages/Admin/AdminDashboard/AdminDashboard";
+import AdminAllProject from "../Pages/Admin/AdminAllProject/AdminAllProject";
 
 
 const router = createBrowserRouter([
@@ -137,10 +140,6 @@ const router = createBrowserRouter([
         element: <SettingForm />,
       },
       {
-        path: "/dashboard/meeting-s",
-        element: <CalenderPage />,
-      },
-      {
         path: "/dashboard/meeting",
         element: <MeetingForm />,
       },
@@ -153,6 +152,35 @@ const router = createBrowserRouter([
         path: "/dashboard/test",
         element: <Try />,
       },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/admin/",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "/admin/all-project",
+        element: <AdminAllProject />,
+      },
+      // {
+      //   path: "/dashboard/recieve-request",
+      //   element: <GeneralRequestRecieve />,
+      // },
+      // {
+      //   path: "/dashboard/friend-request",
+      //   element: <GeneralFriendRequest />,
+      // },
+    
+      // {
+      //   path: "/dashboard/details/:id",
+      //   element: <GeneralProjectDetails />,
+      //   loader: ({ params }) => fetch(`http://localhost:3000/api/v1/project/getProjectById/${params.id}`)
+      // },
+     
     ],
   },
 

@@ -44,10 +44,10 @@ import Loading from "../Loading/Loading";
 import { AuthContext } from "../../Context/UserContext";
 import { loadStripe } from "@stripe/stripe-js";
 import FundSlider from "./FundSlider";
-
-const stripePromise = loadStripe(
-  "pk_test_51Q2kJiGGKSeS74MyQwATubkvrfrB2w6nSam4Th7JXf3KAVCJMiVLtax06wgH2oYPBGEMhXC8O0PYWgcckpjqZZL500sqvvLOFL"
-);
+import FundByPaypal from "./fundOptions/FundByPaypal";
+import FundByPayoneer from "./fundOptions/FundByPayoneer";
+import FundByBank from "./fundOptions/FundByBank";
+import FundByStripe from "./fundOptions/FundByStripe";
 
 const FindProject = ({
   amounts,
@@ -64,6 +64,7 @@ const FindProject = ({
   const [showDocuments, setShowDocuments] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedPayment, setSelectedPayment] = useState("Paypal");
   const [isOpen, setIsOpen] = useState(false);
   const [isPayModalOpen, setIsPayModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -93,7 +94,17 @@ const FindProject = ({
     isLoading: isFetchingProject,
     error,
   } = useGetAllProjectQuery();
-  const projects = allProjects?.data;
+  //const projects = allProjects?.data;
+
+  const projects = allProjects?.data
+    ?.slice()
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  const handlePaymentSelection = (payment) => {
+    setSelectedPayment(payment);
+  };
+
+  // Mapping through sorted projects
 
   useEffect(() => {
     setIsLoading(true);
@@ -159,111 +170,6 @@ const FindProject = ({
   };
   //console.log(projects);
 
-  const requestedBy = userId;
-  const [amount, setAmount] = useState(0);
-
-  //------------ paymnet start
-
-  const [loading, setLoading] = useState(false);
-
-  // const handlePayment = async (requestedTo, projectId) => {
-  //   setLoading(true);
-
-  //   try {
-
-  //     if (!requestedTo || !projectId || !amount || amount <= 0) {
-  //       console.error("Invalid data: Amount is not available or less than 0");
-  //       setLoading(false);
-  //       return;
-  //     }
-
-  //     const response = await fetch(
-  //       "http://localhost:3000/api/v1/fund/new-request",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           requestedBy,
-  //           requestedTo,
-  //           projectId,
-  //           amount,
-  //         }),
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to create payment session");
-  //     }
-
-  //     const { id } = await response.json();
-
-  //     const stripe = await stripePromise;
-  //     const result = await stripe.redirectToCheckout({ sessionId: id });
-
-  //     if (result.error) {
-  //       console.error(result.error.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error in payment:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const handlePayment = async (requestedTo, projectId) => {
-  //   setLoading(true);
-
-  //   try {
-  //     // Validation: Check if requestedTo, projectId, and amount are valid
-  //     if (!requestedTo || !projectId || !amount || amount <= 0) {
-  //       console.error("Invalid data: Amount is not available or less than 0");
-  //       setLoading(false);
-  //       return;
-  //     }
-
-  //     // Create a payment session by making a POST request to the backend
-  //     const response = await fetch(
-  //       "http://localhost:3000/api/v1/fund/new-request",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           requestedBy,  // Ensure requestedBy is available in the component
-  //           requestedTo,
-  //           projectId,
-  //           amount,
-  //         }),
-  //       }
-  //     );
-
-  //     // Check if the response is OK, otherwise throw an error
-  //     if (!response.ok) {
-  //       throw new Error("Failed to create payment session");
-  //     }
-
-  //     const { sessionId } = await response.json();
-
-  //     // Initialize Stripe and redirect to the checkout page
-  //     const stripe = await stripePromise;
-  //     const result = await stripe.redirectToCheckout({ sessionId });
-
-  //     if (result.error) {
-  //       console.error(result.error.message);
-  //     }
-  //   } catch (error) {
-  //     // Catch any errors and log them
-  //     console.error("Error in payment:", error);
-  //   } finally {
-  //     // Stop loading indicator
-  //     setLoading(false);
-  //   }
-  // };
-  //console.log("my", userId);
-  //console.log(projects[0]);
   const handleOpenModal = (project) => {
     setSelectedProject(project);
     if (project?.user?._id === userId) {
@@ -277,67 +183,7 @@ const FindProject = ({
     }
   };
 
-  const handlePayment = async (project) => {
-    setSelectedProject(project);
-    setLoading(true);
-    //console.log("selected project", project);
-    
-    if (amount <= 0) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Invalid Amount',
-        text: '0 is not acceptable!',
-      });
-      return; // Stop further execution
-    }
-
-    const paymentData = {
-      requestedBy: userId,
-      requestedTo: project?.user?._id,
-      projectId: project?._id,
-      status: "Pending",
-      amount: amount,
-    };
-
-   // console.log("Payment data being sent:", paymentData);
-
-    try {
-      if (!project?.user?._id || !project?._id) {
-        console.error("Invalid data: Amount is not available or less than 0");
-        setLoading(false);
-        return;
-      }
-
-      const response = await fetch(
-        "http://localhost:3000/api/v1/fund/new-request",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(paymentData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to create payment session");
-      }
-
-      const { sessionId } = await response.json();
-
-      // Redirect to Stripe checkout
-      const stripe = await stripePromise;
-      const result = await stripe.redirectToCheckout({ sessionId });
-
-      if (result.error) {
-        console.error(result.error.message);
-      }
-    } catch (error) {
-      console.error("Error in payment:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //------------ paymnet start
 
   //------------ paymnet end
   //------------ switch start
@@ -369,6 +215,18 @@ const FindProject = ({
               status === "Done"
                 ? "Sent"
                 : "Join";
+
+            const today = new Date();
+            const startDate = new Date(project.startDate);
+            const endDate = new Date(project.endDate);
+
+            // Determine project status
+            const statuss =
+              today < startDate
+                ? "upcoming"
+                : today > endDate
+                ? "ended"
+                : "running";
 
             return (
               <div
@@ -440,11 +298,24 @@ const FindProject = ({
                               {project?.user?.country}
                             </span>
                           </p>
+                          <p className="graish text-[11px] lg:text-[13px] 3xl:text-[16px] font-medium">
+                            {statuss === "ended"
+                              ? `Project: ${
+                                  project.projectName
+                                } is ended. It started on ${startDate.toLocaleDateString()} and ended on ${endDate.toLocaleDateString()}.`
+                              : statuss === "upcoming"
+                              ? `Project: ${
+                                  project.projectName
+                                } will start very soon. It will start on ${startDate.toLocaleDateString()} and end on ${endDate.toLocaleDateString()}.`
+                              : `Project: ${
+                                  project.projectName
+                                } is ongoing. It started on ${startDate.toLocaleDateString()} and will end on ${endDate.toLocaleDateString()}.`}
+                          </p>
                         </div>
                       </div>
                     </Link>
 
-                    {project?.user?._id !== userId && (
+                    {/* {project?.user?._id !== userId && (
                       <>
                         {theme === "light" ? (
                           buttonText === "Join" ? (
@@ -477,6 +348,54 @@ const FindProject = ({
                                 : undefined
                             }
                             className="profileFriendRequestBtn"
+                          >
+                            <p>{buttonText}</p>
+                          </button>
+                        )}
+                      </>
+                    )} */}
+                    {project?.user?._id !== userId && (
+                      <>
+                        {project.isMemberRequestAccept ? (
+                          theme === "light" ? (
+                            buttonText === "Join" ? (
+                              <div>
+                                <button
+                                  onClick={() => handleJoinClick(project)}
+                                  className="flex items-center space-x-2 lg:text-sm xl:text-lg rounded-[13px] font-semibold px-3 py-2 xl:px-4 xl:py-2 bg-gradient-to-l from-[#2adba4] to-[#69f9cc] text-white"
+                                >
+                                  {buttonText}
+                                  <FaPlus className="text-[15px] md:text-lg ml-1 md:ml-2" />
+                                </button>
+                              </div>
+                            ) : (
+                              <div>
+                                <div
+                                  onClick={() => handleJoinClick(project)}
+                                  className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]"
+                                >
+                                  <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
+                                    {buttonText}
+                                  </button>
+                                </div>
+                              </div>
+                            )
+                          ) : (
+                            <button
+                              onClick={
+                                buttonText === "Join"
+                                  ? () => handleJoinClick(project)
+                                  : undefined
+                              }
+                              className="profileFriendRequestBtn"
+                            >
+                              <p>{buttonText}</p>
+                            </button>
+                          )
+                        ) : (
+                          <button
+                            className="profileFriendRequestBtn opacity-50 cursor-not-allowed"
+                            disabled
                           >
                             <p>{buttonText}</p>
                           </button>
@@ -673,7 +592,7 @@ const FindProject = ({
                         />
                         <div className="flex flex-col py-7">
                           <h2 className="text-xl lg:text-2xl font-bold mb-6">
-                            Enter an amount for funding
+                            Select a payment method for funding
                           </h2>
 
                           {/* Radio Buttons for selecting funding type */}
@@ -707,13 +626,155 @@ const FindProject = ({
                             </div>
                           </div>
 
-                          {/* Conditionally render based on selected option */}
+                          {/* Payment Method Selection */}
+                          {selectedOption === "donation" && (
+                            <div className="mb-6">
+                              <ul className="flex items-center space-x-6">
+                                <li
+                                  onClick={() =>
+                                    handlePaymentSelection("Paypal")
+                                  }
+                                  className={`cursor-pointer p-1 rounded-lg ${
+                                    selectedPayment === "Paypal"
+                                      ? "border-2 p-3 border-blue-500 bg-blue-100"
+                                      : "border-2 p-3 border-gray-300"
+                                  }`}
+                                >
+                                  <img
+                                    className="h-12 w-12"
+                                    src="https://i.ibb.co.com/NYDfhjQ/paypal-1.png"
+                                    alt="paypal"
+                                  />
+                                </li>
+                                <li
+                                  onClick={() =>
+                                    handlePaymentSelection("Payoneer")
+                                  }
+                                  className={`cursor-pointer p-1 rounded-lg ${
+                                    selectedPayment === "Payoneer"
+                                      ? "border-2 p-3 border-blue-500 bg-blue-100"
+                                      : "border-2 p-3 border-gray-300"
+                                  }`}
+                                >
+                                  <img
+                                    className="h-12 w-12"
+                                    src="https://i.ibb.co.com/qR4yw1g/payoneer-logo1.png"
+                                    alt="payoneer"
+                                  />
+                                </li>
+                                <li
+                                  onClick={() =>
+                                    handlePaymentSelection("Stripe")
+                                  }
+                                  className={`cursor-pointer p-1 rounded-lg ${
+                                    selectedPayment === "Stripe"
+                                      ? "border-2  border-blue-500 px-3  py-2 bg-blue-100"
+                                      : "border-2 px-3 py-2 border-gray-300"
+                                  }`}
+                                >
+                                  <img
+                                    className="h-14 w-14"
+                                    src="https://i.ibb.co.com/rstQvKT/stripe.png"
+                                    alt="stripe"
+                                  />
+                                </li>
+
+                                <li
+                                  onClick={() =>
+                                    handlePaymentSelection("Bank transfer")
+                                  }
+                                  className={`cursor-pointer p-1 rounded-lg ${
+                                    selectedPayment === "Bank transfer"
+                                      ? "border-2 p-3 border-blue-500 bg-blue-100"
+                                      : "border-2 p-3 border-gray-300"
+                                  }`}
+                                >
+                                  <img
+                                    className="h-12 w-12"
+                                    src="https://i.ibb.co.com/zJ3bWNk/bank.png"
+                                    alt="bank transfer"
+                                  />
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+                          {/* Conditional Form Fields */}
+
+                          {/* paypal */}
+                          {selectedPayment === "Paypal" &&
+                            selectedOption === "donation" && <FundByPaypal isPayModalOpen={isPayModalOpen} setSelectedProject={setSelectedProject}  selectedProject={selectedProject} />}
+                          {/* payoneer */}
+                          {selectedPayment === "Payoneer" &&
+                            selectedOption === "donation" && <FundByPayoneer isPayModalOpen={isPayModalOpen} setSelectedProject={setSelectedProject}  selectedProject={selectedProject} />}
+                          {/* Bank transfer */}
+                          {selectedPayment === "Bank transfer" &&
+                            selectedOption === "donation" && <FundByBank 
+                            selectedProject={selectedProject}
+                            isPayModalOpen={isPayModalOpen}
+                            setSelectedProject={setSelectedProject}
+                            userId={userId} />}
+                          {/* stripe */}
+                          {selectedPayment === "Stripe" &&
+                            selectedOption === "donation" && (
+                              <FundByStripe
+                              isPayModalOpen={isPayModalOpen}
+                                setSelectedProject={setSelectedProject}
+                                userId={userId}
+                                selectedProject={selectedProject}
+                              />
+                            )}
+
+                          {selectedOption === "buyStack" && (
+                            <p className="text-2xl font-semibold py-3">
+                              Coming Soon
+                            </p>
+                          )}
+                        </div>
+                        {/* <div className="flex flex-col py-7">
+                          <h2 className="text-xl lg:text-2xl font-bold mb-6">
+                            Enter an amount for funding
+                          </h2>
+
+                     
+                          <div className="mb-6 flex items-center space-x-6">
+                            <div className="flex items-center space-x-2">
+                              <label>
+                                <input
+                                  value="donation"
+                                  checked={selectedOption === "donation"}
+                                  onChange={handleOptionChange}
+                                  type="checkbox"
+                                  className="pay-input"
+                                />
+                                <span className="custom-checkbox"></span>
+                              </label>
+                              <p className="ml-2">Donation</p>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <label>
+                                <input
+                                  value="buyStack"
+                                  checked={selectedOption === "buyStack"}
+                                  onChange={handleOptionChange}
+                                  type="checkbox"
+                                  className="pay-input"
+                                />
+                                <span className="custom-checkbox"></span>
+                              </label>
+                              <p className="ml-2">Buy Stack</p>
+                            </div>
+                          </div>
+
+                         
                           {selectedOption === "donation" ? (
                             <>
                               <input
                                 value={amount}
                                 type="number"
-                                onChange={(e) => setAmount(parseFloat(e.target.value) || '')}
+                                onChange={(e) =>
+                                  setAmount(parseFloat(e.target.value) || "")
+                                }
                                 className="payment-input w-[200px] lg:w-[400px] mb-6"
                                 placeholder="Enter Amount"
                               />
@@ -736,7 +797,7 @@ const FindProject = ({
                               Coming Soon
                             </p>
                           )}
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   )}

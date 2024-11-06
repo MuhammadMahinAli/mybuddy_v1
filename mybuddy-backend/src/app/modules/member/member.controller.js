@@ -1,5 +1,6 @@
 import {
   createMemberService,
+  getAllMemberByFilterService,
   getAllMemberService,
   getSingleMember,
   resendEmailService,
@@ -30,6 +31,19 @@ export const createMember = catchAsync(async (req, res, next) => {
     data: newMember,
   });
 });
+
+// //------------ get all user
+export const getAllUserController = catchAsync (async ()=>{
+
+  const members = await getAllUserService();
+
+  sendResponse({
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Members retrieved successfully!",
+    data: members,
+  });
+})
 
 // export const verifyEmail = catchAsync(async (req, res, next) => {
 //   const { token } = req.query;
@@ -226,6 +240,33 @@ export const resetPasswordController = async (req, res) => {
     });
   }
 };
+
+
+
+// Controller function to handle pagination and uniqueId filter
+export const getAllMemberByFilterController = catchAsync(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 6;
+  const uniqueId = req.query.uniqueId || null;
+
+  const result = await getAllMemberByFilterService(page, limit, uniqueId);
+
+  if (result.message) {
+    return sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: result.message,
+      data: [],
+    });
+  }
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Members retrieved successfully!",
+    data: result,
+  });
+});
 
 
 

@@ -285,7 +285,8 @@ const MobileSidebar = ({
               <div className=" bg-[#e4ecf7] h-4 rounded-br-[60px]"></div>
             )}
 
-            <div
+            <Link
+            to='/dashboard/setting'
               className={`${
                 openSetting === true
                   ? "bg-[#f3f6f8] rounded-[20px] py-2"
@@ -293,7 +294,7 @@ const MobileSidebar = ({
               } flex relative  items-center justify-center`}
             >
               <img src="/setting.svg" className="h-5" />
-            </div>
+            </Link>
 
             <div
               className={`${

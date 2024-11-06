@@ -13,7 +13,8 @@ import commitReducer from "../features/commit/commitSlice";
 import fundReducer from "../features/fund/fundSlice";
 import meetingReducer from "../features/meeting/meetingSlice";
 import postReactReducer from "../features/postReact/postReactSlice";
-
+import paypalReducer from "../features/paypal/paypalSlice"
+import payoneerReducer from "../features/payoneer/payoneerSlice"
 
 export const store = configureStore({
   reducer: {
@@ -30,7 +31,9 @@ export const store = configureStore({
     commit:commitReducer,
     fund:fundReducer,
     meeting:meetingReducer,
-    postReact:postReactReducer
+    postReact:postReactReducer,
+    paypal:paypalReducer,
+    payoneer:payoneerReducer
 
    
   },
