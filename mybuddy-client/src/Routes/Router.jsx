@@ -40,6 +40,8 @@ import SettingForm from "../Pages/GeneralDashboard/Setting/SettingForm";
 import AdminLayout from "../Layout/AdminLayout";
 import AdminDashboard from "../Pages/Admin/AdminDashboard/AdminDashboard";
 import AdminAllProject from "../Pages/Admin/AdminAllProject/AdminAllProject";
+import AdminAllUser from "../Pages/Admin/AdminAllUser/AdminAllUser";
+import AdminAllFund from "../Pages/Admin/AdminAllFund/AdminAllFund";
 
 
 const router = createBrowserRouter([
@@ -166,14 +168,14 @@ const router = createBrowserRouter([
         path: "/admin/all-project",
         element: <AdminAllProject />,
       },
-      // {
-      //   path: "/dashboard/recieve-request",
-      //   element: <GeneralRequestRecieve />,
-      // },
-      // {
-      //   path: "/dashboard/friend-request",
-      //   element: <GeneralFriendRequest />,
-      // },
+      {
+        path: "/admin/all-user",
+        element: <AdminAllUser />,
+      },
+      {
+        path: "/admin/all-fund",
+        element: <AdminAllFund />,
+      },
     
       // {
       //   path: "/dashboard/details/:id",

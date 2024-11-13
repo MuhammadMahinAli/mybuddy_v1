@@ -11,6 +11,8 @@ const FundByStripe = ({ setSelectedProject, userId, selectedProject,isPayModalOp
   const [amount, setAmount] = useState(0);
   const [loading, setLoading] = useState(false);
 
+
+  console.log(" projectName: project?.projectName",  selectedProject.projectName);
   const handlePayment = async (project) => {
     setSelectedProject(project);
     setLoading(true);
@@ -26,6 +28,7 @@ const FundByStripe = ({ setSelectedProject, userId, selectedProject,isPayModalOp
     }
 
     const paymentData = {
+      projectName: selectedProject?.projectName,
       requestedBy: userId,
       requestedTo: project?.user?._id,
       projectId: project?._id,
@@ -54,17 +57,13 @@ const FundByStripe = ({ setSelectedProject, userId, selectedProject,isPayModalOp
       );
 
       if (!response.ok) {
-        throw new Error("Failed to create payment session");
-      }
-      else {
         Swal.fire({
-          icon: "success",
-          title: "Payment Successfull",
-          text: "Your funding information has been saved successfully!",
+          icon: "error",
+          title: "Funding Failed",
+          text: "Something went wrong. Please try again later.",
         });
-        isPayModalOpen(false);
       }
-
+    
       const { sessionId } = await response.json();
 
       // Redirect to Stripe checkout

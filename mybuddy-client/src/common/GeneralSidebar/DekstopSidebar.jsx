@@ -82,7 +82,7 @@ const DekstopSidebar = ({
               <p className="lg:text-[18px] xl:text-[22px] font-medium gray600">
                 All Project
               </p>
-            </Link>
+            </Link> 
 
             <div
               className={`${
@@ -90,6 +90,7 @@ const DekstopSidebar = ({
               } bg-[#e4ecf7]  h-5 rounded-tr-[50px]`}
             ></div>
           </li>
+
           <li
             className={`${
               openRequestOption === true ? "show-content" : "hide-content"

@@ -1,12 +1,12 @@
 import { catchAsync } from "../../../utils/catchAsync.js";
 import httpStatus from "http-status";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import {  confirmPaymentService, createPaymentSessionService, deleteFundRequestService, getAllFundRequestByProjectService, getAllFundRequestByRequestedByService, getAllFundRequestByRequestedToService } from "./fundProposal.service.js";
+import {  confirmPaymentService, createPaymentSessionService, deleteFundRequestService, getAllFundRequestByProjectService, getAllFundRequestByRequestedByService, getAllFundRequestByRequestedToService, getAllStripeFundRequestService, updateStripeFundStatusService } from "./fundProposal.service.js";
 
 //------- create payment session in stripe
 
 export const createPaymentSessionController = async (req, res) => {
-  const { requestedBy, requestedTo, projectId, status,amount } = req.body;
+  const { requestedBy, requestedTo, projectId, status,amount, projectName } = req.body;
 
   try {
     const paymentSession = await createPaymentSessionService({
@@ -15,6 +15,7 @@ export const createPaymentSessionController = async (req, res) => {
       projectId,
       status,
       amount,
+      projectName
     });
 
     res.status(200).json(paymentSession);
@@ -58,6 +59,19 @@ export const confirmPaymentController = async (req, res) => {
     });
   }
 };
+
+//----- all fund request 
+
+export const getAllStripeFundRequestController = catchAsync(async (req, res) => {
+  const fundRequests = await getAllStripeFundRequestService();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "All fund request is retrieved successfully!",
+    data: fundRequests,
+  });
+});
 
 //----- all fund request by project
 
@@ -115,4 +129,21 @@ export const deleteFundRequestController = catchAsync(async (req,res)=>{
     message: "Fund request deleted successfully!",
     data: requests,
   });
-})
+});
+
+   //--------- update status controller
+
+   export const updateStripeFundStatusServiceController = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    const updatedStripeFund = await updateStripeFundStatusService(id, status);
+    
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Stripe Fund status updated successfully",
+      data: updatedStripeFund,
+    });
+  });
+
+

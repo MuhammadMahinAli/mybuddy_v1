@@ -31,6 +31,9 @@ import { useGetFundByRequestedByQuery, useGetFundByRequestedToQuery } from "../f
 import { useGetAllMeetingByCreatorQuery, useGetMeetingByMeetingMemberQuery } from "../features/meeting/meetingApi";
 import { useGetUsersPaypalLinkQuery } from "../features/paypal/paypalApi";
 import { useGetUsersPayoneerLinkQuery } from "../features/payoneer/payoneerApi";
+import { useGetPaypalFundByRequestedToQuery } from "../features/paypalfund/paypalFundApi";
+import { useGetPayoneerFundByRequestedToQuery } from "../features/payoneerfund/payoneerFundApi";
+import { useGetBankFundByRequestedToQuery } from "../features/banktransferfund/bankTransferFundApi";
 
 export const AuthContext = createContext();
 
@@ -155,9 +158,21 @@ const UserContext = ({ children }) => {
   const { data: getFundByRequestedBy, isLoading: isFetchingGetFundByRequestedBy, error: getFundByRequestedByError } =
   useGetFundByRequestedByQuery(userId, { skip: !userId });
 
-  //------------- get fund friend by requested by
+  //------------- get stripe fund by requested to
   const { data: getFundByRequestedTo, isLoading: isFetchingGetFundByRequestedTo, error: getFundByRequestedToError } =
   useGetFundByRequestedToQuery(userId, { skip: !userId });
+
+  //------------- get paypal fund by requested to
+  const { data: getPaypalFundByRequestedTo, isLoading: isFetchingGetPaypalFundByRequestedTo, error: getPaypalFundByRequestedToError } =
+  useGetPaypalFundByRequestedToQuery(userId, { skip: !userId });
+
+  //------------- get payoneer fund by requested to
+  const { data: getPayoneerFundByRequestedTo, isLoading: isFetchingGetPayoneerFundByRequestedTo, error: getPayoneerFundByRequestedToError } =
+  useGetPayoneerFundByRequestedToQuery(userId, { skip: !userId });
+
+  //------------- get bank fund by requested to
+  const { data: getBankFundByRequestedTo, isLoading: isFetchingGetBankFundByRequestedTo, error: getBankFundByRequestedToError } =
+  useGetBankFundByRequestedToQuery(userId, { skip: !userId });
 
 
   //------------- get meeting by meeting member
@@ -458,6 +473,9 @@ const UserContext = ({ children }) => {
       getAllSentProjectJoinRequestError ||
       getFundByRequestedByError ||
       getFundByRequestedToError ||
+      getBankFundByRequestedToError ||
+      getPayoneerFundByRequestedToError ||
+      getPaypalFundByRequestedToError ||
       getMeetingByMeetingMemberError ||
       getAllMeetingByCreatorError ||
       getUsersPaypalLinkError ||
@@ -501,7 +519,9 @@ const UserContext = ({ children }) => {
         repsponseDeleteFriendRequestError,
         getAllSentProjectJoinRequestError,
         getFundByRequestedByError ,
-        getFundByRequestedToError,
+        getBankFundByRequestedToError,
+      getPayoneerFundByRequestedToError,
+      getPaypalFundByRequestedToError,
         getMeetingByMeetingMemberError,
         getUsersPaypalLinkError,
         getUsersPayoneerLinkError
@@ -542,6 +562,9 @@ const UserContext = ({ children }) => {
     getAllSentProjectJoinRequestError ,
     getFundByRequestedByError,
     getFundByRequestedToError,
+    getBankFundByRequestedToError,
+    getPayoneerFundByRequestedToError,
+    getPaypalFundByRequestedToError,
     getMeetingByMeetingMemberError,
     getAllMeetingByCreatorError,
     getUsersPaypalLinkError,
@@ -600,6 +623,9 @@ const UserContext = ({ children }) => {
     getAllSentProjectJoinRequest,
     getFundByRequestedBy,
     getFundByRequestedTo,
+    getBankFundByRequestedTo,
+    getPayoneerFundByRequestedTo,
+    getPaypalFundByRequestedTo,
     getMeetingByMeetingMember,
     getAllMeetingByCreator,
     getUsersPaypalLink,

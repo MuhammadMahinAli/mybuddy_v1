@@ -33,11 +33,11 @@ const AdminDekstopSidebar = ({
       <div
         onClick={handleDashboard}
         className={`bg-[#e4ecf7] py-4
-          } flex justify-around relative space-x-12 rounded-[20px] items-center py-2 px-5 lg:px-8 xl:px-12 3xl:px-16 mt-5 shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[71.2px]`}
+          } flex justify-around relative space-x-12 rounded-[20px] items-center py-2 px-5 lg:px-8 xl:px-7 3xl:px-10 mt-5 shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[71.2px]`}
       >
         <img src="/dashboard1.svg" className="h-6" />
         <Link
-          to="/dashboard"
+          to="/admin"
           className="lg:text-[18px] xl:text-[22px] font-semibold gray600 relative -left-5"
         >
           Dashboard
@@ -45,7 +45,7 @@ const AdminDekstopSidebar = ({
       </div>
 
       {/* top */}
-      <div className="m-4 lg:w-[230px] xl:w-[290px] 2xl:w-[300px] 3xl:w-[310px] pt-2 pb-9 flex justify-center items-center rounded-[25px] bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">
+      <div className="m-4 lg:w-[230px] xl:w-[230px] 2xl:w-[230px] 3xl:w-[260px] pt-2 pb-9 flex justify-center items-center rounded-[25px] bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">
         <ul className="text-xl font-semibold relative">
           <li
             onClick={handleAllProject}
@@ -60,7 +60,7 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/dashboard/all-projects"
+              to="/admin/all-project"
               className={`${
                 openAllProject === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2 "
@@ -112,10 +112,10 @@ const AdminDekstopSidebar = ({
                 {openRequestOption && (
                   <div className="pl-3 space-y-[1px] pt-1">
                     <p className="lg:text-[16px] 3xl:text-[19px] font-normal gray600">
-                      <Link to="/dashboard/sent-request">Sent</Link>
+                      <Link to="/admin/sent-request">Sent</Link>
                     </p>
                     <p className="lg:text-[16px] 3xl:text-[19px] font-normal gray600">
-                      <Link to="/dashboard/recieve-request">Recieve</Link>
+                      <Link to="/admin/recieve-request">Recieve</Link>
                     </p>
                   </div>
                 )}
@@ -150,7 +150,7 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/dashboard/create-projects"
+              to="/admin/all-fund"
               className={`${
                 openAllFund === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -182,7 +182,7 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/dashboard/create-projects"
+              to="/admin/all-user"
               className={`${
                 openAllUser === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -219,7 +219,7 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/dashboard/fund-proposal"
+              to="/admin/fund-proposal"
               className={`${
                 openFund === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -251,7 +251,7 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/dashboard/friend-request"
+              to="/admin/friend-request"
               className={`${
                 openFrndRqst === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -283,7 +283,7 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/dashboard/meeting-schedule"
+              to="/admin/meeting-schedule"
               className={`${
                 openMeet === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"

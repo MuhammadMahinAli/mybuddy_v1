@@ -35,6 +35,14 @@ export const fundApi = apiSlice.injectEndpoints({
       providesTags: ["Fund"],
     }),
 
+    getAllStripeFundInfo : builder.query({
+      query: () => ({
+        url: `/fund/getAll`,
+        method: 'GET',
+      }),
+      providesTags: ["Fund"],
+    }),
+
     deleteFundRequest: builder.mutation({
       query: (id) => ({
         url: `/fund/deleteFundRequest/${id}`,
@@ -42,10 +50,18 @@ export const fundApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Fund"],
     }),
+    updateStripeFundStatus : builder.mutation({
+      query: ({id, data}) => ({
+        url: `/fund/updateStatus/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidateTags: ["Fund"],
+    }),
    
   }),
 });
 
- export const {useCreateNewRequestMutation, useGetFundByRequestedToQuery ,useDeleteFundRequestMutation ,useGetFundByRequestedByQuery,useGetAllFundRequestQuery } = fundApi;
+ export const {useUpdateStripeFundStatusMutation,useCreateNewRequestMutation, useGetAllStripeFundInfoQuery,useGetFundByRequestedToQuery ,useDeleteFundRequestMutation ,useGetFundByRequestedByQuery,useGetAllFundRequestQuery } = fundApi;
 
 // useGetAllPostQuery

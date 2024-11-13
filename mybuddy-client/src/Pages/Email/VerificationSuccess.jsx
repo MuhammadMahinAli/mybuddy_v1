@@ -12,6 +12,7 @@ const VerificationSuccess = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [uniqueId, setUniqueId] = useState("");
   const [email, setEmail] = useState("");
   const { loading } = useContext(AuthContext);
 
@@ -25,11 +26,15 @@ const VerificationSuccess = () => {
         const last = response?.data?.data?.lastName;
         const emaill = response?.data?.data?.email;
         const phone = response?.data?.data?.phoneNumber;
+        const  uniqueId = response?.data?.data?.uniqueId;
 
         setFirstName(first);
         setLastName(last);
         setPhoneNumber(phone);
         setEmail(emaill);
+        setUniqueId(uniqueId);
+
+        
         //console.log("Res:", firstName, lastName, email, phoneNumber);
       } catch (error) {
         console.error("Failed to fetch user details", error);
@@ -95,7 +100,7 @@ const VerificationSuccess = () => {
                   <div className="py-5 px-3 space-y-1 text-left">
                     <p className="text-[15px] tracking-wide text-green-700">
                       <span className="font-semibold ">ID NO:</span>{" "}
-                      {token.slice(0, 16)}
+                      {uniqueId}
                     </p>
                     <p className="text-sm tracking-wide text-green-700">
                       <span className="font-semibold ">EMAIL:</span> {email}

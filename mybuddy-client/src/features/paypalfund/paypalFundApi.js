@@ -2,6 +2,7 @@ import {apiSlice} from "../api/apiSlice";
 
 
 export const paypalFundApi = apiSlice.injectEndpoints({
+
   endpoints: (builder) => ({
    
     addPaypalFundInfo: builder.mutation({
@@ -13,13 +14,37 @@ export const paypalFundApi = apiSlice.injectEndpoints({
      invalidateTags: ["PaypalFund"],
     }),
 
-    // getUsersPaypalLink: builder.query({
-    //   query: (id) => ({
-    //     url: `/paypalFund/getLink/${id}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["PaypalFund"],
-    // }),
+    getAllPaypalFundInfo: builder.query({
+      query: () => ({
+        url: `/paypalFund/getAll`,
+        method: 'GET',
+      }),
+      providesTags: ['PaypalFund'],
+    }),
+
+    updatePaypalFundStatus : builder.mutation({
+      query: ({id, data}) => ({
+        url: `/paypalFund/updateStatus/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidateTags: ["PaypalFund"],
+    }),
+    getPaypalFundByRequestedTo: builder.query({
+      query: (id) => ({
+        url: `/paypalFund/getFundByRequestedTo/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["PaypalFund"],
+    }),
+
+    deletePaypalFundRequest: builder.mutation({
+      query: (id) => ({
+        url: `/paypalFund/deleteFundRequest/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["PaypalFund"],
+    }),
 
     // updatePaypalLink: builder.mutation({
     //   query: ({id, data}) => ({
@@ -41,6 +66,6 @@ export const paypalFundApi = apiSlice.injectEndpoints({
   }),
 });
 
- export const { useAddPaypalFundInfoMutation } = paypalFundApi;
+ export const { useGetPaypalFundByRequestedToQuery,useDeletePaypalFundRequestMutation ,useGetAllPaypalFundInfoQuery,useUpdatePaypalFundStatusMutation,useAddPaypalFundInfoMutation } = paypalFundApi;
 
 // useGetAllPostQuery

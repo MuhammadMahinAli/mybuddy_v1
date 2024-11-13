@@ -14,6 +14,38 @@ export const bankTransferFundApi = apiSlice.injectEndpoints({
      invalidateTags: ["BankTransferFund"],
     }),
 
+    getAllBankTransferFundInfo : builder.query({
+      query: () => ({
+        url: `/bankTransferFund/getAll`,
+        method: 'GET',
+      }),
+      providesTags: ["BankTransferFund"],
+    }),
+
+    updateBankFundStatus : builder.mutation({
+      query: ({id, data}) => ({
+        url: `/bankTransferFund/updateStatus/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidateTags: ["BankTransferFund"],
+    }),
+    getBankFundByRequestedTo: builder.query({
+      query: (id) => ({
+        url: `/bankTransferFund/getFundByRequestedTo/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["BankTransferFund"],
+    }),
+
+    deleteBankFundRequest: builder.mutation({
+      query: (id) => ({
+        url: `/bankTransferFund/deleteFundRequest/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["BankTransferFund"],
+    }),
+
     // getUsersPaypalLink: builder.query({
     //   query: (id) => ({
     //     url: `/bankTransferFund/getLink/${id}`,
@@ -42,6 +74,6 @@ export const bankTransferFundApi = apiSlice.injectEndpoints({
   }),
 });
 
- export const { useAddBankTransferFundInfoMutation } = bankTransferFundApi;
+ export const { useGetBankFundByRequestedToQuery,useDeleteBankFundRequestMutation,useGetAllBankTransferFundInfoQuery ,useUpdateBankFundStatusMutation,useAddBankTransferFundInfoMutation } = bankTransferFundApi;
 
 // useGetAllPostQuery

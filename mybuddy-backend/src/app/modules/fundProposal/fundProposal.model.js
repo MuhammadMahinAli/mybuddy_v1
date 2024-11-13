@@ -2,6 +2,9 @@ import { Schema, model } from "mongoose";
 
 const FundProposalSchema = new Schema(
   {
+    projectName: {
+      type: String,
+    },
     requestedBy: {
       type: Schema.Types.ObjectId,
       required: true,
@@ -20,7 +23,7 @@ const FundProposalSchema = new Schema(
     status: {
       type: String,
       required: true,
-      enum: ["Pending", "Accepted", "Rejected"],
+      enum: ["Pending", "Declined", "Done"],
     },
     amount: {
       type: Number,

@@ -2,7 +2,9 @@ import { Schema, model } from "mongoose";
 
 const PayoneerFundSchema = new Schema(
   {
-  
+    projectName: {
+      type: String,
+    },
     fundingProject: {
       type: Schema.Types.ObjectId,
       required: true,
@@ -12,6 +14,17 @@ const PayoneerFundSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Member",
+    },
+    requestedBy: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Member",
+    },
+
+    status: {
+      type: String,
+      required: true,
+      enum: ["Pending", "Declined", "Done"],
     },
 
     transactionId: {

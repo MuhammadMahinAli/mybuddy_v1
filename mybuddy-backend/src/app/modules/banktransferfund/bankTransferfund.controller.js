@@ -1,7 +1,7 @@
 import { catchAsync } from "../../../utils/catchAsync.js";
 import httpStatus from "http-status";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { saveBankTransferFundInfoService } from "./bankTransferfund.service.js";
+import { deleteBankFundService, getAllBankTransferFundInfoService, getBankFundByRequestedToService, saveBankTransferFundInfoService, updateBankTransferFundStatusService } from "./bankTransferfund.service.js";
 
 
 
@@ -20,7 +20,48 @@ export const saveBankTransferFundInfoController = catchAsync(async (req, res, ne
     });
   });
 
+  //------- get all payoneer fund
 
+  export const getAllBankTransferFundInfoController = catchAsync(async (req,res)=>{
+    const getAllBankTransferFundInfo = await getAllBankTransferFundInfoService();
+  
+    sendResponse(res,{
+      statusCode:httpStatus.OK,
+      success:true,
+      message:"All Bank Transfer Fund Information retrived successfully",
+      data:getAllBankTransferFundInfo
+    })
+   }) 
+  
+
+   //--------- update status controller
+
+export const updateBankTransferFundStatusServiceController = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const updatedBankTransferFund = await updateBankTransferFundStatusService(id, status);
+  
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Bank Transfer Fund status updated successfully",
+    data: updatedBankTransferFund,
+  });
+});
+
+// -------------  get recieve fundProposal [ requestedTo ]
+
+export const getBankFundByRequestedToController = catchAsync(async (req, res) => {
+  const {id} = req.params;
+  const recieveFundRequest = await getBankFundByRequestedToService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success:true,
+    message:"All recieve fund request is retrived successfully!",
+    data: recieveFundRequest,
+
+  })
+})
 
   //------- get paypal link
 
@@ -60,18 +101,18 @@ export const saveBankTransferFundInfoController = catchAsync(async (req, res, ne
 // };
 
 
-// //-------- delete paypal 
-// export const deletePaypalLinkController = catchAsync(async (req,res)=>{
-//   const id = req.params.id;
+//-------- delete paypal 
+export const deleteBankFundController = catchAsync(async (req,res)=>{
+  const id = req.params.id;
 
-//   const requests = await deletePaypalLinkService(id);
+  const requests = await deleteBankFundService(id);
 
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Paypal Link deleted successfully!",
-//     data: requests,
-//   });
-// })
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Bank Fund is deleted successfully!",
+    data: requests,
+  });
+})
 
 

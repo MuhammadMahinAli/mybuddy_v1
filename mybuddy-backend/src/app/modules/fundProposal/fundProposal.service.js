@@ -6,7 +6,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // ---------- create payment and store stripe
 export const createPaymentSessionService = async (paymentData) => {
-  const { requestedBy, requestedTo, projectId, amount, status } = paymentData;
+  const { requestedBy, requestedTo, projectId, amount, status, projectName } = paymentData;
+  console.log(paymentData);
   //console.log("Paym", paymentData);
   try {
     // Create Stripe Checkout Session
@@ -17,8 +18,8 @@ export const createPaymentSessionService = async (paymentData) => {
           price_data: {
             currency: "usd",
             product_data: {
-              name: `Funding for project ${projectId}`, // Product details
-              description: `Sender ID: ${requestedBy}, Receiver ID: ${requestedTo}`, // Include sender and receiver in the description
+              name: `Funding for project ${projectName}`, // Product details
+              description: `Project ID: ${projectId} Sender ID: ${requestedBy}, Receiver ID: ${requestedTo}`, // Include sender and receiver in the description
             },
             unit_amount: amount * 100, // Stripe expects the amount in cents
           },
@@ -28,7 +29,7 @@ export const createPaymentSessionService = async (paymentData) => {
       mode: "payment",
       success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`, // Use session ID in the success URL
       cancel_url: `http://localhost:5173/funding-failed`,
-      metadata: { requestedBy, requestedTo, projectId, status, amount }, // Include metadata for later use
+      metadata: { requestedBy, requestedTo, projectId, status, amount,   projectName }, // Include metadata for later use
     });
 
     return { sessionId: session.id };
@@ -52,17 +53,17 @@ export const confirmPaymentService = async (sessionId) => {
       throw new Error("Payment was not successful");
     }
 
-    const { requestedBy, requestedTo, projectId, status, amount } =
+    const { requestedBy, requestedTo, projectId, status, amount, projectName } =
       session.metadata;
     // console.log("session", session.metadata);
 
-    // Check for existing proposal to prevent duplicates
+   // Check for existing proposal to prevent duplicates
     const existingProposal = await FundProposal.findOne({
       requestedBy,
       requestedTo,
       projectId,
       status,
-      amount,
+      amount
     });
 
     if (existingProposal) {
@@ -76,6 +77,7 @@ export const confirmPaymentService = async (sessionId) => {
       projectId,
       status,
       amount,
+      projectName
     });
 
     return { message: "Payment successful and proposal created", fundProposal };
@@ -85,6 +87,15 @@ export const confirmPaymentService = async (sessionId) => {
   }
 };
 
+//--------- get all fundProposal 
+
+export const getAllStripeFundRequestService = async () => {
+  const fundRequests = await FundProposal.find({ })
+    .populate("requestedBy")
+    .populate("requestedTo")
+    .sort({ createdAt: -1 });
+  return fundRequests;
+};
 //--------- get fundProposal by project Id
 
 export const getAllFundRequestByProjectService = async (id) => {
@@ -112,7 +123,6 @@ export const getAllFundRequestByRequestedToService = async (id) => {
   const recieveFundRequests = await FundProposal.find({ requestedTo: id })
   .populate("requestedBy")
   .populate("requestedTo")
-  .populate("projectId")
   .sort(
     { createdAt: -1 }
   );
@@ -124,4 +134,18 @@ export const getAllFundRequestByRequestedToService = async (id) => {
 export const deleteFundRequestService = async(id)=>{
   const result = await FundProposal.findByIdAndDelete({_id:id});
   return result;
-}
+};
+
+  //--------- update status
+  export const updateStripeFundStatusService = async (id, status) => {
+    const updatedStripeFundStatus = await FundProposal.findById({
+      _id: id,
+    });
+  
+    if (!updatedStripeFundStatus) {
+      throw new ApiError(httpStatus.NOT_FOUND, "Bank Transfer Fund not found");
+    }
+    updatedStripeFundStatus.status = status;
+    await updatedStripeFundStatus.save();
+    return updatedStripeFundStatus;
+  };

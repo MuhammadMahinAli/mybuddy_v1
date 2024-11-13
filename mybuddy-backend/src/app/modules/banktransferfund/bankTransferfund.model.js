@@ -2,6 +2,9 @@ import { Schema, model } from "mongoose";
 
 const BankTransferFundSchema = new Schema(
   {
+    projectName: {
+      type: String,
+    },
     accountName: {
       type: String,
     },
@@ -16,6 +19,12 @@ const BankTransferFundSchema = new Schema(
 
     branchName: {
       type: String,
+    },
+
+    status: {
+      type: String,
+      required: true,
+      enum: ["Pending", "Declined", "Done"],
     },
 
     requestedBy: {

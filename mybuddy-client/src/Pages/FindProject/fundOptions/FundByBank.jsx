@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { useAddBankTransferFundInfoMutation } from "../../../features/banktransferfund/bankTransferFundApi";
+import { useAddBankTransferFundInfoMutation} from "../../../features/banktransferfund/bankTransferFundApi";
 import Swal from "sweetalert2";
 
 const FundByBank = ({ selectedProject, userId,setSelectedProject,isPayModalOpen }) => {
   const [addBankTransferFundInfo] = useAddBankTransferFundInfoMutation();
+  
   const [formData, setFormData] = useState({
+    
     accountName: "",
     bankAccountNumber: "",
     bankName: "",
     branchName: "",
     requestedBy: userId,
+    projectName: selectedProject?.projectName,
     requestedTo: selectedProject?.user?._id,
     fundingProject: selectedProject?._id,
+    status:"Pending",
     transactionId: "",
     amount: "",
     date: "",

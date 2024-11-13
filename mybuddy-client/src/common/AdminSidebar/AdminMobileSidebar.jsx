@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/UserContext";
 
@@ -58,7 +57,7 @@ const AdminMobileSidebar = ({
                   : "bg-[#e4ecf7]  py-3"
               } flex relative  items-center justify-center`}
             >
-              <Link to="/dashboard">
+              <Link to="/admin">
                 <img src="/dashboard1.svg" className="h-5" />
               </Link>
             </div>
@@ -87,7 +86,7 @@ const AdminMobileSidebar = ({
                   : "bg-[#e4ecf7]  py-3"
               } flex relative items-center justify-center`}
             >
-              <Link to="/dashboard/all-projects">
+              <Link to="/admin/all-project">
                 <img src="/project2.svg" className="h-5" />
               </Link>
             </div>
@@ -116,7 +115,7 @@ const AdminMobileSidebar = ({
                   : "bg-[#e4ecf7]  py-3"
               } flex relative  items-center justify-center`}
             >
-              <Link to="/dashboard/recieve-request">
+              <Link to="/admin/all-fund">
                 <img src="/rqst.svg" className="h-5" />
               </Link>
             </div>
@@ -145,7 +144,7 @@ const AdminMobileSidebar = ({
                   : "bg-[#e4ecf7]  py-3"
               } flex relative  items-center justify-center`}
             >
-              <Link to="/dashboard/create-projects">
+              <Link to="/admin/all-user">
                 <img src="/create-project.svg" className="h-6 md:h-5" />
               </Link>
             </div>

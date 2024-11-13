@@ -1,7 +1,7 @@
 import { catchAsync } from "../../../utils/catchAsync.js";
 import httpStatus from "http-status";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { savePayoneerFundInfoService } from "./payoneerfundservice.js";
+import { deletePayoneerFundService, getAllPayoneerFundInfoService, getPayoneerFundByRequestedToService, savePayoneerFundInfoService, updatePayoneerFundStatusService } from "./payoneerfundservice.js";
 
 
 
@@ -22,18 +22,47 @@ export const savePayoneerFundInfoController = catchAsync(async (req, res, next) 
 
 
 
-  //------- get paypal link
+  //------- get all payoneer fund
 
-//  export const getPaypalLinkController = catchAsync(async (req,res)=>{
-//   const getLink = await getPaypalLinkService(req?.params?.id);
+ export const getAllPayoneerFundInfoController = catchAsync(async (req,res)=>{
+  const getAllPayoneerFundInfo = await getAllPayoneerFundInfoService();
 
-//   sendResponse(res,{
-//     statusCode:httpStatus.OK,
-//     success:true,
-//     message:"Users Paypal link retrived successfully",
-//     data:getLink
-//   })
-//  }) 
+  sendResponse(res,{
+    statusCode:httpStatus.OK,
+    success:true,
+    message:"All Payoneer Fund Information retrived successfully",
+    data:getAllPayoneerFundInfo
+  })
+ }) 
+
+   //--------- update status controller
+
+export const updatePayoneerFundStatusServiceController = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const updatedPayoneerFund = await updatePayoneerFundStatusService(id, status);
+  
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Payoneer Fund status updated successfully",
+    data: updatedPayoneerFund,
+  });
+});
+
+// -------------  get recieve fundProposal [ requestedTo ]
+
+export const getPayoneerFundByRequestedToController = catchAsync(async (req, res) => {
+  const {id} = req.params;
+  const recieveFundRequest = await getPayoneerFundByRequestedToService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success:true,
+    message:"All recieve fund request is retrived successfully!",
+    data: recieveFundRequest,
+
+  })
+})
 
 
 //  //------- update paypal link
@@ -60,18 +89,18 @@ export const savePayoneerFundInfoController = catchAsync(async (req, res, next) 
 // };
 
 
-// //-------- delete paypal 
-// export const deletePaypalLinkController = catchAsync(async (req,res)=>{
-//   const id = req.params.id;
+//-------- delete paypal 
+export const deletePayoneerFundController = catchAsync(async (req,res)=>{
+  const id = req.params.id;
 
-//   const requests = await deletePaypalLinkService(id);
+  const requests = await deletePayoneerFundService(id);
 
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Paypal Link deleted successfully!",
-//     data: requests,
-//   });
-// })
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Paypal Link deleted successfully!",
+    data: requests,
+  });
+})
 
 

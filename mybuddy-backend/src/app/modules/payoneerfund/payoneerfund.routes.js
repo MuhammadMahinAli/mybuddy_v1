@@ -1,12 +1,16 @@
 import express from "express";
-import { savePayoneerFundInfoController } from "./payoneerfund.controller.js";
+import { deletePayoneerFundController, getAllPayoneerFundInfoController, getPayoneerFundByRequestedToController, savePayoneerFundInfoController, updatePayoneerFundStatusServiceController } from "./payoneerfund.controller.js";
 const router = express.Router();
 
 
 router.post("/addInfo", savePayoneerFundInfoController);
-// router.get('/getLink/:id', getPaypalLinkController);
+router.get('/getAll', getAllPayoneerFundInfoController);
+router.put("/updateStatus/:id",updatePayoneerFundStatusServiceController);
+router.delete("/deleteFundRequest/:id", deletePayoneerFundController);
+router.get('/getFundByRequestedTo/:id', getPayoneerFundByRequestedToController);
+
 // router.put('/updateLink/:id', updatePaypalLinkController);
-// router.delete("/deleteLink/:id", deletePaypalLinkController);
+
 
 
 

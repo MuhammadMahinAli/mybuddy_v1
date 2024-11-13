@@ -702,22 +702,27 @@ const FindProject = ({
 
                           {/* paypal */}
                           {selectedPayment === "Paypal" &&
-                            selectedOption === "donation" && <FundByPaypal isPayModalOpen={isPayModalOpen} setSelectedProject={setSelectedProject}  selectedProject={selectedProject} />}
+                            selectedOption === "donation" && <FundByPaypal setIsPayModalOpen={setIsPayModalOpen} setSelectedProject={setSelectedProject}  selectedProject={selectedProject} />}
                           {/* payoneer */}
                           {selectedPayment === "Payoneer" &&
-                            selectedOption === "donation" && <FundByPayoneer isPayModalOpen={isPayModalOpen} setSelectedProject={setSelectedProject}  selectedProject={selectedProject} />}
+                            selectedOption === "donation" && 
+                            <FundByPayoneer 
+                            userId={userId}
+                            setIsPayModalOpen={setIsPayModalOpen} 
+                            setSelectedProject={setSelectedProject}  
+                            selectedProject={selectedProject} />}
                           {/* Bank transfer */}
                           {selectedPayment === "Bank transfer" &&
                             selectedOption === "donation" && <FundByBank 
                             selectedProject={selectedProject}
-                            isPayModalOpen={isPayModalOpen}
+                            setIsPayModalOpen={setIsPayModalOpen}
                             setSelectedProject={setSelectedProject}
                             userId={userId} />}
                           {/* stripe */}
                           {selectedPayment === "Stripe" &&
                             selectedOption === "donation" && (
                               <FundByStripe
-                              isPayModalOpen={isPayModalOpen}
+                              setIsPayModalOpen={setIsPayModalOpen}
                                 setSelectedProject={setSelectedProject}
                                 userId={userId}
                                 selectedProject={selectedProject}

@@ -13,6 +13,38 @@ export const payoneerFundApi = apiSlice.injectEndpoints({
      invalidateTags: ["PayoneerFund"],
     }),
 
+    getAllPayoneerFundInfo: builder.query({
+      query: () => ({
+        url: `/payoneerFund/getAll`,
+        method: 'GET',
+      }),
+      providesTags: ["PayoneerFund"],
+    }),
+
+    updatePayoneerFundStatus : builder.mutation({
+      query: ({id, data}) => ({
+        url: `/payoneerFund/updateStatus/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidateTags: ["PayoneerFund"],
+    }),
+    getPayoneerFundByRequestedTo: builder.query({
+      query: (id) => ({
+        url: `/payoneerFund/getFundByRequestedTo/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["PayoneerFund"],
+    }),
+
+    deletePayoneerFundRequest: builder.mutation({
+      query: (id) => ({
+        url: `/payoneerFund/deleteFundRequest/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["PayoneerFund"],
+    }),
+
     // getUsersPaypalLink: builder.query({
     //   query: (id) => ({
     //     url: `/payoneerFund/getLink/${id}`,
@@ -41,6 +73,6 @@ export const payoneerFundApi = apiSlice.injectEndpoints({
   }),
 });
 
- export const { useAddPayoneerFundInfoMutation } = payoneerFundApi;
+ export const { useGetPayoneerFundByRequestedToQuery,useDeletePayoneerFundRequestMutation,useGetAllPayoneerFundInfoQuery,useUpdatePayoneerFundStatusMutation,useAddPayoneerFundInfoMutation } = payoneerFundApi;
 
 // useGetAllPostQuery

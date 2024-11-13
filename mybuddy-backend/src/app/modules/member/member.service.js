@@ -15,10 +15,15 @@ import { sendPasswordResetEmail } from "../../../utils/forgetPassword.js";
 //   const {password, ...newUser} = result;
 //   return newUser;
 // };
+
+export const generateUniqueId = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString(); // Generates a 6-digit number
+};
+
 export const createMemberService = async (userInfo) => {
   const verificationToken = crypto.randomBytes(32).toString("hex");
   userInfo.verificationToken = verificationToken;
-
+  userInfo.uniqueId = generateUniqueId();
   const result = (await Member.create(userInfo)).toObject();
   if (!result) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create user");
@@ -27,7 +32,7 @@ export const createMemberService = async (userInfo) => {
   console.log("result", result);
   console.log("userinfo", userInfo);
 
-  const verificationUrl = `esearchbdy.com/verified-email/${verificationToken}`;
+  const verificationUrl = `http://localhost:5173/verified-email/${verificationToken}`;
 
   // Send verification email
   await sendEmail({
@@ -67,6 +72,7 @@ export const verifyEmailService = async (token) => {
     lastName: user.name.lastName,
     phoneNumber: user.phoneNumber,
     email: user.email,
+    uniqueId:user.uniqueId
   };
 
   return userDetails;
@@ -89,7 +95,7 @@ export const resendEmailService = async (email) => {
   //member.verificationToken = verificationToken;
   await member.save();
 
-  const verificationLink = `https://researchbdy.com/verified-email/${verificationToken}`;
+  const verificationLink = `http://localhost:5173/verified-email/${verificationToken}`;
   await sendEmail({
     to: email,
     subject: "Verify Your Email Address",
@@ -159,7 +165,7 @@ export const updateMemberProfilePicService = async (userId, data) => {
   }
 };
 
-//--------------- update cover pic  01827399405
+//--------------- update cover pic 
 export const updateMemberCoverPicService = async (userId, data) => {
   try {
     const member = await Member.findById(userId);
@@ -244,7 +250,7 @@ export const sendForgetPasswordEmailService = async (email) => {
   console.log(user?._id, resetToken, timeRemaining);
 
   // Create the reset URL with token
-  const resetUrl = `https://researchbdy.com/reset-password?id=${user._id}&token=${resetToken}&timeRemaining=${timeRemaining}`;
+  const resetUrl = `http://localhost:5173/reset-password?id=${user._id}&token=${resetToken}&timeRemaining=${timeRemaining}`;
 
   // Send email using utility function
   await sendPasswordResetEmail(user.email, user, resetUrl);
@@ -285,7 +291,7 @@ export const resetPasswordService = async (id, token, newPassword) => {
 // // Modified service function to get members with pagination and uniqueId filter
 export const getAllMemberByFilterService = async (page, limit, uniqueId) => {
   const skip = (page - 1) * limit;
-
+console.log('un',uniqueId);
   // If uniqueId is provided, search for that specific project/member
   if (uniqueId) {
     const user = await Member.findOne({ uniqueId });

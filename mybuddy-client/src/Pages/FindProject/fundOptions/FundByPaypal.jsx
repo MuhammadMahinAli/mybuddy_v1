@@ -4,13 +4,15 @@ import { AuthContext } from "../../../Context/UserContext";
 import Swal from "sweetalert2";
 
 const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) => {
-  const { getUsersPaypalLink } = useContext(AuthContext);
+  const { getUsersPaypalLink, userId } = useContext(AuthContext);
   console.log(" getUsersPaypalLink", getUsersPaypalLink);
   const [addPaypalFundInfo] = useAddPaypalFundInfoMutation();
   const [formData, setFormData] = useState({
-
+    projectName: selectedProject?.projectName,
     fundingProject: selectedProject?._id,
     requestedTo: selectedProject?.user?._id,
+    requestedBy: userId,
+    status:"Pending",
     transactionId: "",
     paypalEmail: "",
     amount: "",
@@ -82,12 +84,13 @@ const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) =>
       setSelectedProject(null);
       isPayModalOpen(false);
     } catch (error) {
-       Swal.fire({
-        title: "Submission Failed",
-        text: "There was an error submitting your Paypal fund information. Please try again.",
-        icon: "error",
-        button: "Retry",
-      });
+      console.log(error);
+      //  Swal.fire({
+      //   title: "Submission Failed",
+      //   text: "There was an error submitting your Paypal fund information. Please try again.",
+      //   icon: "error",
+      //   button: "Retry",
+      // });
     }
   };
   return (

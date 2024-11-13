@@ -28,6 +28,13 @@ const MemberSchema = new Schema(
       },
       required: true,
     },
+    
+    uniqueId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
     phoneNumber: {
       type: String,
       unique: true,

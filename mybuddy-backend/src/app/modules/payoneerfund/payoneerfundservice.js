@@ -18,6 +18,39 @@ export const savePayoneerFundInfoService = async (formData) => {
     }
   };
 
+  // get all
+
+    export const getAllPayoneerFundInfoService = async() => {
+    const getAllPayoneerFundInfo = await PayoneerFund.find({})
+    .sort({createdAt:-1});
+    return getAllPayoneerFundInfo;
+  }
+
+  //--------- update status
+export const updatePayoneerFundStatusService = async (id, status) => {
+  const updatedPayoneerFundStatus = await PayoneerFund.findById({
+    _id: id,
+  });
+
+  if (!updatedPayoneerFundStatus) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Bank Transfer Fund not found");
+  }
+  updatedPayoneerFundStatus.status = status;
+  await updatedPayoneerFundStatus.save();
+  return updatedPayoneerFundStatus;
+};
+
+//--------- get recieve fundProposal [ requestedTo ]
+
+export const getPayoneerFundByRequestedToService = async (id) => {
+  const recieveFundRequests = await PayoneerFund.find({ requestedTo: id })
+  .populate("requestedBy")
+  .populate("requestedTo")
+  .sort(
+    { createdAt: -1 }
+  );
+  return recieveFundRequests;
+};
 
   // //------- get paypal link by user
 
@@ -43,10 +76,10 @@ export const savePayoneerFundInfoService = async (formData) => {
 // }
 
 
-// // ------ delete paypal
+// ------ delete paypal
 
-// export const deletePaypalLinkService = async(id)=>{
-//   const result = await PaypalInfo.findByIdAndDelete({_id:id});
-//   return result;
-// }
+export const deletePayoneerFundService = async(id)=>{
+  const result = await PayoneerFund.findByIdAndDelete({_id:id});
+  return result;
+}
 
