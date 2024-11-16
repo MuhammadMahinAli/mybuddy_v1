@@ -97,6 +97,9 @@ const handleSubmit = async ( id) => {
     });
     
     closeUpdateLicenceModal();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2500);
   } catch (error) {
     console.error('Failed to update license:', error);
     

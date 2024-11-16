@@ -35,7 +35,7 @@ const ViewPdfFile = ({ pdf }) => {
       };
     }
   }, []);
-
+//defaultScale={SpecialZoomLevel.PageFit}
   return (
     <div
       ref={containerRef}
@@ -43,8 +43,8 @@ const ViewPdfFile = ({ pdf }) => {
       data-src="your-url-to-trigger-load"
     >
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
-        <div className="hide-scrollbar min-h-[300px] w-[270px] sm:w-[340px] md:w-[540px] lg:w-[500px] xl:w-full max-h-[70vh] 3xl:max-h-[80vh] bg-red-500 overflow-x-auto">
-          <Viewer fileUrl={pdf} defaultScale={SpecialZoomLevel.PageFit} />
+        <div className="hide-scrollbar min-h-[300px] w-[270px] sm:w-[340px] md:w-[540px] lg:w-[500px] xl:w-full max-h-[70vh] 3xl:max-h-[80vh] overflow-x-auto">
+          <Viewer fileUrl={pdf}  />
         </div>
       </Worker>
     </div>

@@ -64,7 +64,7 @@ export const getAllSentProjectByRequestedByService = async (id) => {
 
 // ***************** get pending send request by requestedBy
 export const getProjectByRequestedByService = async (id) => {
-   const projectByRequestedBy = await ProjectJoinRequest.find({requestedBy: id}).find({ status: "Pending" }).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+   const projectByRequestedBy = await ProjectJoinRequest.find({requestedBy: id}).populate('projectId').populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
    return projectByRequestedBy;
  };
 

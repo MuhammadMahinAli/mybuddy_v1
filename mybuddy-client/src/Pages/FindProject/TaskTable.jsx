@@ -7,9 +7,11 @@ import PropTypes from "prop-types";
 import { LuDivideCircle } from "react-icons/lu";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const TaskTable = ({ tasks, setSelectedTasks, theme, setIsOpen, isOpen }) => {
+const TaskTable = ({ tasks, setSelectedTasks,  selectedTasks, theme, setIsOpen, isOpen }) => {
   const [checkedStates, setCheckedStates] = useState(tasks?.map(() => false));
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(null);
+
+  console.log("l", checkedStates, selectedTaskIndex, selectedTasks, tasks);
 
   // const theme = useSelector((state) => state.theme.theme);
   const handleTaskButtonClick = (index) => {
@@ -31,6 +33,7 @@ const TaskTable = ({ tasks, setSelectedTasks, theme, setIsOpen, isOpen }) => {
     });
 
     const selectedTask = tasks[index];
+    console.log(selectedTask, isChecked);
     if (isChecked) {
       setSelectedTasks((prevSelectedTasks) => [
         ...prevSelectedTasks,
@@ -42,6 +45,9 @@ const TaskTable = ({ tasks, setSelectedTasks, theme, setIsOpen, isOpen }) => {
       );
     }
   };
+
+
+console.log('ffd',   selectedTasks);
 
   return (
     <div className={` md:-my-3 xl:m-0 py-5`}>

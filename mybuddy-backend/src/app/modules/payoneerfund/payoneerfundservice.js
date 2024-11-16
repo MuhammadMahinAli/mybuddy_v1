@@ -51,6 +51,17 @@ export const getPayoneerFundByRequestedToService = async (id) => {
   );
   return recieveFundRequests;
 };
+//--------- get fund by project
+
+export const getPayoneerFundByProjectService = async (id) => {
+  const recieveFundRequests = await PayoneerFund.find({ fundingProject : id })
+  .populate("requestedBy")
+  .populate("requestedTo")
+  .sort(
+    { createdAt: -1 }
+  );
+  return recieveFundRequests;
+};
 
   // //------- get paypal link by user
 

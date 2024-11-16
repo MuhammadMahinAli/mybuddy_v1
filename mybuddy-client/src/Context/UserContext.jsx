@@ -377,6 +377,9 @@ const UserContext = ({ children }) => {
       isFetchingGetAllSentProjectJoinRequest ||
       isFetchingGetFundByRequestedBy ||
       isFetchingGetFundByRequestedTo ||
+      isFetchingGetPaypalFundByRequestedTo ||
+      isFetchingGetPayoneerFundByRequestedTo ||
+      isFetchingGetBankFundByRequestedTo||
       isFetchingGetMeetingByMeetingMember ||
       isFetchingGetAllMeetingByCreator ||
       isFetchingGetUsersPaypalLink,
@@ -424,6 +427,9 @@ const UserContext = ({ children }) => {
     isFetchingGetAllSentProjectJoinRequest,
     isFetchingGetFundByRequestedBy,
     isFetchingGetFundByRequestedTo,
+    isFetchingGetPaypalFundByRequestedTo ,
+      isFetchingGetPayoneerFundByRequestedTo ,
+      isFetchingGetBankFundByRequestedTo,
     isFetchingGetMeetingByMeetingMember,
     isFetchingGetAllMeetingByCreator,
     isFetchingGetUsersPaypalLink,

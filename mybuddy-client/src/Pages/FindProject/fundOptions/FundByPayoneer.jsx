@@ -85,6 +85,9 @@ const FundByPayoneer = ({
       });
       setSelectedProject(null);
       isPayModalOpen(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
     } catch (error) {
       console.log(error);
       // if (error) {

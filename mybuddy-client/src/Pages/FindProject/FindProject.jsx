@@ -49,12 +49,7 @@ import FundByPayoneer from "./fundOptions/FundByPayoneer";
 import FundByBank from "./fundOptions/FundByBank";
 import FundByStripe from "./fundOptions/FundByStripe";
 
-const FindProject = ({
-  amounts,
-  setAmounts,
-  selectedTasks,
-  setSelectedTasks,
-}) => {
+const FindProject = () => {
   //const { user } = useSelector((state) => state.auth);
   const theme = useSelector((state) => state.theme.theme);
   const { getAllSentProjectJoinRequest, userId } = useContext(AuthContext);
@@ -67,6 +62,7 @@ const FindProject = ({
   const [selectedPayment, setSelectedPayment] = useState("Paypal");
   const [isOpen, setIsOpen] = useState(false);
   const [isPayModalOpen, setIsPayModalOpen] = useState(false);
+  const [selectedTasks, setSelectedTasks] = useState([]);
   const navigate = useNavigate();
 
   // console.log(
@@ -118,28 +114,57 @@ const FindProject = ({
     setOpenDescriptionIndex(openDescriptionIndex === i ? null : i);
   };
   //   window.location.href = "https://buy.stripe.com/test_7sIfZP7d6bha3Qs5kk";
+  // const handleJoinClick = (project) => {
+  //   if (!userId) {
+  //     navigate("/");
+  //     console.log(selectedTasks);
+  //   } else if (selectedTasks?.length === 0) {
+  //     Swal.fire({
+  //       icon: "warning",
+  //       title: "Oops !",
+  //       text: "I Think, You Forget to Select Task.",
+  //     });
+  //     return;
+  //   } else {
+  //     setSelectedProject(project);
+  //     const data = {
+  //       projectId: project?._id,
+  //       requestedBy: userId,
+  //       requestedTo: project?.user?._id,
+  //       status: "Pending",
+  //       tasks: selectedTasks,
+  //     };
+  //     // console.log("pro", data);
+  //     createProjectJoinRequest(data);
+  //   }
+  // };
+
   const handleJoinClick = (project) => {
+    console.log(project);
     if (!userId) {
-      navigate("/");
+        navigate("/");
+        console.log("Redirecting due to missing userId:", selectedTasks);
     } else if (selectedTasks?.length === 0) {
-      Swal.fire({
-        icon: "warning",
-        title: "Oops !",
-        text: "I Think, You Forget to Select Task.",
-      });
+        Swal.fire({
+            icon: "warning",
+            title: "Oops !",
+            text: "I Think, You Forget to Select Task.",
+        });
+        console.log("No tasks selected:", selectedTasks);
+        return;
     } else {
-      setSelectedProject(project);
-      const data = {
-        projectId: project?._id,
-        requestedBy: userId,
-        requestedTo: project?.user?._id,
-        status: "Pending",
-        tasks: selectedTasks,
-      };
-      // console.log("pro", data);
-      createProjectJoinRequest(data);
-    }
-  };
+        setSelectedProject(project);
+        const data = {
+            projectId: project?._id,
+            requestedBy: userId,
+            requestedTo: project?.user?._id,
+            status: "Pending",
+            tasks: selectedTasks,
+        };
+        console.log("Request Data Being Sent:", data);
+        createProjectJoinRequest(data);
+       
+};
 
   useEffect(() => {
     if (responseData) {
@@ -150,6 +175,10 @@ const FindProject = ({
         title: "Well Done !!!",
         text: "Your request has been sent successfully!",
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+
     } else if (responseError?.data) {
       Swal.fire({
         icon: "error",

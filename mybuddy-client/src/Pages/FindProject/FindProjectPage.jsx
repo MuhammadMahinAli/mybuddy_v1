@@ -11,7 +11,7 @@ const stripePromise = loadStripe(
 const FindProjectPage = () => {
   const [clientSecret, setClientSecret] = useState("");
   const [amounts, setAmounts] = useState(40);
-  const [selectedTasks, setSelectedTasks] = useState([]);
+
 
   const calculateSelectedTaskBudget = () => {
     const total = selectedTasks.reduce(
@@ -50,9 +50,6 @@ const FindProjectPage = () => {
     }
   };
 
-  useEffect(() => {
-    calculateSelectedTaskBudget();
-  }, [selectedTasks]);
 
   useEffect(() => {
     fetchClientSecret();
@@ -68,10 +65,6 @@ const FindProjectPage = () => {
       {clientSecret ? (
         <Elements stripe={stripePromise} options={options}>
           <FindProject
-            selectedTasks={selectedTasks}
-            setAmounts={setAmounts}
-            amounts={amounts}
-            setSelectedTasks={setSelectedTasks}
           />
         </Elements>
       ) : (

@@ -302,6 +302,7 @@ console.log(isChecked);
           <div className="absolute right-5 top-3">
             <div className="md:flex items-center space-x-3 hidden">
               <label
+              title="Enable/Disable Project Join Request"
                 htmlFor="AcceptConditions"
                 className={`relative inline-block h-6 w-10 cursor-pointer rounded-full transition ${
                   isChecked ? "bg-blue-500" : "bg-gray-300"
@@ -313,9 +314,11 @@ console.log(isChecked);
                   className="sr-only"
                   checked={isChecked}
                   onChange={()=>handleToggle(ProjectInfo)}
+                  
                 />
 
                 <span
+                title="Enable/Disable Project Join Request"
                   className={`absolute inset-y-0 m-1 size-4 rounded-full bg-white transition-all ${
                     isChecked ? "start-4" : "start-0"
                   }`}

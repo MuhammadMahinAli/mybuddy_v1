@@ -144,25 +144,29 @@ const PayoneerFund = () => {
   };
 
   return (
-    <div>
-      <div className="w-full py-4 bg-[#e9f2f9] flex my-5 items-center  shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
-        <div className="text-[16px] md:text-[21px] font-semibold  border-r-2 border-white text-center w-4/12 md:w-3/12 lg:w-3/12">
+    <>
+    {payoneers?.length === 0 ? (
+      <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`No fund request available to show.`}</p>
+    ) : (
+    <div className="w-[300px] xs:w-[330px] ssm:w-[370px] sm:w-[570px] md:w-[630px] lg:w-full overflow-x-auto xl:overflow-hidden">
+      <div className="min-w-[900px] md:min-w-[900px] 2xl:min-w-[1000px] py-4 bg-[#e9f2f9] flex my-5 items-center  shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
+        <div className="text-[16px] md:text-[21px] font-semibold  border-r-2 border-white text-center w-2/12 md:w-3/12 lg:w-3/12">
           Payment
         </div>
-        <div className="text-[21px] hidden md:block font-semibold  border-r-2 border-white text-center md:w-2/12 lg:w-3/12">
+        <div className="text-[21px]  font-semibold  border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-3/12">
           Project
         </div>
-        <div className="text-[21px] hidden lg:block font-semibold  border-r-2 border-white text-center md:w-2/12 lg:w-3/12">
+        <div className="text-[21px]  font-semibold  border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-3/12">
           Details
         </div>
-        <div className="text-[21px] hidden md:block font-semibold  border-r-2 border-white text-center md:w-2/12 lg:w-2/12">
+        <div className="text-[21px]  font-semibold  border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-2/12">
           Amount
         </div>
-        <div className="text-[16px] md:text-[21px]  font-semibold  border-r-2 border-white text-center w-4/12 md:w-2/12 lg:w-2/12">
+        <div className="text-[16px] md:text-[21px]  font-semibold  border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-2/12">
           Status
         </div>
 
-        <div className="text-[16px] md:text-[21px]  text-start e w-4/12 md:w-2/12 lg:w-2/12">
+        <div className="text-[16px] md:text-[21px]  text-start e w-2/12 md:w-2/12 lg:w-2/12">
           <p className="font-semibold text-center">Action</p>
         </div>
       </div>
@@ -172,9 +176,9 @@ const PayoneerFund = () => {
       {payoneers?.map((p, i) => (
         <div
           key={i}
-          className="w-full py-4 bg-[#e9f2f9] flex my-5 items-center  shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
+           className="min-w-[900px] md:min-w-[900px] 2xl:min-w-[1000px] py-4 bg-[#e9f2f9] flex my-5 items-center  shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
         >
-          <div className="flex flex-col md:flex-row justify-center items-center pl-3 space-x-2 text-[16px] md:text-lg   border-r-2 border-white text-center w-4/12 md:w-3/12 lg:w-3/12">
+          <div className="flex flex-col md:flex-row justify-center items-center pl-3 space-x-2 text-[16px] md:text-lg   border-r-2 border-white text-center w-2/12 md:w-3/12 lg:w-3/12">
             <img
               src="https://i.ibb.co.com/qR4yw1g/payoneer-logo1.png"
               className="w-8 h-8 md:w-9 md:h-9 rounded-lg"
@@ -183,20 +187,20 @@ const PayoneerFund = () => {
             />
             <p className="capitalize">Payoneer</p>
           </div>
-          <div className="text-[16px] md:text-[18px] hidden md:block  border-r-2 border-white text-center md:w-2/12 lg:w-3/12">
+          <div className="text-[16px] md:text-[18px]  border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-3/12">
             {p.projectName}
           </div>
 
           <div
             onClick={() => handleOpenDetails(p)}
-            className="cursor-pointer px-3 text-lg hidden lg:block  border-r-2 border-white text-center md:w-2/12 lg:w-3/12"
+            className="cursor-pointer px-3 text-lg border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-3/12"
           >
             View Details
           </div>
-          <div className="text-lg hidden md:block  border-r-2 border-white text-center md:w-2/12 lg:w-2/12">
+          <div className="text-lg border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-2/12">
             ${p.amount}
           </div>
-          <div className="text-[16px] md:text-lg   border-r-2 border-white text-center w-4/12 md:w-2/12 lg:w-2/12">
+          <div className="text-[16px] md:text-lg   border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-2/12">
             <>
               <span
                 className={`border py-1 px-3 rounded-full text-sm cursor-pointer ${
@@ -233,7 +237,7 @@ const PayoneerFund = () => {
             </>
           </div>
 
-          <div className="flex justify-center space-x-3 items-center text-[16px] md:text-lg  text-start e w-4/12 md:w-2/12 lg:w-2/12">
+          <div className="flex justify-center space-x-3 items-center text-[16px] md:text-lg  text-start e w-2/12 md:w-2/12 lg:w-2/12">
             {fundStatuses[p?._id] === "Pending" ? (
               <FaRegTrashCan
                 title="Status is still pending"
@@ -340,6 +344,8 @@ const PayoneerFund = () => {
         </div>
       )}
     </div>
+     )}
+     </>
   );
 };
 

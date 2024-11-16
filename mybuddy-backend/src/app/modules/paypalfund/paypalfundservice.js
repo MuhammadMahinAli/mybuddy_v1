@@ -42,8 +42,21 @@ export const updatePaypalFundStatusService = async (id, status) => {
   return updatedPaypalFundStatus;
 };
 
+//-------- get all
+
 export const getPaypalFundByRequestedToService = async (id) => {
   const recieveFundRequests = await PaypalFund.find({ requestedTo: id })
+  .populate("requestedBy")
+  .populate("requestedTo")
+  .sort(
+    { createdAt: -1 }
+  );
+  return recieveFundRequests;
+};
+//-------- get all by project id
+
+export const getPaypalFundByProjectService = async (id) => {
+  const recieveFundRequests = await PaypalFund.find({ fundingProject : id })
   .populate("requestedBy")
   .populate("requestedTo")
   .sort(

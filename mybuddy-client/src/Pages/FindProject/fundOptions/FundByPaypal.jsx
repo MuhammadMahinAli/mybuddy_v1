@@ -3,7 +3,11 @@ import { useAddPaypalFundInfoMutation } from "../../../features/paypalfund/paypa
 import { AuthContext } from "../../../Context/UserContext";
 import Swal from "sweetalert2";
 
-const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) => {
+const FundByPaypal = ({
+  selectedProject,
+  setSelectedProject,
+  isPayModalOpen,
+}) => {
   const { getUsersPaypalLink, userId } = useContext(AuthContext);
   console.log(" getUsersPaypalLink", getUsersPaypalLink);
   const [addPaypalFundInfo] = useAddPaypalFundInfoMutation();
@@ -12,7 +16,7 @@ const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) =>
     fundingProject: selectedProject?._id,
     requestedTo: selectedProject?.user?._id,
     requestedBy: userId,
-    status:"Pending",
+    status: "Pending",
     transactionId: "",
     paypalEmail: "",
     amount: "",
@@ -27,21 +31,19 @@ const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) =>
     });
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const requiredFields = [
       { key: "transactionId", label: "Transaction ID" },
       { key: "paypalEmail", label: "Paypal Email" },
       { key: "amount", label: "Amount" },
       { key: "date", label: "Date" },
     ];
-  
+
     // Initial emptyFields array to track empty required fields
     const emptyFields = [];
-  
+
     // Check each required field if it's empty
     requiredFields.forEach(({ key, label }) => {
       const keys = key.split(".");
@@ -53,28 +55,25 @@ const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) =>
         emptyFields.push(label);
       }
     });
-  
- 
-  
+
     // Show SweetAlert if there are any empty fields
     if (emptyFields.length > 0) {
       Swal.fire({
         icon: "warning",
         title: "Incomplete data",
-        text: `Please fill in the following fields: ${emptyFields.join(", ")}`
+        text: `Please fill in the following fields: ${emptyFields.join(", ")}`,
       });
       return; // Stop the function if there are empty fields
     }
     try {
       await addPaypalFundInfo(formData);
-       Swal.fire({
+      Swal.fire({
         title: "Success!",
         text: "Your Paypal fund information has been submitted successfully.",
         icon: "success",
         button: "OK",
       });
-  
-      
+
       setFormData({
         transactionId: "",
         paypalEmail: "",
@@ -83,6 +82,9 @@ const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) =>
       });
       setSelectedProject(null);
       isPayModalOpen(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
     } catch (error) {
       console.log(error);
       //  Swal.fire({
@@ -106,7 +108,6 @@ const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) =>
           value={formData.transactionId}
           onChange={handleChange}
           className="payment-input w-full"
-     
         />
         <input
           type="email"
@@ -115,7 +116,6 @@ const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) =>
           value={formData.paypalEmail}
           onChange={handleChange}
           className="payment-input w-full text-gray-800"
-         
         />
         <input
           type="number"
@@ -124,7 +124,6 @@ const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) =>
           value={formData.amount}
           onChange={handleChange}
           className="payment-input w-full text-gray-700"
-        
         />
         <input
           type="date"
@@ -133,7 +132,6 @@ const FundByPaypal = ({ selectedProject,setSelectedProject, isPayModalOpen }) =>
           value={formData.date}
           onChange={handleChange}
           className="payment-input w-full text-gray-700"
-  
         />
         <button type="submit" className="fancy w-44">
           <span className="top-key"></span>

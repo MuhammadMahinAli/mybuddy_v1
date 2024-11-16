@@ -87,6 +87,9 @@ const FundByBank = ({ selectedProject, userId,setSelectedProject,isPayModalOpen 
       });
       setSelectedProject(null);
       isPayModalOpen(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
     } catch (error) {
       console.log(error);
     }

@@ -77,6 +77,9 @@ const FundByStripe = ({ setSelectedProject, userId, selectedProject,isPayModalOp
       console.error("Error in payment:", error);
     } finally {
       setLoading(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
     }
   };
   return (

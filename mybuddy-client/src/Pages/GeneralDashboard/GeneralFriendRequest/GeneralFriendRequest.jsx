@@ -119,9 +119,9 @@ const GeneralFriendRequest = () => {
               "Your request has been deleted.",
               "success"
             );
-            setTimeout(() => {
-              window.location.reload();
-            }, 2500);
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 2500);
           })
           .catch((error) => {
             console.log(error);

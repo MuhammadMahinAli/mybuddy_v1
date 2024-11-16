@@ -1,7 +1,7 @@
 import { catchAsync } from "../../../utils/catchAsync.js";
 import httpStatus from "http-status";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { deletePayoneerFundService, getAllPayoneerFundInfoService, getPayoneerFundByRequestedToService, savePayoneerFundInfoService, updatePayoneerFundStatusService } from "./payoneerfundservice.js";
+import { deletePayoneerFundService, getAllPayoneerFundInfoService, getPayoneerFundByProjectService, getPayoneerFundByRequestedToService, savePayoneerFundInfoService, updatePayoneerFundStatusService } from "./payoneerfundservice.js";
 
 
 
@@ -59,6 +59,19 @@ export const getPayoneerFundByRequestedToController = catchAsync(async (req, res
     statusCode: httpStatus.OK,
     success:true,
     message:"All recieve fund request is retrived successfully!",
+    data: recieveFundRequest,
+
+  })
+})
+// -------------  get recieve fundProposal [ requestedTo ]
+
+export const getPayoneerFundByProjectController = catchAsync(async (req, res) => {
+  const {id} = req.params;
+  const recieveFundRequest = await getPayoneerFundByProjectService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success:true,
+    message:"All  fund request of a project is retrived successfully!",
     data: recieveFundRequest,
 
   })

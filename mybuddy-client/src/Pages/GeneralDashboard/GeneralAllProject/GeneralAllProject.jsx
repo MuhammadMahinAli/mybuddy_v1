@@ -142,7 +142,7 @@ const GeneralAllProject = () => {
                     >
                       <div className="flex justify-center items-center h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[240px] rounded-[25px] bg-[#DCE2EA] shadow-[0px_1px_2px_rgba(0,_0,_0,_0.25),_-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)]">
                         <img
-                          src={p.images[0]}
+                          src={p?.images[0]}
                           className="rounded-2xl h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[240px] w-full object-cover"
                         />
                       </div>
@@ -150,11 +150,11 @@ const GeneralAllProject = () => {
                       <div className="px-2 pt-0 ssm:pt-1 lg:pt-3 xl:pt-3 3xl:pt-3 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">
                         <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold pt-2 ssm:py-0">
                           {p?.projectName.length > 15
-                            ? `${p.projectName.slice(0, 7)}...`
-                            : p.projectName}
+                            ? `${p?.projectName.slice(0, 7)}...`
+                            : p?.projectName}
                         </p>
                         <p className="hidden 2xl:block text-xl 3xl:text-[22px] font-bold py-0">
-                          {p.projectName}
+                          {p?.projectName}
                         </p>
                         <div
                           className="ssm:hidden pb-3"
@@ -199,25 +199,25 @@ const GeneralAllProject = () => {
                     >
                       <div className="flex justify-center items-center h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[240px] rounded-[25px] bg-[#DCE2EA] shadow-[0px_1px_2px_rgba(0,_0,_0,_0.25),_-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)]">
                         <img
-                          src={p.projectId.images[0]}
+                          src={p?.projectId?.images[0]}
                           className="rounded-2xl h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[240px] w-full object-cover"
                         />
                       </div>
 
                       <div className="px-2 pt-0 ssm:pt-1 lg:pt-3 xl:pt-3 3xl:pt-3 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">
                         <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold pt-2 ssm:py-0">
-                          {p?.projectId.projectName.length > 15
-                            ? `${p.projectId.projectName.slice(0, 7)}...`
-                            : p.projectId.projectName}
+                          {p?.projectId?.projectName.length > 15
+                            ? `${p?.projectId?.projectName.slice(0, 7)}...`
+                            : p?.projectId?.projectName}
                         </p>
                         <p className="hidden 2xl:block text-xl 3xl:text-[22px] font-bold py-0">
-                          {p.projectId.projectName}
+                          {p?.projectId?.projectName}
                         </p>
                         <div
                           className="ssm:hidden pb-3"
                           dangerouslySetInnerHTML={{
-                            __html: `${p?.projectId.description.slice(0, 100)}${
-                              p?.projectId.description.length > 100 ? "..." : ""
+                            __html: `${p?.projectId?.description.slice(0, 100)}${
+                              p?.projectId?.description.length > 100 ? "..." : ""
                             }`,
                           }}
                         />
@@ -225,13 +225,13 @@ const GeneralAllProject = () => {
                         <div
                           className="hidden ssm:block md:hidden pb-3"
                           dangerouslySetInnerHTML={{
-                            __html: p?.projectId.description.slice(0, 130),
+                            __html: p?.projectId?.description.slice(0, 130),
                           }}
                         />
                         <div
                           className="hidden md:block pb-3"
                           dangerouslySetInnerHTML={{
-                            __html: p?.projectId.description.slice(0, 100),
+                            __html: p?.projectId?.description.slice(0, 100),
                           }}
                         />
 

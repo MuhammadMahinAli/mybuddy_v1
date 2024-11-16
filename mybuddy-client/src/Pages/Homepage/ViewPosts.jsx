@@ -338,9 +338,12 @@ const ViewPosts = ({ theme }) => {
               <div
                 className={`${
                   theme === "light" ? "graish" : "text-white"
-                } flex flex-col justify-center items-center  py-3 md:py-6`}
+                } flex flex-col justify-center   py-3 md:py-6`}
               >
+                <div className="text-start">
                 <Description text={post?.description} />
+                </div>
+               
                 <div className="w-full my-3 md:my-5 flex justify-center items-center">
                   {post?.technicalRecommendations.length > 0 && (
                     <div className="flex justify-center items-center ">

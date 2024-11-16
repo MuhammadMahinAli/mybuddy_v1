@@ -53,6 +53,16 @@ export const getBankFundByRequestedToService = async (id) => {
   return recieveFundRequests;
 };
 
+export const getBankFundByProjectService = async (id) => {
+  const recieveFundRequests = await BankTransferFund.find({ fundingProject: id })
+  .populate("requestedBy")
+  .populate("requestedTo")
+  .sort(
+    { createdAt: -1 }
+  );
+  return recieveFundRequests;
+};
+
 // //------- get paypal link by user
 
 // export const getPaypalLinkService = async(id) => {

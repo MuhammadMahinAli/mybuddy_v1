@@ -153,7 +153,7 @@ const GeneralRequestRecieve = () => {
               <div className="flex  justify-start items-center space-x-1 text-[16px] md:text-lg   border-r-2  text-center w-4/12 sm:w-3/12">
                 <img
                   src={
-                    request?.requestedTo?.profilePic ||
+                    request?.requestedBy?.profilePic ||
                     "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
                   }
                   className="w-8 h-8 md:w-10 md:h-10 rounded-full"
