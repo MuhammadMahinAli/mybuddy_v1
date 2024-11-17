@@ -326,7 +326,7 @@ const AdminDekstopSidebar = ({
 
       {/* setting logout */}
       <div className="space-y-3">
-      <Link to='/admin/setting'
+      <Link to='/setting'
           onClick={handleSetting}
           className={`${
             openSetting === true ? "bg-[#dce2ea]" : "bg-[#e4ecf7] py-4"
