@@ -6,6 +6,7 @@ export const createSocialInfoZodSchema = z.object({
       user: z.string({
         required_error: "User is required",
       }),
+      orcid : z.string().optional(),
       twitter: z.string().optional(),
       github: z.string().optional(),
       linkedIn: z.string().optional(),
@@ -27,6 +28,7 @@ export const updateSocialInfoZodSchema = z.object({
       user: z.string({
         required_error: "User is required",
       }),
+      orcid : z.string().optional(),
       twitter: z.string().optional(),
       github: z.string().optional(),
       linkedIn: z.string().optional(),

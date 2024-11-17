@@ -25,6 +25,9 @@ export const createMemberZodSchema = z.object({
       phoneNumber: z.string({
         required_error: "Phone Number is required",
       }),
+      uniqueId: z.string({
+        required_error: "Unique Id is required",
+      }),
       phoneNumberPrivacy: z.boolean().default(false),
       role: z.string().optional(),
       address: z.string().optional(),

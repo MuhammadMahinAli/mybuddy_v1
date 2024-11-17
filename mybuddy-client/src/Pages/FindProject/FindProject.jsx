@@ -164,8 +164,8 @@ const FindProject = () => {
         console.log("Request Data Being Sent:", data);
         createProjectJoinRequest(data);
        
-};
-
+}
+  }
   useEffect(() => {
     if (responseData) {
       // console.log("Response Data:", responseData);

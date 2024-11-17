@@ -6,6 +6,9 @@ user: {
     required: true,
     ref: "Member",
   },
+  orcid: {
+    type: String,
+  },
   twitter: {
     type: String,
   },

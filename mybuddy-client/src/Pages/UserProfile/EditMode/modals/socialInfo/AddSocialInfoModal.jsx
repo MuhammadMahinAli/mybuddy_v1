@@ -15,9 +15,10 @@ import Swal from "sweetalert2";
 const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
   const theme = useSelector((state) => state.theme.theme);
   const { user } = useSelector((state) => state.auth);
-  const{addSocialInfo,singleUser} = useContext(AuthContext);
+  const { addSocialInfo, singleUser } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
+    orcid: "",
     twitter: "",
     github: "",
     linkedIn: "",
@@ -35,12 +36,11 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data={
-      user:user?._id,
-      ...formData
-    }
-    addSocialInfo(data)
-    .unwrap() 
+    const data = {
+      user: user?._id,
+      ...formData,
+    };
+    addSocialInfo(data).unwrap();
     Swal.fire({
       icon: "success",
       title: "Good Job !",
@@ -102,6 +102,41 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                             : "bg-[#24272f]"
                         } my-4 md:my-9  xs:w-[250px] md:w-[500px] lg:w-[400px] xl:w-[500px]  space-y-4 p-3 md:p-8 box-border  rounded-xl`}
                       >
+                        {/*  orcid */}
+                        <div>
+                          <label
+                            className={`${
+                              theme === "light" ? "graish" : "text-white"
+                            } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
+                          >
+                            Orc ID
+                          </label>
+                          <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
+                            <div
+                              className={`${
+                                theme !== "light" ? "bg-[#fff]" : "bg-[#fff]"
+                              }  rounded-l-lg  flex justify-center items-center h-9 w-10 md:h-14 md:w-14`}
+                            >
+                              <img
+                                className="h-[36px]"
+                                src="/orcid.svg.png"
+                                loading="lazy"
+                                alt=""
+                              />
+                            </div>
+
+                            <textarea
+                              name="orcid"
+                              value={formData.orcid}
+                              onChange={handleChange}
+                              className={`${
+                                theme === "light"
+                                  ? "bg-[#d6f4ca] graish"
+                                  : "bg-[#204057] text-white"
+                              } m-[1px] pl-2 md:pt-4 outline-none rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                            />
+                          </div>
+                        </div>
                         {/* Twitter */}
                         <div>
                           <label
@@ -198,7 +233,12 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#ff7478] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="h-7 w-7" src={instaIcon} loading="lazy" alt="" />
+                              <img
+                                className="h-7 w-7"
+                                src={instaIcon}
+                                loading="lazy"
+                                alt=""
+                              />
                             </div>
 
                             <textarea
@@ -261,7 +301,12 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#FF0000] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="h-7 w-7" src={ytube} loading="lazy" alt="" />
+                              <img
+                                className="h-7 w-7"
+                                src={ytube}
+                                loading="lazy"
+                                alt=""
+                              />
                             </div>
 
                             <textarea
@@ -288,7 +333,12 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#000000] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="h-7 w-7" src={tiktok} loading="lazy" alt="" />
+                              <img
+                                className="h-7 w-7"
+                                src={tiktok}
+                                loading="lazy"
+                                alt=""
+                              />
                             </div>
 
                             <textarea
@@ -315,7 +365,12 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#E60023] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="h-7 w-7" src={pintrst} loading="lazy" alt="" />
+                              <img
+                                className="h-7 w-7"
+                                src={pintrst}
+                                loading="lazy"
+                                alt=""
+                              />
                             </div>
 
                             <textarea
@@ -342,7 +397,12 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                           </label>
                           <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
                             <div className="bg-[#3b5998] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                              <img className="p-1 w-7" src={fb} loading="lazy" alt="" />
+                              <img
+                                className="p-1 w-7"
+                                src={fb}
+                                loading="lazy"
+                                alt=""
+                              />
                             </div>
 
                             <textarea
@@ -357,7 +417,6 @@ const AddSocialInfoModal = ({ isOpenAddSocial, closeAddSocialModal }) => {
                             />
                           </div>
                         </div>
-
                       </div>
                     </div>
                   </div>

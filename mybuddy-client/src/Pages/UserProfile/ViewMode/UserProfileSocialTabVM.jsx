@@ -16,6 +16,7 @@ const UserProfileSocialTabVM = ({ allSocialInfo }) => {
   console.log(allSocialInfo[0]);
   const [openList, setOpenlist] = useState(false);
 
+  const currentOrcid = allSocialInfo?.orcid;
   const currentTwitter = allSocialInfo?.twitter;
   const currentGithub = allSocialInfo?.github;
   const currentLinkedIn = allSocialInfo?.linkedIn;
@@ -63,6 +64,41 @@ const UserProfileSocialTabVM = ({ allSocialInfo }) => {
                 : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover"
             } space-y-2 p-3 md:p-3 box-border  w-full rounded-b-xl`}
           >
+            {/*  orcid */}
+            {currentOrcid && (
+              <div>
+                <label
+                  className={`${
+                    theme === "light" ? "graish" : "text-white"
+                  } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
+                >
+              Orc ID
+                </label>
+                <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
+                  <div
+                    className={`${
+                      theme !== "light" ? "bg-[#fff]" : "bg-[#fff]"
+                    }  rounded-l-lg  flex justify-center items-center h-9 w-10 md:h-14 md:w-14`}
+                  >
+                        <img
+                  className="h-[55px]"
+                  src="./orcid.svg.png"
+                  loading="lazy"
+                  alt=""
+                />
+                  </div>
+                  <p
+                    className={`${
+                      theme === "light"
+                        ? "bg-[#dbf4ca] graish"
+                        : "bg-[#204057] text-white"
+                    } m-[1px] pt-2 pl-2 md:pt-4  rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                  >
+                    {currentOrcid}
+                  </p>
+                </div>
+              </div>
+            )}
             {/* 1 twitter */}
             {currentTwitter && (
               <div>

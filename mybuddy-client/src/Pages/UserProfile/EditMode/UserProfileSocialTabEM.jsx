@@ -22,15 +22,16 @@ const UserProfileSocialTabEM = () => {
   const [openList, setOpenlist] = useState(false);
   const [isOpenSocialModal, setIsOpenSocialModal] = useState(false);
 
-  const currentTwitter = socialInfo?.twitter 
-  const currentGithub = socialInfo?.github 
-  const currentLinkedIn = socialInfo?.linkedIn
-  const currentInstagram = socialInfo?.instagram 
-  const currentPersonalWebsite = socialInfo?.personalWebsite 
-  const currentYoutube = socialInfo?.youtube 
-  const currenTiktok = socialInfo?.tiktok 
-  const currentPinterest = socialInfo?.pinterest
-  const currentFacebook = socialInfo?.facebook
+  const currentOrcID = socialInfo?.orcid;
+  const currentTwitter = socialInfo?.twitter;
+  const currentGithub = socialInfo?.github;
+  const currentLinkedIn = socialInfo?.linkedIn;
+  const currentInstagram = socialInfo?.instagram;
+  const currentPersonalWebsite = socialInfo?.personalWebsite;
+  const currentYoutube = socialInfo?.youtube;
+  const currenTiktok = socialInfo?.tiktok;
+  const currentPinterest = socialInfo?.pinterest;
+  const currentFacebook = socialInfo?.facebook;
 
   const closeSocialModal = () => {
     setIsOpenSocialModal(false);
@@ -101,276 +102,273 @@ const UserProfileSocialTabEM = () => {
             } space-y-2 p-3 md:p-3 box-border  w-full rounded-b-xl`}
           >
             {/* 1 twitter */}
-            {
-              currentTwitter &&
+            {currentOrcID && (
               <div>
-              <label
-                className={`${
-                  theme === "light" ? "graish" : "text-white"
-                } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-              >
-                Twitter
-              </label>
-              <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
-                <div
+                <label
                   className={`${
-                    theme !== "light" ? "bg-[#fff]" : "bg-[#000]"
-                  }  rounded-l-lg  flex justify-center items-center h-9 w-10 md:h-14 md:w-14`}
+                    theme === "light" ? "graish" : "text-white"
+                  } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
                 >
-                  <TwitterIcon theme={theme} />
-                </div>
+                  Orc ID
+                </label>
+                <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
+                  <div
+                    className={`${
+                      theme !== "light" ? "bg-[#fff]" : "bg-[#fff]"
+                    }  rounded-l-lg  flex justify-center items-center h-9 w-10 md:h-14 md:w-14`}
+                  >
+                    <img
+                      className="h-[35px]"
+                      src="/orcid.svg.png"
+                      loading="lazy"
+                      alt=""
+                    />
+                  </div>
 
-                <p
-                  className={`${
-                    theme === "light"
-                      ? "bg-[#cae4f4] graish"
-                      : "bg-[#204057] text-white"
-                  } m-[1px] pt-2 pl-2 md:pt-4  rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
-                >
-                  {currentTwitter}
-                </p>
+                  <p
+                    className={`${
+                      theme === "light"
+                        ? "bg-[#dbf4ca] graish"
+                        : "bg-[#204057] text-white"
+                    } m-[1px] pt-2 pl-2 md:pt-4  rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                  >
+                    {currentOrcID}
+                  </p>
+                </div>
               </div>
-            </div>
-            }
-           
+            )}
+
             {/* 2 github */}
-            {
-              currentGithub &&
+            {currentGithub && (
               <div>
-              <label
-                className={`${
-                  theme === "light" ? "graish" : "text-white"
-                } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-              >
-                Github
-              </label>
-              <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
-                <div className="bg-[#1abcfe] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                  <GithubIcon />
-                </div>
-
-                <p
+                <label
                   className={`${
-                    theme === "light"
-                      ? "bg-[#b3e4f8] graish"
-                      : "bg-[#1f546d] text-white"
-                  } m-[1px] pt-2 pl-2 md:pt-4  rounded-r-lg w-full   px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                    theme === "light" ? "graish" : "text-white"
+                  } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
                 >
-                  {currentGithub}
-                </p>
+                  Github
+                </label>
+                <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
+                  <div className="bg-[#1abcfe] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
+                    <GithubIcon />
+                  </div>
+
+                  <p
+                    className={`${
+                      theme === "light"
+                        ? "bg-[#b3e4f8] graish"
+                        : "bg-[#1f546d] text-white"
+                    } m-[1px] pt-2 pl-2 md:pt-4  rounded-r-lg w-full   px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                  >
+                    {currentGithub}
+                  </p>
+                </div>
               </div>
-            </div>
-            }
-            
+            )}
+
             {/* if list open */}
             {openList && (
               <>
                 {/* 3 linkedIn */}
-                {
-              currentLinkedIn &&
-              <div>
-              <label
-                className={`${
-                  theme === "light" ? "graish" : "text-white"
-                } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-              >
-                LinkedIn
-              </label>
-              <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
-                <div className="bg-[#0288d1] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                  <LinkedInIcon />
-                </div>
+                {currentLinkedIn && (
+                  <div>
+                    <label
+                      className={`${
+                        theme === "light" ? "graish" : "text-white"
+                      } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
+                    >
+                      LinkedIn
+                    </label>
+                    <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
+                      <div className="bg-[#0288d1] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
+                        <LinkedInIcon />
+                      </div>
 
-                <p
-                  className={`${
-                    theme === "light"
-                      ? "bg-[#c4dfee] graish"
-                      : "bg-[#15384c] text-white"
-                  } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
-                >
-                  {currentLinkedIn}
-                </p>
-              </div>
-            </div>
-            }
-              
+                      <p
+                        className={`${
+                          theme === "light"
+                            ? "bg-[#c4dfee] graish"
+                            : "bg-[#15384c] text-white"
+                        } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                      >
+                        {currentLinkedIn}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 {/* 4 instagram */}
-                {
-              currentInstagram &&
-              <div className="">
-                  <label
-                    className={`${
-                      theme === "light" ? "graish" : "text-white"
-                    } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-                  >
-                    Instagram
-                  </label>
-                  <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
-                    <div className="bg-[#ff7478] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
-                      <img className="h-7 md:h-10" src={instaIcon} />
-                    </div>
-
-                    <p
+                {currentInstagram && (
+                  <div className="">
+                    <label
                       className={`${
-                        theme === "light"
-                          ? "bg-[#f8ced0] graish"
-                          : "bg-[#613b41] text-white"
-                      } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full   px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                        theme === "light" ? "graish" : "text-white"
+                      } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
                     >
-                      {currentInstagram}
-                    </p>
+                      Instagram
+                    </label>
+                    <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
+                      <div className="bg-[#ff7478] rounded-l-lg flex justify-center items-center h-9 w-10 md:h-14 md:w-14">
+                        <img className="h-7 md:h-10" src={instaIcon} />
+                      </div>
+
+                      <p
+                        className={`${
+                          theme === "light"
+                            ? "bg-[#f8ced0] graish"
+                            : "bg-[#613b41] text-white"
+                        } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full   px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                      >
+                        {currentInstagram}
+                      </p>
+                    </div>
                   </div>
-                </div>
-            }
-                
+                )}
+
                 {/* 5 website */}
-                {
-              currentPersonalWebsite &&
-              <div className="">
-                  <label
-                    className={`${
-                      theme === "light" ? "graish" : "text-white"
-                    } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-                  >
-                    Personal Website
-                  </label>
-                  <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
-                    <div className="bg-[#4563ff] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
-                      <img
-                        className="h-7 md:h-10  rounded-md"
-                        src="/arrow.svg"
-                      />
-                    </div>
-
-                    <p
+                {currentPersonalWebsite && (
+                  <div className="">
+                    <label
                       className={`${
-                        theme === "light"
-                          ? "bg-[#cae4f4] graish"
-                          : "bg-[#223055] text-white"
-                      } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                        theme === "light" ? "graish" : "text-white"
+                      } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
                     >
-                      {currentPersonalWebsite?.length > 10 ? currentPersonalWebsite.slice(0,22)+".." : currentPersonalWebsite}
-                    </p>
+                      Personal Website
+                    </label>
+                    <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
+                      <div className="bg-[#4563ff] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
+                        <img
+                          className="h-7 md:h-10  rounded-md"
+                          src="/arrow.svg"
+                        />
+                      </div>
+
+                      <p
+                        className={`${
+                          theme === "light"
+                            ? "bg-[#cae4f4] graish"
+                            : "bg-[#223055] text-white"
+                        } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                      >
+                        {currentPersonalWebsite?.length > 10
+                          ? currentPersonalWebsite.slice(0, 22) + ".."
+                          : currentPersonalWebsite}
+                      </p>
+                    </div>
                   </div>
-                </div>
-            }
-                
+                )}
+
                 {/* 6 youtuve */}
-                {
-              currentYoutube &&
-              <div className="">
-                  <label
-                    className={`${
-                      theme === "light" ? "graish" : "text-white"
-                    } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-                  >
-                    Youtube
-                  </label>
-                  <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
-                    <div className="bg-[#FF0000] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
-                      <img className="h-3 md:h-5 rounded-md" src={ytube} />
-                    </div>
-
-                    <p
+                {currentYoutube && (
+                  <div className="">
+                    <label
                       className={`${
-                        theme === "light"
-                          ? "bg-[#ffd5d7] graish"
-                          : "bg-[#223055] text-white"
-                      } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                        theme === "light" ? "graish" : "text-white"
+                      } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
                     >
-                      {currentYoutube}
-                    </p>
+                      Youtube
+                    </label>
+                    <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
+                      <div className="bg-[#FF0000] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
+                        <img className="h-3 md:h-5 rounded-md" src={ytube} />
+                      </div>
+
+                      <p
+                        className={`${
+                          theme === "light"
+                            ? "bg-[#ffd5d7] graish"
+                            : "bg-[#223055] text-white"
+                        } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                      >
+                        {currentYoutube}
+                      </p>
+                    </div>
                   </div>
-                </div>
-            }
-                
+                )}
+
                 {/* 7 tiktok */}
-                {
-              currenTiktok &&
-              <div className="">
-                  <label
-                    className={`${
-                      theme === "light" ? "graish" : "text-white"
-                    } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-                  >
-                    Tiktok
-                  </label>
-                  <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
-                    <div className="bg-[#ff8f8f] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
-                      <img className="h-3 md:h-7 rounded-md" src={tiktok} />
-                    </div>
-
-                    <p
+                {currenTiktok && (
+                  <div className="">
+                    <label
                       className={`${
-                        theme === "light"
-                          ? "bg-[#ffd6d6] graish"
-                          : "bg-[#223055] text-white"
-                      } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                        theme === "light" ? "graish" : "text-white"
+                      } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
                     >
-                      {currenTiktok}
-                    </p>
+                      Tiktok
+                    </label>
+                    <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
+                      <div className="bg-[#ff8f8f] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
+                        <img className="h-3 md:h-7 rounded-md" src={tiktok} />
+                      </div>
+
+                      <p
+                        className={`${
+                          theme === "light"
+                            ? "bg-[#ffd6d6] graish"
+                            : "bg-[#223055] text-white"
+                        } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                      >
+                        {currenTiktok}
+                      </p>
+                    </div>
                   </div>
-                </div>
-            }
-                
+                )}
+
                 {/* 8 pinterest*/}
-                {
-              currentPinterest &&
-              <div className="">
-                  <label
-                    className={`${
-                      theme === "light" ? "graish" : "text-white"
-                    } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-                  >
-                    Pinterest
-                  </label>
-                  <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
-                    <div className="bg-[#bd2125] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
-                      <img className="h-3 md:h-7 rounded-md" src={pintrst} />
-                    </div>
-
-                    <p
+                {currentPinterest && (
+                  <div className="">
+                    <label
                       className={`${
-                        theme === "light"
-                          ? "bg-[#f2d3d3] graish"
-                          : "bg-[#223055] text-white"
-                      } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                        theme === "light" ? "graish" : "text-white"
+                      } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
                     >
-                      {currentPinterest}
-                    </p>
-                  </div>
-                </div>
-            }
-                
-                {/* 8 fb*/}
-                {
-              currentFacebook &&
-              <div className="">
-              <label
-                className={`${
-                  theme === "light" ? "graish" : "text-white"
-                } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
-              >
-                Facebook
-              </label>
-              <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
-                <div className="bg-[#4563ff] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
-                  <img className="h-3 md:h-7 rounded-md" src={fb} />
-                </div>
+                      Pinterest
+                    </label>
+                    <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
+                      <div className="bg-[#bd2125] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
+                        <img className="h-3 md:h-7 rounded-md" src={pintrst} />
+                      </div>
 
-                <p
-                  className={`${
-                    theme === "light"
-                      ? "bg-[#dae0ff] graish"
-                      : "bg-[#223055] text-white"
-                  } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
-                >
-                  {currentFacebook}
-                </p>
-              </div>
-            </div>
-            }
-               
+                      <p
+                        className={`${
+                          theme === "light"
+                            ? "bg-[#f2d3d3] graish"
+                            : "bg-[#223055] text-white"
+                        } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                      >
+                        {currentPinterest}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* 8 fb*/}
+                {currentFacebook && (
+                  <div className="">
+                    <label
+                      className={`${
+                        theme === "light" ? "graish" : "text-white"
+                      } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
+                    >
+                      Facebook
+                    </label>
+                    <div className="flex justify-start items-center -space-x-1 cursor-pointer h-10 md:h-20 pt-1">
+                      <div className="bg-[#4563ff] flex justify-center items-center h-9 w-10 md:h-14 md:w-14 rounded-l-lg">
+                        <img className="h-3 md:h-7 rounded-md" src={fb} />
+                      </div>
+
+                      <p
+                        className={`${
+                          theme === "light"
+                            ? "bg-[#dae0ff] graish"
+                            : "bg-[#223055] text-white"
+                        } m-[2px] pt-2 pl-2 md:pt-4 rounded-r-lg w-full  px-1 md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                      >
+                        {currentFacebook}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </>
             )}
             <div

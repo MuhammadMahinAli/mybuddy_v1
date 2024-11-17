@@ -117,10 +117,15 @@ export const resendEmailService = async (email) => {
 };
 
 ///get all users
+// export const getAllMemberService = async () => {
+//   const users = await Member.find({});
+//   return users;
+// };
 export const getAllMemberService = async () => {
-  const users = await Member.find({});
+  const users = await Member.find({ email: { $ne: "admin@gmail.com" } }); // Exclude "admin@gmail.com"
   return users;
 };
+
 
 export const getSingleMember = async (id) => {
   const user = await Member.findOne({ _id: id });

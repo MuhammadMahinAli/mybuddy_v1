@@ -159,6 +159,8 @@ const Feed = () => {
       : { status: "No friend request found.", friend: null };
   };
 
+  console.log(getAllUsers?.data);
+
   return (
     <div className="space-y-4">
       {allUsers?.map((user) => {

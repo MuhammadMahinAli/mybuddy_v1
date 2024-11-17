@@ -42,6 +42,7 @@ import AdminDashboard from "../Pages/Admin/AdminDashboard/AdminDashboard";
 import AdminAllProject from "../Pages/Admin/AdminAllProject/AdminAllProject";
 import AdminAllUser from "../Pages/Admin/AdminAllUser/AdminAllUser";
 import AdminAllFund from "../Pages/Admin/AdminAllFund/AdminAllFund";
+import AdminLogin from "../Pages/Admin/AdminLogin/AdminLogin";
 
 
 const router = createBrowserRouter([
@@ -193,6 +194,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path: "/only-for-admin-login-route",
+    element: <AdminLogin />,
   },
   {
     path: "/success",

@@ -30,10 +30,10 @@ const RightSidebar = ({ theme }) => {
     : "0";
   const userCoverPic = singleUser?.data?.coverPic;
   const socialInfo = getSingleUserSocialInfo?.data[0];
-  const currentTwitter = socialInfo?.twitter;
-  const currentGithub = socialInfo?.github;
-  const currentLinkedIn = socialInfo?.linkedIn;
-  const currentFacebook = socialInfo?.facebook;
+  const currentOrcID = socialInfo?.orcid ? socialInfo?.orcid : "https://orcid.org/";
+  const currentGithub = socialInfo?.github ? socialInfo?.github : "https://github.com/";
+  const currentLinkedIn = socialInfo?.linkedIn ? socialInfo?.linkedIn : "https://linkedin.com/";
+  const currentFacebook = socialInfo?.facebook ? socialInfo?.facebook : "https://facebook.com/";
   const userImage = singleUser?.data?.profilePic
     ? singleUser?.data?.profilePic
     : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
@@ -46,7 +46,7 @@ const RightSidebar = ({ theme }) => {
       email: "alice.johnson@example.com",
       age: 28,
       city: "New York",
-      interests: ["reading", "hiking", "coding"]
+      interests: ["reading", "hiking", "coding"],
     },
     {
       id: 2,
@@ -54,7 +54,7 @@ const RightSidebar = ({ theme }) => {
       email: "bob.smith@example.com",
       age: 34,
       city: "San Francisco",
-      interests: ["gaming", "cycling", "cooking"]
+      interests: ["gaming", "cycling", "cooking"],
     },
     {
       id: 3,
@@ -62,7 +62,7 @@ const RightSidebar = ({ theme }) => {
       email: "carol.martinez@example.com",
       age: 25,
       city: "Chicago",
-      interests: ["photography", "traveling", "dancing"]
+      interests: ["photography", "traveling", "dancing"],
     },
     {
       id: 4,
@@ -70,7 +70,7 @@ const RightSidebar = ({ theme }) => {
       email: "david.lee@example.com",
       age: 42,
       city: "Seattle",
-      interests: ["music", "running", "tech"]
+      interests: ["music", "running", "tech"],
     },
     {
       id: 5,
@@ -78,7 +78,7 @@ const RightSidebar = ({ theme }) => {
       email: "eva.green@example.com",
       age: 30,
       city: "Boston",
-      interests: ["yoga", "writing", "gardening"]
+      interests: ["yoga", "writing", "gardening"],
     },
     {
       id: 6,
@@ -86,23 +86,22 @@ const RightSidebar = ({ theme }) => {
       email: "frank.brown@example.com",
       age: 37,
       city: "Los Angeles",
-      interests: ["movies", "swimming", "robotics"]
-    }
+      interests: ["movies", "swimming", "robotics"],
+    },
   ];
-  
+
   const getRandomUsers = (users, count) => {
     const shuffled = users.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   };
-  
 
-    const [randomUsers, setRandomUsers] = useState([]);
-  
-    useEffect(() => {
-      setRandomUsers(getRandomUsers(users, 2));
-    }, []);
+  const [randomUsers, setRandomUsers] = useState([]);
 
-    //console.log(randomUsers);
+  useEffect(() => {
+    setRandomUsers(getRandomUsers(users, 2));
+  }, []);
+
+  //console.log(randomUsers);
 
   return (
     <div className="hidden lg:block space-y-7">
@@ -142,10 +141,16 @@ const RightSidebar = ({ theme }) => {
               <img
                 className="w-8 lg:w-32 xl:w-36 absolute -top-16 right-[12px] md:right-0"
                 src={whiteBorder}
-                loading="lazy" alt="dashedborder"
+                loading="lazy"
+                alt="dashedborder"
               />
 
-              <img className="w-6 -mt-5 z-10" src={active} loading="lazy" alt="active" />
+              <img
+                className="w-6 -mt-5 z-10"
+                src={active}
+                loading="lazy"
+                alt="active"
+              />
             </div>
             <p
               className={`${
@@ -163,7 +168,7 @@ const RightSidebar = ({ theme }) => {
             </p>
 
             <div className="flex py-7 space-x-2">
-              <a
+              {/* <a
                 target="blank"
                 href={
                   singleUser
@@ -172,13 +177,27 @@ const RightSidebar = ({ theme }) => {
                 }
               >
                 <img className="h-12 pr-1" src={twitter} loading="lazy" alt="" />
-              </a>
+              </a> */}
               <a
                 target="blank"
                 href={
                   singleUser
-                    ? `https://facebook.com/${currentFacebook}`
+                    ? `https://orcid.org/${currentOrcID}`
                     : "/"
+                }
+              >
+                <img
+                  className="h-[55px]"
+                  src="./orcid.svg.png"
+                  loading="lazy"
+                  alt=""
+                />
+              </a>
+
+              <a
+                target="blank"
+                href={
+                  singleUser ? `https://facebook.com/${currentFacebook}` : "/"
                 }
               >
                 <img className="h-12" src={facebook} loading="lazy" alt="" />
@@ -192,13 +211,17 @@ const RightSidebar = ({ theme }) => {
                     : "/"
                 }
               >
-                <img className="h-[55px]" src={linkedIn} loading="lazy" alt="" />
+                <img
+                  className="h-[55px]"
+                  src={linkedIn}
+                  loading="lazy"
+                  alt=""
+                />
               </a>
+
               <a
                 target="blank"
-                href={
-                  singleUser ? `https://github.com/${currentGithub}` : "/"
-                }
+                href={singleUser ? `https://github.com/${currentGithub}` : "/"}
               >
                 <img className="h-14" src={github} loading="lazy" alt="" />
               </a>
@@ -259,7 +282,7 @@ const RightSidebar = ({ theme }) => {
       </div>
 
       {/* center */}
-     <FriendSection theme={theme} active={active} />
+      <FriendSection theme={theme} active={active} />
 
       {/* bottom */}
       <div
