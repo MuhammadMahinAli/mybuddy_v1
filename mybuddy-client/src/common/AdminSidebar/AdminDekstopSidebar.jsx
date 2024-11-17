@@ -13,6 +13,8 @@ const AdminDekstopSidebar = ({
   openAllFund,
   logout,
   userData,
+  handleSetting,
+  openSetting
 }) => {
   const { singleUser } = useContext(AuthContext);
   const userImage = singleUser?.data?.profilePic
@@ -321,31 +323,32 @@ const AdminDekstopSidebar = ({
           </p>
         </div>
       </Link> */}
+
       {/* setting logout */}
-      {/* <div className="space-y-3">
-        <div
+      <div className="space-y-3">
+      <Link to='/admin/setting'
           onClick={handleSetting}
           className={`${
             openSetting === true ? "bg-[#dce2ea]" : "bg-[#e4ecf7] py-4"
-          } flex justify-evenly relative space-x-14 rounded-[20px] items-center py-2 lg:px-[41px] xl:px-16 3xl:px-[70px] mt-5  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[71.2px]`}
+          } flex justify-evenly relative space-x-10 rounded-[20px] items-center py-2 lg:px-[41px] xl:px-10 3xl:px-[50px] mt-5  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[71.2px]`}
         >
           <img src="/setting.svg" className="h-8" />
           <p className="lg:text-[18px] xl:text-[22px]  font-medium gray600 relative -left-5">
             Setting
           </p>
-        </div>
+        </Link>
         <div
           onClick={logout}
           className={`${
             openDashboard === true ? "bg-[#dce2ea]" : "bg-[#e4ecf7] py-4"
-          } flex justify-around relative space-x-14 cursor-pointer rounded-[20px] items-center py-2 lg:px-[41px] xl:px-14 3xl:px-[70px]  mt-5  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[71.2px]`}
+          } flex justify-around relative space-x-10 cursor-pointer rounded-[20px] items-center py-2 lg:px-[41px] xl:px-10 3xl:px-[50px]  mt-5  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] h-[71.2px]`}
         >
           <img src="/logout.svg" className="h-8" />
           <p className="lg:text-[18px] xl:text-[22px]  font-medium gray600 relative -left-5">
             Log out
           </p>
         </div>
-      </div> */}
+      </div> 
     </div>
   );
 };

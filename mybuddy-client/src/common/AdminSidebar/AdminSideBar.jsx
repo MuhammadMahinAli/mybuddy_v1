@@ -15,7 +15,7 @@ const AdminSideBar = () => {
   // const [openFund, setOpenFund] = useState(false);
   // const [openFrndRqst, setOpenFrndRqst] = useState(false);
   // const [openMeet, setOpenMeet] = useState(false);
-  // const [openSetting, setOpenSetting] = useState(false);
+  const [openSetting, setOpenSetting] = useState(false);
   // const [openProfile, setOpenProfile] = useState(false);
   // const [openRequestOption, setOpenRequestOption] = useState(false);
   const [userData, setUserData] = useState({});
@@ -40,26 +40,36 @@ setUserData(singleUser);
       setOpenAllFund,
       setOpenAllProject,
       setOpenAllUser,
-      
+      setOpenSetting
     ]);
   const handleAllFund = () =>
     toggleState(setOpenAllFund, [
       setOpenDashboard,
       setOpenAllUser,
-      setOpenAllProject
+      setOpenAllProject,
+      setOpenSetting
     ]);
   const handleAllProject = () =>
     toggleState(setOpenAllProject, [
       setOpenDashboard,
       setOpenAllUser,
       setOpenAllFund,
+      setOpenSetting
     ]);
   const handleAllUser = () =>
     toggleState(setOpenAllUser, [
       setOpenDashboard,
       setOpenAllFund,
       setOpenAllProject,
-     
+      setOpenSetting
+    ]);
+  const handleSetting = () =>
+    toggleState(setOpenSetting , [
+      setOpenAllUser,
+      setOpenDashboard,
+      setOpenAllFund,
+      setOpenAllProject,
+      
     ]);
   // const handleMblDashboard = () =>
   // const handleFund = () =>
@@ -152,6 +162,8 @@ setUserData(singleUser);
         handleAllProject={handleAllProject}
         handleAllFund={handleAllFund}
         handleDashboard={handleDashboard}
+        handleSetting={handleSetting}
+        openSetting={openSetting}
         openDashboard={openDashboard}
         openAllUser={openAllUser}
         openAllProject={openAllProject}
@@ -165,10 +177,12 @@ setUserData(singleUser);
           handleAllProject={handleAllProject}
           handleAllFund={handleAllFund}
           handleDashboard={handleDashboard}
+          handleSetting={handleSetting}
+          openSetting={openSetting}
           openDashboard={openDashboard}
           openAllUser={openAllUser}
-        openAllProject={openAllProject}
-        openAllFund={openAllFund}
+          openAllProject={openAllProject}
+          openAllFund={openAllFund}
           logout={logout}
           userData={userData}
       />

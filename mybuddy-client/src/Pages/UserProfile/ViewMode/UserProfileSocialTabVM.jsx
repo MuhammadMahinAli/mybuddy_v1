@@ -12,10 +12,11 @@ import tiktok from "../../../assets/icon/tiktok.png";
 import fb from "../../../assets/icon/fb.png";
 
 const UserProfileSocialTabVM = ({ allSocialInfo }) => {
+
+  
   const theme = useSelector((state) => state.theme.theme);
   console.log(allSocialInfo[0]);
   const [openList, setOpenlist] = useState(false);
-
   const currentOrcid = allSocialInfo?.orcid;
   const currentTwitter = allSocialInfo?.twitter;
   const currentGithub = allSocialInfo?.github;
@@ -26,6 +27,8 @@ const UserProfileSocialTabVM = ({ allSocialInfo }) => {
   const currenTiktok = allSocialInfo?.tiktok;
   const currentPinterest = allSocialInfo?.pinterest;
   const currentFacebook = allSocialInfo?.facebook;
+
+
   return (
     <>
       <div

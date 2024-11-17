@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { TiEdit } from "react-icons/ti";
 import { IoTrashOutline } from "react-icons/io5";
 import { AuthContext } from "../../../Context/UserContext";
@@ -11,30 +11,42 @@ import {
   useDeletePayoneerLinkMutation,
   useUpdatePayoneerLinkMutation,
 } from "../../../features/payoneer/payoneerApi";
+import { useDeleteAdminBankInfoMutation, useUpdateAdminBankInfoMutation } from "../../../features/adminBankInfo/adminBankInfoApi";
 
-const SettingForm = () => {
-  const { userId, getUsersPaypalLink, getUsersPayoneerLink } =
+const AdminSetting = () => {
+  const { userId, getUsersPaypalLink, getUsersPayoneerLink , getAdminBankInfo} =
     useContext(AuthContext);
   const [updatePaypalLink] = useUpdatePaypalLinkMutation();
   const [updatePayoneerLink] = useUpdatePayoneerLinkMutation();
+  const [updateAdminBankInfo] = useUpdateAdminBankInfoMutation();
   const [deletePaypalLink] = useDeletePaypalLinkMutation();
   const [deletePayoneerLink] = useDeletePayoneerLinkMutation();
+  const [deleteAdminBankInfo] = useDeleteAdminBankInfoMutation();
   const [paypalLink, setPaypalLink] = useState("");
   const [payoneerLink, setPayoneerLink] = useState("");
   const [updatedPaypalLink, setUpdatedPaypalLink] = useState("");
   const [updatedPayoneerLink, setUpdatedPayoneerLink] = useState("");
   const [isOpenPaypalEdit, setIsOpenPaypalEdit] = useState(false);
   const [isOpenPayoneerEdit, setIsOpenPayoneerEdit] = useState(false);
+  const [isOpenAdminBankInfoEdit, setIsOpenAdminBankInfoEdit] = useState(false);
+  const [updatedBankData, setUpdatedBankData] = useState({
+    accountName: "",
+    bankAccountNumber: "",
+    bankName: "",
+    branchName: ""
+  });
 
   const userPaypalLink = getUsersPaypalLink?.data?.paypalLink || "";
-
-  console.log("pppp", getUsersPaypalLink);
 
   const userPayoneerLink = getUsersPayoneerLink?.data?.payoneerLink || "";
 
   const userPaypalId = getUsersPaypalLink?.data?._id;
 
   const userPayoneerId = getUsersPayoneerLink?.data?._id;
+
+  const adminBankInfoId = getAdminBankInfo?.data?._id;
+
+  const adminBankInfo = getAdminBankInfo?.data;
 
   const handlePaypalSubmit = async (e) => {
     e.preventDefault();
@@ -285,7 +297,183 @@ const SettingForm = () => {
       }
     });
   };
+  //--------------------------------------------------------
+  const [formData, setFormData] = useState({
+    accountName: "",
+    bankAccountNumber: "",
+    bankName: "",
+    branchName: "",
+    member: userId,
+  });
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleBankInfoSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(formData);
+
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/adminBankInfo/addInfo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Bank details have been added successfully.",
+          timer: 3000,
+          showConfirmButton: false,
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2500);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Failed!",
+          text: "Failed to save bank details. Please try again.",
+          timer: 3000,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.error("Error saving bank details:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Failed!",
+        text: "An error occurred. Please try again.",
+        timer: 3000,
+        showConfirmButton: false,
+      });
+    }
+  };
+
+
+  useEffect(() => {
+    const fetchBankDetails = async () => {
+    const data = getAdminBankInfo?.data
+          setUpdatedBankData({
+            accountName: data.accountName || "",
+            bankAccountNumber: data.bankAccountNumber || "",
+            bankName: data.bankName || "",
+            branchName: data.branchName || "",
+          });
+     
+    };
+
+    fetchBankDetails();
+  }, [userId]);
+
+  const handleBInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedBankData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleUpdateBankInfoSubmit = async (e) => {
+    e.preventDefault();
+  
+    const id = adminBankInfoId; // Bank Info ID to update
+    console.log("Updating Admin Bank Info:", { id, updatedBankData });
+  
+    // Prepare updated data
+    const updatedData = {
+      accountName: updatedBankData?.accountName,
+      bankAccountNumber: updatedBankData?.bankAccountNumber,
+      bankName: updatedBankData?.bankName,
+      branchName: updatedBankData?.branchName,
+    };
+  
+    try {
+      // Make API call
+      const result = await updateAdminBankInfo({
+        id,
+        data: updatedData,
+      });
+  
+      if (result?.data?.message === "Admin Bank Info updated successfully!") {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Bank information updated successfully.",
+          timer: 3000,
+          showConfirmButton: false,
+        });
+  
+        // Update state or close modal
+        setPayoneerLink(updatedBankData);
+        setIsOpenPayoneerEdit(false);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong! Please try again later.",
+          timer: 3000,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.error("Error updating Bank Info:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "An error occurred while updating bank information.",
+        timer: 3000,
+        showConfirmButton: false,
+      });
+    }
+  };
+  
+  const handleDeleteBankInfo = () => {
+    Swal.fire({
+      title: "Are you sure to delete it ?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteAdminBankInfo(adminBankInfoId)
+          .unwrap()
+          .then(() => {
+            Swal.fire(
+              "Well done!",
+              "Data has been deleted.",
+              "success"
+            );
+            setPayoneerLink("");
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 2500);
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire(
+              "Error!",
+              "There was an issue. Please try again later.",
+              "error"
+            );
+          });
+      }
+    });
+  };
   return (
     <div className="flex flex-col justify-center items-center space-y-8 pt-14">
       <div className="bg-white p-8 rounded-lg shadow-lg w-[600px]">
@@ -300,7 +488,7 @@ const SettingForm = () => {
 
         {/* PayPal Edit Button */}
         <div className="flex items-center justify-between py-3">
-          <p className="text-lg font-bold">Your current PayPal account</p>
+          <p className="text-lg font-bold">Research Buddy PayPal account</p>
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setIsOpenPaypalEdit(!isOpenPaypalEdit)}
@@ -378,7 +566,7 @@ const SettingForm = () => {
 
         {/* Payoneer Edit Button */}
         <div className="flex items-center justify-between py-3">
-          <p className="text-lg font-bold">Your current Payoneer account</p>
+          <p className="text-lg font-bold">Research Buddy Payoneer account</p>
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setIsOpenPayoneerEdit(!isOpenPayoneerEdit)}
@@ -402,7 +590,7 @@ const SettingForm = () => {
                   : userPayoneerLink
               }
               readOnly
-              className="w-full px-4 mt-1 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-4 mt-1 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           ) : (
             <form onSubmit={handleUpdatePayoneerLink}>
@@ -412,7 +600,7 @@ const SettingForm = () => {
                   placeholder="Enter your new Payoneer ID"
                   value={updatedPayoneerLink}
                   onChange={(e) => setUpdatedPayoneerLink(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
               <button
@@ -431,7 +619,7 @@ const SettingForm = () => {
                 placeholder="Enter your Payoneer ID"
                 value={payoneerLink}
                 onChange={(e) => setPayoneerLink(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
             <button
@@ -443,8 +631,154 @@ const SettingForm = () => {
           </form>
         )}
       </div>
+
+      <div className="bg-white p-8 rounded-lg shadow-lg w-[600px] ">
+        {/* bank Section */}
+        <div className="flex justify-center mb-6   ">
+          <img
+            src="https://i.ibb.co.com/zJ3bWNk/bank.png"
+            alt="Payoneer Logo"
+            className="w-16"
+          />
+        </div>
+
+        {/* bank info Edit Button */}
+        <div className="flex items-center justify-between py-3">
+          <p className="text-lg font-bold">Research Buddy Bank account</p>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setIsOpenAdminBankInfoEdit(!isOpenAdminBankInfoEdit)}
+              className="text-xl"
+            >
+              <TiEdit />
+            </button>
+            <button onClick={handleDeleteBankInfo} className="text-xl">
+              <IoTrashOutline />
+            </button>
+          </div>
+        </div>
+
+        { adminBankInfoId ? (
+          !isOpenAdminBankInfoEdit ? (
+            <div className="space-y-4">
+            <input
+              type="text"
+              name="accountName"
+              value={adminBankInfo?.accountName}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+
+            <input
+              type="text"
+              name="bankAccountNumber"
+              value={adminBankInfo?.bankAccountNumber}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+
+            <input
+              type="text"
+              name="bankName"
+              value={adminBankInfo?.bankName}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+            <input
+              type="text"
+              name="branchName"
+              value={adminBankInfo?.branchName}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          ) : (
+            <form onSubmit={handleUpdateBankInfoSubmit} className=" cursor-green-600 rounded-lg space-y-4 text-gray-700">
+            <input
+              type="text"
+              name="accountName"
+              placeholder="Account Holder Name"
+              value={updatedBankData.accountName}
+              onChange={handleBInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+
+            <input
+              type="text"
+              name="bankAccountNumber"
+              placeholder="Bank Account Number"
+              value={updatedBankData.bankAccountNumber}
+              onChange={handleBInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+
+            <input
+              type="text"
+              name="bankName"
+              placeholder="Bank Name "
+              value={updatedBankData.bankName}
+              onChange={handleBInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+            <input
+              type="text"
+              name="branchName"
+              placeholder="Branch Name"
+              value={updatedBankData.branchName}
+              onChange={handleBInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+            <button
+              type="submit"
+              className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition-colors"
+            >
+              Update
+            </button>
+          </form>
+          )
+        ) : (
+          <form onSubmit={handleBankInfoSubmit} className=" cursor-green-600 rounded-lg space-y-4 text-gray-700">
+            <input
+              type="text"
+              name="accountName"
+              placeholder="Account Holder Name"
+              value={formData.accountName}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+
+            <input
+              type="text"
+              name="bankAccountNumber"
+              placeholder="Bank Account Number"
+              value={formData.bankAccountNumber}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+
+            <input
+              type="text"
+              name="bankName"
+              placeholder="Bank Name "
+              value={formData.bankName}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+            <input
+              type="text"
+              name="branchName"
+              placeholder="Branch Name"
+              value={formData.branchName}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+            <button
+              type="submit"
+              className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition-colors"
+            >
+              Save
+            </button>
+          </form>
+        )}
+      </div>
     </div>
   );
 };
 
-export default SettingForm;
+export default AdminSetting;

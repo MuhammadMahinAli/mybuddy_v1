@@ -43,6 +43,7 @@ import AdminAllProject from "../Pages/Admin/AdminAllProject/AdminAllProject";
 import AdminAllUser from "../Pages/Admin/AdminAllUser/AdminAllUser";
 import AdminAllFund from "../Pages/Admin/AdminAllFund/AdminAllFund";
 import AdminLogin from "../Pages/Admin/AdminLogin/AdminLogin";
+import AdminSetting from "../Pages/Admin/AdminSetting/AdminSetting";
 
 
 const router = createBrowserRouter([
@@ -176,6 +177,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/all-fund",
         element: <AdminAllFund />,
+      },
+      {
+        path: "/admin/setting",
+        element: <AdminSetting />,
       },
     
       // {
