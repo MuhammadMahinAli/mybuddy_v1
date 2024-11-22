@@ -162,9 +162,9 @@ const StripeFund = () => {
           Status
         </div>
 
-        <div className="text-[16px] md:text-[21px]  text-start e w-2/12 md:w-2/12 lg:w-2/12">
+        {/* <div className="text-[16px] md:text-[21px]  text-start e w-2/12 md:w-2/12 lg:w-2/12">
           <p className="font-semibold text-center">Action</p>
-        </div>
+        </div> */}
       </div>
       {/* bankTransferFund */}
 
@@ -182,7 +182,7 @@ const StripeFund = () => {
             />
             {/* <p className="capitalize">Bank</p> */}
           </div>
-          <div className="text-[16px] md:text-[18px]  border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-3/12">
+          <div className="capitalize text-[16px] md:text-[18px]  border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-3/12">
             {p.projectName}
           </div>
 
@@ -232,7 +232,7 @@ const StripeFund = () => {
             </>
           </div>
 
-          <div className="flex justify-center space-x-3 items-center text-[16px] md:text-lg  text-start e w-2/12 md:w-2/12 lg:w-2/12">
+          {/* <div className="flex justify-center space-x-3 items-center text-[16px] md:text-lg  text-start e w-2/12 md:w-2/12 lg:w-2/12">
             {fundStatuses[p?._id] === "Pending" ? (
               <FaRegTrashCan title="Status is still pending" className="cursor-not-allowed h-5 md:h-7 text-red-400" />
             ) : (
@@ -241,7 +241,7 @@ const StripeFund = () => {
                 className="h-5 md:h-7 cursor-pointer text-red-600"
               />
             )}
-          </div>
+          </div> */}
           {openDetails && fundRequest && (
             <div className="fixed top-0 left-0  flex justify-center items-center bg-black/25 bg-opacity-50 w-screen h-screen overflow-y-scroll">
               <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all md:w-[600px] 3xl:w-[800px] cursor-pointer">

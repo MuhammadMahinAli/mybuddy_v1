@@ -28,9 +28,9 @@ const OpenDocx = ({ documents, showDocuments,setShowDocuments }) => {
             <ul className="absolute left-0 space-y-3 font-bold text-center mt-2 p-2 lg:p-3 bg-white hover:bg-gray-100 shadow-lg rounded-md w-28 sm:w-36">
               {documents?.map((item, index) => (
                 <li key={index} className="xl:text-[19px] graish">
-                  <button onClick={() => handleDocxButtonClick(index)}>
+                  <a target="blank" href={item}>
                     {`Document ${index + 1}`}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -38,7 +38,7 @@ const OpenDocx = ({ documents, showDocuments,setShowDocuments }) => {
         </div>
       )}
       {/* Popup Modal */}
-      {selectedDocxIndex !== null && (
+      {/* {selectedDocxIndex !== null && (
         <Transition.Root show={isOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -75,7 +75,7 @@ const OpenDocx = ({ documents, showDocuments,setShowDocuments }) => {
             </div>
           </Dialog>
         </Transition.Root>
-      )}
+      )} */}
     </>
   );
 };

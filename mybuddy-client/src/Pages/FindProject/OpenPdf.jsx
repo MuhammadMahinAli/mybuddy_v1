@@ -27,9 +27,9 @@ const OpenPdf = ({ pdfFiles, showPdfList,setShowPdfList }) => {
             <ul className=" absolute left-0 space-y-3 text-center mt-2 p-2 lg:p-3  font-bold bg-white hover:bg-gray-100  shadow-lg rounded-md w-16 md:w-20">
               {pdfFiles?.map((item, index) => (
                 <li key={index} className="xl:text-[17px] graish">
-                  <button onClick={() => handlePdfButtonClick(index)}>
+                  <a target="blank" href={item} >
                     {`PDF ${index + 1}`}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -37,7 +37,7 @@ const OpenPdf = ({ pdfFiles, showPdfList,setShowPdfList }) => {
         </div>
       )}
       {/* Popup Modal */}
-      {selectedPdfIndex !== null && (
+      {/* {selectedPdfIndex !== null && (
         <Transition.Root show={isOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -75,7 +75,7 @@ const OpenPdf = ({ pdfFiles, showPdfList,setShowPdfList }) => {
             </div>
           </Dialog>
         </Transition.Root>
-      )}
+      )} */}
     </>
   );
 };

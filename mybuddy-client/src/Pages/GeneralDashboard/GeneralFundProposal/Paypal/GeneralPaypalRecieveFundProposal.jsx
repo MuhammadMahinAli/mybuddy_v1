@@ -68,7 +68,7 @@ const GeneralPaypalRecieveFundProposal = () => {
                 onClick={() => handleOpenDetails(fundRqst)}
                 className="cursor-pointer px-3 text-lg hidden lg:block  border-r-2 border-white text-center md:w-2/12 lg:w-4/12"
               >
-                View Detail
+                View Details
               </div>
               <div className="text-lg hidden md:block  border-r-2 border-white text-center md:w-2/12 lg:w-2/12">
                 $ {fundRqst?.amount}
@@ -165,7 +165,7 @@ const GeneralPaypalRecieveFundProposal = () => {
                 </p>
                 <p className="text-gray-600">
                   <span className="font-medium pl-4 capitalize">
-                    <strong>Transation ID:</strong>
+                    <strong>Transaction ID:</strong>
                   </span>{" "}
                   {fundRequest?.transactionId}
                 </p>

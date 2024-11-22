@@ -151,9 +151,9 @@ const PaypalFund = () => {
             <div className="text-center w-2/12 md:w-2/12 font-semibold">
               Status
             </div>
-            <div className="text-center w-2/12 md:w-2/12 font-semibold">
+            {/* <div className="text-center w-2/12 md:w-2/12 font-semibold">
               Action
-            </div>
+            </div> */}
           </div>
 
           {/* PayPal Funds */}
@@ -170,7 +170,7 @@ const PaypalFund = () => {
                 />
                 <p className="capitalize">Paypal</p>
               </div>
-              <div className="w-2/12 md:w-2/12 lg:w-3/12 text-center border-r">
+              <div className="capitalize w-2/12 md:w-2/12 lg:w-3/12 text-center border-r">
                 {p.projectName}
               </div>
               <div
@@ -216,8 +216,8 @@ const PaypalFund = () => {
                   </div>
                 )}
               </div>
-              <div className="flex justify-center space-x-3 items-center text-[16px] md:text-lg  text-start e w-2/12 md:w-2/12 lg:w-2/12">
-                {fundStatuses[p?._id] === "Pending" ? (
+              {/* <div className="flex justify-center space-x-3 items-center text-[16px] md:text-lg  text-start e w-2/12 md:w-2/12 lg:w-2/12">
+              {fundStatuses[p?._id] === "Pending" ? (
                   <FaRegTrashCan
                     title="Status is still pending"
                     className="cursor-not-allowed h-5 md:h-7 text-red-400"
@@ -228,6 +228,7 @@ const PaypalFund = () => {
                     className="h-5 md:h-7 cursor-pointer text-red-600"
                   />
                 )}
+                   </div> */}
                 {openDetails && fundRequest && (
                   <div className="fixed top-0 left-0  flex justify-center items-center bg-black/25 bg-opacity-50 w-screen h-screen overflow-y-scroll">
                     <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all md:w-[600px] 3xl:w-[800px] cursor-pointer">
@@ -297,17 +298,18 @@ const PaypalFund = () => {
                         <h3 className="text-lg font-semibold text-gray-700">
                           Request Details
                         </h3>
-                        <p className="text-gray-600">
-                          <span className="font-medium pl-4">
-                            <strong>Amount:</strong>
-                          </span>{" "}
-                          ${fundRequest?.amount}
-                        </p>
+                      
                         <p className="text-gray-600">
                           <span className="font-medium pl-4">
                             <strong>Payment Platform:</strong>
                           </span>{" "}
                           Stripe
+                        </p>
+                        <p className="text-gray-600">
+                          <span className="font-medium pl-4">
+                            <strong>Amount:</strong>
+                          </span>{" "}
+                          ${fundRequest?.amount}
                         </p>
                         <p className="text-gray-600">
                           <span className="font-medium pl-4">
@@ -327,7 +329,7 @@ const PaypalFund = () => {
                     </div>
                   </div>
                 )}
-              </div>
+           
             </div>
           ))}
         </div>

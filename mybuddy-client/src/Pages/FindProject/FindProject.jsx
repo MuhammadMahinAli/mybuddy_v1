@@ -151,15 +151,6 @@ const FindProject = () => {
     setSelectedPayment(payment);
   };
 
-  // Mapping through sorted projects
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   // Simulate loading for 2 seconds
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 5000);
-  // }, []);
 
   const toggleDescription = (i) => {
     setOpenDescriptionIndex(openDescriptionIndex === i ? null : i);
@@ -219,12 +210,12 @@ const FindProject = () => {
   }, [responseData, responseError, navigate]);
   //console.log(responseError, responseData);
   const togglePdf = () => {
-    setShowPdfList(true);
+    setShowPdfList(!showPdfList);
     setShowDocuments(false);
   };
   const toggleDocx = () => {
     setShowPdfList(false);
-    setShowDocuments(true);
+    setShowDocuments(!showDocuments);
   };
   //console.log(projects);
 
@@ -251,7 +242,7 @@ const FindProject = () => {
     setSelectedOption(e.target.value);
   };
 
-  console.log("one",   selectedProject,selectedTasks);
+
   //------------ switch end
 
   if (loading) {
@@ -606,8 +597,8 @@ const FindProject = () => {
                   </ul>
                   {/* Popup Modal */}
                   {isPayModalOpen === true && (
-                    <div className="fixed top-0 left-0 lg:left-20 flex justify-center items-center bg-black/5 bg-opacity-50 w-screen h-screen overflow-y-scroll">
-                      <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all md:w-[600px] 3xl:w-[800px] cursor-pointer">
+                    <div className="z-50 fixed top-0 left-0  flex justify-center items-center bg-black/5 bg-opacity-50 w-screen h-screen overflow-y-scroll">
+                      <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all md:w-[600px] 3xl:w-[800px] xl:h-[600px] 3xl:h-[700px] overflow-y-scroll cursor-pointer">
                         <IoIosCloseCircleOutline
                           onClick={() => setIsPayModalOpen(false)}
                           className="text-xl float-right"

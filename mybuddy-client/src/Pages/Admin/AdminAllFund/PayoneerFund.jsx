@@ -166,9 +166,9 @@ const PayoneerFund = () => {
           Status
         </div>
 
-        <div className="text-[16px] md:text-[21px]  text-start e w-2/12 md:w-2/12 lg:w-2/12">
+        {/* <div className="text-[16px] md:text-[21px]  text-start e w-2/12 md:w-2/12 lg:w-2/12">
           <p className="font-semibold text-center">Action</p>
-        </div>
+        </div> */}
       </div>
 
       {/* payoneer */}
@@ -187,7 +187,7 @@ const PayoneerFund = () => {
             />
             <p className="capitalize">Payoneer</p>
           </div>
-          <div className="text-[16px] md:text-[18px]  border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-3/12">
+          <div className="capitalize text-[16px] md:text-[18px]  border-r-2 border-white text-center w-2/12 md:w-2/12 lg:w-3/12">
             {p.projectName}
           </div>
 
@@ -237,7 +237,7 @@ const PayoneerFund = () => {
             </>
           </div>
 
-          <div className="flex justify-center space-x-3 items-center text-[16px] md:text-lg  text-start e w-2/12 md:w-2/12 lg:w-2/12">
+          {/* <div className="flex justify-center space-x-3 items-center text-[16px] md:text-lg  text-start e w-2/12 md:w-2/12 lg:w-2/12">
             {fundStatuses[p?._id] === "Pending" ? (
               <FaRegTrashCan
                 title="Status is still pending"
@@ -249,7 +249,7 @@ const PayoneerFund = () => {
                 className="h-5 md:h-7 cursor-pointer text-red-600"
               />
             )}
-          </div>
+          </div> */}
         </div>
       ))}
       {openDetails && fundRequest && (
@@ -315,17 +315,30 @@ const PayoneerFund = () => {
               <h3 className="text-lg font-semibold text-gray-700">
                 Request Details
               </h3>
+              
+              <p className="text-gray-600">
+                <span className="font-medium pl-4">
+                  <strong>Payment Platform:</strong>
+                </span>{" "}
+                Payoneer
+              </p>
+              <p className="text-gray-600">
+                <span className="font-medium pl-4">
+                  <strong>Transation ID:</strong>
+                </span>{" "}
+                {fundRequest?.transactionId}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-medium pl-4">
+                  <strong>Payoneer Email:</strong>
+                </span>{" "}
+                {fundRequest?.payoneerEmail}
+              </p>
               <p className="text-gray-600">
                 <span className="font-medium pl-4">
                   <strong>Amount:</strong>
                 </span>{" "}
                 ${fundRequest?.amount}
-              </p>
-              <p className="text-gray-600">
-                <span className="font-medium pl-4">
-                  <strong>Payment Platform:</strong>
-                </span>{" "}
-                Stripe
               </p>
               <p className="text-gray-600">
                 <span className="font-medium pl-4">

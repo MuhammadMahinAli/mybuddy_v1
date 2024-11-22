@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAddPaypalFundInfoMutation } from "../../../features/paypalfund/paypalFundApi";
 import { AuthContext } from "../../../Context/UserContext";
 import Swal from "sweetalert2";
@@ -95,8 +95,47 @@ const FundByPaypal = ({
       // });
     }
   };
+
+  // 
+
+
+  const [adminInfo, setAdminInfo] = useState(null); // Store admin info here
+  const adminId = "6736a6e54466ff850d99807e"; // Admin ID
+
+  // Fetch admin info on component mount
+  useEffect(() => {
+    const fetchAdminInfo = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/v1/paypal/getLink/${adminId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Error fetching admin info: ${response.statusText}`
+          );
+        }
+
+        const data = await response.json();
+        setAdminInfo(data.data); // Assuming `data.data` contains the admin info
+      } catch (error) {
+        console.error("Error fetching admin info:", error);
+      }
+    };
+
+    fetchAdminInfo();
+  }, []); 
+
+
   return (
     <div>
+      <p className="pb-5 text-gray-600">*** Please make the payment via PayPal using this link <strong>{adminInfo?.paypalLink}</strong> before entering the fund details. Verify your transaction ID and confirm the accuracy of the information provided.</p>
       <form
         onSubmit={handleSubmit}
         className="border p-4 rounded-lg space-y-4 text-gray-700"

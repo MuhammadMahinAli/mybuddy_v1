@@ -64,7 +64,7 @@ const GeneralStripeSentFundProposal = () => {
               </div>
 
               <div    onClick={() => handleOpenDetails(fundRqst)} className="cursor-pointer px-3 text-lg hidden lg:block  border-r-2 border-white text-center md:w-2/12 lg:w-4/12">
-             View details
+             View Details
                 
               </div>
               <div className="text-lg hidden md:block  border-r-2 border-white text-center md:w-2/12 lg:w-2/12">

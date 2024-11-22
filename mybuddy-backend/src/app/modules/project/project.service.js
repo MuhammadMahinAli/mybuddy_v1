@@ -70,13 +70,9 @@ export const getProjectsService = async (page, limit) => {
     const skip = (page - 1) * limit;
 
     // Fetch projects and populate user details
-    const projects = await Project.find().skip(skip).limit(limit).populate('user').sort({ createdAt: -1 });;
-      
-
+    const projects = await Project.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit).populate('user');
     const totalPage = await Project.countDocuments();
 
-    console.log("Projects:", projects);
-console.log("User IDs:", projects.map((p) => p.user));
     return {
       projects,
       totalPages: Math.ceil(totalPage / limit),

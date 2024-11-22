@@ -161,7 +161,7 @@ const GeneralPaypalSentFundProposal = () => {
                 </p>
                     <p className="text-gray-600">
                   <span className="font-medium pl-4 capitalize">
-                    <strong>Transation ID:</strong>
+                    <strong>Transaction ID:</strong>
                   </span>{" "}
                   {fundRequest?.transactionId}
                 </p>

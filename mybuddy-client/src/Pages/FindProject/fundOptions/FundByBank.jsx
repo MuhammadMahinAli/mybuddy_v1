@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAddBankTransferFundInfoMutation} from "../../../features/banktransferfund/bankTransferFundApi";
 import Swal from "sweetalert2";
 
@@ -94,8 +94,51 @@ const FundByBank = ({ selectedProject, userId,setSelectedProject,setIsPayModalOp
       console.log(error);
     }
   };
+  const [adminInfo, setAdminInfo] = useState(null); // Store admin info here
+  const adminId = "6736a6e54466ff850d99807e"; // Admin ID
+
+  // Fetch admin info on component mount
+  useEffect(() => {
+    const fetchAdminInfo = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/v1/adminBankInfo/getAdminBankInfo/${adminId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Error fetching admin info: ${response.statusText}`
+          );
+        }
+
+        const data = await response.json();
+        setAdminInfo(data.data); // Assuming `data.data` contains the admin info
+      } catch (error) {
+        console.error("Error fetching admin info:", error);
+      }
+    };
+
+    fetchAdminInfo();
+  }, []);
+  console.log(adminInfo); 
+
   return (
     <div>
+      <div>
+      <p className=" text-gray-600">*** Please make the payment via Bank using the following bank details before entering the fund details. Verify your transaction ID and confirm the accuracy of the information provided.</p>
+      <ul className="py-5 space-y-1">
+        <li className="text-gray-600"><strong>Account Holder:</strong> {adminInfo?.accountName}</li>
+        <li className="text-gray-600"><strong>Bank:</strong> {adminInfo?.bankName}</li>
+        <li className="text-gray-600"><strong>Branch:</strong> {adminInfo?.branchName}</li>
+        <li className="text-gray-600 "><strong>A/C:</strong> {adminInfo?.bankAccountNumber}</li>
+      </ul>
+      </div>
       <form
         onSubmit={handleSubmit}
         className="border p-4 cursor-green-600 rounded-lg space-y-4 text-gray-700"
