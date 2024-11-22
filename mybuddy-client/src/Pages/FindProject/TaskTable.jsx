@@ -11,7 +11,7 @@ const TaskTable = ({ tasks, setSelectedTasks,  selectedTasks, theme, setIsOpen, 
   const [checkedStates, setCheckedStates] = useState(tasks?.map(() => false));
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(null);
 
-  console.log("l", checkedStates, selectedTaskIndex, selectedTasks, tasks);
+  //console.log("l", checkedStates, selectedTaskIndex, selectedTasks, tasks);
 
   // const theme = useSelector((state) => state.theme.theme);
   const handleTaskButtonClick = (index) => {
@@ -47,7 +47,7 @@ const TaskTable = ({ tasks, setSelectedTasks,  selectedTasks, theme, setIsOpen, 
   };
 
 
-console.log('ffd',   selectedTasks);
+//console.log('ffd',   selectedTasks);
 
   return (
     <div className={` md:-my-3 xl:m-0 py-5`}>

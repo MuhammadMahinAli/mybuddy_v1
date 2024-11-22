@@ -22,6 +22,8 @@ const MobileSidebar = ({
   openProject,
   openRequest,
   openSetting,
+  handleMyTools,
+  openMyTools,
   logout
 }) => {
   const{singleUser} = useContext(AuthContext);
@@ -215,6 +217,35 @@ const MobileSidebar = ({
             <div
               className={`${
                 openFrndRqst === true ? "block" : "hidden"
+              } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
+            ></div>
+          </li>
+          {/* my tools*/}
+          <li
+            onClick={handleMyTools}
+            className={`${
+              openMyTools === true ? "show-content pl-2" : "hide-content"
+            } border-b  cursor-pointer`}
+          >
+            {openMyTools && (
+              <div className=" bg-[#e4ecf7] h-4 rounded-br-[60px]"></div>
+            )}
+
+            <div
+              className={`${
+                openMyTools === true
+                  ? "bg-[#f3f6f8] rounded-[20px]  py-2"
+                  : "bg-[#e4ecf7]  py-3"
+              } flex relative items-center justify-center`}
+            >
+              <Link to="/dashboard/my-tools">
+                <img src="/rqst2.svg" className="h-5" />
+              </Link>
+            </div>
+
+            <div
+              className={`${
+                openMyTools === true ? "block" : "hidden"
               } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
             ></div>
           </li>

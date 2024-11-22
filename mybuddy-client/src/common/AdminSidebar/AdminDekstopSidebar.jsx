@@ -14,7 +14,12 @@ const AdminDekstopSidebar = ({
   logout,
   userData,
   handleSetting,
-  openSetting
+  openSetting,
+  handleCreateTools,
+  openCreateTools,
+  handleAllTools,
+  openAllTool,
+
 }) => {
   const { singleUser } = useContext(AuthContext);
   const userImage = singleUser?.data?.profilePic
@@ -206,41 +211,41 @@ const AdminDekstopSidebar = ({
         </ul>
       </div>
       {/* center */}
-      {/* <div className="m-4 lg:w-[230px] xl:w-[290px] 2xl:w-[300px] 3xl:w-[310px] pt-2 pb-9 flex justify-center items-center rounded-[25px] bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">
+  <div className="m-4 lg:w-[230px] xl:w-[230px] 2xl:w-[230px] 3xl:w-[260px] pt-2 pb-9 flex justify-center items-center rounded-[25px] bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">
         <ul className="text-xl font-semibold relative">
           <li
-            onClick={handleFund}
+            onClick={handleCreateTools}
             className={`${
-              openFund === true ? "show-content" : "hide-content"
-            } border-b  cursor-pointer  relative  mt-3 lg:-right-[7px] xl:-right-[11px] 2xl:-right-[16px] 3xl:-right-[23px]`}
+              openCreateTools === true ? "show-content" : "hide-content"
+            } border-b bg-red-700 cursor-pointer  relative  mt-3 lg:-right-[7px] xl:-right-[11px] 2xl:-right-[16px] 3xl:-right-[23px]`}
           >
             <div
               className={`${
-                !openFund && "hidden"
+                !openCreateTools && "hidden"
               } bg-[#e4ecf7] h-5 rounded-br-[60px]`}
             ></div>
 
             <Link
-              to="/admin/fund-proposal"
+              to="/admin/tools"
               className={`${
-                openFund === true
+                openCreateTools === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
-                  : "bg-[#e4ecf7] border-b border-white py-3"
+                  : "bg-[#e4ecf7] w-52 border-b border-white py-3"
               } flex relative lg:space-x-2 xl:space-x-4  items-center  lg:pl-5 xl:pl-3`}
             >
               <img src="/fund2.svg" className="h-7" />
               <p className="lg:text-[18px] xl:text-[22px] font-medium gray600">
-                All Fund
+                Add Tool
               </p>
             </Link>
 
             <div
               className={`${
-                openFund === true ? "block" : "hidden"
-              } bg-[#e4ecf7]  h-5 rounded-tr-[50px]`}
+                openCreateTools === true ? "block" : "hidden"
+              } bg-[#e4ecf7] w-52 h-5 rounded-tr-[50px]`}
             ></div>
           </li>
-          <li
+          {/* <li
             onClick={handleFriendRqst}
             className={`${
               openFrndRqst === true ? "show-content" : "hide-content"
@@ -271,41 +276,41 @@ const AdminDekstopSidebar = ({
                 openFrndRqst === true ? "block" : "hidden"
               } bg-[#e4ecf7]  h-5 rounded-tr-[50px]`}
             ></div>
-          </li>
+          </li>*/}
           <li
-            onClick={handleMeeting}
+            onClick={handleAllTools}
             className={`${
-              openMeet === true ? "show-content" : "hide-content"
+              openAllTool === true ? "show-content" : "hide-content"
             } border-b  cursor-pointer  relative  ml-1 lg:-right-[7px] xl:-right-[11px] 2xl:-right-[16px] 3xl:-right-[23px]`}
           >
             <div
               className={`${
-                !openMeet && "hidden"
+                !openAllTool && "hidden"
               } bg-[#e4ecf7] h-5 rounded-br-[60px]`}
             ></div>
 
             <Link
-              to="/admin/meeting-schedule"
+              to="/admin/all-tools"
               className={`${
-                openMeet === true
+                openAllTool === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
                   : "bg-[#e4ecf7] py-3"
               } flex space-x-3 items-center pl-3 pr-4`}
             >
               <img src="/video.svg" className="h-4" />
               <p className="lg:text-[18px] xl:text-[22px] font-medium text-xl gray600 xl:pr-5">
-                Meeting Schedule
+                All Tool
               </p>
             </Link>
 
             <div
               className={`${
-                openMeet === true ? "block" : "hidden"
+                openAllTool === true ? "block" : "hidden"
               } bg-[#e4ecf7]  h-5 rounded-tr-[50px]`}
             ></div>
-          </li>
+          </li> 
         </ul>
-      </div> */}
+      </div> 
       {/* bottom */}
       {/* <Link
         to="/user/edit-profile"
@@ -326,7 +331,7 @@ const AdminDekstopSidebar = ({
 
       {/* setting logout */}
       <div className="space-y-3">
-      <Link to='/setting'
+      <Link to='/admin/setting'
           onClick={handleSetting}
           className={`${
             openSetting === true ? "bg-[#dce2ea]" : "bg-[#e4ecf7] py-4"

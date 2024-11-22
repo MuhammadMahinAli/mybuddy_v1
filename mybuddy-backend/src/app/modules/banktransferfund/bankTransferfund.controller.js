@@ -1,7 +1,7 @@
 import { catchAsync } from "../../../utils/catchAsync.js";
 import httpStatus from "http-status";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { deleteBankFundService, getAllBankTransferFundInfoService, getBankFundByProjectService, getBankFundByRequestedToService, saveBankTransferFundInfoService, updateBankTransferFundStatusService } from "./bankTransferfund.service.js";
+import { deleteBankFundService, getAllBankTransferFundInfoService, getBankFundByProjectService, getBankFundByRequestedByService, getBankFundByRequestedToService, saveBankTransferFundInfoService, updateBankTransferFundStatusService } from "./bankTransferfund.service.js";
 
 
 
@@ -54,6 +54,19 @@ export const updateBankTransferFundStatusServiceController = catchAsync(async (r
 export const getBankFundByRequestedToController = catchAsync(async (req, res) => {
   const {id} = req.params;
   const recieveFundRequest = await getBankFundByRequestedToService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success:true,
+    message:"All recieve fund request is retrived successfully!",
+    data: recieveFundRequest,
+
+  })
+})
+// -------------  get recieve fundProposal [ requestedBy ]
+
+export const getBankFundByRequestedByController = catchAsync(async (req, res) => {
+  const {id} = req.params;
+  const recieveFundRequest = await getBankFundByRequestedByService(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success:true,

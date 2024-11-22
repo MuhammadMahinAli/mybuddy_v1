@@ -1,4 +1,5 @@
 import { Project } from "./project.model.js";
+import { Member} from "../member/member.model.js"
 import httpStatus from "http-status";
 import { ApiError } from "../../../handleError/apiError.js";
 import { Task } from "../task/task.model.js";
@@ -56,13 +57,39 @@ export const createProject = async (postData) => {
 //   }
 // };
 // ************** get projects  01815000012
-export const getProjectsService = async () => {
-  const projects = await Project.find({ })
-    .populate("user")
-    .populate("tasks")
-    // .sort({ createdAt: -1 });
-  return projects;
+// export const getProjectsService = async () => {
+//   const projects = await Project.find({ })
+//     .populate("user")
+//     .populate("tasks")
+//     // .sort({ createdAt: -1 });
+//   return projects;
+// };
+
+export const getProjectsService = async (page, limit) => {
+  try {
+    const skip = (page - 1) * limit;
+
+    // Fetch projects and populate user details
+    const projects = await Project.find().skip(skip).limit(limit).populate('user').sort({ createdAt: -1 });;
+      
+
+    const totalPage = await Project.countDocuments();
+
+    console.log("Projects:", projects);
+console.log("User IDs:", projects.map((p) => p.user));
+    return {
+      projects,
+      totalPages: Math.ceil(totalPage / limit),
+      currentPage: page,
+    };
+    
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    throw new Error("Failed to retrieve projects");
+  }
 };
+
+
 
 export const getProjectByUserService = async (id) => {
   const projectByUser = await Project.find({ user: id })
@@ -249,7 +276,7 @@ export const getAllProjectService = async (page, limit, uniqueId) => {
   } 
 
   // If no uniqueId, fetch paginated results
-  const projects = await Project.find().skip(skip).limit(limit);
+  const projects = await Project.find().skip(skip).limit(limit).populate('user');
   const totalMembers = await Project.countDocuments();
 
   return {

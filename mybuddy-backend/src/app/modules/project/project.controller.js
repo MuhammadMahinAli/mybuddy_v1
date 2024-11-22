@@ -49,16 +49,40 @@ export const deleteTaskFromProjectController = catchAsync(async (req, res) => {
 
 // ************** get all project
 
+// export const getAllProjects = catchAsync(async (req, res) => {
+//   const posts = await getProjectsService();
+
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "User's Project retrieved successfully!",
+//     data: posts,
+//   });
+// });
+
 export const getAllProjects = catchAsync(async (req, res) => {
-  const posts = await getProjectsService();
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 5;
+
+  const result = await getAllProjectService(page, limit);
+
+  if (result.message) {
+    return sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: result.message,
+      data: [],
+    });
+  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "User's Project retrieved successfully!",
-    data: posts,
+    message: "Projects is retrieved successfully!",
+    data: result,
   });
 });
+
 
 export const getAllProjectByUserController = catchAsync(async (req, res) => {
   const collections = await getProjectByUserService(req?.params?.id);

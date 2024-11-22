@@ -17,7 +17,7 @@ import blockChain from "../../assets/projectDetail/block-chain.png";
 import docx from "../../assets/projectDetail/docx.png";
 import pdf from "../../assets/projectDetail/pdf1.png";
 import { useContext, useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
 import { useGetAllProjectQuery } from "../../features/project/projectApi";
 import { useSelector } from "react-redux";
 import ImageSlider from "./ImageSlider";
@@ -48,6 +48,7 @@ import FundByPaypal from "./fundOptions/FundByPaypal";
 import FundByPayoneer from "./fundOptions/FundByPayoneer";
 import FundByBank from "./fundOptions/FundByBank";
 import FundByStripe from "./fundOptions/FundByStripe";
+import axios from "axios";
 
 const FindProject = () => {
   //const { user } = useSelector((state) => state.auth);
@@ -85,59 +86,85 @@ const FindProject = () => {
     { data: responseData, error: responseError },
   ] = useCreateProjectJoinRequestMutation();
 
-  const {
-    data: allProjects,
-    isLoading: isFetchingProject,
-    error,
-  } = useGetAllProjectQuery();
-  //const projects = allProjects?.data;
+  // const {
+  //   data: allProjects,
+  //   isLoading: isFetchingProject,
+  //   error,
+  // } = useGetAllProjectQuery();
+  // //const projects = allProjects?.data;
 
-  const projects = allProjects?.data
+  // const projects = allProjects?.data
+  //   ?.slice()
+  //   .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  const [allProjects, setAllProjects] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const fetchProjects = async (page = 1) => {
+    setLoading(true); // Set loading to true when fetching data
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/project/getAll`,
+        {
+          params: {
+            page,
+            limit: 5,
+          },
+        }
+      );
+      const data = response.data.data;
+
+      console.log("dd", data);
+
+      setAllProjects(data.projects || []);
+      setCurrentPage(data.currentPage || 1);
+      setTotalPages(data.totalPages || 1);
+
+      // Set isFiltered to true if uniqueIdFilter is applied, else false
+      
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data.message ===
+          "No project matched with the provided uniqueId."
+      ) {
+        setAllProjects([]); // No match found
+      }
+    }
+    setLoading(false); // Set loading to false when data is fetched
+  // Set loading to false when data is fetched
+  };
+
+  const projects = allProjects
     ?.slice()
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
+  // Initial fetch of projects
+  useEffect(() => {
+    fetchProjects(currentPage);
+  }, [currentPage]);
+  
+  
   const handlePaymentSelection = (payment) => {
     setSelectedPayment(payment);
   };
 
   // Mapping through sorted projects
 
-  useEffect(() => {
-    setIsLoading(true);
-    // Simulate loading for 2 seconds
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-  }, []);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   // Simulate loading for 2 seconds
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 5000);
+  // }, []);
 
   const toggleDescription = (i) => {
     setOpenDescriptionIndex(openDescriptionIndex === i ? null : i);
   };
-  //   window.location.href = "https://buy.stripe.com/test_7sIfZP7d6bha3Qs5kk";
-  // const handleJoinClick = (project) => {
-  //   if (!userId) {
-  //     navigate("/");
-  //     console.log(selectedTasks);
-  //   } else if (selectedTasks?.length === 0) {
-  //     Swal.fire({
-  //       icon: "warning",
-  //       title: "Oops !",
-  //       text: "I Think, You Forget to Select Task.",
-  //     });
-  //     return;
-  //   } else {
-  //     setSelectedProject(project);
-  //     const data = {
-  //       projectId: project?._id,
-  //       requestedBy: userId,
-  //       requestedTo: project?.user?._id,
-  //       status: "Pending",
-  //       tasks: selectedTasks,
-  //     };
-  //     // console.log("pro", data);
-  //     createProjectJoinRequest(data);
-  //   }
-  // };
+
 
   const handleJoinClick = (project) => {
     console.log(project);
@@ -175,9 +202,11 @@ const FindProject = () => {
         title: "Well Done !!!",
         text: "Your request has been sent successfully!",
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
+      setSelectedProject(null);
+      setSelectedTasks([])
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 2500);
 
     } else if (responseError?.data) {
       Swal.fire({
@@ -212,9 +241,7 @@ const FindProject = () => {
     }
   };
 
-  //------------ paymnet start
 
-  //------------ paymnet end
   //------------ switch start
   const [selectedOption, setSelectedOption] = useState("donation"); // default selection
   //const [loading, setLoading] = useState(false);
@@ -223,9 +250,11 @@ const FindProject = () => {
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
   };
+
+  console.log("one",   selectedProject,selectedTasks);
   //------------ switch end
 
-  if (isLoading) {
+  if (loading) {
     return <Loading />;
   }
 
@@ -312,7 +341,8 @@ const FindProject = () => {
                               {project?.user?.name?.lastName}
                             </span>
                           </p>
-                          <p
+                          { project?.user?.country &&
+                            <p
                             className={`${
                               theme === "light" ? "graish" : "text-white"
                             } text-[14px] md:text-[16px] xl:text-[20px]`}
@@ -327,7 +357,8 @@ const FindProject = () => {
                               {project?.user?.country}
                             </span>
                           </p>
-                          <p className="graish text-[11px] lg:text-[13px] 3xl:text-[16px] font-medium">
+                          }
+                          <p className="graish text-[11px] lg:text-[16px] 3xl:text-[18px] font-medium pl-1 pt-1">
                             {statuss === "ended"
                               ? `Project: ${
                                   project.projectName
@@ -344,45 +375,7 @@ const FindProject = () => {
                       </div>
                     </Link>
 
-                    {/* {project?.user?._id !== userId && (
-                      <>
-                        {theme === "light" ? (
-                          buttonText === "Join" ? (
-                            <div>
-                              <button
-                                onClick={() => handleJoinClick(project)}
-                                className="flex items-center space-x-2 lg:text-sm xl:text-lg rounded-[13px] font-semibold px-3 py-2 xl:px-4 xl:py-2 bg-gradient-to-l from-[#2adba4] to-[#69f9cc] text-white"
-                              >
-                                {buttonText}
-                                <FaPlus className="text-[15px] md:text-lg ml-1 md:ml-2" />
-                              </button>
-                            </div>
-                          ) : (
-                            <div>
-                              <div
-                                onClick={() => handleJoinClick(project)}
-                                className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]"
-                              >
-                                <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
-                                  {buttonText}
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        ) : (
-                          <button
-                            onClick={
-                              buttonText === "Join"
-                                ? () => handleJoinClick(project)
-                                : undefined
-                            }
-                            className="profileFriendRequestBtn"
-                          >
-                            <p>{buttonText}</p>
-                          </button>
-                        )}
-                      </>
-                    )} */}
+                   
                     {project?.user?._id !== userId && (
                       <>
                         {project.isMemberRequestAccept ? (
@@ -840,6 +833,30 @@ const FindProject = () => {
             );
           })}
         </div>
+        { projects?.length !== 0 && loading === false && (
+          <div className=" pagination flex items-center justify-center mt-5">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
+            >
+           <FaRegArrowAltCircleLeft  className="text-2xl"  />
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
+            >
+                <FaRegArrowAltCircleRight className="text-2xl" />
+            </button>
+
+          </div>
+        )}
       </div>
     </>
   );

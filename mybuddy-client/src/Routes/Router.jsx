@@ -44,6 +44,9 @@ import AdminAllUser from "../Pages/Admin/AdminAllUser/AdminAllUser";
 import AdminAllFund from "../Pages/Admin/AdminAllFund/AdminAllFund";
 import AdminLogin from "../Pages/Admin/AdminLogin/AdminLogin";
 import AdminSetting from "../Pages/Admin/AdminSetting/AdminSetting";
+import AdminTools from "../Pages/Admin/AdminCreateTools/AdminTools";
+import AdminAllTool from "../Pages/Admin/AdminAllTool/AdminAllTool";
+import GeneralMyTools from "../Pages/GeneralDashboard/GeneralMyTools/GeneralMyTools";
 
 
 const router = createBrowserRouter([
@@ -140,6 +143,10 @@ const router = createBrowserRouter([
         element: <GeneralFundProposal />,
       },
       {
+        path: "/dashboard/my-tools",
+        element: <GeneralMyTools />,
+      },
+      {
         path: "/dashboard/setting",
         element: <SettingForm />,
       },
@@ -181,6 +188,14 @@ const router = createBrowserRouter([
       {
         path: "/admin/setting",
         element: <AdminSetting />,
+      },
+      {
+        path: "/admin/tools",
+        element: <AdminTools />,
+      },
+      {
+        path: "/admin/all-tools",
+        element: <AdminAllTool />,
       },
     
       // {

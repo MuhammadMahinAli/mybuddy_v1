@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 const FundByPayoneer = ({
   selectedProject,
   setSelectedProject,
-  isPayModalOpen,
+  setIsPayModalOpen,
 }) => {
   const { getUsersPayoneerLink, userId,user } = useContext(AuthContext);
  // console.log("getUsersPayoneerLink", getUsersPayoneerLink);
@@ -84,10 +84,10 @@ const FundByPayoneer = ({
         date: "",
       });
       setSelectedProject(null);
-      isPayModalOpen(false);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
+      setIsPayModalOpen(false);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 2500);
     } catch (error) {
       console.log(error);
       // if (error) {

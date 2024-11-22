@@ -37,6 +37,13 @@ export const bankTransferFundApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["BankTransferFund"],
     }),
+    getBankFundByRequestedBy: builder.query({
+      query: (id) => ({
+        url: `/bankTransferFund/getFundByRequestedBy/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["BankTransferFund"],
+    }),
 
     deleteBankFundRequest: builder.mutation({
       query: (id) => ({
@@ -74,6 +81,6 @@ export const bankTransferFundApi = apiSlice.injectEndpoints({
   }),
 });
 
- export const { useGetBankFundByRequestedToQuery,useDeleteBankFundRequestMutation,useGetAllBankTransferFundInfoQuery ,useUpdateBankFundStatusMutation,useAddBankTransferFundInfoMutation } = bankTransferFundApi;
+ export const { useGetBankFundByRequestedByQuery,useGetBankFundByRequestedToQuery,useDeleteBankFundRequestMutation,useGetAllBankTransferFundInfoQuery ,useUpdateBankFundStatusMutation,useAddBankTransferFundInfoMutation } = bankTransferFundApi;
 
 // useGetAllPostQuery

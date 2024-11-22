@@ -1,7 +1,7 @@
 import { catchAsync } from "../../../utils/catchAsync.js";
 import httpStatus from "http-status";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { deletePaypalFundService, getAllPaypalFundInfoService, getPaypalFundByProjectService, getPaypalFundByRequestedToService, savePaypalFundInfoService, updatePaypalFundStatusService } from "./paypalfundservice.js";
+import { deletePaypalFundService, getAllPaypalFundInfoService, getPaypalFundByProjectService, getPaypalFundByRequestedByService, getPaypalFundByRequestedToService, savePaypalFundInfoService, updatePaypalFundStatusService } from "./paypalfundservice.js";
 
 
 
@@ -44,6 +44,19 @@ export const updatePaypalFundStatusServiceController = catchAsync(async (req, re
     success: true,
     message: "Bank Transfer Fund status updated successfully",
     data: updatedPaypal,
+  });
+});
+
+// -------------  get recieve fundProposal [ requestedBy ]
+
+export const getPaypalFundByRequestedByController = catchAsync(async (req, res) => {
+  const {id} = req.params;
+  const recieveFundRequest = await getPaypalFundByRequestedByService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success:true,
+    message:"All recieve fund request is retrived successfully!",
+    data: recieveFundRequest,
   });
 });
 

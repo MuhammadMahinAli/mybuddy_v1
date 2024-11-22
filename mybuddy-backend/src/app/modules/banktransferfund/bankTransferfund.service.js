@@ -53,6 +53,18 @@ export const getBankFundByRequestedToService = async (id) => {
   return recieveFundRequests;
 };
 
+//--------- get recieve fundProposal [ requestedTo ]
+
+export const getBankFundByRequestedByService = async (id) => {
+  const recieveFundRequests = await BankTransferFund.find({ requestedBy: id })
+  .populate("requestedBy")
+  .populate("requestedTo")
+  .sort(
+    { createdAt: -1 }
+  );
+  return recieveFundRequests;
+};
+
 export const getBankFundByProjectService = async (id) => {
   const recieveFundRequests = await BankTransferFund.find({ fundingProject: id })
   .populate("requestedBy")

@@ -1,5 +1,5 @@
 import express from "express";
-import { deletePaypalFundController, getAllPaypalFundInfoController, getPaypalFundByProjectController, getPaypalFundByRequestedToController, savePaypalFundInfoController, updatePaypalFundStatusServiceController } from "./paypalfund.controller.js";
+import { deletePaypalFundController, getAllPaypalFundInfoController, getPaypalFundByProjectController, getPaypalFundByRequestedByController, getPaypalFundByRequestedToController, savePaypalFundInfoController, updatePaypalFundStatusServiceController } from "./paypalfund.controller.js";
 const router = express.Router();
 
 
@@ -7,6 +7,7 @@ router.post("/addInfo", savePaypalFundInfoController);
 router.get('/getAll', getAllPaypalFundInfoController);
 router.put("/updateStatus/:id",updatePaypalFundStatusServiceController);
 router.delete("/deleteFundRequest/:id", deletePaypalFundController);
+router.get('/getFundByRequestedBy/:id', getPaypalFundByRequestedByController);
 router.get('/getFundByRequestedTo/:id', getPaypalFundByRequestedToController);
 router.get('/getFundByProject/:id', getPaypalFundByProjectController);
 

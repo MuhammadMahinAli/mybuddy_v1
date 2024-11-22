@@ -42,27 +42,41 @@ export const updatePaypalFundStatusService = async (id, status) => {
   return updatedPaypalFundStatus;
 };
 
-//-------- get all
+//-------- get all by requested by
 
-export const getPaypalFundByRequestedToService = async (id) => {
-  const recieveFundRequests = await PaypalFund.find({ requestedTo: id })
+export const getPaypalFundByRequestedByService = async (id) => {
+  const sentFundRequests = await PaypalFund.find({ requestedBy: id })
   .populate("requestedBy")
   .populate("requestedTo")
   .sort(
     { createdAt: -1 }
   );
-  return recieveFundRequests;
+  return sentFundRequests;
 };
+
+//-------- get all by requested to
+
+export const getPaypalFundByRequestedToService = async (id) => {
+  const sentFundRequests = await PaypalFund.find({ requestedTo: id })
+  .populate("requestedBy")
+  .populate("requestedTo")
+  .sort(
+    { createdAt: -1 }
+  );
+  return sentFundRequests;
+};
+
+
 //-------- get all by project id
 
 export const getPaypalFundByProjectService = async (id) => {
-  const recieveFundRequests = await PaypalFund.find({ fundingProject : id })
+  const fundRequests = await PaypalFund.find({ fundingProject : id })
   .populate("requestedBy")
   .populate("requestedTo")
   .sort(
     { createdAt: -1 }
   );
-  return recieveFundRequests;
+  return fundRequests;
 };
 
   // //------- get paypal link by user

@@ -30,7 +30,7 @@ const PayoneerFundSchema = new Schema(
     transactionId: {
       type: String,
     },
-    payponeerEmail: {
+    payoneerEmail: {
       type: String,
     },
     amount: {

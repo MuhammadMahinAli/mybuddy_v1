@@ -1,153 +1,97 @@
-import { useContext, useState } from "react";
-import filter from "../../../assets/filter.png";
-import { AuthContext } from "../../../Context/UserContext";
-import GeneralSentFundProposal from "./Stripe/GeneralStripeSentFundProposal";
-import GeneralRecieveFundProposal from "./Stripe/GeneralStripeStripeRecieveFundProposal";
-import Swal from "sweetalert2";
-import { useDeleteFundRequestMutation } from "../../../features/fund/fundApi";
-import GeneralPaypalFundProposal from "./Paypal/GeneralPaypalFundProposal";
-import GeneralPayoneerFundProposal from "./Payoneer/GeneralPayoneerFundProposal";
-import GeneralStripeFundProposal from "./Stripe/GeneralStripeFundProposal";
-import GeneralBankFundProposal from "./Bank/GeneralBankFundProposal";
-import FundTypeFilter from "./FundTypeFilter";
-const GeneralFundProposal = () => {
-  // const { getFundByRequestedBy, getFundByRequestedTo } =
-  //   useContext(AuthContext);
-  // const [deleteFundRequest] = useDeleteFundRequestMutation();
 
-  // const allSentFundRequest = getFundByRequestedBy?.data;
-  // const allRecieveFundRequest = getFundByRequestedTo?.data;
+import  { useState } from "react";
+import GeneralSentPaypalFundProposal from "./Paypal/GeneralSentPaypalFundProposal";
+import GeneralPaypalRecieveFundProposal from "./Paypal/GeneralPaypalRecieveFundProposal";
+import GeneralPayoneerSentFundProposal from "./Payoneer/GeneralPayoneerSentFundProposal";
+import GeneralPayoneerRecieveFundProposal from "./Payoneer/GeneralPayoneerRecieveFundProposal";
+import GeneralStripeSentFundProposal from "./Stripe/GeneralStripeSentFundProposal";
+import GeneralStripeStripeRecieveFundProposal from "./Stripe/GeneralStripeStripeRecieveFundProposal";
+import GeneralBankSentFundProposal from "./Bank/GeneralBankSentFundProposal";
+import GeneraBanklRecieveFundProposal from "./Bank/GeneraBanklRecieveFundProposal";
 
-  const [showFilterOption, setShowFilterOption] = useState(false);
+const FundTypeSelector = () => {
+  const [fundType, setFundType] = useState("paypal");
+  const [action, setAction] = useState("sent"); // "sent" or "receive"
+  //const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  const [isOpenPaypal, setIsOpenPaypal] = useState(false);
-  const [isOpenPayoneer, setIsOpenPayoneer] = useState(false);
-  const [isOpenStripe, setIsOpenStripe] = useState(false);
-  const [isOpenBank, setIsOpenBank] = useState(false);
-
-  const togglePaypal = () => {
-    setIsOpenPaypal(true);
-    setIsOpenPayoneer(false);
-    setIsOpenStripe(false);
-    setIsOpenBank(false);
-    setShowFilterOption(false);
-  };
-  const togglePayoneer = () => {
-    setIsOpenPaypal(false);
-    setIsOpenPayoneer(true);
-    setIsOpenStripe(false);
-    setIsOpenBank(false);
-    setShowFilterOption(false);
-  };
-  const toggleStripe = () => {
-    setIsOpenPaypal(false);
-    setIsOpenPayoneer(false);
-    setIsOpenStripe(true);
-    setIsOpenBank(false);
-    setShowFilterOption(false);
+  const handleFundTypeChange = (type) => {
+    setFundType(type);
+    setAction(""); // Reset action when fund type changes
+  //  setDropdownVisible(true); 01677084904
   };
 
-  const toggleBank = () => {
-    setIsOpenPaypal(false);
-    setIsOpenPayoneer(false);
-    setIsOpenStripe(false);
-    setIsOpenBank(true);
-    setShowFilterOption(false);
+  const handleActionChange = (actionType) => {
+    setAction(actionType);
+    //setDropdownVisible(false);
   };
-  // //------- delete fund request
 
-  // const handleDeleteFundRequest = (id) => {
-  //   console.log(id);
-  //   Swal.fire({
-  //     title: "Are you sure to delete it ?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       deleteFundRequest(id)
-  //         .unwrap()
-  //         .then(() => {
-  //           Swal.fire(
-  //             "Well done!",
-  //             "Your request has been deleted.",
-  //             "success"
-  //           );
-  //           // setTimeout(() => {
-  //           //   window.location.reload();
-  //           // }, 2500);
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //           Swal.fire(
-  //             "Error!",
-  //             "There was an issue to cancelled request.",
-  //             "error"
-  //           );
-  //         });
-  //     }
-  //   });
-  // };
+  const renderComponent = () => {
+    if (fundType === "paypal" && action === "sent") {
+      return <GeneralSentPaypalFundProposal />;
+    }
+    if (fundType === "paypal" && action === "receive") {
+      return <GeneralPaypalRecieveFundProposal />;
+    }
+    if (fundType === "payoneer" && action === "sent") {
+      return <GeneralPayoneerSentFundProposal />;
+    }
+    if (fundType === "payoneer" && action === "receive") {
+      return <GeneralPayoneerRecieveFundProposal />;
+    }
+    if (fundType === "stripe" && action === "sent") {
+      return <GeneralStripeSentFundProposal />;
+    }
+    if (fundType === "stripe" && action === "receive") {
+      return <GeneralStripeStripeRecieveFundProposal />;
+    }
+    if (fundType === "bank" && action === "sent") {
+      return <GeneralBankSentFundProposal />;
+    }
+    if (fundType === "bank" && action === "receive") {
+      return <GeneraBanklRecieveFundProposal />;
+    }
+    return null; // Default case
+  };
 
   return (
-    <div className="relative gray600 space-y-6 w-11/12 md:w-full pb-6">
-      <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
-        FUND PROPOSAL
-      </h1>
-      <div className="flex items-center space-x-3 focus:none ">
-        <select className="h-8 bg-transparent focus:none outline-none shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]  rounded-[10px]">
-          <option onClick={togglePaypal} value="paypal">
-            PayPal
-          </option>
-          <option onClick={togglePayoneer}>Payoneer</option>
-          <option onClick={toggleStripe}>Stripe</option>
-          <option onClick={toggleBank}>Bank Transfer</option>
-        </select>
-        
-        <FundTypeFilter
-          setShowFilterOption={setShowFilterOption}
-          showFilterOption={showFilterOption}
-          isOpenPaypal={isOpenPaypal}
-          isOpenPayoneer={isOpenPayoneer}
-          isOpenStripe={isOpenStripe}
-          isOpenBank={isOpenBank}
-        />
-
-        {/* <button
-          onClick={() => setShowFilterOption(!showFilterOption)}
-          className={`flex justify-center  items-center space-x-1 w-16 my-3 md:px-3 py-1 lg:px-4 md:py-2 text-[14px] md:text-[16px]  font-semibold shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] h-8 rounded-[10px]`}
+    <div >
+      {/* Fund Type Dropdown */}
+      <div className="space-x-3">
+        <select
+          className="h-8 bg-transparent outline-none shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] rounded-[10px] mb-4"
+          onChange={(e) => handleFundTypeChange(e.target.value)}
+          value={fundType}
         >
-          <img src={filter} />
-          <span className="hidden">Filter</span>
-        </button> */}
+          <option value="">Select Fund Type</option>
+          <option value="paypal">PayPal</option>
+          <option value="payoneer">Payoneer</option>
+          <option value="stripe">Stripe</option>
+          <option value="bank">Bank Transfer</option>
+        </select>
+
+        {/* Request Type Dropdown */}
+     
+          <select
+            className="h-8 bg-transparent outline-none shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] rounded-[10px]"
+            onChange={(e) => handleActionChange(e.target.value)}
+            value={action}
+          >
+            <option value="">Select Request Type</option>
+            <option value="sent">Sent Request</option>
+            <option value="receive">Receive Request</option>
+          </select>
+        
       </div>
 
-      {/* filt */}
-      {/* {showFilterOption && (
-        <ul className="w-40 absolute top-20 left-1  bg-white border rounded-lg border-gray-300 shadow-lg mt-2 z-10">
-          <li
-            onClick={toggleSentRequest}
-            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-          >
-            Sent Request
-          </li>
-          <li
-            onClick={toggleRecieveRequest}
-            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-          >
-            Recieve Request
-          </li>
-        </ul>
-      )} */}
-      {isOpenPaypal && <GeneralPaypalFundProposal />}
-      {isOpenPayoneer && <GeneralPayoneerFundProposal />}
-      {isOpenStripe && <GeneralStripeFundProposal />}
-      {isOpenBank && <GeneralBankFundProposal />}
+      {/* Render Components */}
+      <div>{renderComponent()}</div>
+      { 
+  (fundType === "stripe" || fundType === "bank" || fundType === "payoneer" || fundType === "paypal") && 
+  action === "" && 
+  <p className="text-xl pt-5">Select a Request Type</p>
+}
     </div>
   );
 };
 
-export default GeneralFundProposal;
+export default FundTypeSelector;

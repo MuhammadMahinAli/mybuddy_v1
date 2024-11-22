@@ -36,6 +36,13 @@ export const payoneerFundApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["PayoneerFund"],
     }),
+    getPayoneerFundByRequestedBy: builder.query({
+      query: (id) => ({
+        url: `/payoneerFund/getFundByRequestedBy/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["PayoneerFund"],
+    }),
 
     deletePayoneerFundRequest: builder.mutation({
       query: (id) => ({
@@ -73,6 +80,6 @@ export const payoneerFundApi = apiSlice.injectEndpoints({
   }),
 });
 
- export const { useGetPayoneerFundByRequestedToQuery,useDeletePayoneerFundRequestMutation,useGetAllPayoneerFundInfoQuery,useUpdatePayoneerFundStatusMutation,useAddPayoneerFundInfoMutation } = payoneerFundApi;
+ export const { useGetPayoneerFundByRequestedByQuery,useGetPayoneerFundByRequestedToQuery,useDeletePayoneerFundRequestMutation,useGetAllPayoneerFundInfoQuery,useUpdatePayoneerFundStatusMutation,useAddPayoneerFundInfoMutation } = payoneerFundApi;
 
 // useGetAllPostQuery

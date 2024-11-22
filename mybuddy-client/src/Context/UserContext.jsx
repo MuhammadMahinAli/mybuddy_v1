@@ -31,10 +31,11 @@ import { useGetFundByRequestedByQuery, useGetFundByRequestedToQuery } from "../f
 import { useGetAllMeetingByCreatorQuery, useGetMeetingByMeetingMemberQuery } from "../features/meeting/meetingApi";
 import { useGetUsersPaypalLinkQuery } from "../features/paypal/paypalApi";
 import { useGetUsersPayoneerLinkQuery } from "../features/payoneer/payoneerApi";
-import { useGetPaypalFundByRequestedToQuery } from "../features/paypalfund/paypalFundApi";
-import { useGetPayoneerFundByRequestedToQuery } from "../features/payoneerfund/payoneerFundApi";
-import { useGetBankFundByRequestedToQuery } from "../features/banktransferfund/bankTransferFundApi";
+import { useGetPaypalFundByRequestedByQuery, useGetPaypalFundByRequestedToQuery } from "../features/paypalfund/paypalFundApi";
+import { useGetPayoneerFundByRequestedByQuery, useGetPayoneerFundByRequestedToQuery } from "../features/payoneerfund/payoneerFundApi";
+import { useGetBankFundByRequestedByQuery, useGetBankFundByRequestedToQuery } from "../features/banktransferfund/bankTransferFundApi";
 import { useGetAdminBankInfoQuery } from "../features/adminBankInfo/adminBankInfoApi";
+import { useGetUserToolsByIdQuery } from "../features/userTools/userToolsApi";
 
 
 export const AuthContext = createContext();
@@ -164,17 +165,29 @@ const UserContext = ({ children }) => {
   const { data: getFundByRequestedTo, isLoading: isFetchingGetFundByRequestedTo, error: getFundByRequestedToError } =
   useGetFundByRequestedToQuery(userId, { skip: !userId });
 
+  //------------- get paypal fund by requested by
+  const { data: getPaypalFundByRequestedBy, isLoading: isFetchingGetPaypalFundByRequestedBy, error: getPaypalFundByRequestedByError } =
+  useGetPaypalFundByRequestedByQuery(userId, { skip: !userId });
+
   //------------- get paypal fund by requested to
-  const { data: getPaypalFundByRequestedTo, isLoading: isFetchingGetPaypalFundByRequestedTo, error: getPaypalFundByRequestedToError } =
+  const { data: getPaypalFundByRequestedTo, isLoading: isFetchingGetPaypalFundByRequestedTo, error: getPaypalFundByRequestedtoError } =
   useGetPaypalFundByRequestedToQuery(userId, { skip: !userId });
 
   //------------- get payoneer fund by requested to
   const { data: getPayoneerFundByRequestedTo, isLoading: isFetchingGetPayoneerFundByRequestedTo, error: getPayoneerFundByRequestedToError } =
   useGetPayoneerFundByRequestedToQuery(userId, { skip: !userId });
 
+  //------------- get payoneer fund by requested by
+  const { data: getPayoneerFundByRequestedBy, isLoading: isFetchingGetPayoneerFundByRequestedBy, error: getPayoneerFundByRequestedByError } =
+  useGetPayoneerFundByRequestedByQuery(userId, { skip: !userId });
+
   //------------- get bank fund by requested to
   const { data: getBankFundByRequestedTo, isLoading: isFetchingGetBankFundByRequestedTo, error: getBankFundByRequestedToError } =
   useGetBankFundByRequestedToQuery(userId, { skip: !userId });
+
+  //------------- get bank fund by requested by
+  const { data: getBankFundByRequestedBy, isLoading: isFetchingGetBankFundByRequestedBy, error: getBankFundByRequestedByError } =
+  useGetBankFundByRequestedByQuery(userId, { skip: !userId });
 
 
   //------------- get meeting by meeting member
@@ -195,9 +208,13 @@ const UserContext = ({ children }) => {
   const { data: getUsersPayoneerLink, isLoading: isFetchingGetUsersPayoneerLink, error: getUsersPayoneerLinkError } =
   useGetUsersPayoneerLinkQuery(userId, { skip: !userId });
 
-  //------------- get  payoneer info of user
+  //------------- get  admin bank info
   const { data: getAdminBankInfo, isLoading: isFetchingGetAdminBankInfo, error: getAdminBankInfoError } =
   useGetAdminBankInfoQuery(userId, { skip: !userId });
+
+  //------------- get  user tools
+  const { data: getUserToolsById, isLoading: isFetchingGetUserToolsById, error: getUserToolsByIdError } =
+  useGetUserToolsByIdQuery(userId, { skip: !userId });
 
 
 
@@ -386,11 +403,14 @@ const UserContext = ({ children }) => {
       isFetchingGetPaypalFundByRequestedTo ||
       isFetchingGetPayoneerFundByRequestedTo ||
       isFetchingGetBankFundByRequestedTo||
+      isFetchingGetBankFundByRequestedBy||
       isFetchingGetMeetingByMeetingMember ||
       isFetchingGetAllMeetingByCreator ||
       isFetchingGetUsersPaypalLink ||
+      isFetchingGetPayoneerFundByRequestedBy ||
       isFetchingGetUsersPayoneerLink ||
-      isFetchingGetAdminBankInfo
+      isFetchingGetAdminBankInfo ||
+      isFetchingGetUserToolsById
     ) { 
       setLoading(true);
     } else {
@@ -413,6 +433,7 @@ const UserContext = ({ children }) => {
     isUpdateSkillLoading,
     isFetchingExperience,
     isFetchingGetAllCommit,
+    isFetchingGetPayoneerFundByRequestedBy,
     isFatchingAddExperience,
     isUpdateExperienceLoading,
     isUpdateCoverPicLoading,
@@ -434,14 +455,17 @@ const UserContext = ({ children }) => {
     isFetchingGetAllSentProjectJoinRequest,
     isFetchingGetFundByRequestedBy,
     isFetchingGetFundByRequestedTo,
+    isFetchingGetPaypalFundByRequestedBy,
     isFetchingGetPaypalFundByRequestedTo ,
       isFetchingGetPayoneerFundByRequestedTo ,
       isFetchingGetBankFundByRequestedTo,
+      isFetchingGetBankFundByRequestedBy,
     isFetchingGetMeetingByMeetingMember,
     isFetchingGetAllMeetingByCreator,
     isFetchingGetUsersPaypalLink,
     isFetchingGetUsersPayoneerLink,
-    isFetchingGetAdminBankInfo
+    isFetchingGetAdminBankInfo,
+    isFetchingGetUserToolsById
   ]);
 
   //************************************************************************************************************** */
@@ -485,16 +509,20 @@ const UserContext = ({ children }) => {
       getAllSentPendingFriendRequestError ||
       repsponseDeleteFriendRequestError ||
       getAllSentProjectJoinRequestError ||
+      getPaypalFundByRequestedtoError ||
       getFundByRequestedByError ||
       getFundByRequestedToError ||
       getBankFundByRequestedToError ||
+      getBankFundByRequestedByError ||
       getPayoneerFundByRequestedToError ||
-      getPaypalFundByRequestedToError ||
+      getPayoneerFundByRequestedByError ||
+      getPaypalFundByRequestedByError ||
       getMeetingByMeetingMemberError ||
       getAllMeetingByCreatorError ||
       getUsersPaypalLinkError ||
       getUsersPayoneerLinkError ||
-      getAdminBankInfoError
+      getAdminBankInfoError ||
+      getUserToolsByIdError
     ) {
       console.error("Error fetching user data:", {
         userError,
@@ -510,6 +538,7 @@ const UserContext = ({ children }) => {
         responseUpdateSkillError,
         responseUpdateSocialInfoError,
         responseUpdateLicenseError,
+        getPaypalFundByRequestedtoError,
         addLicenseError,
         responseUpdateProjectError,
         sentAcceptedPJError,
@@ -535,12 +564,15 @@ const UserContext = ({ children }) => {
         getAllSentProjectJoinRequestError,
         getFundByRequestedByError ,
         getBankFundByRequestedToError,
+        getBankFundByRequestedByError,
       getPayoneerFundByRequestedToError,
-      getPaypalFundByRequestedToError,
+      getPayoneerFundByRequestedByError,
+      getPaypalFundByRequestedByError,
         getMeetingByMeetingMemberError,
         getUsersPaypalLinkError,
         getUsersPayoneerLinkError,
-        getAdminBankInfoError
+        getAdminBankInfoError,
+        getUserToolsByIdError
       });
     }
   }, [
@@ -558,6 +590,7 @@ const UserContext = ({ children }) => {
     responseUpdateLicenseError,
     addLicenseError,
     licenseError,
+    getPaypalFundByRequestedtoError,
     experienceError,
     addExperienceError,
     responseUpdateExperienceError,
@@ -579,14 +612,17 @@ const UserContext = ({ children }) => {
     getFundByRequestedByError,
     getFundByRequestedToError,
     getBankFundByRequestedToError,
+    getBankFundByRequestedByError,
     getPayoneerFundByRequestedToError,
-    getPaypalFundByRequestedToError,
+    getPayoneerFundByRequestedByError,
+    getPaypalFundByRequestedByError,
     getMeetingByMeetingMemberError,
     getAllMeetingByCreatorError,
     getUsersPaypalLinkError,
     getUsersPayoneerLinkError,
     getAdminBankInfoError,
-    getAdminBankInfo
+    getAdminBankInfo,
+    getUserToolsByIdError
   ]);
 
   //************************************************************************************************************** */
@@ -615,6 +651,7 @@ const UserContext = ({ children }) => {
     getSingleUserSocialInfo,
     updateSkills,
     updateSocialInfo,
+    getPaypalFundByRequestedTo,
     getAllSentPendingFriendRequest,
     addLicense,
     updateLicense,
@@ -642,13 +679,16 @@ const UserContext = ({ children }) => {
     getFundByRequestedBy,
     getFundByRequestedTo,
     getBankFundByRequestedTo,
+    getBankFundByRequestedBy,
     getPayoneerFundByRequestedTo,
-    getPaypalFundByRequestedTo,
+    getPayoneerFundByRequestedBy,
+    getPaypalFundByRequestedBy,
     getMeetingByMeetingMember,
     getAllMeetingByCreator,
     getUsersPaypalLink,
     getUsersPayoneerLink,
-    getAdminBankInfo
+    getAdminBankInfo,
+    getUserToolsById
   };
 
   return (

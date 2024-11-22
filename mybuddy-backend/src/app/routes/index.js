@@ -20,7 +20,8 @@ import { PaypalFundInfoRoutes } from "../modules/paypalfund/paypalfund.routes.js
 import { PayoneerFundInfoRoutes } from "../modules/payoneerfund/payoneerfund.routes.js";
 import { BankTransferFundInfoRoutes  } from "../modules/banktransferfund/bankTransferfund.routes.js";
 import { AdminBankInfoRoutes } from "../modules/adminBankInfo/adminBankInfo.routes.js";
-
+import { AdminToolsRoutes } from "../modules/tools/tools.routes.js";
+import { UsersToolsRoutes } from "../modules/usersTools/usersTools.routes.js";
 
 const router = express.Router();
 const moduleRoutes = [
@@ -45,6 +46,8 @@ const moduleRoutes = [
     { path:"/payoneerFund", route:PayoneerFundInfoRoutes},
     { path:"/bankTransferFund", route:BankTransferFundInfoRoutes},
     { path:"/adminBankInfo", route:AdminBankInfoRoutes},
+    { path:"/adminTools", route:AdminToolsRoutes},
+    { path:"/userTools", route:UsersToolsRoutes},
 
 ];
 

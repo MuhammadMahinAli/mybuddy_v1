@@ -12,8 +12,8 @@ const AdminSideBar = () => {
   const [openAllUser, setOpenAllUser] = useState(false);
   const [openAllProject, setOpenAllProject] = useState(false);
   const [openAllFund, setOpenAllFund] = useState(false);
-  // const [openFund, setOpenFund] = useState(false);
-  // const [openFrndRqst, setOpenFrndRqst] = useState(false);
+  const [openCreateTools, setOpenCreateTools] = useState(false);
+  const [openAllTool, setOpenAllTool] = useState(false);
   // const [openMeet, setOpenMeet] = useState(false);
   const [openSetting, setOpenSetting] = useState(false);
   // const [openProfile, setOpenProfile] = useState(false);
@@ -40,28 +40,36 @@ setUserData(singleUser);
       setOpenAllFund,
       setOpenAllProject,
       setOpenAllUser,
-      setOpenSetting
+      setOpenSetting,
+      setOpenCreateTools,
+      setOpenAllTool,
     ]);
   const handleAllFund = () =>
     toggleState(setOpenAllFund, [
       setOpenDashboard,
       setOpenAllUser,
       setOpenAllProject,
-      setOpenSetting
+      setOpenSetting,
+      setOpenCreateTools,
+      setOpenAllTool,
     ]);
   const handleAllProject = () =>
     toggleState(setOpenAllProject, [
       setOpenDashboard,
       setOpenAllUser,
       setOpenAllFund,
-      setOpenSetting
+      setOpenSetting,
+      setOpenCreateTools,
+      setOpenAllTool,
     ]);
   const handleAllUser = () =>
     toggleState(setOpenAllUser, [
       setOpenDashboard,
       setOpenAllFund,
       setOpenAllProject,
-      setOpenSetting
+      setOpenSetting,
+      setOpenCreateTools,
+      setOpenAllTool,
     ]);
   const handleSetting = () =>
     toggleState(setOpenSetting , [
@@ -69,69 +77,28 @@ setUserData(singleUser);
       setOpenDashboard,
       setOpenAllFund,
       setOpenAllProject,
-      
+      setOpenCreateTools,
+      setOpenAllTool,
     ]);
-  // const handleMblDashboard = () =>
-  // const handleFund = () =>
-  //   toggleState(setOpenFund, [
-  //     setOpenDashboard,
-  //     setOpenProject,
-  //     setOpenRequest,
-  //     setOpenCreateProject,
-  //     setOpenFrndRqst,
-  //     setOpenMeet,
-  //     setOpenSetting,
-  //     setOpenProfile,
-  //     setOpenRequestOption,
-  //   ]);
-  // const handleFriendRqst = () =>
-  //   toggleState(setOpenFrndRqst, [
-  //     setOpenDashboard,
-  //     setOpenProject,
-  //     setOpenRequest,
-  //     setOpenCreateProject,
-  //     setOpenFund,
-  //     setOpenMeet,
-  //     setOpenSetting,
-  //     setOpenProfile,
-  //     setOpenRequestOption,
-  //   ]);
-  // const handleMeeting = () =>
-  //   toggleState(setOpenMeet, [
-  //     setOpenDashboard,
-  //     setOpenProject,
-  //     setOpenRequest,
-  //     setOpenCreateProject,
-  //     setOpenFrndRqst,
-  //     setOpenFund,
-  //     setOpenSetting,
-  //     setOpenProfile,
-  //     setOpenRequestOption,
-  //   ]);
-  // const handleProfile = () =>
-  //   toggleState(setOpenProfile, [
-  //     setOpenDashboard,
-  //     setOpenProject,
-  //     setOpenRequest,
-  //     setOpenCreateProject,
-  //     setOpenFrndRqst,
-  //     setOpenFund,
-  //     setOpenSetting,
-  //     setOpenMeet,
-  //     setOpenRequestOption,
-  //   ]);
-  // const handleSetting = () =>
-  //   toggleState(setOpenSetting, [
-  //     setOpenDashboard,
-  //     setOpenProject,
-  //     setOpenRequest,
-  //     setOpenCreateProject,
-  //     setOpenFrndRqst,
-  //     setOpenFund,
-  //     setOpenMeet,
-  //     setOpenProfile,
-  //     setOpenRequestOption,
-  //   ]);
+  const handleCreateTools = () =>
+    toggleState( setOpenCreateTools, [
+      setOpenAllUser,
+      setOpenDashboard,
+      setOpenAllFund,
+      setOpenAllProject,
+      setOpenSetting ,
+      setOpenAllTool,
+    ]);
+  const handleAllTools = () =>
+    toggleState(setOpenAllTool, [
+      setOpenAllUser,
+      setOpenDashboard,
+      setOpenAllFund,
+      setOpenAllProject,
+      setOpenSetting ,
+      setOpenCreateTools,
+    ]);
+  
     // logout
     const { logout: originalLogout } = useAuthCheck();
     const navigate = useNavigate()
@@ -163,6 +130,10 @@ setUserData(singleUser);
         handleAllFund={handleAllFund}
         handleDashboard={handleDashboard}
         handleSetting={handleSetting}
+        handleCreateTools={handleCreateTools}
+        handleAllTools={handleAllTools}
+        openAllTool={openAllTool}
+        openCreateTools={openCreateTools}
         openSetting={openSetting}
         openDashboard={openDashboard}
         openAllUser={openAllUser}
@@ -178,6 +149,10 @@ setUserData(singleUser);
           handleAllFund={handleAllFund}
           handleDashboard={handleDashboard}
           handleSetting={handleSetting}
+          handleCreateTool={handleCreateTools}
+          handleAllTools={handleAllTools}
+          openAllTool={openAllTool}
+          openCreateTools={openCreateTools}
           openSetting={openSetting}
           openDashboard={openDashboard}
           openAllUser={openAllUser}

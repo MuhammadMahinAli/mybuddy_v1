@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAddBankTransferFundInfoMutation} from "../../../features/banktransferfund/bankTransferFundApi";
 import Swal from "sweetalert2";
 
-const FundByBank = ({ selectedProject, userId,setSelectedProject,isPayModalOpen }) => {
+const FundByBank = ({ selectedProject, userId,setSelectedProject,setIsPayModalOpen }) => {
   const [addBankTransferFundInfo] = useAddBankTransferFundInfoMutation();
   
   const [formData, setFormData] = useState({
@@ -86,10 +86,10 @@ const FundByBank = ({ selectedProject, userId,setSelectedProject,isPayModalOpen 
         date: "",
       });
       setSelectedProject(null);
-      isPayModalOpen(false);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
+      setIsPayModalOpen(false);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 2500);
     } catch (error) {
       console.log(error);
     }

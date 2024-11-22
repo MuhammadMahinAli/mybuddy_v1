@@ -30,6 +30,14 @@ export const paypalFundApi = apiSlice.injectEndpoints({
       }),
       invalidateTags: ["PaypalFund"],
     }),
+    getPaypalFundByRequestedBy: builder.query({
+      query: (id) => ({
+        url: `/paypalFund/getFundByRequestedBy/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["PaypalFund"],
+    }),
+
     getPaypalFundByRequestedTo: builder.query({
       query: (id) => ({
         url: `/paypalFund/getFundByRequestedTo/${id}`,
@@ -66,6 +74,6 @@ export const paypalFundApi = apiSlice.injectEndpoints({
   }),
 });
 
- export const { useGetPaypalFundByRequestedToQuery,useDeletePaypalFundRequestMutation ,useGetAllPaypalFundInfoQuery,useUpdatePaypalFundStatusMutation,useAddPaypalFundInfoMutation } = paypalFundApi;
+ export const { useGetPaypalFundByRequestedByQuery ,useGetPaypalFundByRequestedToQuery,useDeletePaypalFundRequestMutation ,useGetAllPaypalFundInfoQuery,useUpdatePaypalFundStatusMutation,useAddPaypalFundInfoMutation } = paypalFundApi;
 
 // useGetAllPostQuery

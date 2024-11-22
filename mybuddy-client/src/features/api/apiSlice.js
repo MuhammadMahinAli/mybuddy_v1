@@ -8,6 +8,6 @@ export const apiSlice = createApi({
     //https://test-two-22w0.onrender.com/api/v1
   }),
   endpoints: (builder) => ({}),
-  tagTypes: ["Memmer","SingleMember","Post","SingleMemberPost","Friend","Fund","Project","ProjectJoinRequest","Payment","Skill","SingleMemberSkill","SocialInfo","SingleMemberSocialInfo","License","SingleMemberLicense","Experience","SingleMemberExperience","Commit","Meeting", "PostReact","Paypal","Payoneer","PaypalFund","PayoneerFund","BankTransferFund", "AdminBankInfo"],
+  tagTypes: ["Memmer","SingleMember","Post","SingleMemberPost","Friend","Fund","Project","ProjectJoinRequest","Payment","Skill","SingleMemberSkill","SocialInfo","SingleMemberSocialInfo","License","SingleMemberLicense","Experience","SingleMemberExperience","Commit","Meeting", "PostReact","Paypal","Payoneer","PaypalFund","PayoneerFund","BankTransferFund", "AdminBankInfo", "AdminTools","UserTools"],
 });
 

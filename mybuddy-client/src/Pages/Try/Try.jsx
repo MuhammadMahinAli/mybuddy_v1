@@ -1,197 +1,778 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { IoIosSearch } from "react-icons/io";
-import { AiOutlineReload } from "react-icons/ai";
-import Loading from "../Loading/Loading";
-import {
-  FaTwitter,
-  FaInstagram,
-  FaGithub,
-  FaLinkedin,
-  FaCodepen,
-  FaDev,
-} from "react-icons/fa";
+import { useState } from "react";;
+import { fileUpload } from "../../utils/cloudinary";
 
 const Try = () => {
-  const [projects, setProjects] = useState([]);
-  const [uniqueId, setUniqueId] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [isFiltered, setIsFiltered] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [images ,setImages] = useState([])
+  const [loading, setLoading] = useState({
+    imageOne: false,
+    imageTwo: false,
+    imageThree: false,
+  });
+  const [previewImage, setPreviewImage] = useState({
+    imageOne: "",
+    imageTwo: "",
+    imageThree: "",
+  });
 
-  // Fetch projects with pagination or uniqueId filter
-  const fetchProjects = async (page = 1, uniqueIdFilter = "") => {
-    setLoading(true); // Set loading to true when fetching data
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/api/v1/member/getAllMember`,
-        {
-          params: {
-            page,
-            limit: 6,
-            uniqueId: uniqueIdFilter,
-          },
-        }
-      );
-      const data = response.data.data;
-
-      console.log("dd", data);
-
-      setProjects(data.users || []);
-      setCurrentPage(data.currentPage || 1);
-      setTotalPages(data.totalPages || 1);
-
-      // Set isFiltered to true if uniqueIdFilter is applied, else false
-      setIsFiltered(!!uniqueIdFilter);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.data.message ===
-          "No project matched with the provided uniqueId."
-      ) {
-        setProjects([]); // No match found 01768320134
+  const handlePreviewImage = async (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const name = e.target.name;
+      setLoading({
+        ...loading,
+        [name]: true,
+      });
+      const files = e.target.files;
+      try {
+        const urls = await Promise.all(Array.from(files).map(async (file) => {
+          const imageUrl = await fileUpload(file); // Upload file to Cloudinary
+          return imageUrl;
+        }));
+        setImages([...images, ...urls]);
+        setLoading({
+          imageOne: false,
+          imageTwo: false,
+          imageThree: false,
+        });
+        setPreviewImage({ ...previewImage, [name]: URL.createObjectURL(files[0]) });
+      } catch (error) {
+        console.error("Error uploading images:", error);
       }
     }
-    setLoading(false); // Set loading to false when data is fetched 01620702021
   };
 
-  // Initial fetch of projects
-  useEffect(() => {
-    fetchProjects(currentPage);
-  }, [currentPage]);
-
-  // Handle uniqueId filter
-  const handleFilter = () => {
-    fetchProjects(1, uniqueId);
-  };
-
-  // Reset to original paginated view
-  const handleReset = () => {
-    setUniqueId("");
-    setIsFiltered(false);
-    fetchProjects(1); // Fetch initial 6 projects
-  };
+  console.log('image', images);
 
   return (
+    <div className="flex flex-col space-y-5 md:space-y-0 font-medium gray600">
     <div>
-      <div>
-        <div className="w-5/12 flex justify-center items-center relative md:w-8/12 xl:w-7/12 2xl:w-6/12 3xl:w-7/12 mb-4">
-          <input
-            type="text"
-            placeholder="Search"
-            value={uniqueId}
-            onChange={(e) => setUniqueId(e.target.value)}
-            className="w-full h-9 md:h-10 lg:h-12 outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border border-solid border-gray-100"
-          />
-          <IoIosSearch
-            onClick={handleFilter}
-            className="text-2xl absolute right-8 cursor-pointer"
-          />
-          {isFiltered && (
-            <AiOutlineReload
-              onClick={handleReset}
-              className="text-2xl absolute right-1 cursor-pointer"
-            />
-          )}
-        </div>
-        {loading ? (
-          <Loading />
+      <label className="text-[16px] md:text-xl capitalize font-bold">images (up to 3)</label>
+    </div>
+    <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+      {/* image one   */}
+      <div className="relative pt-2">
+        {previewImage.imageOne  ? (
+          <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100  custom-shadow">
+            <img className="object-cover h-full rounded-md" src={previewImage.imageOne} alt="" />
+          </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.length > 0 ? (
-              projects.map((p, i) => (
-                <div key={i}>
-                  <div className="my-10 bg-white rounded-2xl shadow-lg p-6 w-80 text-center relative">
-                    {/* Profile Image */}
-                    <div className="relative w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-yellow-300 -mt-16">
-                      <img
-                        src="https://via.placeholder.com/100" // Replace this URL with the actual image URL
-                        alt="Profile"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-
-                    {/* Name and Role */}
-                    <h2 className="text-2xl font-semibold mt-4">
-                      {p.name.firstName} {p.name.lastName}
-                    </h2>
-                    <p className="text-purple-600 font-medium">{p.role}</p>
-
-                    {/* Bio */}
-                    <p className="text-gray-600 mt-2 text-sm">
-                      {p.about
-                        ? p.about.slice(0, 30) + "..."
-                        : `Nothing to show about ${p.name.firstName} ${p.name.lastName}`}
-                    </p>
-
-                    {/* Email Button */}
-                    <button className="bg-purple-700 text-white py-2 px-4 rounded-lg mt-4">
-                      {p.email}
-                    </button>
-
-                    {/* Social Icons */}
-                    <div className="flex justify-center space-x-4 mt-4 text-purple-600 text-xl">
-                      <a href="#">
-                        <FaTwitter />
-                      </a>
-                      <a href="#">
-                        <FaInstagram />
-                      </a>
-                      <a href="#">
-                        <FaGithub />
-                      </a>
-                      <a href="#">
-                        <FaLinkedin />
-                      </a>
-                      <a href="#">
-                        <FaCodepen />
-                      </a>
-                      <a href="#">
-                        <FaDev />
-                      </a>
-                    </div>
-                  </div>
+          <label required htmlFor="image-one" className="">
+            <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow">
+              {loading.imageOne ? (
+                <span className="loading loading-spinner loading-xs"></span>
+              ) : (
+                <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
+                  <img src="/upload.svg" className="h-3 lg:h-5" />
+                  <p className="text-[10px] md:text-[12px] font-normal capitalize">drag & drop a photo or</p>
+                  <p className="text-[10px] md:text-[12px] font-medium capitalize text-blue-500">browse</p>
                 </div>
-              ))
-            ) : (
-              <p className="col-span-full text-center">
-                No project matched with the provided uniqueId.
-              </p>
-            )}
+              )}
+            </div>
+          </label>
+        )}{" "}
+        <input
+          className=" px-3 py-2 rounded-lg shadow-sm border  border-none w-full
+                                                        focus:outline-none  bg-white text-gray-900 hidden"
+          type="file"
+          name="imageOne"
+          id="image-one"
+          onChange={handlePreviewImage}
+          accept="image/*"
+          required
+        />
+      </div>
+      {/* image two */}
+      <div className="relative ">
+        {previewImage.imageTwo ? (
+          <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
+            <img className="object-cover h-full rounded-md" src={previewImage.imageTwo} alt="" />
           </div>
-        )}
-
-        {!isFiltered && (
-          <div className="pagination flex justify-center mt-4">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
-            >
-              Previous
-            </button>
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
-            >
-              Next
-            </button>
+        ) : (
+          <label required htmlFor="image-two" className="">
+            <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
+              {loading.imageTwo ? (
+                <span className="loading loading-spinner loading-xs"></span>
+              ) : (
+                <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
+                 
+                </div>
+              )}
+            </div>
+          </label>
+        )}{" "}
+        <input
+          className=" px-3 py-2 rounded-lg shadow-sm border  border-none w-full
+                                                        focus:outline-none  bg-white text-gray-900 hidden"
+          type="file"
+          name="imageTwo"
+          id="image-two"
+          onChange={handlePreviewImage}
+          accept="image/*"
+          required
+        />
+      </div>
+      {/* image three */}
+      <div className="relative"> 
+        {previewImage.imageThree  ? (
+          <div className="flex justify-center items-center bg-red-500 rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px] box-border border-2 border-gray-100 custom-shadow">
+            <img className="object-cover h-full rounded-md" src={previewImage.imageThree} alt="" />
           </div>
-        )}
+        ) : (
+          <label required htmlFor="image-three" className="">
+            <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
+              {loading.imageThree ? (
+                <span className="loading loading-spinner loading-xs"></span>
+              ) : (
+                <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
+               
+                </div>
+              )}
+            </div>
+          </label>
+        )}{" "}
+        <input
+          className=" px-3 py-2 rounded-lg shadow-sm border  border-none w-full
+                                                        focus:outline-none  bg-white text-gray-900 hidden"
+          type="file"
+          name="imageThree"
+          id="image-three"
+          onChange={handlePreviewImage}
+          accept="image/*"
+          required
+        />
       </div>
     </div>
+  </div>
   );
 };
 
 export default Try;
+
+//----------------------------------- docx start -------------------------------------//
+
+// import { useState } from "react";
+// import pdf from "../../assets/home/pdf-icon.png";
+// import docx from "../../assets/pdf-logo3.png";
+// import { rawFileUpload } from "../../utils/cloudinaryForRaw";
+
+// const Try = () => {
+//   const [documents, setDocuments] = useState([])
+  // const [loading, setLoading] = useState({
+  //   imageOne: false,
+  //   imageTwo: false,
+  //   imageThree: false,
+  // });
+  // const [previewImage, setPreviewImage] = useState({
+  //   imageOne: "",
+  //   imageTwo: "",
+  //   imageThree: "",
+  // });
+
+  // const handlePreviewImage = async (e) => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     const name = e.target.name;
+  //     setLoading({ ...loading, [name]: true });
+
+  //     const file = e.target.files[0];
+
+  //     try {
+  //       // Upload the PDF to Cloudinary
+  //       const uploadedUrl = await rawFileUpload(file, "raw");
+
+  //       if (uploadedUrl) {
+  //         console.log("Uploaded docx URL:", uploadedUrl);
+
+  //         // Update state with the uploaded file URL
+  //         setDocuments((prevDoc) => [...prevDoc, uploadedUrl]);
+
+  //         // Show a preview (using a placeholder like PDF logo)
+  //         setPreviewImage((prevPreviewImage) => ({
+  //           ...prevPreviewImage,
+  //           [name]: uploadedUrl, // URL is saved here
+  //         }));
+  //       }
+  //     } catch (error) {
+  //       console.error("Error uploading PDF:", error);
+  //     } finally {
+  //       setLoading({ ...loading, [name]: false });
+  //     }
+  //   }
+  // };
+
+//   console.log('docx', documents);
+
+//   return (
+    // <div>
+    // <div className="flex flex-col space-y-5 md:space-y-0  font-medium gray600">
+    //     <div className="">
+    //       <label className="text-[16px] md:text-xl capitalize font-bold">Document (up to 2)</label>
+    //     </div>
+    //     <div className="pt-2 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-10 lg:space-x-11 xl:space-x-8 2xl:space-x-16 3xl:space-x-12 4xl:space-x-28 ">
+    //       {/* doc one  */}
+    //       <div className="relative ">
+    //         {previewImage.imageOne !== "" ? (
+    //           <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
+    //             <img className="h-20 lg:h-28 xl:h-32 3xl:h-36  w-5/12 lg:w-7/12 xl:w-5/12 md:w-6/12 3xl:w-5/12 rounded-md" src={docx} alt="" />
+    //           </div>
+    //         ) : (
+    //           <label required htmlFor="doc-one" className="">
+    //             <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
+    //               {loading.imageOne ? (
+    //                 <span className="loading loading-spinner loading-xs"></span>
+    //               ) : (
+    //                 <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
+    //                  <img src={pdf} className="h-8 lg:h-10" />
+    //                   <p className="text-[10px] md:text-[12px] font-normal capitalize">drag & drop a docx or</p>
+    //                   <p className="text-[10px] md:text-[12px] font-medium capitalize text-blue-500">browse</p>
+    //                 </div>
+    //               )}
+    //             </div>
+    //           </label>
+    //         )}{" "}
+    //         <input
+    //           className=" px-3 py-2 rounded-lg shadow-sm border  border-none w-full
+    //                                                         focus:outline-none  bg-white text-gray-900 hidden"
+    //           type="file"
+    //           accept=".docx"
+    //           name="imageOne"
+    //           id="doc-one"
+    //           onChange={handlePreviewImage}
+    //           required
+    //         />
+    //       </div>
+    //       {/* doc two  */}
+    //       <div className="relative ">
+    //         {previewImage.imageTwo !== "" ? (
+    //         <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
+    //         <img className="h-20 lg:h-28 xl:h-32 3xl:h-40  w-5/12 lg:w-7/12 xl:w-5/12 md:w-6/12 3xl:w-6/12 rounded-md" src={docx} alt="" />
+    //       </div>
+    //         ) : (
+    //           <label required htmlFor="doc-two" className="">
+    //             <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
+    //               {loading.imageTwo ? (
+    //                 <span className="loading loading-spinner loading-xs"></span>
+    //               ) : (
+    //                 <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
+                      
+    //                 </div>
+    //               )}
+    //             </div>
+    //           </label>
+    //         )}{" "}
+    //         <input
+    //           className=" px-3 py-2 rounded-lg shadow-sm border  border-none w-full
+    //                                                         focus:outline-none  bg-white text-gray-900 hidden"
+    //           type="file"
+    //           accept=".docx"
+    //           name="imageTwo"
+    //           id="doc-two"
+    //           onChange={handlePreviewImage}
+    //           required
+    //         />
+    //       </div>
+          
+    //     </div>
+    //   </div>
+    // </div>
+//   );
+// };
+
+// export default Try;
+
+//----------------------------------- Docx end -------------------------------------//
+
+//----------------------------------- pdf start -------------------------------------//
+
+
+// import { useState } from "react";
+// import pdf from "../../assets/home/pdf-icon.png";
+// import pdfLogo from "../../assets/pdf-logo3.png";
+// import { rawFileUpload } from "../../utils/cloudinaryForRaw";
+
+// const Try = () => {
+//   const [pdfFiles, setPdfFiles] = useState([])
+  // const [loading, setLoading] = useState({
+  //   imageOne: false,
+  //   imageTwo: false,
+  //   imageThree: false,
+  // });
+  // const [previewImage, setPreviewImage] = useState({
+  //   imageOne: "",
+  //   imageTwo: "",
+  //   imageThree: "",
+  // });
+
+  // const handlePreviewImage = async (e) => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     const name = e.target.name;
+  //     setLoading({ ...loading, [name]: true });
+
+  //     const file = e.target.files[0];
+
+  //     try {
+  //       // Upload the PDF to Cloudinary
+  //       const uploadedUrl = await rawFileUpload(file, "raw");
+
+  //       if (uploadedUrl) {
+  //         console.log("Uploaded PDF URL:", uploadedUrl);
+
+  //         // Update state with the uploaded file URL
+  //         setPdfFiles((prevDoc) => [...prevDoc, uploadedUrl]);
+
+  //         // Show a preview (using a placeholder like PDF logo)
+  //         setPreviewImage((prevPreviewImage) => ({
+  //           ...prevPreviewImage,
+  //           [name]: uploadedUrl, // URL is saved here
+  //         }));
+  //       }
+  //     } catch (error) {
+  //       console.error("Error uploading PDF:", error);
+  //     } finally {
+  //       setLoading({ ...loading, [name]: false });
+  //     }
+  //   }
+  // };
+
+  // console.log('pdf', pdfFiles);
+
+//   return (
+    // <div>
+    //   <div className="flex flex-col space-y-5 md:space-y-0 font-medium gray600">
+    //     <div>
+    //       <label className="text-[16px] md:text-xl capitalize font-bold">PDF (up to 2)</label>
+    //     </div>
+    //     <div className="pt-2 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-10">
+    //       {/* PDF one */}
+    //       <div className="relative">
+    //         {previewImage.imageOne ? (
+    //           <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] box-border border-2 border-gray-100 custom-shadow">
+    //             <img className="h-24 w-6/12 rounded-md" src={pdfLogo} alt="PDF preview" />
+    //           </div>
+    //         ) : (
+    //           <label htmlFor="pdf-one">
+    //             <div className="rounded-lg h-[110px] w-[200px] box-border border-2 border-gray-100 custom-shadow bg-white">
+    //               {loading.imageOne ? (
+    //                 <span className="loading loading-spinner loading-xs"></span>
+    //               ) : (
+    //                 <div className="flex flex-col justify-center items-center">
+    //                   <img src={pdf} className="h-8" alt="Upload PDF" />
+    //                   <p className="text-[10px] font-normal capitalize">Drag & drop a PDF or</p>
+    //                   <p className="text-[10px] font-medium capitalize text-blue-500">browse</p>
+    //                 </div>
+    //               )}
+    //             </div>
+    //           </label>
+    //         )}
+    //         <input
+    //           className="hidden"
+    //           type="file"
+    //           accept=".pdf"
+    //           name="imageOne"
+    //           id="pdf-one"
+    //           onChange={handlePreviewImage}
+    //         />
+    //       </div>
+    //       <div className="relative">
+    //         {previewImage.imageTwo ? (
+    //           <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] box-border border-2 border-gray-100 custom-shadow">
+    //             <img className="h-24 w-6/12 rounded-md" src={pdfLogo} alt="PDF preview" />
+    //           </div>
+    //         ) : (
+    //           <label htmlFor="pdf-two">
+    //             <div className="rounded-lg h-[110px] w-[200px] box-border border-2 border-gray-100 custom-shadow bg-white">
+    //               {loading.imageTwo ? (
+    //                 <span className="loading loading-spinner loading-xs"></span>
+    //               ) : (
+    //                 <div className="flex flex-col justify-center items-center">
+    //                   <img src={pdf} className="h-8" alt="Upload PDF" />
+    //                   <p className="text-[10px] font-normal capitalize">Drag & drop a PDF or</p>
+    //                   <p className="text-[10px] font-medium capitalize text-blue-500">browse</p>
+    //                 </div>
+    //               )}
+    //             </div>
+    //           </label>
+    //         )}
+    //         <input
+    //           className="hidden"
+    //           type="file"
+    //           accept=".pdf"
+    //           name="imageTwo"
+    //           id="pdf-two"
+    //           onChange={handlePreviewImage}
+    //         />
+    //       </div>
+       
+    //     </div>
+    //   </div>
+    // </div>
+//   );
+// };
+
+// export default Try;
+
+//----------------------------------- pdf end -------------------------------------//
+
+
+// import React, { useEffect, useRef, useState } from "react";
+// import axios from "axios";
+// import { Worker, Viewer, SpecialZoomLevel } from "@react-pdf-viewer/core";
+// import "@react-pdf-viewer/core/lib/styles/index.css";
+
+// const Try = () => {
+//   const [pdfFile, setPdfFile] = useState(null); // State for PDF file
+//   const [docxFile, setDocxFile] = useState(null); // State for DOCX file
+//   const [uploading, setUploading] = useState(false); // State for upload status
+//   const [uploadResult, setUploadResult] = useState({}); // State for upload result
+
+//   const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dhxjnryqk/raw/upload";
+//   const uploadPreset = "awer24s"; // Optional (defined in Cloudinary)
+
+//   const handlePdfUpload = (e) => {
+//     const file = e.target.files[0];
+//     if (file && file.type === "application/pdf") {
+//       setPdfFile(file);
+//     } else {
+//       alert("Please upload a valid PDF file!");
+//     }
+//   };
+
+//   const handleDocxUpload = (e) => {
+//     const file = e.target.files[0];
+//     if (file && file.name.endsWith(".docx")) {
+//       setDocxFile(file);
+//     } else {
+//       alert("Please upload a valid DOCX file!");
+//     }
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     if (!pdfFile && !docxFile) {
+//       alert("Please upload at least one file!");
+//       return;
+//     }
+
+//     setUploading(true);
+
+//     try {
+//       // Function to handle file upload to Cloudinary
+//       const uploadToCloudinary = async (file) => {
+//         const formData = new FormData();
+//         formData.append("file", file);
+//         formData.append("upload_preset", uploadPreset); // Optional preset
+//         formData.append("resource_type", "raw");
+
+//         const response = await axios.post(cloudinaryUrl, formData);
+//         return response.data; // Cloudinary response with file URL
+//       };
+
+//       const results = {};
+
+//       if (pdfFile) {
+//         results.pdf = await uploadToCloudinary(pdfFile);
+//         console.log("PDF Uploaded Data:", results.pdf); // Log PDF details
+//       }
+
+//       if (docxFile) {
+//         results.docx = await uploadToCloudinary(docxFile);
+//       }
+
+//       setUploadResult(results);
+//       alert("Files uploaded successfully!");
+//     } catch (error) {
+//       console.error("Upload failed:", error);
+//       alert("Failed to upload files. Please try again.");
+//     } finally {
+//       setUploading(false);
+//     }
+//   };
+//   //---------------
+
+//   const containerRef = useRef(null);
+
+//   useEffect(() => {
+//     if (window.LazyLoad) {
+//       const lazyLoadInstance = new window.LazyLoad({
+//         elements_selector: ".lazy",
+//       });
+
+//       return () => {
+//         lazyLoadInstance.destroy();
+//       };
+//     }
+//   }, []);
+//   const fileUrl =
+//     "https://res.cloudinary.com/dhxjnryqk/raw/upload/v1732067739/s4e83dfjrxrkw9s3jw7g.pdf";
+//   return (
+//     <div>
+//       <h2>Upload Files to Cloudinary</h2>
+//       <form onSubmit={handleSubmit}>
+//         <div>
+//           <label htmlFor="pdfUpload">Upload PDF File:</label>
+//           <input
+//             type="file"
+//             id="pdfUpload"
+//             accept="application/pdf"
+//             onChange={handlePdfUpload}
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="docxUpload">Upload DOCX File:</label>
+//           <input
+//             type="file"
+//             id="docxUpload"
+//             accept=".docx"
+//             onChange={handleDocxUpload}
+//           />
+//         </div>
+
+//         <button type="submit" disabled={uploading}>
+//           {uploading ? "Uploading..." : "Submit"}
+//         </button>
+//       </form>
+
+//       {uploadResult.pdf && (
+//         <div>
+//           <h3>PDF File Uploaded:</h3>
+//           <a
+//             href={uploadResult.pdf.secure_url}
+//             target="_blank"
+//             rel="noopener noreferrer"
+//           >
+//             View PDF
+//           </a>
+//         </div>
+//       )}
+//       {uploadResult.pdf && (
+//         <a
+//           href={`${uploadResult.pdf.secure_url}`}
+//           target="_blank"
+//           download
+//           rel="noopener noreferrer"
+//         >
+//           Download PDF
+//         </a>
+//       )}
+
+//       {uploadResult.docx && (
+//         <div>
+//           <h3>DOCX File Uploaded:</h3>
+//           <a
+//             href={uploadResult.docx.secure_url}
+//             target="_blank"
+//             rel="noopener noreferrer"
+//           >
+//             View DOCX
+//           </a>
+//         </div>
+//       )}
+//       <div style={{ height: "500px", width: "100%" }}>
+//         <h2>View PDF</h2>
+//         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
+//           <Viewer fileUrl={fileUrl} />
+//         </Worker>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Try;
+
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+// import { Link } from "react-router-dom";
+// import { IoIosSearch } from "react-icons/io";
+// import { AiOutlineReload } from "react-icons/ai";
+// import Loading from "../Loading/Loading";
+// import {
+//   FaTwitter,
+//   FaInstagram,
+//   FaGithub,
+//   FaLinkedin,
+//   FaCodepen,
+//   FaDev,
+// } from "react-icons/fa";
+
+// const Try = () => {
+//   const [projects, setProjects] = useState([]);
+//   const [uniqueId, setUniqueId] = useState("");
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [totalPages, setTotalPages] = useState(1);
+//   const [isFiltered, setIsFiltered] = useState(false);
+//   const [loading, setLoading] = useState(false);
+
+//   // Fetch projects with pagination or uniqueId filter
+//   const fetchProjects = async (page = 1, uniqueIdFilter = "") => {
+//     setLoading(true); // Set loading to true when fetching data
+//     try {
+//       const response = await axios.get(
+//         `http://localhost:3000/api/v1/member/getAllMember`,
+//         {
+//           params: {
+//             page,
+//             limit: 6,
+//             uniqueId: uniqueIdFilter,
+//           },
+//         }
+//       );
+//       const data = response.data.data;
+
+//       console.log("dd", data);
+
+//       setProjects(data.users || []);
+//       setCurrentPage(data.currentPage || 1);
+//       setTotalPages(data.totalPages || 1);
+
+//       // Set isFiltered to true if uniqueIdFilter is applied, else false
+//       setIsFiltered(!!uniqueIdFilter);
+//     } catch (error) {
+//       if (
+//         error.response &&
+//         error.response.data.message ===
+//           "No project matched with the provided uniqueId."
+//       ) {
+//         setProjects([]); // No match found 01768320134
+//       }
+//     }
+//     setLoading(false); // Set loading to false when data is fetched 01620702021
+//   };
+
+//   // Initial fetch of projects
+//   useEffect(() => {
+//     fetchProjects(currentPage);
+//   }, [currentPage]);
+
+//   // Handle uniqueId filter
+//   const handleFilter = () => {
+//     fetchProjects(1, uniqueId);
+//   };
+
+//   // Reset to original paginated view
+//   const handleReset = () => {
+//     setUniqueId("");
+//     setIsFiltered(false);
+//     fetchProjects(1); // Fetch initial 6 projects
+//   };
+
+//   return (
+//     <div>
+//       <div>
+//         <div className="w-5/12 flex justify-center items-center relative md:w-8/12 xl:w-7/12 2xl:w-6/12 3xl:w-7/12 mb-4">
+//           <input
+//             type="text"
+//             placeholder="Search"
+//             value={uniqueId}
+//             onChange={(e) => setUniqueId(e.target.value)}
+//             className="w-full h-9 md:h-10 lg:h-12 outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border border-solid border-gray-100"
+//           />
+//           <IoIosSearch
+//             onClick={handleFilter}
+//             className="text-2xl absolute right-8 cursor-pointer"
+//           />
+//           {isFiltered && (
+//             <AiOutlineReload
+//               onClick={handleReset}
+//               className="text-2xl absolute right-1 cursor-pointer"
+//             />
+//           )}
+//         </div>
+//         {loading ? (
+//           <Loading />
+//         ) : (
+//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+//             {projects.length > 0 ? (
+//               projects.map((p, i) => (
+//                 <div key={i}>
+//                   <div className="my-10 bg-white rounded-2xl shadow-lg p-6 w-80 text-center relative">
+//                     {/* Profile Image */}
+//                     <div className="relative w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-yellow-300 -mt-16">
+//                       <img
+//                         src="https://via.placeholder.com/100" // Replace this URL with the actual image URL
+//                         alt="Profile"
+//                         className="w-full h-full object-cover"
+//                       />
+//                     </div>
+
+//                     {/* Name and Role */}
+//                     <h2 className="text-2xl font-semibold mt-4">
+//                       {p.name.firstName} {p.name.lastName}
+//                     </h2>
+//                     <p className="text-purple-600 font-medium">{p.role}</p>
+
+//                     {/* Bio */}
+//                     <p className="text-gray-600 mt-2 text-sm">
+//                       {p.about
+//                         ? p.about.slice(0, 30) + "..."
+//                         : `Nothing to show about ${p.name.firstName} ${p.name.lastName}`}
+//                     </p>
+
+//                     {/* Email Button */}
+//                     <button className="bg-purple-700 text-white py-2 px-4 rounded-lg mt-4">
+//                       {p.email}
+//                     </button>
+
+//                     {/* Social Icons */}
+//                     <div className="flex justify-center space-x-4 mt-4 text-purple-600 text-xl">
+//                       <a href="#">
+//                         <FaTwitter />
+//                       </a>
+//                       <a href="#">
+//                         <FaInstagram />
+//                       </a>
+//                       <a href="#">
+//                         <FaGithub />
+//                       </a>
+//                       <a href="#">
+//                         <FaLinkedin />
+//                       </a>
+//                       <a href="#">
+//                         <FaCodepen />
+//                       </a>
+//                       <a href="#">
+//                         <FaDev />
+//                       </a>
+//                     </div>
+//                   </div>
+//                 </div>
+//               ))
+//             ) : (
+//               <p className="col-span-full text-center">
+//                 No project matched with the provided uniqueId.
+//               </p>
+//             )}
+//           </div>
+//         )}
+
+//         {!isFiltered && (
+//           <div className="pagination flex justify-center mt-4">
+//             <button
+//               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+//               disabled={currentPage === 1}
+//               className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
+//             >
+//               Previous
+//             </button>
+//             <span>
+//               Page {currentPage} of {totalPages}
+//             </span>
+//             <button
+//               onClick={() =>
+//                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+//               }
+//               disabled={currentPage === totalPages}
+//               className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
+//             >
+//               Next
+//             </button>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Try;
 
 //------------------------------------------- Project ---------------------------------//
 
