@@ -18,8 +18,7 @@ const GDashboard = () => {
   }, [singleUser]);
 
 
-  return (
-    <div className="flex flex-col pb-3 justify-start space-y-16">
+  return (     <div className="flex flex-col pb-3 justify-start space-y-16">
       {/* dashboard */}
       <div>
         <h1 className="gray600 text-[20px] lg:text-[28px] pt-5 md:pb-5 font-bold">

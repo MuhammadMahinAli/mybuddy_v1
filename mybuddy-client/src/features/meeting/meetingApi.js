@@ -13,6 +13,16 @@ export const meetingApi = apiSlice.injectEndpoints({
      invalidateTags: ["Meeting"],
     }),
 
+    
+    updateMeetingInfo: builder.mutation({
+      query: ({id, data}) => ({
+        url: `/meeting/update-info/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidateTags: ["Meeting"],
+    }),
+
     getAllMeetingByCreator: builder.query({
       query: (id) => ({
         url: `/meeting/getAllMeetingOf/${id}`,
@@ -32,7 +42,7 @@ export const meetingApi = apiSlice.injectEndpoints({
 
     deleteMeeting: builder.mutation({
       query: (id) => ({
-        url: `/meeting/deleteMeetingRequest/${id}`,
+        url: `/meeting/deleteMeeting/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Meeting"],
@@ -41,6 +51,6 @@ export const meetingApi = apiSlice.injectEndpoints({
   }),
 });
 
- export const {useGetMeetingByMeetingMemberQuery, useGetAllMeetingByCreatorQuery } = meetingApi;
+ export const {useUpdateMeetingInfoMutation,useGetMeetingByMeetingMemberQuery, useGetAllMeetingByCreatorQuery,useDeleteMeetingMutation } = meetingApi;
 
 // useGetAllPostQuery

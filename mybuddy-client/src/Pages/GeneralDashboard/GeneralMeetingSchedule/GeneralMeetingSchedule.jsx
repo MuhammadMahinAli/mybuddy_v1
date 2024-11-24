@@ -19,6 +19,8 @@ const GeneralMeetingSchedule = () => {
     setShowFilterOption(false);
   };
 
+  
+
   return (
     <div className="relative">
       <div className="flex space-x-2 lg:space-x-3 items-center w-6/12 md:w-5/12 xl:w-5/12 2xl:w-5/12 3xl:w-5/12 md:px-4">
@@ -29,26 +31,26 @@ const GeneralMeetingSchedule = () => {
           <img src={filter} />
           <span className="hidden">Filter</span>
         </button>
-        {/* filter option */}
+        {/* filter option                Change filter name [1. 2. ] */}
         {showFilterOption && (
-          <ul className="w-40 absolute top-12 left-2 float-right  bg-white border rounded-lg border-gray-300 shadow-lg mt-2 z-10">
+          <ul className="w-44 absolute top-12 left-2 float-right  bg-white border rounded-lg border-gray-300 shadow-lg mt-2 z-10">
             <li
               onClick={toggleCreatorTab}
               className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
             >
-              My Meeitng
+              Hosted by Me
             </li>
             <li
               onClick={toggleMeetingMember}
               className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
             >
-              Member Meeting
+              Hosted by Others
             </li>
           </ul>
         )}
       </div>
       {isOpenCreatorTab && <CreatorTab />}
-      {isOpenMeetingMember && <MeetingMemberTab  />}
+      {isOpenMeetingMember && <MeetingMemberTab />}
     </div>
   );
 };

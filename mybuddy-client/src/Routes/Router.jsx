@@ -47,6 +47,7 @@ import AdminSetting from "../Pages/Admin/AdminSetting/AdminSetting";
 import AdminTools from "../Pages/Admin/AdminCreateTools/AdminTools";
 import AdminAllTool from "../Pages/Admin/AdminAllTool/AdminAllTool";
 import GeneralMyTools from "../Pages/GeneralDashboard/GeneralMyTools/GeneralMyTools";
+import GeneralAllPost from "../Pages/GeneralDashboard/GeneralAllPost/GeneralAllPost";
 
 
 const router = createBrowserRouter([
@@ -133,6 +134,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/create-project",
         element: <GeneralAddProject />,
+      },
+      {
+        path: "/dashboard/all-post",
+        element: <GeneralAllPost />,
       },
       {
         path: "/dashboard/meeting-schedule",

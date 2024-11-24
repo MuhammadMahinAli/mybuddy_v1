@@ -33,7 +33,7 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
     meetingTime: "",
     timeZone: "Asia/Dhaka",
     repeat: "custom",
-    weeklyRepeat: 1,
+    weeklyRepeat: 0,
     endDate: "",
     customDays: [],
     attendanceLink: null,
@@ -259,6 +259,8 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
       return; // Stop the function if there are empty fields
     }
 
+    console.log(formData);
+
     try {
       // Submit form data to the API
       const response = await fetch(
@@ -303,7 +305,7 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
   return (
     <>
       <div className="fixed top-0 left-0  flex justify-center items-center bg-black/40 bg-opacity-50 w-screen h-screen overflow-y-scroll">
-        <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all md:w-[600px] 3xl:w-[800px] cursor-pointer">
+        <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all md:w-[600px] xl:h-[600px] 3xl:h-[700px] 3xl:w-[800px] overflow-y-scroll cursor-pointer">
           <IoIosCloseCircleOutline
             onClick={() => setIsOpenMeeting(false)}
             className="text-xl float-right"
@@ -517,14 +519,14 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
                           <input
                             type="number"
                             id="weeklyRepeat"
-                            value={formData.weeklyRepeat || ""}
+                            value={formData.weeklyRepeat || "0"}
                             onChange={(e) =>
                               setFormData({
                                 ...formData,
                                 weeklyRepeat: e.target.value,
                               })
                             }
-                            min="1"
+                            min="0"
                 
                             className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                           />

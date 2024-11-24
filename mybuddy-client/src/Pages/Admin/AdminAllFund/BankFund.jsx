@@ -102,41 +102,41 @@ const BankFund = () => {
     }
   };
 
-  const handleDeleteFundRequest = (id) => {
-    console.log(id);
-    Swal.fire({
-      title: "Are you sure to delete it ?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteBankFundRequest(id)
-          .unwrap()
-          .then(() => {
-            Swal.fire(
-              "Well done!",
-              "This fund request has been deleted.",
-              "success"
-            );
-            // setTimeout(() => {
-            //   window.location.reload();
-            // }, 2500);
-          })
-          .catch((error) => {
-            console.log(error);
-            Swal.fire(
-              "Error!",
-              "There was an issue to cancelled fund request.",
-              "error"
-            );
-          });
-      }
-    });
-  };
+  // const handleDeleteFundRequest = (id) => {
+  //   console.log(id);
+  //   Swal.fire({
+  //     title: "Are you sure to delete it ?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       deleteBankFundRequest(id)
+  //         .unwrap()
+  //         .then(() => {
+  //           Swal.fire(
+  //             "Well done!",
+  //             "This fund request has been deleted.",
+  //             "success"
+  //           );
+  //           // setTimeout(() => {
+  //           //   window.location.reload();
+  //           // }, 2500);
+  //         })
+  //         .catch((error) => {
+  //           console.log(error);
+  //           Swal.fire(
+  //             "Error!",
+  //             "There was an issue to cancelled fund request.",
+  //             "error"
+  //           );
+  //         });
+  //     }
+  //   });
+  // };
 
   return (
     <>

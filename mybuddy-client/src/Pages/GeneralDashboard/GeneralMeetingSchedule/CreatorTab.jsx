@@ -3,13 +3,32 @@ import { AuthContext } from "../../../Context/UserContext";
 import MeetingForm from "./MeetingForm";
 import moment from "moment";
 import MeetingDetailsPage from "./MeetingDetailsPage";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import UpdateMeeting from "./UpdateMeeting";
+import { FaRegPenToSquare, FaRegTrashCan } from "react-icons/fa6";
+import Swal from "sweetalert2";
+import { useDeleteMeetingMutation } from "../../../features/meeting/meetingApi";
 
 const CreatorTab = () => {
   const [isOpenMeeting, setIsOpenMeeting] = useState(false);
+  const [isOpenOption, setIsOpenOption] = useState(false);
+  const [selectedMeeting, setSelectedMeeting] = useState(null);
+  const [selectMeeting, setSelectMeeting] = useState(null);
+  const [isOpenUpdateMeeting, setIsOpenUpdateMeeting] = useState(false);
+  const [deleteMeeting]=useDeleteMeetingMutation();
   const { getAllProjectByUser, userId, getAllMeetingByCreator } =
     useContext(AuthContext);
-  const [selectedMeeting, setSelectedMeeting] = useState(null); // Store only one selected meeting
+  // Store only one selected meeting
   const meetingAsMembers = getAllMeetingByCreator?.data;
+
+  const toggleUpdateMeeting = (meetingData) => {
+    setSelectMeeting(meetingData);
+    setIsOpenUpdateMeeting(true);
+  };
+  const toggleOption = (meetingData) => {
+    setSelectMeeting(meetingData);
+    setIsOpenOption(!isOpenOption);
+  };
 
   const formatDateTime = (dateTimeString) => {
     const dateTime = moment(dateTimeString);
@@ -19,6 +38,41 @@ const CreatorTab = () => {
   const formatDate = (isoDateString) => {
     const date = moment(isoDateString);
     return date.format("DD MMMM YYYY");
+  };
+
+  const handleDeleteMeeting = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Are you sure to delete it ?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteMeeting(id).unwrap()
+          .then(() => {
+            Swal.fire(
+              "Well done!",
+              "This meeting has been deleted.",
+              "success"
+            );
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 2500);
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire(
+              "Error!",
+              "There was an issue to delete meeting.",
+              "error"
+            );
+          });
+      }
+    });
   };
 
   return (
@@ -37,10 +91,43 @@ const CreatorTab = () => {
           </button>
         </div>
 
-        {/* Meeting Cards Section */}
+        {/* Meeting Cards Section  */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {meetingAsMembers?.map((meeting, index) => (
-            <div key={index} className="bg-white shadow-md rounded-lg p-4">
+            <div
+              key={index}
+              className="bg-white shadow-md rounded-lg p-4 relative"
+            >
+              <button
+                onClick={() => toggleOption(meeting)}
+                className="float-right"
+              >
+                <HiOutlineDotsVertical />
+              </button>
+              {isOpenOption &&
+                selectMeeting &&
+                selectMeeting?._id === meeting?._id && (
+                  <ul className="absolute bg-white rounded-md text-center  right-4 top-8 shadow-xl w-28">
+                    <li
+                      onClick={() => toggleUpdateMeeting(meeting)}
+                      className="hover:bg-gray-100 py-1  cursor-pointer flex items-center pl-5 space-x-2"
+                    >
+                      {" "}
+                      <span>
+                        <FaRegPenToSquare className="text-gray-500" />
+                      </span>{" "}
+                      <span className=""> Edit</span>
+                    </li>
+                    <li onClick={()=>handleDeleteMeeting(meeting?._id)} className="hover:bg-gray-100 py-1  cursor-pointer flex items-center pl-5 space-x-2">
+                      {" "}
+                      <span>
+                        <FaRegTrashCan className="text-gray-500" />
+                      </span>{" "}
+                      <span className=""> Delete</span>
+                    </li>
+                  </ul>
+                )}
+
               <div className="flex items-start mb-2">
                 <img
                   src={
@@ -53,7 +140,7 @@ const CreatorTab = () => {
                 />
                 <div className="ml-4">
                   <h3 className="text-lg font-semibold capitalize">
-                    {meeting?.title}
+                    {meeting?.title?.length > 7 ? `${meeting?.title?.slice(0,6)}...` : meeting?.title}
                   </h3>
                   <span className="text-base">
                     {formatDate(meeting.meetingTime)}
@@ -113,6 +200,14 @@ const CreatorTab = () => {
           setIsOpenMeeting={setIsOpenMeeting}
           getAllProjectByUser={getAllProjectByUser}
           userId={userId}
+        />
+      )}
+
+      {isOpenUpdateMeeting && selectMeeting && (
+        <UpdateMeeting
+          meetingData={selectMeeting}
+          setSelectMeeting={setSelectMeeting}
+          setIsOpenUpdateMeeting={setIsOpenUpdateMeeting}
         />
       )}
     </>

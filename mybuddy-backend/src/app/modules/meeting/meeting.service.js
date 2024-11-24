@@ -385,8 +385,9 @@ export const updateMemberAttendance = async (
 //---------- get meeting of specific user
 export const getMeetingByCreatorService = async (id) => {
   const meetingByCreator = await Meeting.find({creator : id })
-    .populate("creator")
-    .populate("meetingMembers.memberId")
+    .populate("creator","name email profilePic")
+    .populate("meetingMembers.memberId","name email profilePic")
+    .populate("projectId", "projectName")
     .sort({ createdAt: -1 });
   return meetingByCreator;
 };
@@ -489,4 +490,31 @@ export const getMeetingsByStatus = async (userId, filter) => {
   }).length;
 
   return { totalMeetings, upcomingMeetings, absentMeetings };
+};
+
+
+//--- update meeting 
+export const updateMeetingService = async (id, updatedMeetingData) => {
+  if (!id) {
+    throw new Error("Meeting ID is required.");
+  }
+
+  const updatedMeeting = await Meeting.findByIdAndUpdate(
+    id,
+    updatedMeetingData,
+    { new: true } // Ensures we get the updated document
+  );
+
+  if (!updatedMeeting) {
+    throw new Error("Meeting not found or could not be updated.");
+  }
+
+  return updatedMeeting;
+};
+
+//----------------- delete meeting
+
+export const deleteMeetingService = async (id) => {
+  const result = await Meeting.findByIdAndDelete({ _id: id });
+  return result;
 };

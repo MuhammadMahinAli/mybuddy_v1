@@ -75,7 +75,7 @@ const UserContext = ({ children }) => {
     isLoading: isFetchingPost,
     error: postError,
   } = useGetSingleUserPostQuery(userId, { skip: !userId });
-  console.log("p", getUserPost);
+
 
   //-------------- get each user's project
   const {

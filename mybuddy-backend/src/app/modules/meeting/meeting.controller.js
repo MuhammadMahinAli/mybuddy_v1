@@ -1,9 +1,11 @@
 import {
   createMeetingService,
+  deleteMeetingService,
   getMeetingByCreatorService,
   getMeetingsByMeetingMember,
   getMeetingsByStatus,
   getSingleMeeting,
+  updateMeetingService,
   updateMemberAttendance,
   updateMembersAttendanceStatus,
 } from "./meeting.service.js";
@@ -189,5 +191,41 @@ export const getMeetingByCreatorController = catchAsync(async (req, res) => {
     success: true,
     message: "All meeting by creator retrived successfully",
     data: meetings,
+  });
+});
+
+//--------- update meeting 
+export const updateMeetingController = async (req, res) => {
+  const { id } = req.params; // Extract meeting ID from request params
+  const updatedMeetingData = req.body; // Data sent in request body
+
+  try {
+    const updatedMeeting = await updateMeetingService(id, updatedMeetingData);
+    res.status(200).json({
+      success: true,
+      message: "Meeting updated successfully.",
+      data: updatedMeeting,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Failed to update meeting.",
+    });
+  }
+};
+
+//----------------- delete meeting
+
+
+export const deleteMeetingController = catchAsync(async (req, res) => {
+  const id = req.params.id;
+
+  const project = await deleteMeetingService(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Meeting deleted successfully!",
+    data: project,
   });
 });

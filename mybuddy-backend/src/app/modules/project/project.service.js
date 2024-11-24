@@ -57,20 +57,21 @@ export const createProject = async (postData) => {
 //   }
 // };
 // ************** get projects  01815000012
-// export const getProjectsService = async () => {
-//   const projects = await Project.find({ })
-//     .populate("user")
+// export const getAllProjectsService = async () => {
+//   const projects = await Project.find({})
+//     .populate("user", "name email profilePic" ,)
 //     .populate("tasks")
-//     // .sort({ createdAt: -1 });
+//     .sort({ createdAt: -1 });
 //   return projects;
 // };
+
 
 export const getProjectsService = async (page, limit) => {
   try {
     const skip = (page - 1) * limit;
 
     // Fetch projects and populate user details
-    const projects = await Project.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit).populate('user');
+    const projects = await Project.find().sort({ createdAt: -1 }).skip(skip).limit(limit).populate('user', "name email profilePic country");
     const totalPage = await Project.countDocuments();
 
     return {
@@ -84,6 +85,7 @@ export const getProjectsService = async (page, limit) => {
     throw new Error("Failed to retrieve projects");
   }
 };
+
 
 
 
