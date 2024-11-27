@@ -149,7 +149,7 @@ const UserContext = ({ children }) => {
   const { data: getFriendRequest, isLoading: isFetchingGetFriendRequest, error: getFriendRequestError } =
   useGetFriendRequestQuery(userId, { skip: !userId });
 
-  //------------- get pending friend request
+  //------------- get accepted friend request
   const { data: getAcceptedFriendRequest, isLoading: isFetchingAcceptedFriendRequest, error: acceptedFriendRequestError } =
   useGetAcceptedFriendRequestQuery(userId, { skip: !userId });
 

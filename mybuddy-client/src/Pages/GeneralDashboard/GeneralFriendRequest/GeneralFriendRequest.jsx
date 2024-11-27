@@ -153,7 +153,7 @@ const GeneralFriendRequest = () => {
   const requests = getFriendRequest?.data;
   const sentRequests = getAllSentPendingFriendRequest?.data;
 
-  console.log(getFriendRequest?.data?.length);
+  console.log(requests);
   return (
     <div className="relative">
       <h1 className="gray600 text-[20px] lg:text-[28px] md:pb-5 font-bold w-full pb-3 xl:pb-7">

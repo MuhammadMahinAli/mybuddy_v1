@@ -17,6 +17,7 @@ const GeneralSideBar = () => {
   const [openMyTools, setOpenMyTools] = useState(false);
   const [openSetting, setOpenSetting] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
+  const [openAllPost, setOpenAllPost] = useState(false);
   const [openRequestOption, setOpenRequestOption] = useState(false);
   const [userData, setUserData] = useState({});
   const{singleUser} = useContext(AuthContext);
@@ -46,6 +47,7 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenProfile,
       setOpenRequestOption,
+      setOpenAllPost,
       setOpenMyTools
     ]);
   const handleProject = () =>
@@ -59,6 +61,7 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenProfile,
       setOpenRequestOption,
+      setOpenAllPost,
       setOpenMyTools
     ]);
   const handleRequest = () =>
@@ -71,6 +74,7 @@ setUserData(singleUser);
       setOpenMeet,
       setOpenSetting,
       setOpenProfile,
+      setOpenAllPost,
       setOpenMyTools
     ]);
   const handleCreateProject = () =>
@@ -84,6 +88,7 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenProfile,
       setOpenRequestOption,
+      setOpenAllPost,
       setOpenMyTools
     ]);
   // const handleMblDashboard = () =>
@@ -98,6 +103,7 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenProfile,
       setOpenRequestOption,
+      setOpenAllPost,
       setOpenMyTools
     ]);
   const handleFriendRqst = () =>
@@ -111,6 +117,7 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenProfile,
       setOpenRequestOption,
+      setOpenAllPost,
       setOpenMyTools
     ]);
   const handleMeeting = () =>
@@ -124,6 +131,7 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenProfile,
       setOpenRequestOption,
+      setOpenAllPost,
       setOpenMyTools
     ]);
   const handleProfile = () =>
@@ -137,6 +145,7 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenMeet,
       setOpenRequestOption,
+      setOpenAllPost,
       setOpenMyTools
     ]);
   const handleMyTools = () =>
@@ -150,6 +159,7 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenMeet,
       setOpenRequestOption,
+      setOpenAllPost,
       setOpenProfile
      
     ]);
@@ -164,6 +174,21 @@ setUserData(singleUser);
       setOpenMeet,
       setOpenProfile,
       setOpenRequestOption,
+      setOpenAllPost,
+      setOpenMyTools
+    ]);
+  const handleAllPost = () =>
+    toggleState(setOpenAllPost, [
+      setOpenDashboard,
+      setOpenProject,
+      setOpenRequest,
+      setOpenCreateProject,
+      setOpenFrndRqst,
+      setOpenFund,
+      setOpenMeet,
+      setOpenProfile,
+      setOpenRequestOption,
+      setOpenSetting,  
       setOpenMyTools
     ]);
     // logout
@@ -202,6 +227,8 @@ setUserData(singleUser);
         handleRequest={handleRequest}
         handleSetting={handleSetting}
         handleMyTools={handleMyTools}
+        handleAllPost={handleAllPost}
+        openAllPost={openAllPost}
         openMyTools={openMyTools}
         openCreateProject={openCreateProject}
         openDashboard={openDashboard}
@@ -226,6 +253,8 @@ setUserData(singleUser);
         handleRequest={handleRequest}
         handleSetting={handleSetting}
         handleMyTools={handleMyTools}
+        handleAllPost={handleAllPost}
+        openAllPost={openAllPost}
         openMyTools={openMyTools}
         setOpenRequestOption={setOpenRequestOption}
         openCreateProject={openCreateProject}

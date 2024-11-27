@@ -434,6 +434,8 @@ const TaskTab = ({
   ).length;
 
   const doneTasks = tasks?.filter((task) => task.status === "completed").length;
+
+  console.log("current m",currentTeamMember);
   return (
     <div className="">
       {ProjectInfo?.user?._id === userId && (
@@ -540,16 +542,31 @@ const TaskTab = ({
                 </div>
                 <div className="flex justify-between items-center mt-4">
                   <div className="flex -space-x-2">
-                    <img
-                      className="w-8 h-8 rounded-full border-2 border-white"
-                      src="https://randomuser.me/api/portraits/men/1.jpg"
-                      alt="User 1"
-                    />
-                    <img
-                      className="w-8 h-8 rounded-full border-2 border-white"
-                      src="https://randomuser.me/api/portraits/women/2.jpg"
-                      alt="User 2"
-                    />
+                   
+                  {currentTeamMember
+                    ?.filter((request) =>
+                      request.tasks.some(
+                        (task) => task.title === tasks[selectedIndex]?.title
+                      )
+                    )
+                    .map((request, i) => (
+                      <div
+                        key={i}
+                        className="flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
+                      >
+                        <div className="flex justify-start pl-2 text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
+                          <img
+                            src={
+                              request?.requestedBy?.profilePic
+                                ? request?.requestedBy?.profilePic
+                                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                            }
+                            alt="Profile"
+                            className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
+                          />
+                          </div>
+                          </div>
+                   ))}
                     <button
                       className={`w-8 h-8 rounded-full ${progressColor} text-white text-bl flex items-center justify-center border-2 border-white`}
                     >

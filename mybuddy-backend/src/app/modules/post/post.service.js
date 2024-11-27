@@ -30,8 +30,8 @@ export const createPost = async (postData) => {
 
 export const getAllPostService = async () => {
   const posts = await Post.find({})
-    .populate("postedBy")
-    .populate("teamMembers.member")
+    .populate("postedBy", "name email profilePic role")
+    .populate("teamMembers.member", "name")
     .sort({ createdAt: -1 });
   return posts;
 };
@@ -49,4 +49,32 @@ export const getSingleMemberPostService = async (userId) => {
     console.error("Error fetching user's posts:", error);
     throw new Error("Failed to fetch user's posts");
   }
+};
+
+//------------------ update post
+
+
+export const updatePostService = async (id, updatedPostData) => {
+  if (!id) {
+    throw new Error("Post ID is required.");
+  }
+console.log(id, updatedPostData);
+  const updatedPost = await Post.findByIdAndUpdate(
+    id,
+    updatedPostData,
+    { new: true } // Ensures we get the updated document
+  );
+
+  if (!updatedPost) {
+    throw new Error("Post not found or could not be updated.");
+  }
+
+  return updatedPost;
+};
+
+//----------------- delete 
+
+export const deletePostService = async (id) => {
+  const result = await Post.findByIdAndDelete({ _id: id });
+  return result;
 };

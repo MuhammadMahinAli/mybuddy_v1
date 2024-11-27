@@ -26,8 +26,23 @@ export const postApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["SingleMemberPost"],
     }),
+    updatePostInfo: builder.mutation({
+      query: ({id, data}) => ({
+        url: `/posts/update-info/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidateTags: ["Post"],
+    }),
+    deletePost: builder.mutation({
+      query: (id) => ({
+        url: `/posts/deletePost/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Post"],
+    }),
   }),
 });
 
- export const {useCreatePostMutation, useGetAllPostQuery,useGetSingleUserPostQuery} = postApi;
+ export const {useDeletePostMutation,useUpdatePostInfoMutation,useCreatePostMutation, useGetAllPostQuery,useGetSingleUserPostQuery} = postApi;
 

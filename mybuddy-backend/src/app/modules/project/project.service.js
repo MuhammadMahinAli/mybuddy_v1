@@ -30,40 +30,6 @@ export const createProject = async (postData) => {
   }
 };
 
-// export const createProject = async (data) => {
-//   try {
-//     // Create task documents and collect their IDs
-//     const taskIds = [];
-//     for (const task of data.tasks) {
-//       const newTask = new Task(task);
-//       await newTask.save();
-//       taskIds.push(newTask._id);
-//     }
-
-//     // Create project with task IDs
-//     const projectData = {
-//       ...data,
-//       tasks: taskIds,
-//     };
-//     const project = new Project(projectData);
-//     const result = await project.save();
-
-//     if (!result) {
-//       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create project");
-//     }
-//     return result;
-//   } catch (error) {
-//     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
-//   }
-// };
-// ************** get projects  01815000012
-// export const getAllProjectsService = async () => {
-//   const projects = await Project.find({})
-//     .populate("user", "name email profilePic" ,)
-//     .populate("tasks")
-//     .sort({ createdAt: -1 });
-//   return projects;
-// };
 
 
 export const getProjectsService = async (page, limit) => {

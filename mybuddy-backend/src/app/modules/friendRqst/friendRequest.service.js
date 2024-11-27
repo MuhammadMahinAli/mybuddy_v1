@@ -52,10 +52,29 @@ export const getPendingFriendRequestByService = async (id) => {
 
 
 //------------- get friend request with accepted status requested to
-   export const getAcceptedFriendRequestService = async (id) => {
-      const friendRequests = await FriendRequest.find({requestedTo: id}).find({ status: "Accepted" }).populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+  //  export const getAcceptedFriendRequestService = async (id) => {
+  //     const friendRequests = await FriendRequest.find({requestedTo: id}).find({ status: "Accepted" }).populate('requestedBy').populate('requestedTo').sort({ createdAt: -1 });
+  //     return friendRequests;
+  //   };
+  export const getAcceptedFriendRequestService = async (id) => {
+    try {
+      const friendRequests = await FriendRequest.find({
+        status: "Accepted",
+        $or: [
+          { requestedBy: id },
+          { requestedTo: id }
+        ]
+      })
+        .populate('requestedBy')
+        .populate('requestedTo')
+        .sort({ createdAt: -1 });
+  
       return friendRequests;
-    };
+    } catch (error) {
+      throw new Error("Error fetching accepted friend requests: " + error.message);
+    }
+  };
+  
 
 //------------- get other's friend request with accepted status requested by
    export const getOthersAcceptedFriendRequestService = async (id) => {

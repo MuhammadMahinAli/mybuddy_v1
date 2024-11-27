@@ -1,7 +1,9 @@
 import {
   createPost,
+  deletePostService,
   getAllPostService,
   getSingleMemberPostService,
+  updatePostService,
 } from "./post.service.js";
 import { catchAsync } from "../../../utils/catchAsync.js";
 import { sendResponse } from "../../../utils/sendResponse.js";
@@ -59,3 +61,41 @@ export const getSingleMemberPostController= async (req, res) => {
     });
   
 };
+
+//------------- update post
+
+export const updatePostController = async (req, res) => {
+  const { id } = req.params; 
+  const updatedPostData = req.body; 
+  console.log(id, updatedPostData);
+
+  try {
+    const updatedPost = await updatePostService(id, updatedPostData);
+    res.status(200).json({
+      success: true,
+      message: "Post updated successfully!",
+      data: updatedPost,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Failed to update post.",
+    });
+  }
+};
+
+//----------------- delete 
+
+
+export const deletePostController = catchAsync(async (req, res) => {
+  const id = req.params.id;
+
+  const project = await deletePostService(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Post deleted successfully!",
+    data: project,
+  });
+});

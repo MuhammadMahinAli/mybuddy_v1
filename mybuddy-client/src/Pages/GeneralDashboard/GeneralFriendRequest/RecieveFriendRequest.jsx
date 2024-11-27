@@ -4,6 +4,8 @@ const RecieveFriendRequest = ({
   handleUpdateStatusAccept,
   handleDeleteFriendRequest
 }) => {
+
+  console.log('h', getFriendRequest);
   return (
     <div>
       <>

@@ -24,6 +24,8 @@ const MobileSidebar = ({
   openSetting,
   handleMyTools,
   openMyTools,
+  handleAllPost,
+  openAllPost,
   logout
 }) => {
   const{singleUser} = useContext(AuthContext);
@@ -246,6 +248,35 @@ const MobileSidebar = ({
             <div
               className={`${
                 openMyTools === true ? "block" : "hidden"
+              } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
+            ></div>
+          </li>
+          {/* all post*/}
+          <li
+            onClick={handleAllPost}
+            className={`${
+              openAllPost === true ? "show-content pl-2" : "hide-content"
+            } border-b  cursor-pointer`}
+          >
+            {openAllPost && (
+              <div className=" bg-[#e4ecf7] h-4 rounded-br-[60px]"></div>
+            )}
+
+            <div
+              className={`${
+                openAllPost === true
+                  ? "bg-[#f3f6f8] rounded-[20px]  py-2"
+                  : "bg-[#e4ecf7]  py-3"
+              } flex relative items-center justify-center`}
+            >
+              <Link to="/dashboard/all-post">
+                <img src="/rqst2.svg" className="h-5" />
+              </Link>
+            </div>
+
+            <div
+              className={`${
+                openAllPost === true ? "block" : "hidden"
               } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
             ></div>
           </li>
