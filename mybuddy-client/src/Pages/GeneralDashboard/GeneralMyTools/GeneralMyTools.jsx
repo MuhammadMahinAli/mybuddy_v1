@@ -128,12 +128,12 @@ const GeneralMyTools = () => {
   };
 
   return (
-    <div className="p-10 space-y-10">
+    <div className="py-5 xl:p-10 space-y-10">
       {/* My Tools Section */}
       <div>
         { storedMyTools?.length !== 0 &&  <h2 className="text-2xl font-semibold mb-4">My Tools</h2> }
         
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {storedMyTools?.map((tool) => (
             <div
               key={tool._id}
@@ -162,7 +162,7 @@ const GeneralMyTools = () => {
       {/* All Tools Section */}
       <div>
         <h2 className="text-2xl font-semibold mb-4">All Tools</h2>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {storedAllTools.map((tool) => (
             <div
               key={tool._id}

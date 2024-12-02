@@ -17,7 +17,11 @@ import blockChain from "../../assets/projectDetail/block-chain.png";
 import docx from "../../assets/projectDetail/docx.png";
 import pdf from "../../assets/projectDetail/pdf1.png";
 import { useContext, useEffect, useState } from "react";
-import { FaPlus, FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
+import {
+  FaPlus,
+  FaRegArrowAltCircleLeft,
+  FaRegArrowAltCircleRight,
+} from "react-icons/fa";
 import { useGetAllProjectQuery } from "../../features/project/projectApi";
 import { useSelector } from "react-redux";
 import ImageSlider from "./ImageSlider";
@@ -123,7 +127,6 @@ const FindProject = () => {
       setTotalPages(data.totalPages || 1);
 
       // Set isFiltered to true if uniqueIdFilter is applied, else false
-      
     } catch (error) {
       if (
         error.response &&
@@ -134,7 +137,7 @@ const FindProject = () => {
       }
     }
     setLoading(false); // Set loading to false when data is fetched
-  // Set loading to false when data is fetched
+    // Set loading to false when data is fetched
   };
 
   const projects = allProjects
@@ -145,45 +148,41 @@ const FindProject = () => {
   useEffect(() => {
     fetchProjects(currentPage);
   }, [currentPage]);
-  
-  
+
   const handlePaymentSelection = (payment) => {
     setSelectedPayment(payment);
   };
-
 
   const toggleDescription = (i) => {
     setOpenDescriptionIndex(openDescriptionIndex === i ? null : i);
   };
 
-
   const handleJoinClick = (project) => {
     console.log(project);
     if (!userId) {
-        navigate("/");
-        console.log("Redirecting due to missing userId:", selectedTasks);
+      navigate("/");
+      console.log("Redirecting due to missing userId:", selectedTasks);
     } else if (selectedTasks?.length === 0) {
-        Swal.fire({
-            icon: "warning",
-            title: "Oops !",
-            text: "I Think, You Forget to Select Task.",
-        });
-        console.log("No tasks selected:", selectedTasks);
-        return;
+      Swal.fire({
+        icon: "warning",
+        title: "Oops !",
+        text: "I Think, You Forget to Select Task.",
+      });
+      console.log("No tasks selected:", selectedTasks);
+      return;
     } else {
-        setSelectedProject(project);
-        const data = {
-            projectId: project?._id,
-            requestedBy: userId,
-            requestedTo: project?.user?._id,
-            status: "Pending",
-            tasks: selectedTasks,
-        };
-        console.log("Request Data Being Sent:", data);
-        createProjectJoinRequest(data);
-       
-}
-  }
+      setSelectedProject(project);
+      const data = {
+        projectId: project?._id,
+        requestedBy: userId,
+        requestedTo: project?.user?._id,
+        status: "Pending",
+        tasks: selectedTasks,
+      };
+      console.log("Request Data Being Sent:", data);
+      createProjectJoinRequest(data);
+    }
+  };
   useEffect(() => {
     if (responseData) {
       // console.log("Response Data:", responseData);
@@ -194,11 +193,10 @@ const FindProject = () => {
         text: "Your request has been sent successfully!",
       });
       setSelectedProject(null);
-      setSelectedTasks([])
+      setSelectedTasks([]);
       // setTimeout(() => {
       //   window.location.reload();
       // }, 2500);
-
     } else if (responseError?.data) {
       Swal.fire({
         icon: "error",
@@ -232,7 +230,6 @@ const FindProject = () => {
     }
   };
 
-
   //------------ switch start
   const [selectedOption, setSelectedOption] = useState("donation"); // default selection
   //const [loading, setLoading] = useState(false);
@@ -241,7 +238,6 @@ const FindProject = () => {
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
   };
-
 
   //------------ switch end
 
@@ -332,24 +328,28 @@ const FindProject = () => {
                               {project?.user?.name?.lastName}
                             </span>
                           </p>
-                          { project?.user?.country &&
+                          {project?.user?.country && (
                             <p
+                              className={`${
+                                theme === "light" ? "graish" : "text-white"
+                              } text-[14px] md:text-[16px] xl:text-[20px]`}
+                            >
+                              <span
+                                className={`${
+                                  theme === "light"
+                                    ? "text-gray-500"
+                                    : "text-white"
+                                } capitalize text-[13px] md:text-[15px] xl:text-[19px] font-normal pl-1`}
+                              >
+                                {project?.user?.country}
+                              </span>
+                            </p>
+                          )}
+                          <p
                             className={`${
                               theme === "light" ? "graish" : "text-white"
-                            } text-[14px] md:text-[16px] xl:text-[20px]`}
+                            }  text-[11px] lg:text-[16px] 3xl:text-[18px] font-medium pl-1 pt-1`}
                           >
-                            <span
-                              className={`${
-                                theme === "light"
-                                  ? "text-gray-500"
-                                  : "text-white"
-                              } capitalize text-[13px] md:text-[15px] xl:text-[19px] font-normal pl-1`}
-                            >
-                              {project?.user?.country}
-                            </span>
-                          </p>
-                          }
-                          <p className="graish text-[11px] lg:text-[16px] 3xl:text-[18px] font-medium pl-1 pt-1">
                             {statuss === "ended"
                               ? `Project: ${
                                   project.projectName
@@ -366,7 +366,6 @@ const FindProject = () => {
                       </div>
                     </Link>
 
-                   
                     {project?.user?._id !== userId && (
                       <>
                         {project.isMemberRequestAccept ? (
@@ -554,7 +553,7 @@ const FindProject = () => {
                       React [5]
                     </p>
                     <div className="flex items-center space-x-2">
-                      <FundSlider projectId={project?._id} />
+                      <FundSlider projectId={project?._id} theme={theme} />
                       <p className="text-[14px] lg:text-[16px] 3xl:text-[20px] font-medium">
                         2 Comments, 5 Shares
                       </p>
@@ -597,8 +596,12 @@ const FindProject = () => {
                   </ul>
                   {/* Popup Modal */}
                   {isPayModalOpen === true && (
-                    <div className="z-50 fixed top-0 left-0  flex justify-center items-center bg-black/5 bg-opacity-50 w-screen h-screen overflow-y-scroll">
-                      <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all md:w-[600px] 3xl:w-[800px] xl:h-[600px] 3xl:h-[700px] overflow-y-scroll cursor-pointer">
+                    <div className={`${
+                      theme === "light"
+                        ? "bg-black/5"
+                        : "bg-black/15"
+                    }  z-50 fixed top-0 left-0  flex justify-center items-center  bg-opacity-50 w-screen h-screen overflow-y-scroll`}>
+                      <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all md:w-[600px] 3xl:w-[800px] h-[600px] 3xl:h-[700px] overflow-y-scroll cursor-pointer">
                         <IoIosCloseCircleOutline
                           onClick={() => setIsPayModalOpen(false)}
                           className="text-xl float-right"
@@ -642,19 +645,19 @@ const FindProject = () => {
                           {/* Payment Method Selection */}
                           {selectedOption === "donation" && (
                             <div className="mb-6">
-                              <ul className="flex items-center space-x-6">
+                              <ul className="flex items-center space-x-3 lg:space-x-6">
                                 <li
                                   onClick={() =>
                                     handlePaymentSelection("Paypal")
                                   }
                                   className={`cursor-pointer p-1 rounded-lg ${
                                     selectedPayment === "Paypal"
-                                      ? "border-2 p-3 border-blue-500 bg-blue-100"
-                                      : "border-2 p-3 border-gray-300"
+                                      ? "border-2 p-2 lg:p-3 border-blue-500 bg-blue-100"
+                                      : "border-2 p-2 lg:p-3 border-gray-300"
                                   }`}
                                 >
                                   <img
-                                    className="h-12 w-12"
+                                    className="w-8 h-8 lg:h-12 lg:w-12"
                                     src="https://i.ibb.co.com/NYDfhjQ/paypal-1.png"
                                     alt="paypal"
                                   />
@@ -665,12 +668,12 @@ const FindProject = () => {
                                   }
                                   className={`cursor-pointer p-1 rounded-lg ${
                                     selectedPayment === "Payoneer"
-                                      ? "border-2 p-3 border-blue-500 bg-blue-100"
-                                      : "border-2 p-3 border-gray-300"
+                                      ? "border-2 p-2 lg:p-3 border-blue-500 bg-blue-100"
+                                      : "border-2 p-2 lg:p-3 border-gray-300"
                                   }`}
                                 >
                                   <img
-                                    className="h-12 w-12"
+                                    className="w-8 h-8 lg:h-12 lg:w-12"
                                     src="https://i.ibb.co.com/qR4yw1g/payoneer-logo1.png"
                                     alt="payoneer"
                                   />
@@ -682,11 +685,11 @@ const FindProject = () => {
                                   className={`cursor-pointer p-1 rounded-lg ${
                                     selectedPayment === "Stripe"
                                       ? "border-2  border-blue-500 px-3  py-2 bg-blue-100"
-                                      : "border-2 px-3 py-2 border-gray-300"
+                                      : "border-2 px-2 py-1 lg:px-3 lg:py-2 border-gray-300"
                                   }`}
                                 >
                                   <img
-                                    className="h-14 w-14"
+                                    className="h-10 w-10 lg:h-14 lg:w-14"
                                     src="https://i.ibb.co.com/rstQvKT/stripe.png"
                                     alt="stripe"
                                   />
@@ -698,12 +701,12 @@ const FindProject = () => {
                                   }
                                   className={`cursor-pointer p-1 rounded-lg ${
                                     selectedPayment === "Bank transfer"
-                                      ? "border-2 p-3 border-blue-500 bg-blue-100"
-                                      : "border-2 p-3 border-gray-300"
+                                      ? "border-2 p-2 lg:p-3 border-blue-500 bg-blue-100"
+                                      : "border-2 p-2 lg:p-3 border-gray-300"
                                   }`}
                                 >
                                   <img
-                                    className="h-12 w-12"
+                                    className="w-8 h-8 lg:h-12 lg:w-12"
                                     src="https://i.ibb.co.com/zJ3bWNk/bank.png"
                                     alt="bank transfer"
                                   />
@@ -715,27 +718,38 @@ const FindProject = () => {
 
                           {/* paypal */}
                           {selectedPayment === "Paypal" &&
-                            selectedOption === "donation" && <FundByPaypal setIsPayModalOpen={setIsPayModalOpen} setSelectedProject={setSelectedProject}  selectedProject={selectedProject} />}
+                            selectedOption === "donation" && (
+                              <FundByPaypal
+                                setIsPayModalOpen={setIsPayModalOpen}
+                                setSelectedProject={setSelectedProject}
+                                selectedProject={selectedProject}
+                              />
+                            )}
                           {/* payoneer */}
                           {selectedPayment === "Payoneer" &&
-                            selectedOption === "donation" && 
-                            <FundByPayoneer 
-                            userId={userId}
-                            setIsPayModalOpen={setIsPayModalOpen} 
-                            setSelectedProject={setSelectedProject}  
-                            selectedProject={selectedProject} />}
+                            selectedOption === "donation" && (
+                              <FundByPayoneer
+                                userId={userId}
+                                setIsPayModalOpen={setIsPayModalOpen}
+                                setSelectedProject={setSelectedProject}
+                                selectedProject={selectedProject}
+                              />
+                            )}
                           {/* Bank transfer */}
                           {selectedPayment === "Bank transfer" &&
-                            selectedOption === "donation" && <FundByBank 
-                            selectedProject={selectedProject}
-                            setIsPayModalOpen={setIsPayModalOpen}
-                            setSelectedProject={setSelectedProject}
-                            userId={userId} />}
+                            selectedOption === "donation" && (
+                              <FundByBank
+                                selectedProject={selectedProject}
+                                setIsPayModalOpen={setIsPayModalOpen}
+                                setSelectedProject={setSelectedProject}
+                                userId={userId}
+                              />
+                            )}
                           {/* stripe */}
                           {selectedPayment === "Stripe" &&
                             selectedOption === "donation" && (
                               <FundByStripe
-                              setIsPayModalOpen={setIsPayModalOpen}
+                                setIsPayModalOpen={setIsPayModalOpen}
                                 setSelectedProject={setSelectedProject}
                                 userId={userId}
                                 selectedProject={selectedProject}
@@ -824,16 +838,22 @@ const FindProject = () => {
             );
           })}
         </div>
-        { projects?.length !== 0 && loading === false && (
-          <div className=" pagination flex items-center justify-center mt-5">
+        {projects?.length !== 0 && loading === false && (
+          <div className="space-x-2 pagination flex items-center justify-center mt-5">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
+              className={`${
+                theme === "light" ? "text-gray-600" : "text-white"
+              } py-2 rounded-lg mx-2`}
             >
-           <FaRegArrowAltCircleLeft  className="text-2xl"  />
+              <FaRegArrowAltCircleLeft className="text-2xl" />
             </button>
-            <span>
+            <span
+              className={`${
+                theme === "light" ? "text-gray-600" : "text-white"
+              }`}
+            >
               Page {currentPage} of {totalPages}
             </span>
             <button
@@ -841,11 +861,12 @@ const FindProject = () => {
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
+              className={`${
+                theme === "light" ? "text-gray-600" : "text-white"
+              } py-2 rounded-lg mx-2`}
             >
-                <FaRegArrowAltCircleRight className="text-2xl" />
+              <FaRegArrowAltCircleRight className="text-2xl" />
             </button>
-
           </div>
         )}
       </div>

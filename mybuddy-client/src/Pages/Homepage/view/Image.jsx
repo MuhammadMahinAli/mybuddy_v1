@@ -6,11 +6,11 @@ const Image = ({image,i}) => {
     console.log("Rendering Image component at index:", i);
   }, [i]);
     return (
-        <div className="flex justify-center items-center w-full ">
+        <div className="flex justify-center items-center w-full">
         <div className="flex  max-h-[600px] justify-center items-center w-full">
        {
         image &&
-        <img className="w-11/12 max-h-[590px] object-cover rounded-lg" src={image} loading="lazy" alt="Post" />
+        <img className="w-full max-h-[590px] object-cover rounded-lg" src={image} loading="lazy" alt="Post" />
        }
       </div>
       </div>

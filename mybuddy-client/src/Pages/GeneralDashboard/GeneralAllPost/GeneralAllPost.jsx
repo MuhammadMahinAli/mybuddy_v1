@@ -79,16 +79,32 @@ const GeneralAllPost = () => {
                   <HiOutlineDotsVertical />
                 </button>
                 {post.image && (
-                  <img src={post.image} className="w-4/12 h-32 rounded-md" />
+                  <img
+                    src={post.image}
+                    className="w-4/12 h-20 lg:h-32 3xl:h-36 rounded-md"
+                  />
                 )}
                 {post.pdf && (
-                  <img src={pdfIcon} className="w-4/12 h-32 rounded-md" />
+                  <img
+                    src={pdfIcon}
+                    className="w-4/12 h-20 lg:h-32 3xl:h-36 rounded-md"
+                  />
                 )}
-
+                {/* mbl */}
                 <div
                   className={`${
                     post.image || post?.pdf ? "w-8/12" : "w-11/12"
-                  } pr-6 rounded-lg`}
+                  } pr-6 rounded-lg lg:hidden`}
+                >
+                  {post?.description.length > 45
+                    ? `${post?.description.slice(0, 45)}....`
+                    : post?.description}
+                </div>
+                {/* tab */}
+                <div
+                  className={`${
+                    post.image || post?.pdf ? "w-8/12" : "w-11/12"
+                  } pr-6 rounded-lg hidden lg:block`}
                 >
                   {post?.description.length > 140
                     ? `${post?.description.slice(0, 140)}....`

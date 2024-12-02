@@ -28,7 +28,6 @@ const TaskTab = ({
   allRecieveRequest,
   filteredMyself,
   projectOwner,
- 
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isOpenCommitModal, setIsOpenCommitModal] = useState(false);
@@ -162,11 +161,9 @@ const TaskTab = ({
 
   // is Matching useGetAllAcceptedProjectTeamMemberQuery
 
-
-
   const [teamMembers, setTeamMembers] = useState(null);
 
-  const projectId = ProjectInfo?._id
+  const projectId = ProjectInfo?._id;
 
   useEffect(() => {
     if (!projectId) {
@@ -183,21 +180,15 @@ const TaskTab = ({
     fetchData();
   }, [projectId]);
 
-
-
- // access of commit 
+  // access of commit
 
   const currentTaskid = tasks[selectedIndex]?._id;
 
   const isMatchingMember = teamMembers?.some(
-    (member) => 
+    (member) =>
       member?.requestedBy?._id === userId &&
-      member?.tasks?.some(task => task?._id === currentTaskid) // Check if any task's title matches
+      member?.tasks?.some((task) => task?._id === currentTaskid) // Check if any task's title matches
   );
-
- 
-
-
 
   //----------- update task, subtask status
   const [updateTaskStatus] = useUpdateTaskStatusMutation();
@@ -258,7 +249,7 @@ const TaskTab = ({
     }).then((result) => {
       if (result.isConfirmed) {
         deleteTask(taskId)
-        .unwrap() 
+          .unwrap()
           .then(() => {
             Swal.fire("Deleted!", "Your task has been deleted.", "success");
             setTimeout(() => {
@@ -290,7 +281,7 @@ const TaskTab = ({
     }).then((result) => {
       if (result.isConfirmed) {
         deleteTeamMember(id)
-        .unwrap() 
+          .unwrap()
           .then(() => {
             Swal.fire("Deleted!", "This member has been deleted.", "success");
             setTimeout(() => {
@@ -396,7 +387,6 @@ const TaskTab = ({
     }
   };
 
-
   //------ count progress bar
 
   const calculateProgress = (task) => {
@@ -435,7 +425,7 @@ const TaskTab = ({
 
   const doneTasks = tasks?.filter((task) => task.status === "completed").length;
 
-  console.log("current m",currentTeamMember);
+  console.log("current m", currentTeamMember);
   return (
     <div className="">
       {ProjectInfo?.user?._id === userId && (
@@ -540,21 +530,16 @@ const TaskTab = ({
                     {progress.toFixed(2)}%
                   </p>
                 </div>
+                
                 <div className="flex justify-between items-center mt-4">
-                  <div className="flex -space-x-2">
-                   
-                  {currentTeamMember
-                    ?.filter((request) =>
-                      request.tasks.some(
-                        (task) => task.title === tasks[selectedIndex]?.title
+                  <div className="flex -space-x-3">
+                    {currentTeamMember
+                      ?.filter((request) =>
+                        request.tasks.some((t) => t.title === task.title)
                       )
-                    )
-                    .map((request, i) => (
-                      <div
-                        key={i}
-                        className="flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
-                      >
-                        <div className="flex justify-start pl-2 text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
+                      .slice(0, 2) // Show only the first 3 members
+                      .map((request, i) => (
+                        <div key={i}>
                           <img
                             src={
                               request?.requestedBy?.profilePic
@@ -562,19 +547,26 @@ const TaskTab = ({
                                 : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
                             }
                             alt="Profile"
-                            className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
+                            className="h-8 xl:w-8 w-8 xl:h-8 rounded-full border-2 border-white"
                           />
-                          </div>
-                          </div>
-                   ))}
-                    <button
-                      className={`w-8 h-8 rounded-full ${progressColor} text-white text-bl flex items-center justify-center border-2 border-white`}
-                    >
-                      +
-                    </button>
+                        </div>
+                      ))}
+                    {/* Show "+" button if more than 3 members */}
+                    {currentTeamMember?.filter((request) =>
+                      request.tasks.some((t) => t.title === task.title)
+                    ).length > 2 && (
+                      <button
+                        className={`w-8 h-8 rounded-full ${progressColor} text-white flex items-center justify-center border-2 border-white`}
+                      >
+                        +
+                        {currentTeamMember.filter((request) =>
+                          request.tasks.some((t) => t.title === task.title)
+                        ).length - 2}
+                      </button>
+                    )}
                   </div>
                   <button
-                    className={`${daysLeftColor}  text-sm px-4 py-1 rounded-full`}
+                    className={`${daysLeftColor} text-sm px-4 py-1 rounded-full`}
                   >
                     {daysLeft} Days Left
                   </button>
@@ -605,14 +597,13 @@ const TaskTab = ({
               {tasks[selectedIndex].details}
             </p>
             <p className="text-gray-600 text-xl font-semibold pt-3">
-             Coin:  Free
+              Coin: Free
             </p>
-              <button
-                className={`float-right ${colors[selectedIndex].progressColor} text-white px-2 py-1 capitalize rounded-lg`}
-              >
-                {tasks[selectedIndex].status}
-              </button>
-       
+            <button
+              className={`float-right ${colors[selectedIndex].progressColor} text-white px-2 py-1 capitalize rounded-lg`}
+            >
+              {tasks[selectedIndex].status}
+            </button>
           </div>
           {tasks[selectedIndex].subTask?.length !== 0 && (
             <div className="">
@@ -628,7 +619,9 @@ const TaskTab = ({
                     <div className="flex justify-between items-start space-x-4">
                       <div
                         className={` mt-1 w-3 h-3 rounded-full graish text-[14px]`}
-                      >{i+1}.</div>
+                      >
+                        {i + 1}.
+                      </div>
                       <p className="text-gray-500 w-11/12 text-lg">
                         {sub?.todo}
                       </p>
@@ -646,7 +639,7 @@ const TaskTab = ({
           )}
 
           {/* commit button  ProjectInfo?.user?._id !== userId && */}
-          {   tasks[selectedIndex].title && isMatchingMember && (
+          {tasks[selectedIndex].title && isMatchingMember && (
             <div className="pb-3">
               <button
                 onClick={() => setIsOpenCommitModal(true)}

@@ -7,8 +7,9 @@ import Loading from "../../Loading/Loading";
 import { FaTwitter, FaInstagram, FaGithub, FaLinkedin, FaCodepen, FaDev, FaRegArrowAltCircleRight, FaRegArrowAltCircleLeft } from 'react-icons/fa';
 
 const AdminAllProject = () => {
-  const [projects, setProjects] = useState([]);
+ 
   const [uniqueId, setUniqueId] = useState("");
+  const [projects, setProjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isFiltered, setIsFiltered] = useState(false);

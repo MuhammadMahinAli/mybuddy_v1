@@ -5,7 +5,7 @@ import PostSupportIcon from '../../icons/PostSupportIcon';
 import PostHandHeartIcon from '../../icons/PostHandHeartIcon';
 import PostIdeaIcon from '../../icons/PostIdeaIcon';
 
-const ReactComponent = ({ postId, user }) => {
+const ReactComponent = ({ postId, user, theme }) => {
   const [reactionsData, setReactionsData] = useState({});
   const [userReaction, setUserReaction] = useState(null);
   const [reactionCountText, setReactionCountText] = useState('');
@@ -43,11 +43,11 @@ const ReactComponent = ({ postId, user }) => {
     const otherReactionsCount = reactionCounts.length - (hasUserReacted ? 1 : 0);
 
     if (hasUserReacted && otherReactionsCount === 0) {
-      setReactionCountText('You react');
+      setReactionCountText('You reacted');
     } else if (hasUserReacted && otherReactionsCount > 0) {
-      setReactionCountText(`You and ${otherReactionsCount} more people react`);
+      setReactionCountText(`You and ${otherReactionsCount} more people reacted`);
     } else if (otherReactionsCount > 0) {
-      setReactionCountText(`${otherReactionsCount} people react`);
+      setReactionCountText(`${otherReactionsCount} people reacted`);
     } else {
       setReactionCountText('');
     }
@@ -78,7 +78,15 @@ const ReactComponent = ({ postId, user }) => {
     return (
       <div className="flex items-center -space-x-3">
         {reactionIcons}
-        <span className='pl-4'>{reactionCountText}</span>
+        <span 
+  className={`${
+    theme === "light"
+      ? "text-gray-600"
+      : "text-white"
+  } text-sm lg:text-lg pl-4`}
+>
+  {reactionCountText}
+</span>
       </div>
     );
   };

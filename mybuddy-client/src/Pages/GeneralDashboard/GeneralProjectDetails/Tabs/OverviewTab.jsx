@@ -45,11 +45,12 @@ const OverviewTab = ({
     documents,
     uniqueId,
     _id,
-    isMemberRequestAccept
+    isMemberRequestAccept,
   } = ProjectInfo;
   const [showPdfList, setShowPdfList] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [showDocuments, setShowDocuments] = useState(false);
-const [ updateProjectMemberRequest ] = useUpdateProjectMemberRequestMutation()
+  const [updateProjectMemberRequest] = useUpdateProjectMemberRequestMutation();
   const togglePdf = () => {
     setShowPdfList(!showPdfList);
     setShowDocuments(false);
@@ -77,37 +78,37 @@ const [ updateProjectMemberRequest ] = useUpdateProjectMemberRequestMutation()
 
   const [isChecked, setIsChecked] = useState(isMemberRequestAccept);
 
-  const projectId = uniqueId? uniqueId: "project Id"
+  const projectId = uniqueId ? uniqueId : "project Id";
 
   // const handleToggle = (project) => {
   //   const newStatus = !isChecked;
 
   //   // Now update the state
   //   setIsChecked(newStatus);
-  
+
   //   // Log the correct new status
   //   console.log("New Status:", newStatus);
-  
+
   //   // Use the new status in your logic/API call
   //   console.log({
   //     id: project?._id,
   //     isChecked: newStatus
-      
+
   //   });
   //   updateProjectMemberRequest({
   //     id:project?._id,
-  //     data: { isChecked: newStatus }, 
+  //     data: { isChecked: newStatus },
   //   })
   // };
 
   const handleToggle = (project) => {
     const newStatus = !isChecked;
-  
+
     // Define the confirmation message based on the new status
     const confirmationText = newStatus
       ? "Are you sure you want to **allow users to send project join requests** for this project? This will enable others to request to join."
       : "Are you sure you want to **stop accepting project join requests** for this project? Users will no longer be able to send requests to join.";
-  
+
     // Show SweetAlert with the confirmation message
     Swal.fire({
       title: "Confirm Action",
@@ -121,23 +122,25 @@ const [ updateProjectMemberRequest ] = useUpdateProjectMemberRequestMutation()
       if (result.isConfirmed) {
         // If confirmed, proceed with updating the status
         setIsChecked(newStatus);
-  
+
         // Call your API logic here
         updateProjectMemberRequest({
           id: project?._id,
           data: { isChecked: newStatus },
         });
-  
+
         // Optionally, show a success message
         Swal.fire(
           "Updated!",
-          `The project is now ${newStatus ? "accepting" : "not accepting"} join requests.`,
+          `The project is now ${
+            newStatus ? "accepting" : "not accepting"
+          } join requests.`,
           "success"
         );
       }
     });
   };
-console.log(isChecked);
+  console.log(isChecked);
   return (
     <div>
       <div className="mt-7 space-y-2 pb-6 rounded-[20px] md:rounded-[15px] relative bg-[#e4ecf7]  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">
@@ -300,9 +303,10 @@ console.log(isChecked);
         {/* edit delete */}
         {ProjectInfo?.user?._id === userId && (
           <div className="absolute right-5 top-3">
-            <div className="md:flex items-center space-x-3 hidden">
+            <div className="md:flex items-center space-x-3 hidden relative">
               <label
-              title="Enable/Disable Project Join Request"
+                onMouseEnter={()=>setShowAlert(true)}
+                onMouseLeave={()=>setShowAlert(false)}
                 htmlFor="AcceptConditions"
                 className={`relative inline-block h-6 w-10 cursor-pointer rounded-full transition ${
                   isChecked ? "bg-blue-500" : "bg-gray-300"
@@ -313,17 +317,25 @@ console.log(isChecked);
                   id="AcceptConditions"
                   className="sr-only"
                   checked={isChecked}
-                  onChange={()=>handleToggle(ProjectInfo)}
-                  
+                  onChange={() => handleToggle(ProjectInfo)}
                 />
 
                 <span
-                title="Enable/Disable Project Join Request"
+                  onMouseEnter={()=>setShowAlert(true)}
+                  onMouseLeave={()=>setShowAlert(false)}
                   className={`absolute inset-y-0 m-1 size-4 rounded-full bg-white transition-all ${
                     isChecked ? "start-4" : "start-0"
                   }`}
                 ></span>
               </label>
+              {
+                showAlert &&
+                <div className="w-[300px]  space-x-4 px-4 py-2 rounded-[50px] absolute top-7 right-0 bg-gray-50 shadow-gray-400 shadow-md border animate-fade-up">
+                Enable / Disable Project Join Request
+              </div>
+              }
+            
+
               <FaRegEdit
                 onClick={openProjectUpdateModal}
                 className="text-2xl text-blue-500 cursor-pointer"

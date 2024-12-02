@@ -24,7 +24,7 @@ const ProjectSidebar = ({
       <ul
         className={`w-[35px] sm:w-[40px] md:w-[50px] lg:w-[50px] xl:w-[55px] 3xl:w-[55px]  ${
           theme === "light" ? "bg-white border" : "bg-[#3a565b]"
-        } flex flex-col items-center justify-center py-4 sm:py-6 lg:py-10 shadow-2xl rounded-full space-y-3 sm:space-y-6 lg:space-y-7 absolute top-[58%] sm:top-[65%] md:top-[47%] 3xl:top-[45%] left-0 z-50`}
+        } flex flex-col items-center justify-center py-4 sm:py-6 lg:py-10 shadow-2xl rounded-full space-y-3 sm:space-y-6 lg:space-y-7 absolute ${openComponent === "team" || openComponent === "skill" ? "top-[20%] sm:top-[1%]  md:top-[20%] lg:top-[10%] xl:top-[13%] 3xl:top-[12%]" : "top-[30%] sm:top-[25%]  md:top-[40%] lg:top-[30%] xl:top-[38%] 3xl:top-[35%]"}   left-0 z-50`}
       >
         
           <li className="relative">

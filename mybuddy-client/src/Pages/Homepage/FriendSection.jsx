@@ -5,8 +5,13 @@ import darkBorder from "../../assets/home/dark-border.png";
 import { Link } from "react-router-dom";
 
 const FriendSection = ({ theme }) => {
-  const { getAllUsers, getAcceptedFriendRequest, getFriendRequest, user } =
-    useContext(AuthContext);
+  const {
+    getAllUsers,
+    getAcceptedFriendRequest,
+    getFriendRequest,
+    user,
+    userId,
+  } = useContext(AuthContext);
   const [randomUsers, setRandomUsers] = useState([]);
   const [suggestionTab, setSuggestionTab] = useState(true);
   const [friendTab, setFriendTab] = useState(false);
@@ -18,7 +23,7 @@ const FriendSection = ({ theme }) => {
 
   const getRandomUsers = (count) => {
     if (!suggestedUsers) return [];
-    const filteredUsers = suggestedUsers.filter(u => u?._id !== user?._id);
+    const filteredUsers = suggestedUsers.filter((u) => u?._id !== user?._id);
     const shuffled = [...filteredUsers]?.sort(() => 0.5 - Math.random());
     return shuffled?.slice(0, count);
   };
@@ -104,7 +109,11 @@ const FriendSection = ({ theme }) => {
             {theme === "light" ? (
               <button
                 onClick={toggleSuggestion}
-                className={`${ suggestionTab === true ? "text-white [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)] shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)]":"border border-gray-500"} my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg font-normal rounded-[10px]`}
+                className={`${
+                  suggestionTab === true
+                    ? "text-white [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)] shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)]"
+                    : "border border-gray-500"
+                } my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg font-normal rounded-[10px]`}
               >
                 Suggestion
               </button>
@@ -123,7 +132,11 @@ const FriendSection = ({ theme }) => {
             {theme === "light" ? (
               <button
                 onClick={toggleFriend}
-                className={`${ friendTab === true ? "text-white [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)] shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)]":"border border-gray-500"} my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg font-normal rounded-[10px]`}
+                className={`${
+                  friendTab === true
+                    ? "text-white [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)] shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)]"
+                    : "border border-gray-500"
+                } my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg font-normal rounded-[10px]`}
               >
                 Friends
               </button>
@@ -139,7 +152,11 @@ const FriendSection = ({ theme }) => {
             {theme === "light" ? (
               <button
                 onClick={toggleRequest}
-                className={`${ requestTab === true ? "text-white [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)] shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)]":"border border-gray-500"} my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg font-normal rounded-[10px]`}
+                className={`${
+                  requestTab === true
+                    ? "text-white [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)] shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)]"
+                    : "border border-gray-500"
+                } my-3  lg:px-5 lg:py-1 text-[16px] md:text-lg font-normal rounded-[10px]`}
               >
                 Request
               </button>
@@ -176,7 +193,8 @@ const FriendSection = ({ theme }) => {
                           <img
                             className="w-16 lg:w-32 xl:w-36 absolute"
                             src={theme === "light" ? darkBorder : whiteBorder}
-                            loading="lazy" alt="dashedborder"
+                            loading="lazy"
+                            alt="dashedborder"
                           />
                         </div>
                         <div>
@@ -212,15 +230,33 @@ const FriendSection = ({ theme }) => {
             {friendTab && (
               <>
                 <ul className="space-y-6">
-                  {allFriends?.slice(0, 3).map((user, i) => (
-                    <li key={i} className="flex justify-between items-center">
-                      {/* lrft */}
+                 
+                  {allFriends?.slice(0, 3).map((item, index) => {
+                    // Determine if the current user is `requestedBy` or `requestedTo`
+                    const isRequestedTo = item?.requestedTo?._id === userId;
+
+                    // Get the appropriate name based on the match
+                    const displayName = isRequestedTo
+                    ? `${item?.requestedBy?.name?.firstName} ${item?.requestedBy?.name?.lastName}`
+                    : `${item?.requestedTo?.name?.firstName} ${item?.requestedTo?.name?.lastName}`;
+                  
+
+                    // Get the appropriate profile picture
+                    const profilePic = isRequestedTo
+                      ? item?.requestedBy?.profilePic
+                      : item?.requestedTo?.profilePic;
+
+                      const profileLink = isRequestedTo
+  ? `/user/profile/${item?.requestedBy?._id}`
+  : `/user/profile/${item?.requestedTo?._id}`;
+
+                    return (
+                      <li key={index} className="flex justify-between items-center">
+                   
                       <div className="flex items-center space-x-3">
                       <div className="flex flex-col justify-center items-center relative">
                         <img
-                          src={
-                            user?.requestedBy?.profilePic
-                              ? user?.requestedBy?.profilePic
+                          src={ profilePic ? profilePic
                               : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
                           }
                           className={` h-[54px] w-[54px]  rounded-full p-[6px] `}
@@ -237,13 +273,12 @@ const FriendSection = ({ theme }) => {
                               theme === "light" ? "text-gray-500" : "text-white"
                             } text-lg font-medium capitalize pt-b `}
                           >
-                            {user?.requestedBy?.name?.firstName}{" "}
-                            {user?.requestedBy?.name?.lastName}
+                          {displayName}
                           </p>
                         </div>
                       </div>
-                      <Link to={`/user/profile/${user?.requestedBy?._id}`}>
-                        {/* right */}
+                      <Link  to={profileLink}>
+                    
                         {theme === "light" ? (
                           <button className="my-3  lg:px-4 lg:py-1 text-[16px] md:text-lg graish font-normal  rounded-[10px] border border-gray-500">
                             Profile
@@ -255,7 +290,8 @@ const FriendSection = ({ theme }) => {
                         )}
                       </Link>
                     </li>
-                  ))}
+                    );
+                  })}
                 </ul>
                 {allFriends?.length === 0 && (
                   <p
@@ -276,19 +312,20 @@ const FriendSection = ({ theme }) => {
                     <li key={i} className="flex justify-between items-center">
                       {/* lrft */}
                       <div className="flex items-center space-x-3">
-                      <div className="flex flex-col justify-center items-center relative">
-                        <img
-                          src={
-                            user?.requestedBy?.profilePic
-                              ? user?.requestedBy?.profilePic
-                              : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
-                          }
-                          className={`h-[54px] w-[54px] rounded-full p-[5px]  `}
-                        />
-                        <img
+                        <div className="flex flex-col justify-center items-center relative">
+                          <img
+                            src={
+                              user?.requestedBy?.profilePic
+                                ? user?.requestedBy?.profilePic
+                                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                            }
+                            className={`h-[54px] w-[54px] rounded-full p-[5px]  `}
+                          />
+                          <img
                             className="w-16 lg:w-32 xl:w-36 absolute"
                             src={theme === "light" ? darkBorder : whiteBorder}
-                            loading="lazy" alt="dashedborder"
+                            loading="lazy"
+                            alt="dashedborder"
                           />
                         </div>
                         <div>

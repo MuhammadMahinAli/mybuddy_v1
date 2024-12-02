@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import pdfPreview from "../../assets/home/pdf-image.jpg";
+import pdfPreview from "../../assets/home/pdf-icon3.png";
+
 import MediaIcon from "../../icons/MediaIcon";
 import ArticleIcon from "../../icons/ArticleIcon";
 import TechnicalIcon from "../../icons/TechnicalIcon";
@@ -211,10 +212,10 @@ const Posts = ({ theme }) => {
       <div
         className={`${
           theme !== "light" &&
-          "p-[1px] bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90% rounded-[15px] h-[210px] md:h-[355px] xl:h-[344px]"
+          "p-[1px] bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90% rounded-[15px] h-[210px] md:h-[355px] lg:h-[345px] xl:h-[347px]"
         }`}
       >
-        <div className="relative h-[230px] md:h-[330px] xl:h-[330px]">
+        <div className="relative h-[230px] md:h-[330px]  xl:h-[330px]">
           {theme === "light" && (
             <div className="bg-[#f2f3f4] rounded-b-[14px] w-[230px] xs:w-[240px] sm:w-[350px] md:w-[560px] lg:w-[470px] xl:w-[640px] 2xl:w-[715px] 3xl:w-[760px] h-4 absolute -bottom-0 left-4" />
           )}

@@ -24,16 +24,42 @@ export const createNewPost = catchAsync(async (req, res, next) => {
 });
 
 //-------get all users
+
+//-------get all posts with pagination
 export const getAllPost = catchAsync(async (req, res) => {
-  const posts = await getAllPostService();
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 5;
+
+  const result = await getAllPostService(page, limit);
+
+  if (result.message) {
+    return sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: result.message,
+      data: [],
+    });
+  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Posts retrieved successfully!",
-    data: posts,
+    message: "Posts is retrieved successfully!",
+    data: result,
   });
 });
+
+
+// export const getAllPost = catchAsync(async (req, res) => {
+//   const posts = await getAllPostService();
+
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Posts retrieved successfully!",
+//     data: posts,
+//   });
+// });
 
 //---------get specific user post
 

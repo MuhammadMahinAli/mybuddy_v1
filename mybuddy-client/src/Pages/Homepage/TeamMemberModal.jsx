@@ -156,7 +156,7 @@ const TeamMemberModal = ({
                                 <div className="text-sm md:text-[14px] py-1 px-3 rounded-md font-semibold capitalize">
                                   {displayName}{" "}
                                   {isRequestedTo
-                                    ? item?.requestedBy?.name?.lastName
+                                    ? item?.requestedBy?.name?.firstName
                                     : item?.requestedTo?.name?.lastName}
                                 </div>
                               </div>

@@ -4,13 +4,32 @@ import whiteBorder from "../../assets/home/p-border.png";
 import linkedIn from "../../assets/home/linkedIn.png";
 import facebook from "../../assets/home/facebook.png";
 import github from "../../assets/home/github.png";
+import ytube from "../../assets/icon/yt.png";
+import pintrst from "../../assets/icon/pintrst.png";
+import pw from "../../assets/icon/pw.png";
+import tiktok from "../../assets/icon/tiktok.png";
+import instaIcon from "../../assets/icon/instagram.png";
 import postCover from "../../assets/home/project-post.png";
 import "../../styles/buttonStyle.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/UserContext";
 import FriendSection from "./FriendSection";
+import { FaLocationArrow } from "react-icons/fa";
 
 const RightSidebar = ({ theme }) => {
+  //   {
+  //     "_id": "67395094c7e00306bb4fd02a",
+  //     "orcid": "jh",
+  //     "twitter": "kjb",
+  //     "github": "",
+  //     "linkedIn": "",
+  //     "instagram": "",
+  //     "personalWebsite": "",
+  //     "youtube": "",
+  //     "tiktok": "",
+  //     "pinterest": "",
+  //     "facebook": "",
+  // }
   const {
     singleUser,
     getUserPost,
@@ -30,10 +49,80 @@ const RightSidebar = ({ theme }) => {
     : "0";
   const userCoverPic = singleUser?.data?.coverPic;
   const socialInfo = getSingleUserSocialInfo?.data[0];
-  const currentOrcID = socialInfo?.orcid ? socialInfo?.orcid : "https://orcid.org/";
-  const currentGithub = socialInfo?.github ? socialInfo?.github : "https://github.com/";
-  const currentLinkedIn = socialInfo?.linkedIn ? socialInfo?.linkedIn : "https://linkedin.com/";
-  const currentFacebook = socialInfo?.facebook ? socialInfo?.facebook : "https://facebook.com/";
+
+  const currentOrcID = socialInfo?.orcid;
+  const currentGithub = socialInfo?.github;
+  const currentLinkedIn = socialInfo?.linkedIn;
+  const currentTwitter = socialInfo?.twitter;
+  const currentInstagram = socialInfo?.instagram;
+  const currentPersonalWebsite = socialInfo?.personalWebsite;
+  const currentYoutube = socialInfo?.youtube;
+  const currentTiktok = socialInfo?.tiktok;
+  const currentFacebook = socialInfo?.facebook;
+  const currentPinterest = socialInfo?.pinterest;
+
+  const socialLinks = [
+    {
+      url: `https://orcid.org/${currentOrcID}`,
+      icon: "./orcid.svg.png",
+      alt: "ORCID",
+      value: currentOrcID,
+    },
+    {
+      url: `https://facebook.com/${currentFacebook}`,
+      icon: facebook,
+      alt: "Facebook",
+      value: currentFacebook,
+    },
+    {
+      url: `https://linkedin.com/in/${currentLinkedIn}`,
+      icon: linkedIn,
+      alt: "LinkedIn",
+      value: currentLinkedIn,
+    },
+    {
+      url: `https://github.com/${currentGithub}`,
+      icon: github,
+      alt: "GitHub",
+      value: currentGithub,
+    },
+    {
+      url: `https://twitter.com/${currentTwitter}`,
+      icon: twitter,
+      alt: "Twitter",
+      value: currentTwitter,
+    },
+    {
+      url: `https://instagram.com/${currentInstagram}`,
+      icon: instaIcon,
+      alt: "Instagram",
+      value: currentInstagram,
+    },
+    {
+      url: `https://youtube.com/${currentYoutube}`,
+      icon: ytube,
+      alt: "YouTube",
+      value: currentYoutube,
+    },
+    {
+      url: `https://tiktok.com/@${currentTiktok}`,
+      icon: tiktok,
+      alt: "TikTok",
+      value: currentTiktok,
+    },
+    {
+      url: `https://${currentPersonalWebsite}`,
+      icon: pw,
+      alt: "Website",
+      value: currentPersonalWebsite,
+    },
+  ];
+
+  // Filter and limit to the first 4 non-empty social links
+  const availableLinks = socialLinks
+    .filter((link) => link.value && link.value.trim() !== "")
+    .slice(0, 4);
+
   const userImage = singleUser?.data?.profilePic
     ? singleUser?.data?.profilePic
     : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
@@ -101,7 +190,7 @@ const RightSidebar = ({ theme }) => {
     setRandomUsers(getRandomUsers(users, 2));
   }, []);
 
-  //console.log(randomUsers);
+  console.log(getSingleUserSocialInfo?.data[0]);
 
   return (
     <div className="hidden lg:block space-y-7">
@@ -168,63 +257,23 @@ const RightSidebar = ({ theme }) => {
             </p>
 
             <div className="flex py-7 space-x-2">
-              {/* <a
-                target="blank"
-                href={
-                  singleUser
-                    ? `https://twitter.com/${currentTwitter}`
-                    : "/"
-                }
-              >
-                <img className="h-12 pr-1" src={twitter} loading="lazy" alt="" />
-              </a> */}
-              <a
-                target="blank"
-                href={
-                  singleUser
-                    ? `https://orcid.org/${currentOrcID}`
-                    : "/"
-                }
-              >
-                <img
-                  className="h-[55px]"
-                  src="./orcid.svg.png"
-                  loading="lazy"
-                  alt=""
-                />
-              </a>
-
-              <a
-                target="blank"
-                href={
-                  singleUser ? `https://facebook.com/${currentFacebook}` : "/"
-                }
-              >
-                <img className="h-12" src={facebook} loading="lazy" alt="" />
-              </a>
-              {/* <img className="h-12" src={google} loading="lazy" alt="" /> */}
-              <a
-                target="blank"
-                href={
-                  singleUser
-                    ? `https://linkedin.com/in/${currentLinkedIn}`
-                    : "/"
-                }
-              >
-                <img
-                  className="h-[55px]"
-                  src={linkedIn}
-                  loading="lazy"
-                  alt=""
-                />
-              </a>
-
-              <a
-                target="blank"
-                href={singleUser ? `https://github.com/${currentGithub}` : "/"}
-              >
-                <img className="h-14" src={github} loading="lazy" alt="" />
-              </a>
+              {availableLinks.map((link, index) => (
+                <a
+                  key={index}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={link.url}
+                >
+                  <img
+                    className={`${
+                      link.value === currentGithub && "h-[55px]"
+                    } h-12`}
+                    src={link.icon}
+                    loading="lazy"
+                    alt={link.alt}
+                  />
+                </a>
+              ))}
             </div>
 
             <ul className="flex justify-between items-center w-80">

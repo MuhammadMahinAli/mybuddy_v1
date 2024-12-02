@@ -13,8 +13,8 @@ export const postApi = apiSlice.injectEndpoints({
      invalidateTags: ["Post"],
     }),
     getAllPost: builder.query({
-      query: () => ({
-        url: "/posts/getAll",
+      query: ({ page = 1, limit = 5 }) => ({
+        url: `/posts/getAll?page=${page}&limit=${limit}`,
         method: "GET",
       }),
       providesTags: ["Post"],

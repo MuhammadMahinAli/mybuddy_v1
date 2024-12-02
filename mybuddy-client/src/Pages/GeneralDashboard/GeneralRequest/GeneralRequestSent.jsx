@@ -123,7 +123,7 @@ const GeneralRequestSent = () => {
         // <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-11/12 md:w-[600px] pt-7">{`You've not sent any request yet.`}</p>
         <div className=" gray600 space-y-6 w-11/12 md:w-full">
           <div className="w-full py-4 flex my-5 items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
-            <div className="text-[16px] md:text-[21px] font-semibold text-center w-4/12 md:w-3/12 lg:w-3/12">
+            <div className="text-[16px] md:text-[21px] font-semibold text-center w-3/12 md:w-3/12 lg:w-3/12">
               To
             </div>
             <div className="text-[21px] hidden md:block font-semibold text-center md:w-2/12 lg:w-2/12">
@@ -149,7 +149,7 @@ const GeneralRequestSent = () => {
               key={i}
               className="w-full py-4  flex my-5 items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
             >
-              <div className="flex flex-col md:flex-row  items-center space-x-2 text-[16px] md:text-lg   border-r-2  text-center w-4/12 md:w-3/12 lg:w-3/12">
+              <div className="flex flex-col md:flex-row  items-center space-x-2 text-[16px] md:text-lg   border-r-2  text-center w-3/12 md:w-3/12 lg:w-3/12">
                 <img
                   src={
                     request?.requestedTo?.profilePic ||

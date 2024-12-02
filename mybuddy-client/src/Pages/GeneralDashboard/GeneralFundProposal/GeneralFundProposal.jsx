@@ -1,5 +1,4 @@
-
-import  { useState } from "react";
+import { useState } from "react";
 import GeneralSentPaypalFundProposal from "./Paypal/GeneralSentPaypalFundProposal";
 import GeneralPaypalRecieveFundProposal from "./Paypal/GeneralPaypalRecieveFundProposal";
 import GeneralPayoneerSentFundProposal from "./Payoneer/GeneralPayoneerSentFundProposal";
@@ -17,7 +16,7 @@ const FundTypeSelector = () => {
   const handleFundTypeChange = (type) => {
     setFundType(type);
     setAction(""); // Reset action when fund type changes
-  //  setDropdownVisible(true); 01677084904
+    //  setDropdownVisible(true); 01677084904
   };
 
   const handleActionChange = (actionType) => {
@@ -54,9 +53,9 @@ const FundTypeSelector = () => {
   };
 
   return (
-    <div >
+    <div>
       {/* Fund Type Dropdown */}
-      <div className="space-x-3">
+      <div className="md:space-x-3">
         <select
           className="h-8 bg-transparent outline-none shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] rounded-[10px] mb-4"
           onChange={(e) => handleFundTypeChange(e.target.value)}
@@ -70,26 +69,25 @@ const FundTypeSelector = () => {
         </select>
 
         {/* Request Type Dropdown */}
-     
-          <select
-            className="h-8 bg-transparent outline-none shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] rounded-[10px]"
-            onChange={(e) => handleActionChange(e.target.value)}
-            value={action}
-          >
-            <option value="">Select Request Type</option>
-            <option value="sent">Sent Request</option>
-            <option value="receive">Receive Request</option>
-          </select>
-        
+
+        <select
+          className="h-8 bg-transparent outline-none shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] rounded-[10px]"
+          onChange={(e) => handleActionChange(e.target.value)}
+          value={action}
+        >
+          <option value="">Select Request Type</option>
+          <option value="sent">Sent Request</option>
+          <option value="receive">Receive Request</option>
+        </select>
       </div>
 
       {/* Render Components */}
       <div>{renderComponent()}</div>
-      { 
-  (fundType === "stripe" || fundType === "bank" || fundType === "payoneer" || fundType === "paypal") && 
-  action === "" && 
-  <p className="text-xl pt-5">Select a Request Type</p>
-}
+      {(fundType === "stripe" ||
+        fundType === "bank" ||
+        fundType === "payoneer" ||
+        fundType === "paypal") &&
+        action === "" && <p className="text-xl pt-5">Select a Request Type</p>}
     </div>
   );
 };

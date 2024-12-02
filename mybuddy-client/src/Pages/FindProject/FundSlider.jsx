@@ -176,7 +176,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
 
-const FundSlider = ({ projectId }) => {
+const FundSlider = ({ projectId, theme }) => {
   const [fundData, setFundData] = useState([]);
 
   useEffect(() => {
@@ -268,7 +268,7 @@ const FundSlider = ({ projectId }) => {
                       }
                       className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-600 object-cover"
                     />
-                    <p className="font-semibold text-sm md:text-lg">
+                    <p className={`graish font-semibold text-sm md:text-lg`}>
                       ${f?.amount}
                     </p>
                   </div>
@@ -299,7 +299,7 @@ const FundSlider = ({ projectId }) => {
                         }
                         className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-600 object-cover"
                       />
-                      <p className="font-semibold text-sm md:text-lg">
+                      <p className="graish font-semibold text-sm md:text-lg">
                         ${f?.amount}
                       </p>
                     </div>
