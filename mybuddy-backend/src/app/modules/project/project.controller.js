@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import { catchAsync } from "../../../utils/catchAsync.js";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { addTaskToProjectService, createProject,deleteProjectService,deleteTaskFromProjectService,getAllProjectService,getProjectByUserService, getProjectsService, getSingleProjectService, updateProjectService, updateProjectTasks, updateProjetRequestStatusService, updateTaskStatusService } from "./project.service.js";
+import { addTaskToProjectService, createProject,deleteProjectService,deleteTaskFromProjectService,getAllProjectService,getProjectByUserService, getProjectsService, getSingleProjectService, updateProjectService, updateProjectTasks, updateProjetRequestStatusService, updateTaskService, updateTaskStatusService } from "./project.service.js";
 
 
 // ************** create project
@@ -147,6 +147,20 @@ export const updateProjectController = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "Project updated successfully!",
+    data: updatedProject,
+  });
+});
+//------------update project
+export const updateTaskController = catchAsync(async (req, res) => {
+  const projectId = req.params.projectId;
+  const taskId = req.params.taskId;
+  const updateData = req.body;
+  const updatedProject = await updateTaskService(projectId, taskId, updateData);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Project's task updated successfully!",
     data: updatedProject,
   });
 });

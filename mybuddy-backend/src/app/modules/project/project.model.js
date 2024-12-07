@@ -15,8 +15,6 @@ const ProjectSchema = new Schema(
 
     uniqueId: {
       type: String,
-      required: true,
-      unique: true,
     },
     whatsApp: {
       type: String,

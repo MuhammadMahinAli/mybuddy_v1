@@ -1,13 +1,21 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import { AiOutlineReload } from "react-icons/ai";
 import Loading from "../../Loading/Loading";
-import { FaTwitter, FaInstagram, FaGithub, FaLinkedin, FaCodepen, FaDev, FaRegArrowAltCircleRight, FaRegArrowAltCircleLeft } from 'react-icons/fa';
+import {
+  FaTwitter,
+  FaInstagram,
+  FaGithub,
+  FaLinkedin,
+  FaCodepen,
+  FaDev,
+  FaRegArrowAltCircleRight,
+  FaRegArrowAltCircleLeft,
+} from "react-icons/fa";
 
 const AdminAllProject = () => {
- 
   const [uniqueId, setUniqueId] = useState("");
   const [projects, setProjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,8 +78,6 @@ const AdminAllProject = () => {
 
   return (
     <div>
-       
-          
       <div className="py-4">
         <div className="w-5/12 flex justify-center items-center relative md:w-8/12 xl:w-7/12 2xl:w-6/12 3xl:w-7/12 mb-4">
           <input
@@ -87,7 +93,7 @@ const AdminAllProject = () => {
           />
           {isFiltered && (
             <AiOutlineReload
-            title="Reset"
+              title="Reset"
               onClick={handleReset}
               className="text-2xl absolute right-1 cursor-pointer"
             />
@@ -163,7 +169,7 @@ const AdminAllProject = () => {
               disabled={currentPage === 1}
               className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
             >
-           <FaRegArrowAltCircleLeft  className="text-2xl"  />
+              <FaRegArrowAltCircleLeft className="text-2xl" />
             </button>
             <span>
               Page {currentPage} of {totalPages}
@@ -175,9 +181,8 @@ const AdminAllProject = () => {
               disabled={currentPage === totalPages}
               className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
             >
-                <FaRegArrowAltCircleRight className="text-2xl" />
+              <FaRegArrowAltCircleRight className="text-2xl" />
             </button>
-
           </div>
         )}
       </div>

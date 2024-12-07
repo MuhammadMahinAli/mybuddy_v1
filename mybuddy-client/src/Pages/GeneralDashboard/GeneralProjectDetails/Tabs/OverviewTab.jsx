@@ -16,6 +16,9 @@ import OpenPdf from "../../../FindProject/OpenPdf";
 import OpenDocx from "../../../FindProject/OpenDocx";
 import { useUpdateProjectMemberRequestMutation } from "../../../../features/project/projectApi";
 import Swal from "sweetalert2";
+import { TbLogout } from "react-icons/tb";
+import { useDeleteProjectByRequestedByMutation } from "../../../../features/projectJoinRequest/projectJoinRequestApi";
+import { useNavigate } from "react-router-dom";
 
 const OverviewTab = ({
   ProjectInfo,
@@ -30,6 +33,7 @@ const OverviewTab = ({
   filteredMyself,
   projectOwner,
   userId,
+  projectJoinRequestData,
 }) => {
   const {
     description,
@@ -48,13 +52,16 @@ const OverviewTab = ({
     isMemberRequestAccept,
   } = ProjectInfo;
   const [showPdfList, setShowPdfList] = useState(false);
+  const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
+  const [showLeaveAlert, setShowLeaveAlert] = useState(false);
   const [showDocuments, setShowDocuments] = useState(false);
   const [updateProjectMemberRequest] = useUpdateProjectMemberRequestMutation();
   const togglePdf = () => {
     setShowPdfList(!showPdfList);
     setShowDocuments(false);
   };
+  console.log("i", filteredMyself);
   const toggleDocx = () => {
     setShowPdfList(false);
     setShowDocuments(!showDocuments);
@@ -79,27 +86,6 @@ const OverviewTab = ({
   const [isChecked, setIsChecked] = useState(isMemberRequestAccept);
 
   const projectId = uniqueId ? uniqueId : "project Id";
-
-  // const handleToggle = (project) => {
-  //   const newStatus = !isChecked;
-
-  //   // Now update the state
-  //   setIsChecked(newStatus);
-
-  //   // Log the correct new status
-  //   console.log("New Status:", newStatus);
-
-  //   // Use the new status in your logic/API call
-  //   console.log({
-  //     id: project?._id,
-  //     isChecked: newStatus
-
-  //   });
-  //   updateProjectMemberRequest({
-  //     id:project?._id,
-  //     data: { isChecked: newStatus },
-  //   })
-  // };
 
   const handleToggle = (project) => {
     const newStatus = !isChecked;
@@ -140,7 +126,107 @@ const OverviewTab = ({
       }
     });
   };
-  console.log(isChecked);
+  console.log();
+  // delete
+  const [deleteProjectByRequestedBy] = useDeleteProjectByRequestedByMutation();
+
+  // const handleLeaveProject = () => {
+  //   const id = projectJoinRequestData?._id;
+  //  const confirmProjectName = projectJoinRequestData?.projectId?.projectName
+  //   Swal.fire({
+  //     title: "Are you sure to delete it ?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       deleteProjectByRequestedBy(id)
+  //         .unwrap()
+  //         .then(() => {
+  //           Swal.fire(
+  //             "Well done!",
+  //             "This request has been deleted.",
+  //             "success"
+  //           );
+  //           // setTimeout(() => {
+  //           //   window.location.reload();
+  //           // }, 2500);
+  //         })
+  //         .catch((error) => {
+  //           console.log(error);
+  //           Swal.fire(
+  //             "Error!",
+  //             "There was an issue to cancelled request.",
+  //             "error"
+  //           );
+  //         });
+  //     }
+  //   });
+  // };
+  const handleLeaveProject = () => {
+    const id = projectJoinRequestData?._id;
+    const confirmProjectName = projectJoinRequestData?.projectId?.projectName;
+    const capitalizedTitle = confirmProjectName?.toUpperCase();
+    Swal.fire({
+      title: "Confirm Project Name",
+      input: "text",
+      html: `Type the project name below to confirm:<br><b>${capitalizedTitle}</b>`,
+      inputPlaceholder: "Enter the project name to confirm",
+      showCancelButton: true,
+      confirmButtonText: "Confirm",
+      cancelButtonText: "Cancel",
+      preConfirm: (inputValue) => {
+        if (inputValue !== capitalizedTitle) {
+          Swal.showValidationMessage(
+            `<span style="color: red;">Project name does not match!</span>`
+          );
+          return false;
+        }
+        return inputValue;
+      },
+    }).then((result) => {
+      if (result.isConfirmed && result.value === capitalizedTitle) {
+        Swal.fire({
+          title: "Are you sure leave this project?",
+          text: "You won't be able to work on this project anymore!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, I want to leave!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            deleteProjectByRequestedBy(id)
+              .unwrap()
+              .then(() => {
+                Swal.fire(
+                  "Well done!",
+                  `You just take a leave from ${capitalizedTitle}.`,
+                  "success"
+                );
+                setTimeout(() => {
+                  navigate("/dashboard/all-projects");
+                }, 2000);
+              })
+              .catch((error) => {
+                console.log(error);
+                if (error) {
+                  Swal.fire(
+                    "Error!",
+                    "There was an issue. Please try again later.",
+                    "error"
+                  );
+                }
+              });
+          }
+        });
+      }
+    });
+  };
+
   return (
     <div>
       <div className="mt-7 space-y-2 pb-6 rounded-[20px] md:rounded-[15px] relative bg-[#e4ecf7]  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">
@@ -301,12 +387,12 @@ const OverviewTab = ({
           </ul>
         </div>
         {/* edit delete */}
-        {ProjectInfo?.user?._id === userId && (
-          <div className="absolute right-5 top-3">
+        <div className="absolute right-5 top-3">
+          {ProjectInfo?.user?._id === userId ? (
             <div className="md:flex items-center space-x-3 hidden relative">
               <label
-                onMouseEnter={()=>setShowAlert(true)}
-                onMouseLeave={()=>setShowAlert(false)}
+                onMouseEnter={() => setShowAlert(true)}
+                onMouseLeave={() => setShowAlert(false)}
                 htmlFor="AcceptConditions"
                 className={`relative inline-block h-6 w-10 cursor-pointer rounded-full transition ${
                   isChecked ? "bg-blue-500" : "bg-gray-300"
@@ -321,20 +407,18 @@ const OverviewTab = ({
                 />
 
                 <span
-                  onMouseEnter={()=>setShowAlert(true)}
-                  onMouseLeave={()=>setShowAlert(false)}
+                  onMouseEnter={() => setShowAlert(true)}
+                  onMouseLeave={() => setShowAlert(false)}
                   className={`absolute inset-y-0 m-1 size-4 rounded-full bg-white transition-all ${
                     isChecked ? "start-4" : "start-0"
                   }`}
                 ></span>
               </label>
-              {
-                showAlert &&
+              {showAlert && (
                 <div className="w-[300px]  space-x-4 px-4 py-2 rounded-[50px] absolute top-7 right-0 bg-gray-50 shadow-gray-400 shadow-md border animate-fade-up">
-                Enable / Disable Project Join Request
-              </div>
-              }
-            
+                  Enable / Disable Project Join Request
+                </div>
+              )}
 
               <FaRegEdit
                 onClick={openProjectUpdateModal}
@@ -345,8 +429,24 @@ const OverviewTab = ({
                 className="text-2xl text-red-500 cursor-pointer"
               />
             </div>
-          </div>
-        )}
+          ) : (
+            <>
+              <button onClick={handleLeaveProject}>
+                <TbLogout
+                  onMouseEnter={() => setShowLeaveAlert(true)}
+                  onMouseLeave={() => setShowLeaveAlert(false)}
+                  className="text-3xl text-red-600 cursor-pointer"
+                />
+              </button>
+
+              {showLeaveAlert && (
+                <div className="w-[140px]  space-x-4 px-4 py-2 rounded-[50px] absolute top-7 right-0 bg-gray-50 shadow-gray-400 shadow-md border animate-fade-up">
+                  Leave Project
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
       {openUpdateModal === true && (
         <UpdateProjectForm

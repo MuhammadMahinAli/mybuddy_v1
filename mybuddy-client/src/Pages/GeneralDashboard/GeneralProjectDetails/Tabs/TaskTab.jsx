@@ -11,20 +11,31 @@ import {
 } from "../../../../features/project/projectApi";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../Context/UserContext";
-import { useUpdateJoinRequestStatusMutation } from "../../../../features/projectJoinRequest/projectJoinRequestApi";
+import {
+  useLeaveTaskFromProjectMutation,
+  useUpdateJoinRequestStatusMutation,
+} from "../../../../features/projectJoinRequest/projectJoinRequestApi";
 import xMark from "../../../../assets/xmark.png";
 import rightMark from "../../../../assets/checkmark.png";
 import CommitModal from "../modals/CommitModal";
 import AddNewTask from "../AddNewTask";
 import { apiFetch } from "../../../../utils/apiFetch";
+import { FaRegPenToSquare, FaRegTrashCan } from "react-icons/fa6";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import UpdateTask from "../modals/UpdateTask";
+import { TbLogout } from "react-icons/tb";
 
 const TaskTab = ({
   ProjectInfo,
   tasks,
+  setIsOpenTaskTab,
   openTaskModal,
   formatDate,
   currentTeamMember,
   req,
+  teamMembers, 
+  setTeamMembers,
+  projectId,
   allRecieveRequest,
   filteredMyself,
   projectOwner,
@@ -32,6 +43,7 @@ const TaskTab = ({
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isOpenCommitModal, setIsOpenCommitModal] = useState(false);
   const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
+  const [leaveTaskFromProject] = useLeaveTaskFromProjectMutation();
 
   const closeAddTaskModal = () => {
     setOpenAddTaskModal(false);
@@ -55,12 +67,33 @@ const TaskTab = ({
   };
 
   // Function to calculate days left
-  const calculateDaysLeft = (startDate, endDate) => {
+  // const calculateDaysLeft = (startDate, endDate) => {
+  //   const end = new Date(endDate);
+  //   const today = new Date(startDate);
+  //   const diffTime = Math.abs(end - today);
+  //   return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  // };
+
+  const calculateDaysLeft = (endDate) => {
+    const today = new Date();
     const end = new Date(endDate);
-    const today = new Date(startDate);
-    const diffTime = Math.abs(end - today);
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    // Remove time portion for date-only comparison
+    today.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+
+    // Calculate the time difference in milliseconds
+    const diffTime = end - today;
+
+    if (diffTime < 0) {
+      return "Times Up";
+    }
+
+    // Convert the time difference to days
+    const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return `${daysLeft} ${daysLeft > 1 ? "Days" : "Day"} Left`;
   };
+  // "Deadline over" if today is "2024-12-03"
 
   // Mapping colors based on index
   const colors = [
@@ -161,25 +194,9 @@ const TaskTab = ({
 
   // is Matching useGetAllAcceptedProjectTeamMemberQuery
 
-  const [teamMembers, setTeamMembers] = useState(null);
+ 
 
-  const projectId = ProjectInfo?._id;
-
-  useEffect(() => {
-    if (!projectId) {
-      return;
-    }
-    const fetchData = async () => {
-      const res = await apiFetch(
-        `http://localhost:3000/api/v1/project-join-request/Accepted/team-member/${projectId}`,
-        "GET"
-      );
-      setTeamMembers(res?.data ?? {});
-      console.log(res?.data);
-    };
-    fetchData();
-  }, [projectId]);
-
+ 
   // access of commit
 
   const currentTaskid = tasks[selectedIndex]?._id;
@@ -425,9 +442,89 @@ const TaskTab = ({
 
   const doneTasks = tasks?.filter((task) => task.status === "completed").length;
 
-  console.log("current m", currentTeamMember);
+  // ----------------------
+  const [isOpenOption, setIsOpenOption] = useState(false);
+  const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const toggleOption = (task) => {
+    setIsOpenOption(!isOpenOption);
+    setSelectedTask(task);
+  };
+
+  const toggleUpdateTask = (post) => {
+    setIsOpenOption(false);
+    setIsOpenUpdateModal(true);
+    setSelectedTask(post);
+  };
+
+  // ----- leave task
+
+  const handleLeaveTask = (task) => {
+   const taskId= task?._id
+    console.log("OP",projectId,
+      task?._id,);
+    const capitalizedTitle = task?.title?.toUpperCase(); // Capitalize the task title
+
+    Swal.fire({
+      title: "Are you sure you want to leave this task?",
+      html: `Type the task title below to confirm:<br><b>${capitalizedTitle}</b>`, // Display the title in bold and capitalized
+      input: "text",
+      inputPlaceholder: `Enter task title: ${capitalizedTitle}`, // Placeholder includes the capitalized title
+      inputAttributes: {
+        autocapitalize: "on", // Capitalize user input
+      },
+      showCancelButton: true,
+      confirmButtonText: "Leave Task",
+      showLoaderOnConfirm: true,
+      preConfirm: (inputValue) => {
+        if (inputValue.toUpperCase() === capitalizedTitle) {
+          // Compare input value in uppercase
+          return Promise.resolve(); // Task title matches
+        } else {
+          Swal.showValidationMessage(
+            `Task title does not match. Did you mean: "${capitalizedTitle}"?`
+          );
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If confirmed, proceed with the task leaving logic
+        leaveTaskFromProject(
+          {projectId,taskId}) // Replace this with your API call or function
+          .then(() => {
+            Swal.fire(
+              "Success!",
+              `You have successfully left the task: <b>${capitalizedTitle}</b>.`,
+              "success"
+            );
+            // setTimeout(() => {
+            //   window.location.reload(); // Optional, reload the page
+            // }, 2000);
+          })
+          .catch((error) => {
+            console.error(error);
+            Swal.fire(
+              "Error!",
+              "There was an issue leaving the task. Please try again later.",
+              "error"
+            );
+          });
+      }
+    });
+  };
+
+  // currentTeamMember?.forEach((request) => {
+  //   request.tasks.forEach((t) => console.log(t));
+  // });
+  console.log("pp",teamMembers);
+  
   return (
-    <div className="">
+    <div
+    // key={key}
+    >
+      {/* <button onClick={refreshPage}>Refresh</button> */}
       {ProjectInfo?.user?._id === userId && (
         <div className="flex  justify-between items-center py-5 md:py-10">
           <div className="flex  space-x-8 text-center">
@@ -484,11 +581,12 @@ const TaskTab = ({
           projectId={ProjectInfo?._id}
         />
       )}
+
       {/* card */}
       <div className="flex justify-center md:justify-between items-center ">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 py-3 sm:w-full">
           {tasks?.map((task, index) => {
-            const daysLeft = calculateDaysLeft(task.startDate, task.endDate);
+            const daysLeft = calculateDaysLeft(task.endDate);
             const progress = calculateProgress(task);
             const { progressColor, daysLeftColor, cardBg } =
               colors[index % colors.length];
@@ -499,18 +597,72 @@ const TaskTab = ({
                 className={`rounded-3xl shadow-md p-4 w-72 sm:w-64 ${cardBg}`}
                 onClick={() => setSelectedIndex(index)}
               >
-                <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between items-center mb-2 relative">
                   <p className="text-gray-500 text-sm">
                     {formatDate(task.startDate)}
                   </p>
-                  {ProjectInfo?.user?._id === userId && (
-                    <button className="text-gray-500">
-                      <LuTrash2
-                        onClick={() => deleteTaskById(task?._id)}
-                        className="text-lg text-red-500 cursor-pointer"
+                  {/* {ProjectInfo?.user?._id === userId && ( */}
+                  <button
+                    onClick={() => toggleOption(task)}
+                    className="absolute  right-0 top-0"
+                  >
+                    <HiOutlineDotsVertical />
+                  </button>
+                  {/* )} */}
+                  {isOpenOption &&
+                    selectedTask &&
+                    selectedTask?._id === task?._id && (
+                      <ul className="absolute bg-slate-50 rounded-md text-center  right-2 top-4 shadow-xl w-28">
+                        {ProjectInfo?.user?._id === userId && (
+                          <>
+                            <li
+                              onClick={() => toggleUpdateTask(task)}
+                              className="hover:bg-gray-100 py-2  cursor-pointer flex items-center pl-5 space-x-2"
+                            >
+                              {" "}
+                              <span>
+                                <FaRegPenToSquare className="text-gray-500" />
+                              </span>{" "}
+                              <span className=""> Edit</span>
+                            </li>
+                            <li
+                              onClick={() => deleteTaskById(task?._id)}
+                              className="hover:bg-gray-100 py-2  cursor-pointer flex items-center pl-5 space-x-2"
+                            >
+                              {" "}
+                              <span>
+                                <FaRegTrashCan className="text-gray-500" />
+                              </span>{" "}
+                              <span className=""> Delete</span>
+                            </li>
+                          </>
+                        )}
+
+                      {isMatchingMember  && 
+                            (<li
+                              key={index}
+                              onClick={() => handleLeaveTask(task)}
+                              className="hover:bg-gray-100 py-2 cursor-pointer flex items-center pl-5 space-x-2"
+                            >
+                              <span>
+                                <TbLogout className="text-xl text-gray-500" />
+                              </span>
+                              <span className="">Leave</span>
+                            </li>
+                          )}
+                      </ul>
+                    )}
+                  {isOpenUpdateModal &&
+                    selectedTask &&
+                    selectedTask?._id === task?._id && (
+                      <UpdateTask
+                        projectId={ProjectInfo?._id}
+                        progressColor={progressColor}
+                        task={task}
+                        setIsOpenUpdateModal={setIsOpenUpdateModal}
+                        setSelectedTask={setSelectedTask}
                       />
-                    </button>
-                  )}
+                    )}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-800 text-center">
                   {task.title}
@@ -530,10 +682,21 @@ const TaskTab = ({
                     {progress.toFixed(2)}%
                   </p>
                 </div>
-                
+
                 <div className="flex justify-between items-center mt-4">
                   <div className="flex -space-x-3">
-                    {currentTeamMember
+                    <>
+                      <img
+                        src={
+                          ProjectInfo?.user?.profilePic
+                            ? ProjectInfo?.user?.profilePic
+                            : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                        }
+                        alt="Profile"
+                        className="h-8 xl:w-8 w-8 xl:h-8 rounded-full border-2 border-white"
+                      />
+                    </>
+                    {teamMembers
                       ?.filter((request) =>
                         request.tasks.some((t) => t.title === task.title)
                       )
@@ -552,14 +715,14 @@ const TaskTab = ({
                         </div>
                       ))}
                     {/* Show "+" button if more than 3 members */}
-                    {currentTeamMember?.filter((request) =>
+                    {teamMembers?.filter((request) =>
                       request.tasks.some((t) => t.title === task.title)
                     ).length > 2 && (
                       <button
                         className={`w-8 h-8 rounded-full ${progressColor} text-white flex items-center justify-center border-2 border-white`}
                       >
                         +
-                        {currentTeamMember.filter((request) =>
+                        {teamMembers.filter((request) =>
                           request.tasks.some((t) => t.title === task.title)
                         ).length - 2}
                       </button>
@@ -568,7 +731,7 @@ const TaskTab = ({
                   <button
                     className={`${daysLeftColor} text-sm px-4 py-1 rounded-full`}
                   >
-                    {daysLeft} Days Left
+                    {daysLeft}
                   </button>
                 </div>
               </div>
@@ -639,7 +802,7 @@ const TaskTab = ({
           )}
 
           {/* commit button  ProjectInfo?.user?._id !== userId && */}
-          {tasks[selectedIndex].title && isMatchingMember && (
+          {tasks[selectedIndex].title && (
             <div className="pb-3">
               <button
                 onClick={() => setIsOpenCommitModal(true)}
@@ -647,8 +810,9 @@ const TaskTab = ({
               >
                 Commit
               </button>
-              {isMatchingMember && (
+              {isOpenCommitModal && (
                 <CommitModal
+                  isMatchingMember={isMatchingMember}
                   textColor={colors[selectedIndex].textColor}
                   cardBg={colors[selectedIndex].cardBg}
                   buttonColor={colors[selectedIndex].progressColor}

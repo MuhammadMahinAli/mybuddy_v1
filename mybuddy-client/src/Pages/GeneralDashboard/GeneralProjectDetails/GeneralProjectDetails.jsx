@@ -4,7 +4,7 @@ import { AiOutlineFileSearch } from "react-icons/ai";
 import ProjectTaskIcon from "../../../icons/ProjectTaskIcon";
 import ActivityIcon from "../../../icons/ActivityIcon";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 import Swal from "sweetalert2";
 import { useGetAllAcceptedProjectTeamMemberQuery } from "../../../features/projectJoinRequest/projectJoinRequestApi";
@@ -12,6 +12,7 @@ import ActivityTab from "./Tabs/ActivityTab";
 import OverviewTab from "./Tabs/OverviewTab";
 import TaskTab from "./Tabs/TaskTab";
 import { LuTrash2 } from "react-icons/lu";
+import { apiFetch } from "../../../utils/apiFetch";
 
 const GeneralProjectDetails = () => {
   const [isOpenOverviewTab, setIsOpenOverviewTab] = useState(true);
@@ -49,6 +50,27 @@ const GeneralProjectDetails = () => {
     setShowPdfList(false);
     setShowDocuments(true);
   };
+
+  //
+  const projectId = ProjectInfo?._id;
+  const [teamMembers, setTeamMembers] = useState(null);
+
+
+  useEffect(() => {
+    if (!projectId) {
+      return;
+    }
+    const fetchData = async () => {
+      const res = await apiFetch(
+        `http://localhost:3000/api/v1/project-join-request/Accepted/team-member/${projectId}`,
+        "GET"
+      );
+      setTeamMembers(res?.data ?? {});
+      console.log(res?.data);
+    };
+    fetchData();
+  }, [projectId]);
+
 
   //------------- get accepted recieve project request to
   const {
@@ -143,6 +165,13 @@ const GeneralProjectDetails = () => {
     });
   };
 
+  console.log("p",teamMembers);
+  const projectJoinRequestData = teamMembers?.find(
+    (item) => item.requestedBy._id === userId
+  );
+  
+  console.log("Matching Project:", projectJoinRequestData);
+
   return (
     <>
       <div className="md:flex items-center space-x-1 hidden">
@@ -235,6 +264,9 @@ const GeneralProjectDetails = () => {
 
         {isOpenOverviewTab && (
           <OverviewTab
+          projectJoinRequestData={projectJoinRequestData}
+          teamMembers={teamMembers}
+           setTeamMembers={setTeamMembers}
             ProjectInfo={ProjectInfo}
             openUpdateModal={openUpdateModal}
             filteredMyself={filteredMyself}
@@ -254,6 +286,9 @@ const GeneralProjectDetails = () => {
         {/* task */}
         {isOpenTaskTab && (
           <TaskTab
+          teamMembers={teamMembers}
+          setTeamMembers={setTeamMembers}
+          projectId={ProjectInfo?._id}
             ProjectInfo={ProjectInfo}
             tasks={tasks}
             formatDate={formatDate}
@@ -262,6 +297,7 @@ const GeneralProjectDetails = () => {
             req={req}
             projectOwner={projectOwner}
             allRecieveRequest={allRecieveRequest}
+            setIsOpenTaskTab={setIsOpenTaskTab}
             userId={ userId}          />
         )}
 

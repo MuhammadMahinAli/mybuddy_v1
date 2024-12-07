@@ -78,6 +78,15 @@ export const projectJoinRequestApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["ProjectJoinRequest"],
     }),
+    leaveTaskFromProject: builder.mutation({
+      // The query expects an object with projectId and taskId as properties
+      query: ({ projectId, taskId }) => ({
+        url: `/project-join-request/leaveTask/${projectId}/${taskId}`,
+        method: "PATCH",
+      }),
+      // Optionally invalidate a specific tag after mutation
+      invalidatesTags: ["ProjectJoinRequest"],
+    }),
     getAllSentProjectJoinRequest: builder.query({
       query: (id) => ({
         url: `/project-join-request/getAll/sentRequest/${id}`,
@@ -88,6 +97,6 @@ export const projectJoinRequestApi = apiSlice.injectEndpoints({
   }),
 });
 
- export const {useCreateProjectJoinRequestMutation,useGetMyProjectAcceptedProjectTeamMemberQuery,useGetAllProjectJoinRequestQuery, useGetAllSentProjectJoinRequestQuery,
+ export const {useLeaveTaskFromProjectMutation,useCreateProjectJoinRequestMutation,useGetMyProjectAcceptedProjectTeamMemberQuery,useGetAllProjectJoinRequestQuery, useGetAllSentProjectJoinRequestQuery,
   useGetAllProjectByRequestedByQuery,useGetAllProjectByRequestedToQuery,useGetAllAcceptedProjectTeamMemberQuery,useGetAllAcceptedProjectByRequestedByQuery, useGetAllAcceptedProjectByRequestedToQuery, useDeleteProjectByRequestedByMutation,useUpdateJoinRequestStatusMutation} = projectJoinRequestApi;
 

@@ -294,7 +294,7 @@ const PaypalFund = () => {
                         </p>
                       </div>
 
-                      <div className="mb-4 space-y-1">
+                      {/* <div className="mb-4 space-y-1">
                         <h3 className="text-lg font-semibold text-gray-700">
                           Request Details
                         </h3>
@@ -325,7 +325,49 @@ const PaypalFund = () => {
                             fundRequest?.createdAt
                           ).toLocaleDateString()}
                         </p>
-                      </div>
+                      </div> */}
+                         <div className="mb-4 space-y-1">
+              <h3 className="text-lg font-semibold text-gray-700">
+                Request Details
+              </h3>
+              
+              <p className="text-gray-600">
+                <span className="font-medium pl-4">
+                  <strong>Payment Platform:</strong>
+                </span>{" "}
+                PayPal
+              </p>
+              <p className="text-gray-600">
+                <span className="font-medium pl-4">
+                  <strong>Transation ID:</strong>
+                </span>{" "}
+                {fundRequest?.transactionId}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-medium pl-4">
+                  <strong>Payoneer Email:</strong>
+                </span>{" "}
+                {fundRequest?.paypalEmail}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-medium pl-4">
+                  <strong>Amount:</strong>
+                </span>{" "}
+                ${fundRequest?.amount}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-medium pl-4">
+                  <strong>Status:</strong>
+                </span>{" "}
+                {fundRequest?.status}
+              </p>
+              <p className="text-gray-600">
+                <span className="font-medium pl-4">
+                  <strong>Request Date:</strong>
+                </span>{" "}
+                {new Date(fundRequest?.createdAt).toLocaleDateString()}
+              </p>
+            </div>
                     </div>
                   </div>
                 )}

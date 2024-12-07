@@ -17,6 +17,7 @@ export const createProjectZodSchema = z.object({
     projectName: z.string({
       required_error: "Project name is required",
     }),
+    uniqueId: z.string().optional(),
     category: CategoryEnum,
     discord: z.string({
       required_error: "Discord is required",

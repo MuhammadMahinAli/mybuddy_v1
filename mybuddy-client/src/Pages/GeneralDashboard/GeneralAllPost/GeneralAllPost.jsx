@@ -55,6 +55,8 @@ const GeneralAllPost = () => {
       }
     });
   };
+
+  
   return (
     <div>
       <h1 className=" text-[20px] lg:text-[28px] py-3 font-bold text-gray-700">

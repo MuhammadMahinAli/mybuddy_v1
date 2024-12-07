@@ -231,8 +231,28 @@ const ViewPosts = ({ theme }) => {
       }
     } 
     }
-  
-
+  // post date
+    const formatPostDate = (createdAt) => {
+      const postDate = new Date(createdAt);
+      const now = new Date();
+      const diffTime = now - postDate;
+      const diffSeconds = Math.floor(diffTime / 1000);
+      const diffMinutes = Math.floor(diffSeconds / 60);
+      const diffHours = Math.floor(diffMinutes / 60);
+      const diffDays = Math.floor(diffHours / 24);
+      const diffWeeks = Math.floor(diffDays / 7);
+      const diffMonths = Math.floor(diffDays / 30);
+      const diffYears = Math.floor(diffMonths / 12);
+    
+      if (diffYears >= 1) return `${diffYears}yr`;
+      if (diffMonths >= 1) return `${diffMonths}mon`;
+      if (diffWeeks >= 1) return `${diffWeeks}w`;
+      if (diffDays >= 1) return `${diffDays}d`;
+      if (diffHours >= 1) return `${diffHours}h`;
+      if (diffMinutes >= 1) return `${diffMinutes}min`;
+      return `${diffSeconds}s`; // Show seconds if it's less than a minute
+    };
+    
 
 
   //  post reaction on db
@@ -421,6 +441,7 @@ const ViewPosts = ({ theme }) => {
                         {post?.postedBy?.name?.firstName}{" "}
                         {post?.postedBy?.name?.lastName}
                       </p>
+                      
                     </div>
                     <p
                       className={`${
@@ -428,6 +449,13 @@ const ViewPosts = ({ theme }) => {
                       } hidden  md:block capitalize text-[14px] lg:text-[15px]`}
                     >
                       {post?.postedBy?.role}
+                    </p>
+                    <p
+                      className={`${
+                        theme === "light" ? "graish" : "text-white"
+                      } hidden  md:block capitalize text-[14px] lg:text-[15px]`}
+                    >
+                      {formatPostDate(post.createdAt)}
                     </p>
                   </div>
                 </div>

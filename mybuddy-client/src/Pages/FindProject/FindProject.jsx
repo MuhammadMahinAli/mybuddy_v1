@@ -22,7 +22,6 @@ import {
   FaRegArrowAltCircleLeft,
   FaRegArrowAltCircleRight,
 } from "react-icons/fa";
-import { useGetAllProjectQuery } from "../../features/project/projectApi";
 import { useSelector } from "react-redux";
 import ImageSlider from "./ImageSlider";
 import ProjectDescription from "./ProjectDescription";

@@ -40,45 +40,45 @@ const AdminTools = () => {
     }
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
     try {
-        const result = await addNewTools(formData);
-        if (result?.data?.message === "Tools saved successfully!") {
-          Swal.fire({
-            icon: "success",
-            title: "Success!",
-            text: result?.data?.message,
-            timer: 3000,
-            showConfirmButton: false,
-          });
-          setFormData({
-            toolName: "",
-            toolHomepage: "",
-            description: "",
-            image: "",
-          });
-          setPreviewImage(null);
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong! Please try again later.",
-            timer: 3000,
-            showConfirmButton: false,
-          });
-        }
-      } catch (error) {
-        console.error("Error Tools saved :", error);
+      const result = await addNewTools(formData);
+      if (result?.data?.message === "Tools saved successfully!") {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: result?.data?.message,
+          timer: 3000,
+          showConfirmButton: false,
+        });
+        setFormData({
+          toolName: "",
+          toolHomepage: "",
+          description: "",
+          image: "",
+        });
+        setPreviewImage(null);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong! Please try again later.",
+          timer: 3000,
+          showConfirmButton: false,
+        });
       }
+    } catch (error) {
+      console.error("Error Tools saved :", error);
+    }
   };
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 border rounded-lg shadow-lg bg-[#f3f6f8]">
-      <p  className="block text-gray-700 mb-2 text-xl font-bold pb-4">
-              Add A New Tool
-            </p>
+      <p className="block text-gray-700 mb-2 text-xl font-bold pb-4">
+        Add A New Tool
+      </p>
       <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6">
         {/* Image Selection */}
         <div className="flex flex-col items-center">
@@ -87,15 +87,15 @@ const AdminTools = () => {
             className="border border-gray-400 rounded-lg w-full h-64 flex items-center justify-center cursor-pointer hover:bg-gray-100"
           >
             {previewImage ? (
-              <div className="w-11/12 py-2 h-60">
+              <div className="w-full h-60 flex justify-center items-center">
                 <img
                   src={URL.createObjectURL(previewImage)}
                   alt="Tool Preview"
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-full object-contain rounded-lg"
                 />
               </div>
             ) : (
-                <span className="text-gray-500 flex items-center gap-2">
+              <span className="text-gray-500 flex items-center gap-2">
                 {isFileLoading ? (
                   "Uploading..."
                 ) : (
@@ -159,7 +159,7 @@ const AdminTools = () => {
               value={formData.description}
               onChange={handleInputChange}
               rows="4"
-              maxLength="200" 
+              maxLength="200"
               className="h-20 w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-300"
               placeholder="Enter Short Description"
             ></textarea>

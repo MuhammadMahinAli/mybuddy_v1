@@ -6,6 +6,7 @@ import { fileUpload } from "../../../../utils/cloudinary";
 import { FaCheck } from "react-icons/fa";
 
 const CommitModal = ({
+  isMatchingMember,
   userId,
   buttonColor,
   createCommit,

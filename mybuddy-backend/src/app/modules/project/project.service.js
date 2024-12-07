@@ -128,9 +128,28 @@ export const updateProjectService = async (id, updateData) => {
     new: true,
   });
   if (!updatedProject) {
-    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Project not found");
   }
   return updatedProject;
+  
+};
+//----------Update task of a project
+export const updateTaskService = async (projectId, taskId, updateData) => {
+  console.log(projectId, taskId,updateData);
+  const updateTask = await Project.findOneAndUpdate(
+    { _id: projectId, "tasks._id": taskId },
+    {
+      $set: {
+        "tasks.$": updateData, // Update the specific task with matching taskId
+      },
+    },
+    { new: true } // Return the updated project document
+  );
+
+  if (!updateTask) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Task not found");
+  }
+  return updateTask;
 };
 
 //------------------ post task in projec

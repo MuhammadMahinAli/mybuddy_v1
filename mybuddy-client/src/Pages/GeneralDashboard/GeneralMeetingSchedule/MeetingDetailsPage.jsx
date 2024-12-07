@@ -7,8 +7,45 @@ import { Link } from "react-router-dom";
 const MeetingDetailsPage = ({ meetingDat, setSelectedMeeting }) => {
   const { user } = useSelector((state) => state.auth);
   const userId = user?._id;
+
+  const { meetingMembers } = meetingDat;
   // Function to format the date
-  console.log(meetingDat?.creator._id, userId);
+  console.log("meeting", meetingDat);
+  // Extract unique meeting dates and attendance data
+
+  // Helper function to format dates
+  const formatDated = (dateString) => {
+    const options = { day: "2-digit", month: "short", year: "numeric" };
+    return new Date(dateString)
+      .toLocaleDateString("en-US", options)
+      .replace(",", "");
+  };
+
+  const getMeetingData = () => {
+    const meetingDataMap = new Map();
+
+    meetingMembers.forEach((member) => {
+      member.attendance.forEach((attendance) => {
+        const formattedDate = formatDated(attendance.meetingDate);
+        if (!meetingDataMap.has(formattedDate)) {
+          meetingDataMap.set(formattedDate, []);
+        }
+        if (attendance.isAttend) {
+          meetingDataMap
+            .get(formattedDate)
+            .push(
+              `${member.memberId.name.firstName} ${member.memberId.name.lastName}`
+            );
+        }
+      });
+    });
+
+    return Array.from(meetingDataMap, ([date, attendees]) => ({
+      date,
+      attendees,
+    }));
+  };
+  const meetingData = getMeetingData();
   function formatDate(dateString, formatType) {
     const date = new Date(dateString); // Ensure dateString is a valid ISO format
 
@@ -109,7 +146,8 @@ const MeetingDetailsPage = ({ meetingDat, setSelectedMeeting }) => {
             until <span className="font-bold">{formattedEndDate}</span>. Make
             sure to be on time—{" "}
             <span className="font-bold uppercase">{formattedStartTime}</span>{" "}
-            sharp.
+            sharp. <span> You will get a reminder before 30 minutes of every meeting via
+            email.</span>
           </p>
         </div>
 
@@ -142,13 +180,30 @@ const MeetingDetailsPage = ({ meetingDat, setSelectedMeeting }) => {
           </div>
         </div>
 
+        <ul className="my-3">
+          <h4 className="font-bold text-lg text-gray-600">Attendence:</h4>
+          {meetingData?.map(({ date, attendees }) => (
+            <>
+              <li
+                key={date}
+                className="text-gray-700 text-[17px] capitalize pl-3 pt-2"
+              >
+                <strong>{date}:</strong>{" "}
+                {attendees?.length > 0
+                  ? attendees.join(", ")
+                  : "No one attended"}
+              </li>
+            </>
+          ))}
+        </ul>
+
         {/* Update Button       http://localhost:5173/attendance?otp=241930&meetingId=67274fa0e0b950bcffb9235f&date=2024-11-03 */}
         {meetingDat?.attendenceLink !== null && (
           <div className="flex justify-center">
             {meetingDat?.creator._id !== userId && (
               <Link
                 to={`http://localhost:5173/attendance?meeting=${meetingDat?.title}&meetingId=${meetingDat?._id}&date=${meetingDat?.meetingTime}`}
-          className="px-3 py-2 font-bold text-white [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] rounded-lg shadow hover:bg-green-500 transition-colors"
+                className="px-3 py-2 font-bold text-white [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] rounded-lg shadow hover:bg-green-500 transition-colors"
               >
                 Update Attendance
               </Link>

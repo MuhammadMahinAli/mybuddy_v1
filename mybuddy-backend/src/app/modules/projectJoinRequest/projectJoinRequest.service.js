@@ -191,6 +191,37 @@ export const deleteProjectByRequestedByService = async (id) => {
    const result = await ProjectJoinRequest.findByIdAndDelete({_id: id});
    return result;
  };
+
+ //----------- leave from a task from tasks array
+ export const leaveTaskFromProjectService = async (projectId, taskId) => {
+  try {
+    // Ensure projectId and taskId are defined
+    if (!projectId || !taskId) {
+      throw new Error('Both projectId and taskId must be provided.');
+    }
+
+    console.log("Project ID:", projectId);
+    console.log("Task ID:", taskId);
+
+    // Use findOneAndUpdate for complex queries
+    const updatedProject = await ProjectJoinRequest.findOneAndUpdate(
+      { _id: projectId, "tasks._id": taskId }, // Match project with the task
+      { $pull: { tasks: { _id: taskId } } },  // Remove the task
+      { new: true }                          // Return the updated document
+    );
+
+    // Handle case where the project or task is not found
+    // if (!updatedProject) {
+    //   throw new Error('Project or Task not found.');
+    // }
+
+    return updatedProject;
+  } catch (error) {
+    console.error('Error in leaveTaskFromProjectService:', error.message);
+    throw error; // Re-throw the error for the caller to handle
+  }
+};
+
  
  //------------- update status
 

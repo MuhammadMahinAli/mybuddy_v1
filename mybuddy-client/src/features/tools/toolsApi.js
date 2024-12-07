@@ -21,26 +21,26 @@ export const adminToolsApi = apiSlice.injectEndpoints({
       providesTags: ["AdminTools"],
     }),
 
-  //   updateAdminToolsLink: builder.mutation({
-  //     query: ({id, data}) => ({
-  //       url: `/adminTools/updateLink/${id}`,
-  //       method: "PUT",
-  //       body: data,
-  //     }),
-  //     invalidateTags: ["AdminTools"],
-  //   }),
+    updateAdminTools: builder.mutation({
+      query: ({id, data}) => ({
+        url: `/adminTools/updateInfo/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidateTags: ["AdminTools"],
+    }),
     
 
-  //     deleteAdminToolsLink: builder.mutation({
-  //     query: (id) => ({
-  //       url: `/adminTools/deleteLink/${id}`,
-  //       method: "DELETE",
-  //     }),
-  //     invalidatesTags: ["AdminTools"],
-  //   }),   
+      deleteAdminTool: builder.mutation({
+      query: (id) => ({
+        url: `/adminTools/deleteTool/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["AdminTools"],
+    }),   
   }),
 });
 
- export const { useAddNewToolsMutation, useGetAllToolsQuery} = adminToolsApi;
+ export const { useUpdateAdminToolsMutation,useDeleteAdminToolMutation,useAddNewToolsMutation, useGetAllToolsQuery} = adminToolsApi;
 
 // useGetAllPostQuery

@@ -7,9 +7,11 @@ import { IoTrashOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../Context/UserContext";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const AddNewTask = ({
   tasks,
+  progressColor,
   openAddTaskModal,
   closeAddTaskModal,
   projectId,
@@ -63,7 +65,7 @@ const AddNewTask = ({
         status: "pending",
         startDate: "",
         endDate: "",
-        subTask: [{ todo: "", status: "pending" }],
+        subTask: [{ todo: "Describe the sub task", status: "pending" }],
       });
     }
     createNewTask({ id: projectId, data: taskInput }).unwrap();
@@ -84,18 +86,6 @@ const AddNewTask = ({
     setTaskInput((prev) => ({ ...prev, [name]: value }));
   };
 
-  // const handleSubTaskChange = (index, event) => {
-  //   const newSubTasks = [...taskInput.subTask];
-  //   newSubTasks[index] = event.target.value;
-  //   setTaskInput((prev) => ({ ...prev, subTask: newSubTasks }));
-  // };
-
-  // const addSubTask = () => {
-  //   setTaskInput((prev) => ({
-  //     ...prev,
-  //     subTask: [...prev.subTask, "Describe the sub task"],
-  //   }));
-  // };
 
   const handleSubTaskChange = (index, event) => {
     const { name, value } = event.target;
@@ -152,21 +142,136 @@ const AddNewTask = ({
     return date.toLocaleDateString("en-GB", options);
   }
   return (
-    <Transition appear show={openAddTaskModal} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={closeAddTaskModal}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black/25" />
-        </Transition.Child>
+    <>
+      <div className="fixed top-0 left-0 flex justify-center z-50 items-center bg-black/25 bg-opacity-50 w-screen h-screen overflow-y-scroll">
+        <div className="w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all md:w-[600px] 3xl:w-[800px] h-[600px] overflow-y-auto">
+          <IoIosCloseCircleOutline
+            onClick={closeAddTaskModal}
+            className="text-xl float-right cursor-pointer"
+          />
+          <form className="space-y-3 p-4">
+            <div className="w-full space-y-2">
+              <label className="text-[16px] md:text-xl font-semibold">
+                Title:
+              </label>
+              <input
+                name="title"
+                value={taskInput.title}
+                onChange={handleTaskChange}
+                className="outline-none rounded-lg py-3 px-2 w-full border border-gray-300"
+                required
+              />
+            </div>
 
-        <form
+            <div className="w-full space-y-2">
+              <label className="text-[16px] md:text-xl font-semibold">
+                Details:
+              </label>
+              <textarea
+                name="details"
+                value={taskInput.details}
+                onChange={handleTaskChange}
+                className="outline-none rounded-lg py-3 px-2 h-32 w-full border border-gray-300"
+                required
+              />
+            </div>
+
+            <div className="w-full space-y-2">
+              <label className="text-[16px] md:text-xl font-semibold">
+                Duration:
+              </label>
+              <div className="flex space-x-4">
+                <input
+                  type="date"
+                  name="startDate"
+                  value={taskInput.startDate}
+                  onChange={handleTaskChange}
+                  className="outline-none rounded-lg py-2 px-3 w-1/2 border border-gray-300"
+                />
+                <input
+                  type="date"
+                  name="endDate"
+                  value={taskInput.endDate}
+                  onChange={handleTaskChange}
+                  className="outline-none rounded-lg py-2 px-3 w-1/2 border border-gray-300"
+                />
+              </div>
+            </div>
+
+            <div className="w-full space-y-2 py-3">
+              <label className="text-[16px] md:text-xl font-semibold">
+                Priority:
+              </label>
+              <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+                <button
+                  type="button"
+                  className={buttonClasses("low")}
+                  onClick={() => handlePriorityChange("low")}
+                >
+                  Low
+                </button>
+                <button
+                  type="button"
+                  className={buttonClasses("medium")}
+                  onClick={() => handlePriorityChange("medium")}
+                >
+                  Medium
+                </button>
+                <button
+                  type="button"
+                  className={buttonClasses("high")}
+                  onClick={() => handlePriorityChange("high")}
+                >
+                  High
+                </button>
+              </div>
+            </div>
+
+            <div className="w-full space-y-3">
+              <label className="text-[16px] md:text-xl font-semibold">
+                SubTasks:
+              </label>
+
+              <div className="space-y-2">
+                {taskInput.subTask.map((subTask, index) => (
+                  <div key={index} className="flex items-center space-x-3">
+                    <input
+                      type="text"
+                      name="todo"
+                      value={subTask.todo}
+                      onChange={(e) => handleSubTaskChange(index, e)}
+                      className="outline-none rounded-lg py-2 px-3 w-full border border-gray-300"
+                    />
+                    <IoTrashOutline
+                      onClick={() => removeSubTask(index)}
+                      className="text-red-500 cursor-pointer text-lg"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={addSubTask}
+              className="my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
+            >
+              <FaPlus />
+              <span className="ml-2">Add SubTask</span>
+            </button>
+            <div className="w-full flex justify-end">
+              <button
+                type="submit"
+                onClick={addTask}
+                className="my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
+              >
+                Save Task
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {/* <form
           className="fixed inset-0 overflow-y-auto"
           onSubmit={(e) => handleSubmit(e, projectId)}
         >
@@ -200,7 +305,7 @@ const AddNewTask = ({
                         </div>
                       </div>
 
-                      {/* details */}
+                  
                       <div className="xs:w-full md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
                         <div className="flex flex-col md:flex-row md:justify-between md:items-start space-y-3 md:space-y-0 md:space-x-3">
                           <label className="text-[16px] md:text-xl">
@@ -215,7 +320,7 @@ const AddNewTask = ({
                         </div>
                       </div>
 
-                      {/* details */}
+                   
                       <div className=" xs:w-full  md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
                         <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
                           <label className="text-[16px] md:text-xl md:pr-2 lg:pr-5">
@@ -227,7 +332,7 @@ const AddNewTask = ({
                         </div>
                       </div>
 
-                      {/* duration */}
+          
                       <div className="flex flex-col space-y-3 w-full lg:w-[550px] ">
                         <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
                           <label className="text-[16px] md:text-xl">
@@ -254,7 +359,7 @@ const AddNewTask = ({
                         </div>
                       </div>
 
-                      {/* priority */}
+                      
 
                       <div className=" xs:w-full md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
                         <div className="flex flex-col md:flex-row  md:items-center space-y-3 md:space-y-0 md:space-x-3">
@@ -287,7 +392,7 @@ const AddNewTask = ({
                         </div>
                       </div>
 
-                      {/* sub tasks */}
+                     
                       <div className="w-full xs:w-full md:w-9/12 lg:w-[550px] flex flex-col space-y-3">
                         <div className="flex flex-col space-y-2">
                           <label className="text-[16px] md:text-xl">
@@ -321,7 +426,7 @@ const AddNewTask = ({
                                   onClick={() => removeSubTask(index)}
                                   className="text-red-500 cursor-pointer text-lg"
                                 />
-                              </div>
+                              </div> 
                             ))}
                           </div>
                         </div>
@@ -342,9 +447,8 @@ const AddNewTask = ({
               </Dialog.Panel>
             </Transition.Child>
           </div>
-        </form>
-      </Dialog>
-    </Transition>
+        </form> */}
+    </>
   );
 };
 
