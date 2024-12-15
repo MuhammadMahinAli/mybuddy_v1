@@ -476,19 +476,19 @@ const AdminSetting = () => {
   };
   return (
     <div className="flex flex-col justify-center items-center space-y-8 pt-14">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-[600px]">
+      <div className="bg-white p-8 rounded-lg shadow-lg md:w-[600px]">
         {/* PayPal Section */}
         <div className="flex justify-center  mb-6">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
             alt="PayPal Logo"
-            className="w-32"
+            className="w-20 md:w-32"
           />
         </div>
 
         {/* PayPal Edit Button */}
-        <div className="flex items-center justify-between py-3">
-          <p className="text-lg font-bold">Research Buddy PayPal account</p>
+        <div className="flex items-start md:items-center justify-between py-3">
+          <p className="text-sm ssm:text-lg font-bold pr-3 ssm:pr-0">Research Buddy PayPal account</p>
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setIsOpenPaypalEdit(!isOpenPaypalEdit)}
@@ -554,229 +554,229 @@ const AdminSetting = () => {
           </form>
         )}
       </div>
-      <div className="bg-white p-8 rounded-lg shadow-lg w-[600px] ">
-        {/* Payoneer Section */}
-        <div className="flex justify-center mb-6   ">
-          <img
-            src="https://seeklogo.com/images/P/payoneer-new-2021-logo-A7168B16B5-seeklogo.com.png"
-            alt="Payoneer Logo"
-            className="w-36"
+      <div className="bg-white p-8 rounded-lg shadow-lg md:w-[600px] ">
+  {/* Payoneer Section */}
+  <div className="flex justify-center mb-6   ">
+    <img
+      src="https://seeklogo.com/images/P/payoneer-new-2021-logo-A7168B16B5-seeklogo.com.png"
+      alt="Payoneer Logo"
+      className="w-20 md:w-36"
+    />
+  </div>
+  
+  {/* Payoneer Edit Button */}
+  <div className="flex items-start md:items-center justify-between py-3">
+    <p className="text-sm ssm:text-lg font-bold pr-3 ssm:pr-0">Research Buddy Payoneer account</p>
+    <div className="flex items-center space-x-2">
+      <button
+        onClick={() => setIsOpenPayoneerEdit(!isOpenPayoneerEdit)}
+        className="text-xl"
+      >
+        <TiEdit />
+      </button>
+      <button onClick={handleDeletePayoneerLink} className="text-xl">
+        <IoTrashOutline />
+      </button>
+    </div>
+  </div>
+  
+  {userPayoneerLink ? (
+    !isOpenPayoneerEdit ? (
+      <input
+        type="text"
+        value={
+          updatedPayoneerLink?.length !== 0
+            ? updatedPayoneerLink
+            : userPayoneerLink
+        }
+        readOnly
+        className="w-full px-4 mt-1 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+      />
+    ) : (
+      <form onSubmit={handleUpdatePayoneerLink}>
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Enter your new Payoneer ID"
+            value={updatedPayoneerLink}
+            onChange={(e) => setUpdatedPayoneerLink(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
         </div>
-
-        {/* Payoneer Edit Button */}
-        <div className="flex items-center justify-between py-3">
-          <p className="text-lg font-bold">Research Buddy Payoneer account</p>
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setIsOpenPayoneerEdit(!isOpenPayoneerEdit)}
-              className="text-xl"
-            >
-              <TiEdit />
-            </button>
-            <button onClick={handleDeletePayoneerLink} className="text-xl">
-              <IoTrashOutline />
-            </button>
-          </div>
-        </div>
-
-        {userPayoneerLink ? (
-          !isOpenPayoneerEdit ? (
-            <input
-              type="text"
-              value={
-                updatedPayoneerLink?.length !== 0
-                  ? updatedPayoneerLink
-                  : userPayoneerLink
-              }
-              readOnly
-              className="w-full px-4 mt-1 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-            />
-          ) : (
-            <form onSubmit={handleUpdatePayoneerLink}>
-              <div className="mb-4">
-                <input
-                  type="text"
-                  placeholder="Enter your new Payoneer ID"
-                  value={updatedPayoneerLink}
-                  onChange={(e) => setUpdatedPayoneerLink(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition-colors"
-              >
-                Update
-              </button>
-            </form>
-          )
-        ) : (
-          <form onSubmit={handlePayoneerSubmit}>
-            <div className="mb-4">
-              <input
-                type="text"
-                placeholder="Enter your Payoneer ID"
-                value={payoneerLink}
-                onChange={(e) => setPayoneerLink(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition-colors"
-            >
-              Save
-            </button>
-          </form>
-        )}
+        <button
+          type="submit"
+          className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition-colors"
+        >
+          Update
+        </button>
+      </form>
+    )
+  ) : (
+    <form onSubmit={handlePayoneerSubmit}>
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Enter your Payoneer ID"
+          value={payoneerLink}
+          onChange={(e) => setPayoneerLink(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
       </div>
-
-      <div className="bg-white p-8 rounded-lg shadow-lg w-[600px] ">
-        {/* bank Section */}
-        <div className="flex justify-center mb-6   ">
-          <img
-            src="https://i.ibb.co.com/zJ3bWNk/bank.png"
-            alt="Payoneer Logo"
-            className="w-16"
-          />
-        </div>
-
-        {/* bank info Edit Button */}
-        <div className="flex items-center justify-between py-3">
-          <p className="text-lg font-bold">Research Buddy Bank account</p>
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setIsOpenAdminBankInfoEdit(!isOpenAdminBankInfoEdit)}
-              className="text-xl"
-            >
-              <TiEdit />
-            </button>
-            <button onClick={handleDeleteBankInfo} className="text-xl">
-              <IoTrashOutline />
-            </button>
-          </div>
-        </div>
-
-        { adminBankInfoId ? (
-          !isOpenAdminBankInfoEdit ? (
-            <div className="space-y-4">
-            <input
-              type="text"
-              name="accountName"
-              value={adminBankInfo?.accountName}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-
-            <input
-              type="text"
-              name="bankAccountNumber"
-              value={adminBankInfo?.bankAccountNumber}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-
-            <input
-              type="text"
-              name="bankName"
-              value={adminBankInfo?.bankName}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-            <input
-              type="text"
-              name="branchName"
-              value={adminBankInfo?.branchName}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
-          ) : (
-            <form onSubmit={handleUpdateBankInfoSubmit} className=" cursor-green-600 rounded-lg space-y-4 text-gray-700">
-            <input
-              type="text"
-              name="accountName"
-              placeholder="Account Holder Name"
-              value={updatedBankData.accountName}
-              onChange={handleBInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-
-            <input
-              type="text"
-              name="bankAccountNumber"
-              placeholder="Bank Account Number"
-              value={updatedBankData.bankAccountNumber}
-              onChange={handleBInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-
-            <input
-              type="text"
-              name="bankName"
-              placeholder="Bank Name "
-              value={updatedBankData.bankName}
-              onChange={handleBInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-            <input
-              type="text"
-              name="branchName"
-              placeholder="Branch Name"
-              value={updatedBankData.branchName}
-              onChange={handleBInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-            <button
-              type="submit"
-              className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition-colors"
-            >
-              Update
-            </button>
-          </form>
-          )
-        ) : (
-          <form onSubmit={handleBankInfoSubmit} className=" cursor-green-600 rounded-lg space-y-4 text-gray-700">
-            <input
-              type="text"
-              name="accountName"
-              placeholder="Account Holder Name"
-              value={formData.accountName}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-
-            <input
-              type="text"
-              name="bankAccountNumber"
-              placeholder="Bank Account Number"
-              value={formData.bankAccountNumber}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-
-            <input
-              type="text"
-              name="bankName"
-              placeholder="Bank Name "
-              value={formData.bankName}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-            <input
-              type="text"
-              name="branchName"
-              placeholder="Branch Name"
-              value={formData.branchName}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-            <button
-              type="submit"
-              className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition-colors"
-            >
-              Save
-            </button>
-          </form>
-        )}
-      </div>
+      <button
+        type="submit"
+        className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition-colors"
+      >
+        Save
+      </button>
+    </form>
+  )}
+  </div>
+  
+  <div className="bg-white p-8 rounded-lg shadow-lg md:w-[600px] ">
+  {/* bank Section */}
+  <div className="flex justify-center mb-6   ">
+    <img
+      src="https://i.ibb.co.com/zJ3bWNk/bank.png"
+      alt="Payoneer Logo"
+      className="w-14 md:w-16"
+    />
+  </div>
+  
+  {/* bank info Edit Button */}
+  <div className="flex items-start md:items-center justify-between py-3">
+    <p className="text-sm ssm:text-lg font-bold pr-3 ssm:pr-0">Research Buddy Bank account</p>
+    <div className="flex items-center space-x-2">
+      <button
+        onClick={() => setIsOpenAdminBankInfoEdit(!isOpenAdminBankInfoEdit)}
+        className="text-xl"
+      >
+        <TiEdit />
+      </button>
+      <button onClick={handleDeleteBankInfo} className="text-xl">
+        <IoTrashOutline />
+      </button>
+    </div>
+  </div>
+  
+  { adminBankInfoId ? (
+    !isOpenAdminBankInfoEdit ? (
+      <div className="space-y-4">
+      <input
+        type="text"
+        name="accountName"
+        value={adminBankInfo?.accountName}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+  
+      <input
+        type="text"
+        name="bankAccountNumber"
+        value={adminBankInfo?.bankAccountNumber}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+  
+      <input
+        type="text"
+        name="bankName"
+        value={adminBankInfo?.bankName}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+      <input
+        type="text"
+        name="branchName"
+        value={adminBankInfo?.branchName}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+    </div>
+    ) : (
+      <form onSubmit={handleUpdateBankInfoSubmit} className=" cursor-green-600 rounded-lg space-y-4 text-gray-700">
+      <input
+        type="text"
+        name="accountName"
+        placeholder="Account Holder Name"
+        value={updatedBankData.accountName}
+        onChange={handleBInputChange}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+  
+      <input
+        type="text"
+        name="bankAccountNumber"
+        placeholder="Bank Account Number"
+        value={updatedBankData.bankAccountNumber}
+        onChange={handleBInputChange}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+  
+      <input
+        type="text"
+        name="bankName"
+        placeholder="Bank Name "
+        value={updatedBankData.bankName}
+        onChange={handleBInputChange}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+      <input
+        type="text"
+        name="branchName"
+        placeholder="Branch Name"
+        value={updatedBankData.branchName}
+        onChange={handleBInputChange}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+      <button
+        type="submit"
+        className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition-colors"
+      >
+        Update
+      </button>
+    </form>
+    )
+  ) : (
+    <form onSubmit={handleBankInfoSubmit} className=" cursor-green-600 rounded-lg space-y-4 text-gray-700">
+      <input
+        type="text"
+        name="accountName"
+        placeholder="Account Holder Name"
+        value={formData.accountName}
+        onChange={handleInputChange}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+  
+      <input
+        type="text"
+        name="bankAccountNumber"
+        placeholder="Bank Account Number"
+        value={formData.bankAccountNumber}
+        onChange={handleInputChange}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+  
+      <input
+        type="text"
+        name="bankName"
+        placeholder="Bank Name "
+        value={formData.bankName}
+        onChange={handleInputChange}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+      <input
+        type="text"
+        name="branchName"
+        placeholder="Branch Name"
+        value={formData.branchName}
+        onChange={handleInputChange}
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+      <button
+        type="submit"
+        className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition-colors"
+      >
+        Save
+      </button>
+    </form>
+  )}
+  </div>
     </div>
   );
 };

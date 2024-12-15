@@ -13,6 +13,9 @@ const ProfileTab = ({ openProfile, logout }) => {
     && singleUser?.data?.name?.firstName + " " + singleUser?.data?.name?.lastName;
   const userRole = singleUser
     && singleUser?.data?.role;
+  const userEmail = singleUser
+    && singleUser?.data?.email;
+
 
     const userProfilePic = singleUser
     && singleUser?.data?.profilePic ? singleUser?.data?.profilePic : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg" ;
@@ -20,6 +23,8 @@ const ProfileTab = ({ openProfile, logout }) => {
     logout()
 
   }
+
+  console.log('role', userEmail);
   return (
     <div
       data-aos={openProfile === true ? "fade-up" : "fade-down"}
@@ -101,7 +106,7 @@ const ProfileTab = ({ openProfile, logout }) => {
             </Link>
           </li>
           <li className="text-[11px] lg:text-[13px] text-gray-500 font-medium capitalize">
-          <Link to="/dashboard">
+          <Link to={userEmail ===  "admin@gmail.com" ? `/admin/${user?._id}` : "/dashboard"}>
             dashboard
             </Link>
           </li>

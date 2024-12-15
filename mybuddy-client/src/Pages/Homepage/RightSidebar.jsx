@@ -59,6 +59,8 @@ const RightSidebar = ({ theme }) => {
   const currentYoutube = socialInfo?.youtube;
   const currentTiktok = socialInfo?.tiktok;
   const currentFacebook = socialInfo?.facebook;
+  const currentResearchGate = socialInfo?.researchGate;
+  const currentGoogleScholar = socialInfo?.googleScholar;
   const currentPinterest = socialInfo?.pinterest;
 
   const socialLinks = [
@@ -67,6 +69,18 @@ const RightSidebar = ({ theme }) => {
       icon: "./orcid.svg.png",
       alt: "ORCID",
       value: currentOrcID,
+    },
+    {
+      url: `https://www.researchgate.net/profile/${currentResearchGate}`,
+      icon: "./rg.png",
+      alt: "ORCID",
+      value: currentResearchGate,
+    },
+    {
+      url: `https://scholar.google.com/citations?user=${currentGoogleScholar}`,
+      icon: "./google-scholar-hd-logo.png",
+      alt: "ORCID",
+      value: currentGoogleScholar,
     },
     {
       url: `https://facebook.com/${currentFacebook}`,

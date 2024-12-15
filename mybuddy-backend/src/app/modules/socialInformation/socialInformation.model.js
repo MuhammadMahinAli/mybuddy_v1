@@ -1,46 +1,55 @@
 import { Schema, model } from "mongoose";
 
-const SocialInformationSchema = new Schema({
-user: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "Member",
+const SocialInformationSchema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Member",
+    },
+    orcid: {
+      type: String,
+    },
+    researchGate: {
+      type: String,
+    },
+    googleScholar: {
+      type: String,
+    },
+    twitter: {
+      type: String,
+    },
+    github: {
+      type: String,
+    },
+    linkedIn: {
+      type: String,
+    },
+    instagram: {
+      type: String,
+    },
+    personalWebsite: {
+      type: String,
+    },
+    youtube: {
+      type: String,
+    },
+    tiktok: {
+      type: String,
+    },
+    pinterest: {
+      type: String,
+    },
+    facebook: {
+      type: String,
+    },
   },
-  orcid: {
-    type: String,
-  },
-  twitter: {
-    type: String,
-  },
-  github: {
-    type: String,
-  },
-  linkedIn: {
-    type: String,
-  },
-  instagram: {
-    type: String,
-  },
-  personalWebsite: {
-    type: String,
-  },
-  youtube: {
-    type: String,
-  },
-  tiktok: {
-    type: String,
-  },
-  pinterest: {
-    type: String,
-  },
-  facebook: {
-    type: String,
-  },
-}
-,
-{
-  timestamps: true,
-}
+  {
+    timestamps: true,
+  }
 );
 
-export const SocialInformation = model("SocialInformation", SocialInformationSchema);
+export const SocialInformation = model(
+  "SocialInformation",
+  SocialInformationSchema
+);

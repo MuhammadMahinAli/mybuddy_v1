@@ -79,7 +79,7 @@ const AdminAllProject = () => {
   return (
     <div>
       <div className="py-4">
-        <div className="w-5/12 flex justify-center items-center relative md:w-8/12 xl:w-7/12 2xl:w-6/12 3xl:w-7/12 mb-4">
+        <div className="w-full lg:w-8/12 flex justify-center items-center relative  xl:w-7/12 2xl:w-6/12 3xl:w-7/12 mb-4">
           <input
             type="text"
             placeholder="Search"
@@ -87,17 +87,20 @@ const AdminAllProject = () => {
             onChange={(e) => setUniqueId(e.target.value)}
             className="w-full h-9 md:h-10 lg:h-12 outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border border-solid border-gray-100"
           />
-          <IoIosSearch
-            onClick={handleFilter}
-            className="text-2xl absolute right-8 cursor-pointer"
-          />
-          {isFiltered && (
+          
+          {isFiltered ? (
             <AiOutlineReload
               title="Reset"
               onClick={handleReset}
-              className="text-2xl absolute right-1 cursor-pointer"
+              className="text-2xl absolute right-3 cursor-pointer"
             />
-          )}
+          )
+        :
+        <IoIosSearch
+            onClick={handleFilter}
+            className="text-2xl absolute right-3 cursor-pointer"
+          />
+        }
         </div>
         {loading ? (
           <Loading />
@@ -105,6 +108,7 @@ const AdminAllProject = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.length > 0 ? (
               projects.map((p, i) => (
+                <>
                 <div key={i}>
                   <div
                     className={`pb-4 space-y-1 flex flex-col justify-start rounded-[15px] bg-skyblue shadow-lg overflow-hidden`}
@@ -153,16 +157,21 @@ const AdminAllProject = () => {
                     </div>
                   </div>
                 </div>
+                
+                </>
               ))
             ) : (
-              <p className="col-span-full text-center">
-                No project matched with the provided uniqueId.
-              </p>
+              <p className="col-span-full text-center pt-10">
+              {`No project matched with the provided uniqueId. `}
+              <span className="text-blue-500 hover:underline cursor-pointer" onClick={handleReset}>
+                Refresh
+              </span>
+            </p>
             )}
           </div>
         )}
 
-        {!isFiltered && loading === false && (
+        {isFiltered && loading === false && (
           <div className=" pagination flex items-center justify-center mt-14">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

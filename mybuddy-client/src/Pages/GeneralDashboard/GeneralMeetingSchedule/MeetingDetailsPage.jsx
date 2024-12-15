@@ -146,20 +146,24 @@ const MeetingDetailsPage = ({ meetingDat, setSelectedMeeting }) => {
             until <span className="font-bold">{formattedEndDate}</span>. Make
             sure to be on time—{" "}
             <span className="font-bold uppercase">{formattedStartTime}</span>{" "}
-            sharp. <span> You will get a reminder before 30 minutes of every meeting via
-            email.</span>
+            sharp.{" "}
+            <span>
+              {" "}
+              You will get a reminder before 30 minutes of every meeting via
+              email.
+            </span>
           </p>
         </div>
 
         {/* Invited Members */}
         <div className="mb-4">
           <h4 className="font-bold text-lg text-gray-600">Invited Members:</h4>
-          <div className="grid grid-cols-2 gap-2 mt-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
             {meetingDat?.meetingMembers.map((item, index) => (
               <div
                 key={item?.memberId?.profilePic}
                 style={{ backgroundColor: bgColors[index % bgColors.length] }}
-                className="flex  items-center px-3 py-2 rounded-lg shadow-lg  "
+                className="flex md:justify-center items-center px-3 py-2 rounded-lg shadow-lg  "
               >
                 <img
                   src={

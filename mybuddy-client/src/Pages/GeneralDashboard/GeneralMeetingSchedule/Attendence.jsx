@@ -3,10 +3,12 @@ import { AuthContext } from "../../../Context/UserContext";
 import { apiFetch } from "../../../utils/apiFetch";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const Attendence = () => {
   const [otp, setOtp] = useState(""); //
- // const { userId } = useContext(AuthContext);
+  // const { userId } = useContext(AuthContext);
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const meeting = queryParams.get("meeting");
   const meetingId = queryParams.get("meetingId");
@@ -14,13 +16,12 @@ const Attendence = () => {
   const dateString = queryParams.get("date");
   console.log(otps, meetingId, dateString);
 
-
   // const date = new Date(meeting?.meetingTime);
   const [formattedDate, setFormattedDate] = useState("");
   const [formattedTime, setFormattedTime] = useState("");
 
   useEffect(() => {
-   // const dateString = "2024-10-07T02:45:00.000Z"; // Your date string here
+    // const dateString = "2024-10-07T02:45:00.000Z"; // Your date string here
     const date = new Date(dateString);
 
     if (!isNaN(date.getTime())) {
@@ -58,21 +59,21 @@ const Attendence = () => {
   }, [meetingId]);
   const { user } = useSelector((state) => state.auth);
   const userId = user?._id;
- console.log(userId); 
+  console.log(userId);
   const handleOtpChange = (event) => {
     setOtp(event.target.value); // Update the OTP state as the user types
   };
-console.log("ot",fund?.attendenceLink );
+  console.log("ot", fund?.attendenceLink);
   //http://localhost:5173/attendance?otp=384128&meetingId=66fe38de724207f81ec75cc3&date=2024-10-03
   const handleAttendClick = async () => {
     // Log meeting details for debugging
     console.log({
       meetingId,
-      meetingTime:dateString,
+      meetingTime: dateString,
       otp,
       memberId: userId,
     });
-  
+
     //Check if the provided OTP matches the attendance link
     if (fund?.attendenceLink === otp) {
       try {
@@ -85,47 +86,45 @@ console.log("ot",fund?.attendenceLink );
             },
             body: JSON.stringify({
               meetingId,
-              meetingTime:dateString,
+              meetingTime: dateString,
               otp,
               memberId: userId,
             }),
           }
         );
-  
+
         const data = await response.json();
-  
+
         // Check if the attendance was successfully updated
         if (data.success) {
           console.log("Attendance successfully updated.");
           Swal.fire({
             icon: "success",
-            title:"Attendance successfully updated..",
+            title: "Attendance successfully updated..",
           });
+          navigate("/dashboard/meeting-schedule");
         } else {
           console.log("Failed to update attendance:", data.message);
           Swal.fire({
             icon: "error",
-            title:data.message
+            title: data.message,
           });
         }
       } catch (error) {
         console.error("Error updating attendance:", error.message);
       }
     } else {
-  
       Swal.fire({
         icon: "error",
-        title:"Invalid OTP. Please try again."
+        title: "Invalid OTP. Please try again.",
       });
-      
-   }
+    }
   };
-  
 
   return (
-    <div className="fixed top-0 left-0  flex justify-center items-center bg-black/40 bg-opacity-50 w-screen h-screen overflow-y-scroll">
+    <div className="fixed top-0 left-0  flex justify-center items-center bg-white bg-opacity-50 w-screen h-screen overflow-y-scroll">
       <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all md:w-[600px] 3xl:w-[800px] cursor-pointer">
-        <div className="flex justify-center items-center py-10">
+        <div className="flex justify-center items-center">
           <div className="flex flex-col border-2 border-black overflow-hidden p-2 rounded-xl shadow-large bg-rose-400 w-[500px]">
             <div className="px-6 py-8 sm:p-10 sm:pb-6">
               <div className="items-center w-full justify-center grid grid-cols-1 text-left">
@@ -172,6 +171,11 @@ console.log("ot",fund?.attendenceLink );
             </div>
           </div>
         </div>
+        <Link to="/dashboard/meeting-schedule">
+          <p className="text-center pt-5 text-sm lg:text-xl underline text-blue-600 hover:text-blue-400 hover:underline">
+            Go Back
+          </p>
+        </Link>
       </div>
     </div>
   );

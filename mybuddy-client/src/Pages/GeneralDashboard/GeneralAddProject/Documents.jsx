@@ -66,7 +66,7 @@ const Documents = ({ setDocuments}) => {
                   {loading.imageOne ? (
                     <span className="loading loading-spinner loading-xs"></span>
                   ) : (
-                    <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
+                    <div className="flex flex-col justify-center items-center absolute top-8 lg:top-10 xl:top-16 2xl:top-14 3xl:top-16 w-full">
                      <img src={pdf} className="h-8 lg:h-10" />
                       <p className="text-[10px] md:text-[12px] font-normal capitalize">drag & drop a docx or</p>
                       <p className="text-[10px] md:text-[12px] font-medium capitalize text-blue-500">browse</p>

@@ -11,10 +11,12 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../Context/UserContext";
 import Swal from "sweetalert2";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const UpdateSocialInfoModal = ({
   isOpenSocialModal,
   theme,
+  setIsOpenSocialModal,
   closeSocialModal,
 }) => {
   const { getSingleUserSocialInfo, updateSocialInfo, user } =
@@ -25,6 +27,8 @@ const UpdateSocialInfoModal = ({
   // Initialize form data state
   const [formData, setFormData] = useState({
     orcid: "",
+    researchGate: "",
+    googleScholar: "",
     twitter: "",
     github: "",
     linkedIn: "",
@@ -41,6 +45,8 @@ const UpdateSocialInfoModal = ({
     if (socialInfo) {
       setFormData({
         orcid: socialInfo?.orcid || "",
+        researchGate: socialInfo?.researchGate || "",
+        googleScholar: socialInfo?.googleScholar || "",
         twitter: socialInfo?.twitter || "",
         github: socialInfo?.github || "",
         linkedIn: socialInfo?.linkedIn || "",
@@ -131,6 +137,10 @@ const UpdateSocialInfoModal = ({
                         : "text-white"
                     } `}
                   >
+                    <IoIosCloseCircleOutline
+                      onClick={() => setIsOpenSocialModal(false)}
+                      className="text-xl text-gray-800 absolute cursor-pointer right-5"
+                    />
                     <p className="m-[1px] pt-2 md:pt-3 outline-none text-[15px] md:text-[20px] xl:text-[24px] font-semibold text-start">
                       Update Your Social Info
                     </p>
@@ -178,6 +188,76 @@ const UpdateSocialInfoModal = ({
                                   ? "bg-[#d6f4ca] graish"
                                   : "bg-[#204057] text-white"
                               } m-[1px] pl-2 md:pt-3 outline-none  rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                            />
+                          </div>
+                        </div>
+                        {/*  researchGate */}
+                        <div>
+                          <label
+                            className={`${
+                              theme === "light" ? "graish" : "text-white"
+                            } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
+                          >
+                            Research Gate
+                          </label>
+                          <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
+                            <div
+                              className={`${
+                                theme !== "light" ? "bg-[#fff]" : "bg-[#fff]"
+                              }  rounded-l-lg  flex justify-center items-center h-9 w-10 md:h-14 md:w-14`}
+                            >
+                              <img
+                                className="h-[40px]"
+                                src="/rg.png"
+                                loading="lazy"
+                                alt=""
+                              />
+                            </div>
+
+                            <textarea
+                              name="researchGate"
+                              value={formData.researchGate}
+                              onChange={handleChange}
+                              className={`${
+                                theme === "light"
+                                  ? "bg-[#caf4ee] graish"
+                                  : "bg-[#204057] text-white"
+                              } m-[1px] pl-2 md:pt-4 outline-none rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                            />
+                          </div>
+                        </div>
+                        {/*  googleScholar */}
+                        <div>
+                          <label
+                            className={`${
+                              theme === "light" ? "graish" : "text-white"
+                            } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
+                          >
+                            Google Scholar
+                          </label>
+                          <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
+                            <div
+                              className={`${
+                                theme !== "light" ? "bg-[#fff]" : "bg-[#fff]"
+                              }  rounded-l-lg  flex justify-center items-center h-9 w-10 md:h-14 md:w-14`}
+                            >
+                              <img
+                                className="h-[38px]"
+                                src="/google-scholar-hd-logo.png"
+                                loading="lazy"
+                                alt=""
+                              />
+                            </div>
+
+                            <textarea
+                              name="googleScholar"
+                              value={formData.googleScholar}
+                              onChange={handleChange}
+                              className={`${
+                                theme === "light"
+                                  ? "bg-[#cae4f4] graish"
+                                  : "bg-[#204057] text-white"
+                              } m-[1px] pl-2 md:pt-4 outline-none rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                             />
                           </div>
                         </div>

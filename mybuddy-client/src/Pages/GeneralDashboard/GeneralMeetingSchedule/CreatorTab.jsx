@@ -77,22 +77,22 @@ const CreatorTab = () => {
 
   return (
     <>
-      <div className="bg-gray-100 p-6">
+      <div className="bg-gray-100 md:p-6">
         {/* Title Section */}
-        <div className="flex justify-between items-center py-2">
-          <h2 className="text-2xl font-bold text-gray-700 mb-6">
+        <div className="flex justify-between items-start lg:items-center py-2 mb-6">
+          <h2 className="xl:text-2xl font-bold text-gray-700 ">
             YOU'VE CREATED {meetingAsMembers?.length} MEETINGS
           </h2>
           <button
             onClick={() => setIsOpenMeeting(true)}
-            className={`px-4 py-2 text-white rounded-lg shadow [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] text-lg font-bold hover:bg-green-500 transition-colors`}
+            className={`text-sm xl:text-lg px-2 md:px-4 py-2 text-white rounded-lg shadow [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] font-bold hover:bg-green-500 transition-colors`}
           >
             Create Meeting
           </button>
         </div>
 
         {/* Meeting Cards Section  */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           {meetingAsMembers?.map((meeting, index) => (
             <div
               key={index}
@@ -139,8 +139,11 @@ const CreatorTab = () => {
                   className="w-10 h-10 rounded-full"
                 />
                 <div className="ml-4">
-                  <h3 className="text-lg font-semibold capitalize">
-                    {meeting?.title?.length > 7 ? `${meeting?.title?.slice(0,6)}...` : meeting?.title}
+                <h3 className="text-lg font-semibold capitalize lg:hidden">
+                    {meeting?.title?.length > 7 ? meeting?.title.slice(0,7)  + "..." :  meeting?.title}
+                  </h3>
+                  <h3 className="hidden text-lg font-semibold capitalize lg:block ">
+                    {meeting?.title}
                   </h3>
                   <span className="text-base">
                     {formatDate(meeting.meetingTime)}

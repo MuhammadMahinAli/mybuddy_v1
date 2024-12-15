@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDeleteAdminToolMutation, useGetAllToolsQuery } from "../../../features/tools/toolsApi";
-import { HiOutlineDotsVertical } from "react-icons/hi";
+import { HiOutlineDotsVertical, HiOutlineExternalLink } from "react-icons/hi";
 import { FaRegPenToSquare, FaRegTrashCan } from "react-icons/fa6";
 import UpdateTool from "./UpdateTool";
 import Swal from "sweetalert2";
@@ -73,6 +73,19 @@ const AdminAllTool = () => {
                 selectedTool &&
                 selectedTool?._id === tool?._id && (
                   <ul className="absolute bg-white rounded-md text-center  right-4 top-4 shadow-xl w-28">
+                    <li
+                      
+                      className="hover:bg-gray-100 py-2  cursor-pointer "
+                    >
+                      <a className="flex items-center pl-5 space-x-2" href={tool?.toolHomepage} target="blank">
+                      <span>
+                        <HiOutlineExternalLink className="text-xl text-gray-500" />
+                      </span>{" "}
+                      <span className=""> Visit</span>
+                      </a>
+                      {" "}
+                    
+                    </li>
                     <li
                       onClick={() => toggleUpdateTool(tool)}
                       className="hover:bg-gray-100 py-2  cursor-pointer flex items-center pl-5 space-x-2"

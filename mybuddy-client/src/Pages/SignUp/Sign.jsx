@@ -32,6 +32,7 @@ const Sign = () => {
       lastName: "",
     },
     phoneNumber: "",
+    uniqueId : "",
     address: "",
     country: "",
     profession: "",

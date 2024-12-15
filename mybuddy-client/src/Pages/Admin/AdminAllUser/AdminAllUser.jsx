@@ -39,8 +39,6 @@ const AdminAllUser = () => {
       );
       const data = response.data.data;
 
-    
-
       setUsers(data.users || []);
       setCurrentPage(data.currentPage || 1);
       setTotalPages(data.totalPages || 1);
@@ -81,7 +79,7 @@ const AdminAllUser = () => {
   return (
     <div>
       <div>
-        <div className="w-5/12 flex justify-center items-center relative md:w-8/12 xl:w-7/12 2xl:w-6/12 3xl:w-7/12 mb-4">
+        <div className="w-full lg:w-8/12 flex justify-center items-center relative  xl:w-7/12 2xl:w-6/12 3xl:w-7/12 my-4">
           <input
             type="text"
             placeholder="Search"
@@ -89,15 +87,16 @@ const AdminAllUser = () => {
             onChange={(e) => setUniqueId(e.target.value)}
             className="w-full h-9 md:h-10 lg:h-12 outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border border-solid border-gray-100"
           />
-          <IoIosSearch
-            onClick={handleFilter}
-            className="text-2xl absolute right-8 cursor-pointer"
-          />
-          {isFiltered && (
+          {isFiltered ? (
             <AiOutlineReload
               title="Reset"
               onClick={handleReset}
-              className="text-2xl absolute right-1 cursor-pointer"
+              className="text-2xl absolute right-3 cursor-pointer"
+            />
+          ) : (
+            <IoIosSearch
+              onClick={handleFilter}
+              className="text-2xl absolute right-3 cursor-pointer"
             />
           )}
         </div>
@@ -108,11 +107,15 @@ const AdminAllUser = () => {
             {users.length > 0 ? (
               users.map((p, i) => (
                 <div key={i}>
-                  <div className="my-10 bg-white rounded-2xl shadow-lg p-6 w-80 text-center relative">
+                  <div className="my-10 bg-white rounded-2xl shadow-lg p-6  text-center relative">
                     {/* Profile Image */}
-                    <div className="relative w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-blue-500 -mt-16">
+                    <div className="relative md:w-24 h-16 w-16 md:h-24 mx-auto rounded-full overflow-hidden border-4 border-blue-500 -mt-16">
                       <img
-                        src={p.profilePic ? p.profilePic : "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg"} // Replace this URL with the actual image URL
+                        src={
+                          p.profilePic
+                            ? p.profilePic
+                            : "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg"
+                        } // Replace this URL with the actual image URL
                         alt="Profile"
                         className="w-full h-full object-cover"
                       />
@@ -123,45 +126,52 @@ const AdminAllUser = () => {
                       {p.name.firstName} {p.name.lastName}
                     </h2>
                     <p className="text-blue-600 font-medium">{p.role}</p>
-
+                    <p className="text-gray-600 font-medium">{p.email}</p>
                     {/* Bio */}
-                    <p className="text-gray-600 mt-2 text-sm">
+                    <p className="text-gray-600 mt-2">
                       {p.about
                         ? p.about.slice(0, 30) + "..."
                         : `Nothing to show about ${p.name.firstName} ${p.name.lastName}`}
                     </p>
+
                     <p className="text-gray-600 mt-2 text-sm">
-                     <span>User ID:</span> {p.uniqueId
-                        ? p.uniqueId
-                        : `ID`}
+                      <span>User ID:</span> {p.uniqueId ? p.uniqueId : `ID`}
                     </p>
 
                     {/* Email Button */}
-                    <button className="bg-blue-700 text-white py-2 px-4 rounded-lg mt-4">
-                      {p.email}
-                    </button>
-
-                
-                    
+                    {/* <button className=" text-gray-700 border-2 shadow-lg hover:bg-gray-100 py-2 px-4 rounded-xl mt-4">
+                     View Profile
+                    </button> */}
+                    <Link to={`/user/profile/${p?._id}`}>
+                      <button className="bg-blue-700 text-white py-2 px-4 rounded-lg mt-4">
+                        View Profile
+                      </button>
+                    </Link>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="col-span-full text-center">
-                No project matched with the provided uniqueId.
+              <p className="col-span-full text-center pt-10">
+                {`No user matched with the provided uniqueId. `}
+                <span
+                  className="text-blue-500 hover:underline cursor-pointer"
+                  onClick={handleReset}
+                >
+                  Refresh
+                </span>
               </p>
             )}
           </div>
         )}
 
-        {!isFiltered && (
-          <div className="py-3 pagination flex items-center justify-center mt-4">
+        {isFiltered && loading === false && (
+          <div className="py-3 pagination flex items-center justify-center lg:mt-4">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className="px-4 py-2 bg-gray-200 rounded-lg mx-2"
             >
-            <FaRegArrowAltCircleLeft  className="text-2xl"  />
+              <FaRegArrowAltCircleLeft className="text-2xl" />
             </button>
             <span>
               Page {currentPage} of {totalPages}

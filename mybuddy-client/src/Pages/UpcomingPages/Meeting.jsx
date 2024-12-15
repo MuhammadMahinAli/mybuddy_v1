@@ -70,38 +70,7 @@ const Meeting = () => {
                   Today is <strong>{todaysDate}</strong>
                 </span>
               </div>
-              {/* <div className="flex rounded-lg">
-                <button
-                  onClick={() => setFilter("today")}
-                  className={`px-4 py-2 rounded-l-lg text-white font-semibold shadow-md text-xl ${
-                    filter === "today"
-                      ? "[background:linear-gradient(-84.24deg,#FF867A,#f7a7a0)]"
-                      : "[background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
-                  }`}
-                >
-                  Day
-                </button>
-                <button
-                  onClick={() => setFilter("weekly")}
-                  className={`px-4 py-1 text-xl text-white font-semibold shadow-md ${
-                    filter === "weekly"
-                      ? "[background:linear-gradient(-84.24deg,#FF867A,#f7a7a0)]"
-                      : "[background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
-                  }`}
-                >
-                  Week
-                </button>
-                <button
-                  onClick={() => setFilter("monthly")}
-                  className={`px-4 py-1 rounded-r-lg text-xl text-white font-semibold shadow-md ${
-                    filter === "monthly"
-                      ? "[background:linear-gradient(-84.24deg,#FF867A,#f7a7a0)]"
-                      : "[background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
-                  }`}
-                >
-                  Month
-                </button>
-              </div> */}
+             
               <ul className="flex justify-between items-center w-[200px] md:w-[300px]">
                 {/* Media Tab */}
                 <li

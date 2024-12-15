@@ -55,7 +55,7 @@ const Login = () => {
     setPasswordType("password");
   };
 
-  console.log("mrmber",formData);
+  console.log("mrmber",user);
 
 
   const handleSubmit = async (e) => {

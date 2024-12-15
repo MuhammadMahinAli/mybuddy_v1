@@ -9,6 +9,8 @@ const ReactComponent = ({ postId, user, theme }) => {
   const [reactionsData, setReactionsData] = useState({});
   const [userReaction, setUserReaction] = useState(null);
   const [reactionCountText, setReactionCountText] = useState('');
+  
+  console.log("oo",reactionsData, userReaction, reactionCountText);
 
   useEffect(() => {
     const fetchReactions = async () => {
@@ -37,6 +39,10 @@ const ReactComponent = ({ postId, user, theme }) => {
   const updateReactionCountText = () => {
     const reactionCounts = Object.values(reactionsData).flat();
     const userId = user?._id;
+    if (!userId) {
+      setReactionCountText('');
+      return; // Exit if user is null or undefined
+    }
 
     // Check if the user has reacted
     const hasUserReacted = reactionCounts.some(reaction => reaction.reactBy._id === userId);

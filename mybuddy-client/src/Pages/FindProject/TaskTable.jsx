@@ -372,7 +372,7 @@ const TaskTable = ({ tasks, setSelectedTasks,  selectedTasks, theme, setIsOpen, 
       </div>
       {/* Popup Modal */}
       {selectedTaskIndex !== null && (
-        <div className="fixed top-0 left-0 lg:left-20 flex justify-center items-center bg-black/25 bg-opacity-50 w-screen h-screen overflow-y-scroll">
+        <div className="z-50 fixed top-0 left-0 lg:left-20 flex justify-center items-center bg-black/25 bg-opacity-50 w-screen h-screen overflow-y-scroll">
           <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all md:w-[600px] 3xl:w-[800px] cursor-pointer">
             <IoIosCloseCircleOutline
               onClick={() => setSelectedTaskIndex(null)}

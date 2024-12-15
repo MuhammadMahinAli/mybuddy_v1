@@ -22,6 +22,7 @@ const AdminDekstopSidebar = ({
 
 }) => {
   const { singleUser } = useContext(AuthContext);
+const adminId = singleUser?.data?._id
   const userImage = singleUser?.data?.profilePic
     ? singleUser?.data?.profilePic
     : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
@@ -44,7 +45,7 @@ const AdminDekstopSidebar = ({
       >
         <img src="/dashboard1.svg" className="h-6" />
         <Link
-          to="/admin"
+          to={`/admin/${adminId}/`}
           className="lg:text-[18px] xl:text-[22px] font-semibold gray600 relative -left-5"
         >
           Dashboard
@@ -67,7 +68,8 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/admin/all-project"
+           
+              to={`/admin/${adminId}/all-project`}
               className={`${
                 openAllProject === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2 "
@@ -157,7 +159,7 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/admin/all-fund"
+              to={`/admin/${adminId}/all-fund`}
               className={`${
                 openAllFund === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -189,7 +191,7 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/admin/all-user"
+              to={`/admin/${adminId}/all-user`} 
               className={`${
                 openAllUser === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -226,7 +228,7 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/admin/tools"
+              to={`/admin/${adminId}/tools`}
               className={`${
                 openCreateTools === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -290,7 +292,7 @@ const AdminDekstopSidebar = ({
             ></div>
 
             <Link
-              to="/admin/all-tools"
+              to= {`/admin/${adminId}/all-tools`}
               className={`${
                 openAllTool === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -331,7 +333,7 @@ const AdminDekstopSidebar = ({
 
       {/* setting logout */}
       <div className="space-y-3">
-      <Link to='/admin/setting'
+      <Link to= {`/admin/${adminId}/setting`} 
           onClick={handleSetting}
           className={`${
             openSetting === true ? "bg-[#dce2ea]" : "bg-[#e4ecf7] py-4"

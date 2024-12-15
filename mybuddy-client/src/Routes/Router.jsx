@@ -48,6 +48,7 @@ import AdminTools from "../Pages/Admin/AdminCreateTools/AdminTools";
 import AdminAllTool from "../Pages/Admin/AdminAllTool/AdminAllTool";
 import GeneralMyTools from "../Pages/GeneralDashboard/GeneralMyTools/GeneralMyTools";
 import GeneralAllPost from "../Pages/GeneralDashboard/GeneralAllPost/GeneralAllPost";
+import LandingPage from "../Pages/Landing/LandingPage";
 
 
 const router = createBrowserRouter([
@@ -171,35 +172,35 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/admin",
+    path: "/admin/:id",
     element: <AdminLayout />,
     children: [
       {
-        path: "/admin/",
+        path: "/admin/:id",
         element: <AdminDashboard />,
       },
       {
-        path: "/admin/all-project",
+        path: "/admin/:id/all-project",
         element: <AdminAllProject />,
       },
       {
-        path: "/admin/all-user",
+        path: "/admin/:id/all-user",
         element: <AdminAllUser />,
       },
       {
-        path: "/admin/all-fund",
+        path: "/admin/:id/all-fund",
         element: <AdminAllFund />,
       },
       {
-        path: "/admin/setting",
+        path: "/admin/:id/setting",
         element: <AdminSetting />,
       },
       {
-        path: "/admin/tools",
+        path: "/admin/:id/tools",
         element: <AdminTools />,
       },
       {
-        path: "/admin/all-tools",
+        path: "/admin/:id/all-tools",
         element: <AdminAllTool />,
       },
     
@@ -259,6 +260,10 @@ const router = createBrowserRouter([
   {
     path: "/try",
     element: <Try />,
+  },
+  {
+    path: "/land",
+    element: <LandingPage />,
   },
   {
     path: "/test",

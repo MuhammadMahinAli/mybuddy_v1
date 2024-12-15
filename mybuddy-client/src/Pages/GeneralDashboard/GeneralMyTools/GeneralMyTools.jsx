@@ -4,6 +4,7 @@ import { useAddToolsMutation } from "../../../features/userTools/userToolsApi";
 import { AuthContext } from "../../../Context/UserContext";
 import { IoMdRemoveCircle } from "react-icons/io";
 import { IoAddCircle } from "react-icons/io5";
+import { HiOutlineExternalLink } from "react-icons/hi";
 
 const GeneralMyTools = () => {
   const [addTools] = useAddToolsMutation();
@@ -42,7 +43,6 @@ const GeneralMyTools = () => {
     }
   }, [userId]);
 
-
   useEffect(() => {
     // Initialize `myTools` from backend data if localStorage is empty
     if (!storedMyTools.length && currentTools?.length > 0) {
@@ -50,20 +50,22 @@ const GeneralMyTools = () => {
       localStorage.setItem(`myTools_${userId}`, JSON.stringify(currentTools));
       setStoredMyTools(currentTools);
     }
-  
+
     // Dynamically update `allTools` with new backend data, excluding `myTools`
     if (allToolsData?.length > 0) {
       const filteredAllTools = allToolsData.filter(
-        (tool) => !storedMyTools.some((myTool) => myTool._id === tool._id) &&
-                  !myTools.some((myTool) => myTool._id === tool._id) // Avoid duplicate tools
+        (tool) =>
+          !storedMyTools.some((myTool) => myTool._id === tool._id) &&
+          !myTools.some((myTool) => myTool._id === tool._id) // Avoid duplicate tools
       );
       setAllTools(filteredAllTools);
-      localStorage.setItem(`allTools_${userId}`, JSON.stringify(filteredAllTools));
+      localStorage.setItem(
+        `allTools_${userId}`,
+        JSON.stringify(filteredAllTools)
+      );
       setStoredAllTools(filteredAllTools);
     }
   }, [allToolsData, currentTools, storedMyTools, myTools, userId]);
-  
-  
 
   // Update `myToolsIds` when `myTools` changes
   useEffect(() => {
@@ -104,7 +106,10 @@ const GeneralMyTools = () => {
 
       // Update `localStorage`
       localStorage.setItem(`myTools_${userId}`, JSON.stringify(updatedMyTools));
-      localStorage.setItem(`allTools_${userId}`, JSON.stringify(updatedAllTools));
+      localStorage.setItem(
+        `allTools_${userId}`,
+        JSON.stringify(updatedAllTools)
+      );
 
       // Update `stored` states
       setStoredMyTools(updatedMyTools);
@@ -119,7 +124,10 @@ const GeneralMyTools = () => {
 
       // Update `localStorage`
       localStorage.setItem(`myTools_${userId}`, JSON.stringify(updatedMyTools));
-      localStorage.setItem(`allTools_${userId}`, JSON.stringify(updatedAllTools));
+      localStorage.setItem(
+        `allTools_${userId}`,
+        JSON.stringify(updatedAllTools)
+      );
 
       // Update `stored` states
       setStoredMyTools(updatedMyTools);
@@ -131,16 +139,21 @@ const GeneralMyTools = () => {
     <div className="py-5 xl:p-10 space-y-10">
       {/* My Tools Section */}
       <div>
-        { storedMyTools?.length !== 0 &&  <h2 className="text-2xl font-semibold mb-4">My Tools</h2> }
-        
+        {storedMyTools?.length !== 0 && (
+          <h2 className="text-2xl font-semibold mb-4">My Tools</h2>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {storedMyTools?.map((tool) => (
             <div
               key={tool._id}
               className="relative rounded-2xl p-3 space-y-3 bg-skyblue shadow-lg"
+            >
+              <button
+                onClick={() => handleToolAction(tool, true)}
+                className="absolute right-2"
               >
-                 <button      onClick={() => handleToolAction(tool, true)} className="absolute right-2">
-              <IoMdRemoveCircle className="text-2xl text-red-500" />
+                <IoMdRemoveCircle className="text-2xl text-red-500" />
               </button>
               <div>
                 <img
@@ -150,10 +163,12 @@ const GeneralMyTools = () => {
                 />
               </div>
               <div>
-                <h3 className="text-lg font-medium">{tool.toolName}</h3>
+                <div className="flex items-center space-x-2">
+                  <h3 className="text-lg font-medium">{tool.toolName}</h3>
+                  <HiOutlineExternalLink />
+                </div>
                 <p className="pt-2 text-sm text-gray-700">{tool.description}</p>
               </div>
-             
             </div>
           ))}
         </div>
@@ -168,8 +183,11 @@ const GeneralMyTools = () => {
               key={tool._id}
               className="relative rounded-2xl p-3 space-y-3 bg-skyblue shadow-lg"
             >
-               <button      onClick={() => handleToolAction(tool, false)} className="absolute right-2">
-               <IoAddCircle className="text-2xl text-blue-500" />
+              <button
+                onClick={() => handleToolAction(tool, false)}
+                className="absolute right-2"
+              >
+                <IoAddCircle className="text-2xl text-blue-500" />
               </button>
               <div>
                 <img
@@ -179,10 +197,18 @@ const GeneralMyTools = () => {
                 />
               </div>
               <div>
-                <h3 className="text-lg font-medium">{tool.toolName}</h3>
+                <div className="flex items-center space-x-2">
+                  <h3 className="text-lg font-medium">{tool.toolName}</h3>
+                  <a
+                    className="hover:underline"
+                    href={tool?.toolHomepage}
+                    target="blank"
+                  >
+                    <HiOutlineExternalLink className="text-xl text-gray-500 hover:text-blue-500 " />
+                  </a>
+                </div>
                 <p className="pt-2 text-sm text-gray-700">{tool.description}</p>
               </div>
-             
             </div>
           ))}
         </div>

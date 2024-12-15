@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import FeedIcon from "../../icons/FeedIcon";
 import HoveredText from "../../icons/HoveredText";
@@ -8,6 +8,7 @@ import ProjectIcon from "../../icons/ProjectIcon";
 import PeoplesIcon from "../../icons/PeoplesIcon";
 import VideoIcon from "../../icons/VideoIcon";
 import PropTypes from "prop-types";
+import { AuthContext } from "../../Context/UserContext";
 
 const MiniSidebar = ({ user, theme }) => {
   const [openFeed, setOpenFeed] = useState(false);
@@ -22,6 +23,15 @@ const MiniSidebar = ({ user, theme }) => {
   const isPageActive = (path) => {
     return location.pathname === path;
   };
+
+  //--
+
+  const{singleUser} = useContext(AuthContext);
+
+  const userEmail = singleUser
+    && singleUser?.data?.email;
+
+
   return (
     <ul
       className={`absolute hidden 3xl:block w-[80px]  ${
@@ -52,7 +62,7 @@ const MiniSidebar = ({ user, theme }) => {
           </p>
           {openFeed && (
             <div className="absolute left-16 top-1 ">
-              <HoveredText text={"Feed"} theme={theme} />
+              <HoveredText text={"Home"} theme={theme} />
             </div>
           )}
         </Link>
@@ -82,7 +92,7 @@ const MiniSidebar = ({ user, theme }) => {
         )}
       </li>
       <li className="relative sidebar-list">
-        <Link to={user ? "/dashboard" : "/"}>
+        <Link to={userEmail ===  "admin@gmail.com" ? `/admin/${user?._id}` : "/dashboard"}>
           <div
             className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
             onMouseEnter={() => setOpenDashboard(true)}

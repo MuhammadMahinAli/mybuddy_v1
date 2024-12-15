@@ -13,8 +13,13 @@ const AdminMobileSidebar = ({
   openAllFund,
   logout,
   userData,
+  handleCreateTools,
+  handleAllTools,
+  openAllTool,
+  openCreateTools
 }) => {
   const { singleUser } = useContext(AuthContext);
+  const adminId = singleUser?.data?._id
   const userImage = singleUser?.data?.profilePic
     ? singleUser?.data?.profilePic
     : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
@@ -57,7 +62,7 @@ const AdminMobileSidebar = ({
                   : "bg-[#e4ecf7]  py-3"
               } flex relative  items-center justify-center`}
             >
-              <Link to="/admin">
+              <Link to={`/admin/${adminId}/`}>
                 <img src="/dashboard1.svg" className="h-5" />
               </Link>
             </div>
@@ -86,7 +91,7 @@ const AdminMobileSidebar = ({
                   : "bg-[#e4ecf7]  py-3"
               } flex relative items-center justify-center`}
             >
-              <Link to="/admin/all-project">
+              <Link to={`/admin/${adminId}/all-project`}>
                 <img src="/project2.svg" className="h-5" />
               </Link>
             </div>
@@ -115,7 +120,7 @@ const AdminMobileSidebar = ({
                   : "bg-[#e4ecf7]  py-3"
               } flex relative  items-center justify-center`}
             >
-              <Link to="/admin/all-fund">
+              <Link to={`/admin/${adminId}/all-fund`}>
                 <img src="/rqst.svg" className="h-5" />
               </Link>
             </div>
@@ -144,7 +149,7 @@ const AdminMobileSidebar = ({
                   : "bg-[#e4ecf7]  py-3"
               } flex relative  items-center justify-center`}
             >
-              <Link to="/admin/all-user">
+              <Link to={`/admin/${adminId}/all-user`}>
                 <img src="/create-project.svg" className="h-6 md:h-5" />
               </Link>
             </div>
@@ -152,6 +157,64 @@ const AdminMobileSidebar = ({
             <div
               className={`${
                 openAllUser === true ? "block" : "hidden"
+              } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
+            ></div>
+          </li>
+          {/* add tool */}
+          <li
+            onClick={handleCreateTools}
+            className={`${
+              openAllUser === true ? "show-content pl-2" : "hide-content"
+            } border-b  cursor-pointer`}
+          >
+            {openCreateTools && (
+              <div className=" bg-[#e4ecf7] h-4 rounded-br-[60px]"></div>
+            )}
+
+            <div
+              className={`${
+                openCreateTools === true
+                  ? "bg-[#f3f6f8] rounded-[20px] py-2"
+                  : "bg-[#e4ecf7]  py-3"
+              } flex relative  items-center justify-center`}
+            >
+              <Link to={`/admin/${adminId}/tools`}>
+                <img src="/create-project.svg" className="h-6 md:h-5" />
+              </Link>
+            </div>
+
+            <div
+              className={`${
+                openCreateTools === true ? "block" : "hidden"
+              } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
+            ></div>
+          </li>
+          {/* all tool */}
+          <li
+            onClick={handleAllTools}
+            className={`${
+              openAllTool === true ? "show-content pl-2" : "hide-content"
+            } border-b  cursor-pointer`}
+          >
+            {openAllTool && (
+              <div className=" bg-[#e4ecf7] h-4 rounded-br-[60px]"></div>
+            )}
+
+            <div
+              className={`${
+                openAllTool === true
+                  ? "bg-[#f3f6f8] rounded-[20px] py-2"
+                  : "bg-[#e4ecf7]  py-3"
+              } flex relative  items-center justify-center`}
+            >
+              <Link to={`/admin/${adminId}/all-tools`}>
+                <img src="/create-project.svg" className="h-6 md:h-5" />
+              </Link>
+            </div>
+
+            <div
+              className={`${
+                openAllTool === true ? "block" : "hidden"
               } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
             ></div>
           </li>

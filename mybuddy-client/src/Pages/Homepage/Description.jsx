@@ -7,8 +7,8 @@ const Description = ({ text }) => {
     setIsExpanded(!isExpanded);
   };
 
-  const descriptionPreview = text.slice(0, 120);
-  const shouldShowToggle = text.length > 100;
+  const descriptionPreview = text.slice(0, 200);
+  const shouldShowToggle = text.length > 200;
 
   return (
     <div>

@@ -155,7 +155,7 @@ const ProjectDetails = () => {
               </div>
               {/* bor=ttom div */}
               {openDescription && (
-                <div className="pb-7" >
+                <div className="z-50 pb-7" >
                   <div className="relative flex justify-center lg:justify-start md: space-x-3 py-5 md:py-2 xl:py-2 xl:ml-8">
                     <img
                       onClick={() => setShowDocuments(!showDocuments)}

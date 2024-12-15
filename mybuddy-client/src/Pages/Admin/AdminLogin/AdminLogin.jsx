@@ -76,7 +76,7 @@ const AdminLogin = () => {
 
         // social
         addSocialInfo(infoData);
-        navigate("/admin");
+        navigate(`/home`); 
       } else if (response?.error?.data?.message === "Email is not verified") {
         // Handle unexpected response format
         Swal.fire({

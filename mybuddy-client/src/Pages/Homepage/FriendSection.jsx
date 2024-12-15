@@ -230,66 +230,70 @@ const FriendSection = ({ theme }) => {
             {friendTab && (
               <>
                 <ul className="space-y-6">
-                 
                   {allFriends?.slice(0, 3).map((item, index) => {
                     // Determine if the current user is `requestedBy` or `requestedTo`
                     const isRequestedTo = item?.requestedTo?._id === userId;
 
                     // Get the appropriate name based on the match
                     const displayName = isRequestedTo
-                    ? `${item?.requestedBy?.name?.firstName} ${item?.requestedBy?.name?.lastName}`
-                    : `${item?.requestedTo?.name?.firstName} ${item?.requestedTo?.name?.lastName}`;
-                  
+                      ? `${item?.requestedBy?.name?.firstName} ${item?.requestedBy?.name?.lastName}`
+                      : `${item?.requestedTo?.name?.firstName} ${item?.requestedTo?.name?.lastName}`;
 
                     // Get the appropriate profile picture
                     const profilePic = isRequestedTo
                       ? item?.requestedBy?.profilePic
                       : item?.requestedTo?.profilePic;
 
-                      const profileLink = isRequestedTo
-  ? `/user/profile/${item?.requestedBy?._id}`
-  : `/user/profile/${item?.requestedTo?._id}`;
+                    const profileLink = isRequestedTo
+                      ? `/user/profile/${item?.requestedBy?._id}`
+                      : `/user/profile/${item?.requestedTo?._id}`;
 
                     return (
-                      <li key={index} className="flex justify-between items-center">
-                   
-                      <div className="flex items-center space-x-3">
-                      <div className="flex flex-col justify-center items-center relative">
-                        <img
-                          src={ profilePic ? profilePic
-                              : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
-                          }
-                          className={` h-[54px] w-[54px]  rounded-full p-[6px] `}
-                        />
-                        <img
-                            className="w-16 lg:w-32 xl:w-36 absolute"
-                            src={theme === "light" ? darkBorder : whiteBorder}
-                            loading="lazy" alt="dashedborder"
-                          />
+                      <li
+                        key={index}
+                        className="flex justify-between items-center"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className="flex flex-col justify-center items-center relative">
+                            <img
+                              src={
+                                profilePic
+                                  ? profilePic
+                                  : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                              }
+                              className={` h-[54px] w-[54px]  rounded-full p-[6px] `}
+                            />
+                            <img
+                              className="w-16 lg:w-32 xl:w-36 absolute"
+                              src={theme === "light" ? darkBorder : whiteBorder}
+                              loading="lazy"
+                              alt="dashedborder"
+                            />
+                          </div>
+                          <div>
+                            <p
+                              className={`${
+                                theme === "light"
+                                  ? "text-gray-500"
+                                  : "text-white"
+                              } text-lg font-medium capitalize pt-b `}
+                            >
+                              {displayName}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p
-                            className={`${
-                              theme === "light" ? "text-gray-500" : "text-white"
-                            } text-lg font-medium capitalize pt-b `}
-                          >
-                          {displayName}
-                          </p>
-                        </div>
-                      </div>
-                      <Link  to={profileLink}>
-                    
-                        {theme === "light" ? (
-                          <button className="my-3  lg:px-4 lg:py-1 text-[16px] md:text-lg graish font-normal  rounded-[10px] border border-gray-500">
-                            Profile
-                          </button>
-                        ) : (
-                          <button className="popularBtn">
-                            <p>Profile</p>
-                          </button>
-                        )}
-                      </Link>
-                    </li>
+                        <Link to={profileLink}>
+                          {theme === "light" ? (
+                            <button className="my-3  lg:px-4 lg:py-1 text-[16px] md:text-lg graish font-normal  rounded-[10px] border border-gray-500">
+                              Profile
+                            </button>
+                          ) : (
+                            <button className="popularBtn">
+                              <p>Profile</p>
+                            </button>
+                          )}
+                        </Link>
+                      </li>
                     );
                   })}
                 </ul>

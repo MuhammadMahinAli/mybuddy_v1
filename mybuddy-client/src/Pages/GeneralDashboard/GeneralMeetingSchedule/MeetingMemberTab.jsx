@@ -61,10 +61,10 @@ const MeetingMemberTab = () => {
 
   return (
     <div className="px-5"> 
-       <h2 className="text-2xl font-bold text-gray-700 my-6">
+       <h2 className="xl:text-2xl font-bold text-gray-700 my-6">
             YOU NEED TO ATTEND {meetingAsMembers?.length} MEETINGS
           </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
      
           {meetingAsMembers?.map((meeting, index) => (
             <div key={index} className="bg-white shadow-md rounded-lg p-4">
@@ -79,7 +79,10 @@ const MeetingMemberTab = () => {
                   className="w-10 h-10 rounded-full"
                 />
                 <div className="ml-4">
-                  <h3 className="text-lg font-semibold capitalize">
+                  <h3 className="text-lg font-semibold capitalize lg:hidden">
+                    {meeting?.title?.length > 7 ? meeting?.title.slice(0,7)  + "..." :  meeting?.title}
+                  </h3>
+                  <h3 className="hidden text-lg font-semibold capitalize lg:block ">
                     {meeting?.title}
                   </h3>
                   <span className="text-base">

@@ -79,7 +79,7 @@ const AdminTools = () => {
       <p className="block text-gray-700 mb-2 text-xl font-bold pb-4">
         Add A New Tool
       </p>
-      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Image Selection */}
         <div className="flex flex-col items-center">
           <label

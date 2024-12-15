@@ -58,19 +58,19 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
         {/* PDF one */}
         <div className="relative">
           {previewImage.imageOne ? (
-            <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] box-border border-2 border-gray-100 custom-shadow">
-              <img className="h-24 w-6/12 rounded-md" src={pdfLogo} alt="PDF preview" />
+            <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
+              <img className="h-20 lg:h-28 xl:h-32 3xl:h-40  w-5/12 lg:w-7/12 xl:w-5/12 md:w-6/12 3xl:w-6/12 rounded-md" src={pdfLogo} alt="PDF preview" />
             </div>
           ) : (
             <label htmlFor="pdf-one">
-              <div className="rounded-lg h-[110px] w-[200px] box-border border-2 border-gray-100 custom-shadow bg-white">
+              <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
                 {loading.imageOne ? (
                   <span className="loading loading-spinner loading-xs"></span>
                 ) : (
-                  <div className="flex flex-col justify-center items-center">
-                    <img src={pdf} className="h-8" alt="Upload PDF" />
-                    <p className="text-[10px] font-normal capitalize">Drag & drop a PDF or</p>
-                    <p className="text-[10px] font-medium capitalize text-blue-500">browse</p>
+                  <div className="flex flex-col justify-center items-center absolute top-8 lg:top-10 xl:top-16 2xl:top-14 3xl:top-16 w-full">
+                    <img src={pdf} className="h-8 lg:h-10" alt="Upload PDF" />
+                    <p className="text-[10px] md:text-[12px] font-normal capitalize">Drag & drop a PDF or</p>
+                    <p className="text-[10px] md:text-[12px] font-medium capitalize text-blue-500">browse</p>
                   </div>
                 )}
               </div>
@@ -87,19 +87,19 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
         </div>
         <div className="relative">
           {previewImage.imageTwo ? (
-            <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] box-border border-2 border-gray-100 custom-shadow">
-              <img className="h-24 w-6/12 rounded-md" src={pdfLogo} alt="PDF preview" />
+            <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
+              <img className="h-20 lg:h-28 xl:h-32 3xl:h-36  w-5/12 lg:w-7/12 xl:w-5/12 md:w-6/12 3xl:w-5/12 rounded-md" src={pdfLogo} alt="PDF preview" />
             </div>
           ) : (
             <label htmlFor="pdf-two">
-              <div className="rounded-lg h-[110px] w-[200px] box-border border-2 border-gray-100 custom-shadow bg-white">
+              <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
                 {loading.imageTwo ? (
                   <span className="loading loading-spinner loading-xs"></span>
                 ) : (
-                  <div className="flex flex-col justify-center items-center">
-                    <img src={pdf} className="h-8" alt="Upload PDF" />
+                  <div className="flex flex-col justify-center items-center absolute top-8 lg:top-10 xl:top-16 2xl:top-14 3xl:top-16 w-full">
+                    {/* <img src={pdf} className="h-8" alt="Upload PDF" />
                     <p className="text-[10px] font-normal capitalize">Drag & drop a PDF or</p>
-                    <p className="text-[10px] font-medium capitalize text-blue-500">browse</p>
+                    <p className="text-[10px] font-medium capitalize text-blue-500">browse</p> */}
                   </div>
                 )}
               </div>

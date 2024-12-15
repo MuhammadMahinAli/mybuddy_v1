@@ -20,6 +20,8 @@ const UserProfileSocialTabVM = ({ allSocialInfo }) => {
   const currentOrcid = allSocialInfo?.orcid;
   const currentTwitter = allSocialInfo?.twitter;
   const currentGithub = allSocialInfo?.github;
+  const currentResearchGate = allSocialInfo?.researchGate;
+  const currentGoogleScholar = allSocialInfo?.googleScholar;
   const currentLinkedIn = allSocialInfo?.linkedIn;
   const currentInstagram = allSocialInfo?.instagram;
   const currentPersonalWebsite = allSocialInfo?.personalWebsite;
@@ -98,6 +100,78 @@ const UserProfileSocialTabVM = ({ allSocialInfo }) => {
                     } m-[1px] pt-2 pl-2 md:pt-4  rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
                   >
                     {currentOrcid}
+                  </p>
+                </div>
+              </div>
+            )}
+          {/* 2 research gate */}
+          {currentResearchGate && (
+              <div>
+                <label
+                  className={`${
+                    theme === "light" ? "graish" : "text-white"
+                  } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
+                >
+                  Research Gate
+                </label>
+                <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
+                  <div
+                    className={`${
+                      theme !== "light" ? "bg-[#fff]" : "bg-[#fff]"
+                    }  rounded-l-lg  flex justify-center items-center h-9 w-10 md:h-14 md:w-14`}
+                  >
+                    <img
+                      className="h-[40px]"
+                      src="/rg.png"
+                      loading="lazy"
+                      alt=""
+                    />
+                  </div>
+
+                  <p
+                    className={`${
+                      theme === "light"
+                        ? "bg-[#caf4ee] graish"
+                        : "bg-[#204057] text-white"
+                    } m-[1px] pt-2 pl-2 md:pt-4  rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                  >
+                    {currentResearchGate}
+                  </p>
+                </div>
+              </div>
+            )}
+            {/* 3 google research */}
+            {currentGoogleScholar && (
+              <div>
+                <label
+                  className={`${
+                    theme === "light" ? "graish" : "text-white"
+                  } text-sm md:text-[18px] 3xl:text-[20px] font-semibold`}
+                >
+                  Google Scholar
+                </label>
+                <div className="flex justify-start items-center cursor-pointer -space-x-1 h-10 md:h-20 pt-1">
+                  <div
+                    className={`${
+                      theme !== "light" ? "bg-[#fff]" : "bg-[#fff]"
+                    }  rounded-l-lg  flex justify-center items-center h-9 w-10 md:h-14 md:w-14`}
+                  >
+                    <img
+                      className="h-[38px]"
+                      src="/google-scholar-hd-logo.png"
+                      loading="lazy"
+                      alt=""
+                    />
+                  </div>
+
+                  <p
+                    className={`${
+                      theme === "light"
+                        ? "bg-[#cae4f4] graish"
+                        : "bg-[#204057] text-white"
+                    } m-[1px] pt-2 pl-2 md:pt-4  rounded-r-lg w-full  md:px-3 text-[15px] md:text-[18px] xl:text-[20px] font-semibold text-start h-[37px] md:h-[57px]`}
+                  >
+                    {currentGoogleScholar}
                   </p>
                 </div>
               </div>

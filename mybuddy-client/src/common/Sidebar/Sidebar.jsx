@@ -8,8 +8,15 @@ import ResearcherIcon from "../../icons/ResearcherIcon";
 import Hamburger from "../../icons/Hamburger";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/UserContext";
 
 const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
+
+  const{singleUser} = useContext(AuthContext);
+
+  const userEmail = singleUser
+    && singleUser?.data?.email;
  
   return (
     <div>
@@ -84,7 +91,7 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                       theme === "light" ? "sidebar-text" : ""
                     } text-[18px] font-semibold`}
                   >
-                    Feed
+                    Home
                   </p>
                 </Link>
               </li>
@@ -116,7 +123,7 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
               <li className="sidebar-list">
                 <Link
                    
-                  to={user ? "/dashboard" : "/"}
+                  to={userEmail ===  "admin@gmail.com" ? `/admin/${user?._id}` : "/dashboard"}
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">

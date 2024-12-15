@@ -19,11 +19,13 @@ import { sendPasswordResetEmail } from "../../../utils/forgetPassword.js";
 export const generateUniqueId = () => {
   return Math.floor(100000 + Math.random() * 900000).toString(); // Generates a 6-digit number
 };
-
+console.log(generateUniqueId());
 export const createMemberService = async (userInfo) => {
   const verificationToken = crypto.randomBytes(32).toString("hex");
   userInfo.verificationToken = verificationToken;
   userInfo.uniqueId = generateUniqueId();
+
+  console.log("user", userInfo);
   const result = (await Member.create(userInfo)).toObject();
   if (!result) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create user");

@@ -10,12 +10,17 @@ const AdminLayout = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  if (!user) {
-    navigate("/");
+  if (!user?._id) {
+    navigate("/only-for-admin-login-route");
     return;
   }
 
+  console.log('uu', user);
+
   return (
+    <>
+    { 
+    user?.email === 'admin@gmail.com' &&
     <>
       {!authChecked ? (
         <div>Checking Authentication....</div>
@@ -30,6 +35,8 @@ const AdminLayout = () => {
           </div>
         </div>
       )}
+    </>
+    }
     </>
   );
 };
