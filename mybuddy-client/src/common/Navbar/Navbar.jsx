@@ -56,7 +56,7 @@ const Navbar = ({ darkMode, toggleSidebar, openSidebar, theme }) => {
         icon: "success",
         text: "Logged out successfully!",
       });
-      navigate("/");
+      navigate("/login");
     }
   };
 
@@ -105,7 +105,7 @@ const Navbar = ({ darkMode, toggleSidebar, openSidebar, theme }) => {
           >
             <li className="absolute top-1-left-0">
               {openSidebar === false && (
-                <Link to={singleUser ? "/home" : "/"}>
+                <Link to={singleUser ? "/" : "/login"}>
                   <img
                     className="h-16 w-16 lg:p-2  rounded-lg"
                     src="/logo.png"

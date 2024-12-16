@@ -11,7 +11,7 @@ const GeneralLayout = () => {
   const navigate = useNavigate();
 
   if (!user) {
-    navigate("/");
+    navigate("/login");
     return;
   }
 

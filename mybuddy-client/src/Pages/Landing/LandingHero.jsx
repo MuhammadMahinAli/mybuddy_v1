@@ -1,7 +1,41 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 const LandingHero = () => {
+   const [openDashboard, setOpenDashboard] = useState(true);
+   const [openFeed, setOpenFeed] = useState(false);
+   const [openProject, setOpenProject] = useState(false);
+   const [openManage, setOpenManage] = useState(false);
+
+ const toggleDashboard = ()=>{
+   setOpenDashboard(true);
+   setOpenFeed(false);
+   setOpenManage(false);
+   setOpenProject(false);
+ }
+ const toggleFeed = ()=>{
+   setOpenDashboard(false);
+   setOpenFeed(true);
+   setOpenManage(false);
+   setOpenProject(false);
+ }
+ const toggleProject = ()=>{
+   setOpenDashboard(false);
+   setOpenFeed(false);
+   setOpenManage(false);
+   setOpenProject(true);
+ }
+ const toggleManage = ()=>{
+   setOpenDashboard(false);
+   setOpenFeed(false);
+   setOpenManage(true);
+   setOpenProject(false);
+ }
+ const { user } = useSelector((state) => state.auth);
   return (
     <div className="flex flex-col justify-center items-center w-screen">
-      <div className="flex flex-col justify-center items-center -space-y-16 lg:space-y-3  lg:pt-20 lg:pb-10">
+      <div className="flex flex-col justify-center items-center -space-y-16 lg:space-y-3 pt-5 md:pt-10 lg:pt-20 lg:pb-10">
         <h1 className="m-0 text-white text-2xl lg:text-5xl  relative text-inherit leading-[100px] capitalize font-bold">
           empower your
         </h1>
@@ -12,11 +46,11 @@ const LandingHero = () => {
           journey
         </h1>
       </div>
-      <button className=" px-5 py-2 cursor-pointer bg-[transparent] shadow-[0px_5px_5px_rgba(46,_213,_115,_0.15)] rounded-lg [background:linear-gradient(-84.24deg,_#2c68ff,_#87a9ff)] flex flex-row items-center justify-center flex-wrap content-center">
+      <Link to={user ? "/home" : "/login"} className=" px-5 py-2 cursor-pointer bg-[transparent] shadow-[0px_5px_5px_rgba(46,_213,_115,_0.15)] rounded-lg [background:linear-gradient(-84.24deg,_#2c68ff,_#87a9ff)] flex flex-row items-center justify-center flex-wrap content-center">
         <b className="relative text-white xl:text-xl capitalize font-nunito text-primary-contrast text-left">
           get started
         </b>
-      </button>
+      </Link>
       <div className=" hidden  my-10 md:flex flex-col items-start justify-start pt-1 px-1 pb-[5px] box-border relative gap-2.5 max-w-full text-left text-lg text-lightslategray-200">
         <img
           className="w-full h-full absolute !m-[0] top-[0%] right-[0%] bottom-[0%] left-[0%] max-w-full overflow-hidden max-h-full object-cover"

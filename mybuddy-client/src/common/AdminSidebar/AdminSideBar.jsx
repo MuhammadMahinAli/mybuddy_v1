@@ -119,7 +119,7 @@ setUserData(singleUser);
           icon: "success",
           text: "Logged out successfully!",
         });
-        navigate("/");
+        navigate("/login");
       }
     };
   return (

@@ -140,7 +140,7 @@ const Posts = ({ theme }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
-      navigate("/");
+      navigate("/login");
       return;
     }
     if (!formData.description) {

@@ -364,7 +364,7 @@ const RightSidebar = ({ theme }) => {
           <div className="flex flex-col justify-center items-center py-4">
             <p className="text-xl font-bold pt-3 ">Browse Our</p>
             <p className="text-lg font-normal pb-3">Projects</p>
-            <a href={singleUser ? "/dashboard/create-projects" : "/"}>
+            <a href={singleUser ? "/dashboard/create-projects" : "/login"}>
               {theme === "light" ? (
                 <button className="px-8 py-2 text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)]">
                   Post Project

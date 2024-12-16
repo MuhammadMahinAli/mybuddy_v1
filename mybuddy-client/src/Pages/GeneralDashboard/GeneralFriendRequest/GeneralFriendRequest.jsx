@@ -41,6 +41,7 @@ const GeneralFriendRequest = () => {
                 title: "Well done !",
                 text: "You have accepted the request successfully!",
               });
+             
               setTimeout(() => {
                 window.location.reload();
               }, 2500);

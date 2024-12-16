@@ -159,7 +159,7 @@ const FindProject = () => {
   const handleJoinClick = (project) => {
     console.log(project);
     if (!userId) {
-      navigate("/");
+      navigate("/login");
       console.log("Redirecting due to missing userId:", selectedTasks);
     } else if (selectedTasks?.length === 0) {
       Swal.fire({

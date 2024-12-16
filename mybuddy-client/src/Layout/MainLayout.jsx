@@ -32,7 +32,7 @@ const MainLayout = () => {
   }, []);
 
   if (!user) {
-    navigate("/");
+    navigate("/login");
     return;
   }
   

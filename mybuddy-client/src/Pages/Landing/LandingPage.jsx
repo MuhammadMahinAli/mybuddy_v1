@@ -1,5 +1,6 @@
 // import { useState } from "react";
 
+import { useSelector } from "react-redux";
 import LandingCollaboration from "./LandingCollaboration";
 import LandingFeature from "./LandingFeature";
 import LandingFooter from "./LandingFooter";
@@ -8,6 +9,9 @@ import LandingHero from "./LandingHero";
 import LandingHowWork from "./LandingHowWork";
 import LandingNav from "./LandingNav";
 import LandingTouchDiff from "./LandingTouchDiff";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/UserContext";
 
 // const LandingPage = () => {
 //   const [openDashboard, setOpenDashboard] = useState(true);
@@ -82,6 +86,8 @@ import LandingTouchDiff from "./LandingTouchDiff";
 // export default LandingPage;
 
 const LandingPage = () => {
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <div className="relative">
       <div
@@ -90,7 +96,7 @@ const LandingPage = () => {
         <div className="flex-1 flex flex-row items-center justify-start pt-9  pb-[7px] box-border bg-[url('/public/full-kanding-page@3x.png')] bg-cover bg-no-repeat bg-[top]  ">
           <div className="">
             {/* nav */}
-            <LandingNav/>
+            <LandingNav />
             {/* hero */}
 
             <LandingHero />
@@ -106,22 +112,19 @@ const LandingPage = () => {
       <LandingFeature />
       <div className="flex flex-row items-center justify-center pb-8">
         <button className="  px-5 py-2 cursor-pointer bg-[transparent] shadow-[0px_5px_5px_rgba(46,_213,_115,_0.15)] rounded-lg [background:linear-gradient(-84.24deg,_#2c68ff,_#87a9ff)]  flex-wrap content-center">
-          <b className="relative text-white xl:text-xl capitalize font-nunito text-primary-contrast text-left">
+          <Link to={user ? "/home" : "/login"} className="relative text-white xl:text-xl capitalize font-nunito text-primary-contrast text-left">
             get started
-          </b>
+            </Link>
         </button>
       </div>
       {/* how it work */}
       <LandingHowWork />
       {/* touch diff */}
       <LandingTouchDiff />
-      <LandingGetReady />
+      {/* <LandingGetReady /> */}
       {/* footer */}
-      <section
-        className={` self-stretch flex flex-col items-start justify-start pt-11 px-56  box-border gap-[111.2px] bg-[url('/public/footer@3x.png')] bg-cover bg-no-repeat bg-[top] shrink-0 text-center `}
-      >
-        <LandingFooter />
-      </section>
+
+      <LandingFooter />
     </div>
   );
 };

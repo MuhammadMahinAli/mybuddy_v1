@@ -66,7 +66,7 @@ const ResetPassword = () => {
         icon: "error",
         text: "Reset link has expired. Please request a new one.",
       });
-      navigate("/");
+      navigate("/login");
     }
   }, [timeRemaining]);
 
@@ -115,7 +115,7 @@ const ResetPassword = () => {
           icon: "success",
           text: "Password has been reset successfully!",
         });
-        navigate("/");
+        navigate("/login");
       })
       .catch((error) => {
         setIsLoading(false);

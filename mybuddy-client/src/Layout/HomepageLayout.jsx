@@ -52,7 +52,7 @@ const HomepageLayout = () => {
       if (user) {
         navigate("/home");
       } else {
-        navigate("/");
+        navigate("/login");
       }
     }, 5000); // 5-second delay
 

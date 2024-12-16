@@ -45,7 +45,7 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                   openSidebar === false && "hidden"
                 }`}
               >
-                <Link to="/home">
+                <Link to="/">
                   <img
                     className="h-[32px] w-[30px] md:h-12 md:w-[46px] rounded-lg"
                     src="/logo.png"

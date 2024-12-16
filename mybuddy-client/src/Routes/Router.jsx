@@ -49,9 +49,23 @@ import AdminAllTool from "../Pages/Admin/AdminAllTool/AdminAllTool";
 import GeneralMyTools from "../Pages/GeneralDashboard/GeneralMyTools/GeneralMyTools";
 import GeneralAllPost from "../Pages/GeneralDashboard/GeneralAllPost/GeneralAllPost";
 import LandingPage from "../Pages/Landing/LandingPage";
+import Help from "../Pages/Help/Help";
+import LandingLayout from "../Layout/LandingLayout";
 
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingLayout />,
+    children: [
+      {
+        path: "/",
+        element: <LandingPage /> ,
+      },
+
+      
+    ],
+  },
   {
     path: "/home",
     element: <HomepageLayout />,
@@ -218,7 +232,7 @@ const router = createBrowserRouter([
     element: <Sign />,
   },
   {
-    path: "/",
+    path: "/login",
     element: <Login />,
   },
   {
@@ -261,9 +275,10 @@ const router = createBrowserRouter([
     path: "/try",
     element: <Try />,
   },
+
   {
-    path: "/land",
-    element: <LandingPage />,
+    path: "/help",
+    element: <Help/>,
   },
   {
     path: "/test",
