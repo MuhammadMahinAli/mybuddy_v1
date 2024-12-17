@@ -16,7 +16,7 @@ const AdminLogin = () => {
   const navigate = useNavigate();
   const [isLoader, setIsLoader] = useState(false);
   const [formData, setFormData] = useState({
-    email: "admin@gmail.com",
+    email: "researchbdy@gmail.com",
     password: "",
   });
 
@@ -206,7 +206,7 @@ const AdminLogin = () => {
               type="email"
               id="email"
               name="email"
-             value="admin@gmail.com"
+             value="researchbdy@gmail.com"
              className="h-12 w-11/12 outline-none  p-4"
             />
             <MdOutlineEmail className="text-gray-500 text-xl" />

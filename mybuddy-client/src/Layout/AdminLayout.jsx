@@ -20,7 +20,7 @@ const AdminLayout = () => {
   return (
     <>
     { 
-    user?.email === 'admin@gmail.com' &&
+    user?.email === 'researchbdy@gmail.com' &&
     <>
       {!authChecked ? (
         <div>Checking Authentication....</div>

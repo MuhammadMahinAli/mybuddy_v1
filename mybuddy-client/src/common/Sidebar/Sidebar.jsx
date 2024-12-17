@@ -123,7 +123,7 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
               <li className="sidebar-list">
                 <Link
                    
-                  to={userEmail ===  "admin@gmail.com" ? `/admin/${user?._id}` : "/dashboard"}
+                  to={userEmail ===  "researchbdy@gmail.com" ? `/admin/${user?._id}` : "/dashboard"}
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer [border:none] box1">

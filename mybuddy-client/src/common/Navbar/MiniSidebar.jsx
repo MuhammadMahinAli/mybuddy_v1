@@ -92,7 +92,7 @@ const MiniSidebar = ({ user, theme }) => {
         )}
       </li>
       <li className="relative sidebar-list">
-        <Link to={userEmail ===  "admin@gmail.com" ? `/admin/${user?._id}` : "/dashboard"}>
+        <Link to={userEmail ===  "researchbdy@gmail.com" ? `/admin/${user?._id}` : "/dashboard"}>
           <div
             className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
             onMouseEnter={() => setOpenDashboard(true)}

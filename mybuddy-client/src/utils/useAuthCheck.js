@@ -67,7 +67,7 @@ export const useAuthCheck = () => {
         } else {
           // If auth is updated, log in and load the user's reactions
           dispatch(userLoggedIn({ accessToken: updatedAuth?.accessToken, user: updatedAuth?.user }));
-          const updatedPostReact = JSON.parse(localStorage.getItem(`postReact_${updatedAuth.user._id}`));
+          const updatedPostReact = JSON.parse(localStorage.getItem(`postReact_${updatedAuth?.user?._id}`));
           if (updatedPostReact) {
             dispatch(updatePostReact(updatedPostReact));
           }
@@ -86,7 +86,7 @@ export const useAuthCheck = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem("auth");
     // localStorage.removeItem(`reactions`);
-    navigate("/");
+    navigate("/login");
   };
 
   return { logout, authChecked };

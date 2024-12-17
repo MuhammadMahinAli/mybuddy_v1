@@ -122,77 +122,7 @@ const LandingFooter = () => {
           </div>
         </div>
       </div>
-      {/* <div className="pt-6 self-stretch flex flex-row items-center justify-between shrink-0 gap-5 text-left text-sm text-gray-1400 lg:flex-wrap">
-            <div className="w-[257px] flex flex-col items-start justify-start text-4xl text-gray-900">
-              <div className="flex flex-row items-center justify-start">
-                <img
-                  className="h-[55.2px] w-[55.2px] relative object-cover"
-                  loading="lazy"
-                  alt=""
-                  src="/image-2@2x.png"
-                />
-                <b className="relative capitalize text-xl">
-                  research buddy
-                </b>
-              </div>
-              <div className="relative text-base capitalize text-dimgray-300">
-                Empowering Researchers To Achieve More. Simplify Research
-                Collaboration, Manage Tools, And Unlock Your Full Potential.
-                Join Us Today To Revolutionize The Way You Conduct Research.
-              </div>
-            </div>
-            <div className="w-[118px] flex flex-col items-start justify-start py-0 pl-0 pr-0.5 box-border gap-2.5">
-              <b className="relative text-mid capitalize text-dimgray-200">
-                Important Links
-              </b>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
-                home
-              </a>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
-                Project
-              </a>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
-                Help
-              </a>
-              <div className="self-stretch relative capitalize">Contact</div>
-            </div>
-            <div className="w-[118px] flex flex-col items-start justify-start py-0 pl-0 pr-0.5 box-border gap-[9px]">
-              <b className="self-stretch relative text-mid capitalize text-dimgray-200">
-                community
-              </b>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
-                news feed
-              </a>
-              <div className="self-stretch relative capitalize">profile</div>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
-                dashboard
-              </a>
-              <div className="self-stretch relative capitalize">friends</div>
-            </div>
-            <div className="w-[118px] flex flex-col items-start justify-start py-0 pl-0 pr-0.5 box-border gap-[9px]">
-              <b className="self-stretch relative text-mid capitalize text-dimgray-200">
-                followers
-              </b>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
-                Facebook
-              </a>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
-                twitter
-              </a>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
-                Linkedin
-              </a>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
-                YouTube
-              </a>
-            </div>
-          </div> */}
-
-      {/* <div className="flex flex-row items-center justify-center py-10 text-center text-sm text-dimgray-100 mq450:pl-5 mq450:pr-5 mq450:box-border mq1050:pl-32 mq1050:pr-[132px] mq1050:box-border">
-          <div className="relative capitalize pt-7">
-            Copy© research buddy 2021. All Rights Reserved
-          </div>
-        </div> */}
+     
     </div>
   );
 };

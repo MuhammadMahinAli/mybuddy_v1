@@ -3,6 +3,7 @@ import dash from "../../../assets/project1.png";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import GeneralAddProject from "./GeneralAddProject";
+import { FaPen } from "react-icons/fa";
 
 const AddProject = () => {
   let [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ const AddProject = () => {
     {
       _id: 1,
       title: "Create a New Project",
-      paragraph: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+      paragraph: "Create, assign, and track tasks with ease to ensure timely project completion.",
       image: dash,
       route: `/dashboard/create-project`,
     },
@@ -32,8 +33,8 @@ const AddProject = () => {
       {/* left */}
       <div className="w-full md:w-6/12">
         <div className="md:flex hidden items-center space-x-4">
-          <div className="flex items-center justify-center cursor-pointer [border:none] p-0 bg-[#fff] rounded-xl shadow-[2px_2px_5px_2px_rgba(155,_155,_155,_0.3)] filter:blur(2px) backdrop-filter:blur(20px) w-12 h-[42px]">
-            {/* <img className=" h-8 object-cover" alt="" src={edit} /> */}
+          <div className="flex items-center justify-center cursor-pointer [border:none] p-0 bg-[#fff] rounded-md shadow-[2px_2px_5px_2px_rgba(155,_155,_155,_0.3)] filter:blur(2px) backdrop-filter:blur(20px) w-8 h-[32px]">
+          <FaPen className="text-xl" />
           </div>
           <h1 className="text-3xl font-semibold">Create</h1>
         </div>

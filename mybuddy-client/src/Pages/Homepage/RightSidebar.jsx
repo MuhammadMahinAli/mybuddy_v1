@@ -281,7 +281,7 @@ const RightSidebar = ({ theme }) => {
                   <img
                     className={`${
                       link.value === currentGithub && "h-[55px]"
-                    } h-12`}
+                    } h-12 rounded-full`}
                     src={link.icon}
                     loading="lazy"
                     alt={link.alt}

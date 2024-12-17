@@ -124,7 +124,7 @@ export const resendEmailService = async (email) => {
 //   return users;
 // };
 export const getAllMemberService = async () => {
-  const users = await Member.find({ email: { $ne: "admin@gmail.com" } }); // Exclude "admin@gmail.com"
+  const users = await Member.find({ email: { $ne: "researchbdy@gmail.com" } }); // Exclude "researchbdy@gmail.com"
   return users;
 };
 

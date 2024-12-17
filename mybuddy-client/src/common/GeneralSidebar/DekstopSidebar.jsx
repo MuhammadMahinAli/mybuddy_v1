@@ -173,7 +173,7 @@ const DekstopSidebar = ({
                   : "bg-[#e4ecf7] py-3 border-b border-white"
               } flex space-x-3 items-center pl-3 lg:pr-14`}
             >
-              <img src="/video.svg" className="h-4" />
+              <img src="/createProject.svg" className="h-6" />
               <p className="lg:text-[18px] xl:text-[22px] font-medium text-xl gray600 xl:pr-5">
                 Create Project
               </p>
@@ -275,7 +275,7 @@ const DekstopSidebar = ({
                   : "bg-[#e4ecf7] border-b border-white py-3"
               } flex relative space-x-4  items-center pl-3 `}
             >
-              <img src="/rqst2.svg" className="h-6" />
+              <img src="/allPost.svg" className="h-6" />
               <p className="lg:text-[18px] xl:text-[22px] font-medium gray600">
                 All Post
               </p>
@@ -308,7 +308,7 @@ const DekstopSidebar = ({
                   : "bg-[#e4ecf7] border-b border-white py-3"
               } flex relative space-x-4  items-center pl-3 `}
             >
-              <img src="/rqst2.svg" className="h-6" />
+              <img src="/myTool.svg" className="h-9" />
               <p className="lg:text-[18px] xl:text-[22px] font-medium gray600">
                 My Tools
               </p>

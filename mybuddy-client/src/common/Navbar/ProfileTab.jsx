@@ -106,7 +106,7 @@ const ProfileTab = ({ openProfile, logout }) => {
             </Link>
           </li>
           <li className="text-[11px] lg:text-[13px] text-gray-500 font-medium capitalize">
-          <Link to={userEmail ===  "admin@gmail.com" ? `/admin/${user?._id}` : "/dashboard"}>
+          <Link to={userEmail ===  "researchbdy@gmail.com" ? `/admin/${user?._id}` : "/dashboard"}>
             dashboard
             </Link>
           </li>

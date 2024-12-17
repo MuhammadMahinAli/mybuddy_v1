@@ -131,14 +131,9 @@ const Friends = () => {
             );
           })
         ) : (
-          <p className="col-span-full text-center pt-10">
-            {`No user matched with the provided uniqueId. `}
-            <span
-              className="text-blue-500 hover:underline cursor-pointer"
-              //onClick={handleReset}
-            >
-              Refresh
-            </span>
+          <p className="text-sm md:text-lg col-span-full text-center pt-10">
+            {`You don't have any friend yet. `}
+         
           </p>
         )}
       </div>

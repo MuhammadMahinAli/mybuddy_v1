@@ -543,7 +543,7 @@ const FindProject = () => {
                       {openDescriptionIndex !== i && <IoIosArrowDown />}
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     className={`${
                       theme === "light" ? "graish" : "text-white"
                     } flex  justify-between items-center border-b pb-3`}
@@ -557,12 +557,12 @@ const FindProject = () => {
                         2 Comments, 5 Shares
                       </p>
                     </div>
-                  </div>
+                  </div> */}
 
                   <ul
                     className={`${
                       theme === "light" ? "graish" : "text-white"
-                    } flex space-x-3 md:space-x-6 pt-5`}
+                    } flex space-x-3 md:space-x-6 pt-5 border-t `}
                   >
                     <li className="flex items-center space-x-2">
                       <LikeIcon theme={theme} />
