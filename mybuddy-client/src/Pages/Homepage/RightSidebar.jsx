@@ -248,12 +248,12 @@ const RightSidebar = ({ theme }) => {
                 alt="dashedborder"
               />
 
-              <img
+              {/* <img
                 className="w-6 -mt-5 z-10"
                 src={active}
                 loading="lazy"
                 alt="active"
-              />
+              /> */}
             </div>
             <p
               className={`${

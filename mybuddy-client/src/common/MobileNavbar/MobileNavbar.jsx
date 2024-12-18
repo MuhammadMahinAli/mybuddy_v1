@@ -25,10 +25,10 @@ const MobileNavbar = ({
                 : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
             }
             loading="lazy" alt=""
-            className="w-8 h-8 md:w-12 md:h-12 xl:w-12 xl:h-12 p-[3px] mx-auto rounded-full aspect-square"
+            className="w-10 h-10 md:w-12 md:h-12 xl:w-12 xl:h-12 p-[3px] mx-auto rounded-full aspect-square"
           />
           <img
-            className="w-8 h-8 md:w-12 md:h-12 xl:w-12 xl:h-12 absolute top-0  md:right-0"
+            className="w-10 h-10 md:w-12 md:h-12 xl:w-12 xl:h-12 absolute top-0  md:right-0"
             src={theme === "light" ? feedDarkBorder : feedWhiteBorder}
             loading="lazy" alt="dashedborder"
           />
@@ -38,7 +38,7 @@ const MobileNavbar = ({
           <Swiper
             navigation={true}
             modules={[Navigation]}
-            className="mySwiper h-[40px] w-[130px] xs:w-[160px] "
+            className="mySwiper h-[40px] w-[155px] xs:w-[160px] "
           >
             <SwiperSlide>
               {/* skill button */}
@@ -139,7 +139,7 @@ const MobileNavbar = ({
                       : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
                   } cursor-pointer rounded-[27px] bg-[#C7F99173] border-[2px] border-solid px-4 py-1 mx-5 mt-1 flex justify-center items-center`}
                 >
-                  <p className="graish text-[11px] xs:text-sm md:text-lg font-semibold">
+                  <p className="graish text-[12px] xs:text-sm md:text-lg font-semibold">
                     Social Info
                   </p>
                 </div>
@@ -178,9 +178,9 @@ const MobileNavbar = ({
               {theme === "light" ? (
                 <div
                   onClick={() => sentFriendRequest(user)}
-                  className={`cursor-pointer rounded-[27px] bg-gradient-to-l from-[#39d6a4] to-[#04b17a]  px-3 py-1 mx-5 mt-1 flex justify-center items-center`}
+                  className={`cursor-pointer rounded-[27px] bg-gradient-to-l from-[#39d6a4] to-[#04b17a]  px-3 py-1 mx-5 mt-2 flex justify-center items-center`}
                 >
-                  <p className="text-white text-[10px] xs:text-sm md:text-lg text-center font-semibold">
+                  <p className="text-white text-[12px] xs:text-sm md:text-lg text-center font-semibold">
                     Friend Request
                   </p>
                 </div>
@@ -190,7 +190,7 @@ const MobileNavbar = ({
                   className="flex flex-col items-center py-[5px]"
                 >
                   <div className="w-5 h-[3px] md:h-[5px] shadow-[0px_0px_5px_#0cfc34,_0px_0px_15px_#0cfc34,_0px_0px_30px_#0cfc34,_0px_0px_60px_#0cfc34] rounded-3xs bg-[#1eff45] rounded-t-xl blur-[1px]" />
-                  <p className="text-white text-[10px]  font-semibold text-center rounded-[10px] py-1 px-3  shadow-[-2px_-2px_100px_rgba(255,_255,_255,_0.1)_inset,_2px_2px_100px_rgba(66,_66,_66,_0.1)_inset] [backdrop-filter:blur(50px)]  box-border">
+                  <p className="text-white text-[11px]  font-semibold text-center rounded-[10px] py-1 px-3  shadow-[-2px_-2px_100px_rgba(255,_255,_255,_0.1)_inset,_2px_2px_100px_rgba(66,_66,_66,_0.1)_inset] [backdrop-filter:blur(50px)]  box-border">
                     FRIEND REQUEST
                   </p>
                   <div className="w-5 h-[3px] md:h-[5px] shadow-[0px_0px_5px_#0cfc34,_0px_0px_15px_#0cfc34,_0px_0px_30px_#0cfc34,_0px_0px_60px_#0cfc34] rounded-3xs bg-[#1eff45] rounded-t-xl blur-[1px]" />
@@ -205,7 +205,7 @@ const MobileNavbar = ({
           theme === "light" ? "bg-red-200" : "border border-[#9370DB]"
         } rounded-[8px] py-1 px-2 flex justify-center items-center`}
       >
-        <FaHeart className="text-lg font-semibold text-red-500 cursor-pointer" />
+        <FaHeart className="text-2xl font-semibold text-red-500 cursor-pointer" />
       </div>
     </div>
   );

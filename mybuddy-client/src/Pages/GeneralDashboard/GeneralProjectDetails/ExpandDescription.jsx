@@ -20,14 +20,14 @@ const ExpandDescription = ({ description }) => {
   };
 
   return (
-    <div className="md:text-[13px] lg:text-[15px] graish xl:text-[17px] text-start">
+    <div className="text-sm md:text-[13px] lg:text-[15px] graish xl:text-[17px] text-start">
       {expanded ? (
         <>
           <div dangerouslySetInnerHTML={{ __html: modifiedDescription }} />
          
           {description.length > maxChars && (
             <button
-              className="cursor-pointer text-indigo-500 font-medium hover:underline"
+              className="text-sm md:text-lg cursor-pointer text-indigo-500 font-medium hover:underline"
               onClick={toggleDescription}
             >
               Read Less

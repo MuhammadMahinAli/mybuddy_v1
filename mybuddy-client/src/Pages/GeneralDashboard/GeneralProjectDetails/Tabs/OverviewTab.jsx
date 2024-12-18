@@ -228,10 +228,10 @@ const OverviewTab = ({
   };
 
   return (
-    <div>
+    <>
       <div className="mt-7 space-y-2 pb-6 rounded-[20px] md:rounded-[15px] relative bg-[#e4ecf7]  shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">
         {/* profile */}
-        <div className="flex flex-col items-center md:flex-row md:items-start lg:w-11/12 lg:pt-8   bg-skyblue p-2 overflow-hidden">
+        <div className=" flex flex-col items-center md:flex-row md:items-start lg:w-11/12 lg:pt-8   bg-skyblue p-2 overflow-hidden">
           {/* left */}
           <div className="md:w-[200px] lg:w-4/12 flex flex-col justify-center items-center space-y-1 py-2">
             <img
@@ -239,7 +239,7 @@ const OverviewTab = ({
               src={userProfilePic}
               alt=""
             />
-            <p className="md:text-[16px] lg:text-[18px] graish font-bold pt-3">
+            <p className=" md:text-[16px] lg:text-[18px] graish font-bold pt-3">
               Project Owner
             </p>
             <p className="md:text-[14px] lg:text-[17px] graish font-medium capitalize">
@@ -258,50 +258,50 @@ const OverviewTab = ({
             <p className="hidden md:block graish text-[17px]">Overview</p>
             <ul className="flex flex-col md:flex-row justify-between md:items-center w-full space-y-1 md:space-y-0">
               <li className="flex flex-row md:flex-col space-x-1 md:space-x-0">
-                <p className="graish font-bold md:text-[14px] lg:text-lg">
+                <p className="text-sm graish font-bold md:text-[14px] lg:text-lg">
                   Duration:
                 </p>
-                <p className="graish md:text-[13px] lg:text-[16px] md:pt-[3px]">
+                <p className="text-sm graish md:text-[13px] lg:text-[16px] md:pt-[3px]">
                   {projectDeadline}
                 </p>
               </li>
               <li className="flex flex-row md:flex-col space-x-1 md:space-x-0">
-                <p className="graish font-bold md:text-[14px] lg:text-lg">
+                <p className="text-sm graish font-bold md:text-[14px] lg:text-lg">
                   Category:
                 </p>
-                <p className="graish md:text-[13px] lg:text-[16px] md:pt-[3px] capitalize">
+                <p className="text-sm graish md:text-[13px] lg:text-[16px] md:pt-[3px] capitalize">
                   {category}
                 </p>
               </li>
               <li className="flex flex-row md:flex-col space-x-1 md:space-x-0">
-                <p className="graish font-bold md:text-[14px] lg:text-lg">
+                <p className="text-sm graish font-bold md:text-[14px] lg:text-lg">
                   Disdord:
                 </p>
-                <p className="graish md:text-[13px] lg:text-[16px] md:pt-[3px]">
+                <p className="text-sm graish md:text-[13px] lg:text-[16px] md:pt-[3px]">
                   {discord}
                 </p>
               </li>
             </ul>
-            <ul className="flex space-x-36 items-center w-full space-y-1 md:space-y-0">
+            <ul className="flex flex-col md:flex-row 6xl:justify-between md:items-center lg:space-x-28 xl:space-x-24  3xl:space-x-32  w-full space-y-1 md:space-y-0">
               <li className="flex flex-row md:flex-col space-x-1 md:space-x-0">
-                <p className="graish font-bold md:text-[14px] lg:text-lg">
+                <p className="text-sm graish font-bold md:text-[14px] lg:text-lg">
                   WhatsApp:
                 </p>
-                <p className="graish md:text-[13px] lg:text-[16px] md:pt-[3px]">
+                <p className="text-sm graish md:text-[13px] lg:text-[16px] md:pt-[3px]">
                   {whatsApp}
                 </p>
               </li>
               <li className="flex flex-row md:flex-col space-x-1 md:space-x-0">
-                <p className="graish font-bold md:text-[14px] lg:text-lg">
+                <p className="text-sm graish font-bold md:text-[14px] lg:text-lg">
                   Project Id:
                 </p>
-                <p className="graish md:text-[13px] lg:text-[16px] md:pt-[3px]">
+                <p className="text-sm graish md:text-[13px] lg:text-[16px] md:pt-[3px]">
                   {projectId}
                 </p>
               </li>
             </ul>
             <div>
-              <p className="graish font-bold md:text-[14px] lg:text-lg">
+              <p className="text-sm graish font-bold md:text-[14px] lg:text-lg">
                 Description:
               </p>
               <ExpandDescription description={description} />
@@ -327,7 +327,7 @@ const OverviewTab = ({
             <li className="relative">
               <img
                 onClick={togglePdf}
-                className="w-[34px] md:w-10 p-1 md:p-2  rounded-lg bg-[#e9f2f9]"
+                className="w-[31px] md:w-10 p-1 md:p-2  rounded-lg bg-[#e9f2f9]"
                 src={pdf}
                 alt=""
               />
@@ -345,7 +345,7 @@ const OverviewTab = ({
             <li className="relative">
               <img
                 onClick={toggleDocx}
-                className="w-[32px] md:w-10 p-1 md:p-2  rounded-lg bg-[#e9f2f9]"
+                className="w-[28px] md:w-10 p-1 md:p-2  rounded-lg bg-[#e9f2f9]"
                 src={docx}
                 alt=""
               />
@@ -463,7 +463,7 @@ const OverviewTab = ({
           closeAddTaskModal={closeAddTaskModal}
         />
       )}
-    </div>
+    </>
   );
 };
 

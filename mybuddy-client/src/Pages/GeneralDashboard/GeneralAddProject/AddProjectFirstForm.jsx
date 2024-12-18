@@ -14,7 +14,7 @@ const AddProjectFirstForm = ({
       description: description,
     }));
   };
-console.log(projectData.startDate);
+  console.log(projectData.startDate);
   return (
     <form className="p-5 md:p-3 lg:p-6 w-[320px]   sm:w-11/12 space-y-2">
       {/* project name */}
@@ -41,6 +41,21 @@ console.log(projectData.startDate);
             <option value="">Select</option>
             <option value="technology">Technology</option>
             <option value="tech">Tech</option>
+            <option value="software">Software</option>
+            <option value="cloud-computing">Cloud Computing</option>
+            <option value="ai">Artificial Intelligence</option>
+            <option value="machine-learning">Machine Learning</option>
+            <option value="iot">Internet of Things</option>
+            <option value="data-science">Data Science</option>
+            <option value="blockchain">Blockchain</option>
+            <option value="cybersecurity">Cybersecurity</option>
+            <option value="web-development">Web Development</option>
+            <option value="mobile-development">Mobile Development</option>
+            <option value="devops">DevOps</option>
+            <option value="robotics">Robotics</option>
+            <option value="game-development">Game Development</option>
+            <option value="vr-ar">VR/AR</option>
+            <option value="embedded-systems">Embedded Systems</option>
           </select>
         </div>
       </div>

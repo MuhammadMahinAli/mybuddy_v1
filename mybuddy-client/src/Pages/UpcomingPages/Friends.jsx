@@ -131,7 +131,8 @@ const Friends = () => {
             );
           })
         ) : (
-          <p className="text-sm md:text-lg col-span-full text-center pt-10">
+          <p className={`${theme === "light" ? "graish" : "text-white"
+                              }  text-sm md:text-lg col-span-full text-center pt-10`}>
             {`You don't have any friend yet. `}
          
           </p>

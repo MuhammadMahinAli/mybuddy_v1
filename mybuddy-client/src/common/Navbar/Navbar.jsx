@@ -263,7 +263,7 @@ const Navbar = ({ darkMode, toggleSidebar, openSidebar, theme }) => {
               onClick={() => setOpenProfile(!openProfile)}
               className="relative"
             >
-              {theme === "light" ? (
+              {/* {theme === "light" ? (
                 <img
                   className="w-5 absolute -top-1 right-1 md:-right-2"
                   src={active}
@@ -277,7 +277,7 @@ const Navbar = ({ darkMode, toggleSidebar, openSidebar, theme }) => {
                   loading="lazy"
                   alt="active"
                 />
-              )}
+              )} */}
               <img
                 className="w-8 md:w-20 absolute  right-[12px] md:right-0"
                 src={theme === "light" ? darkBorder : whiteBorder}

@@ -64,7 +64,7 @@ const Attendence = () => {
     setOtp(event.target.value); // Update the OTP state as the user types
   };
   console.log("ot", fund?.attendenceLink);
-  //http://localhost:5173/attendance?otp=384128&meetingId=66fe38de724207f81ec75cc3&date=2024-10-03
+  //https://researchbdy.com/attendance?otp=384128&meetingId=66fe38de724207f81ec75cc3&date=2024-10-03
   const handleAttendClick = async () => {
     // Log meeting details for debugging
     console.log({

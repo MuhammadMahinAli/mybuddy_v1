@@ -135,27 +135,16 @@ console.log(friendRequests);
         </button>
      
         <button
-          className={`hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-3 py-1  xs:px-5 sm:px-10 lg:px-7 2xl:px-10 4xl:px-14 flex justify-center items-center`}
+          className={`hidden hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-3 py-1  xs:px-5 sm:px-10 lg:px-7 2xl:px-10 4xl:px-14 md:flex justify-center items-center`}
         >
            Fund
         </button>
         <button
-          className={`hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-3 py-1  xs:px-5 sm:px-10 lg:px-7 2xl:px-10 4xl:px-14 flex justify-center items-center`}
+          className={`hidden hover:shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]  text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#e4ecf7]  cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  px-3 py-1  xs:px-5 sm:px-10 lg:px-7 2xl:px-10 4xl:px-14 md:flex justify-center items-center`}
         >
            Proposal
         </button>
-        {/* <button
-          onClick={toggleProjectRequest}
-          className="text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#d4e3ed] shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9] cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  hover:shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9_inset] box-border border-[2px] border-solid border-white px-2 py-1 md:px-4 md:py-2 flex justify-center items-center"
-        >
-          Project
-        </button>
-        <button className="text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#d4e3ed] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  hover:shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9_inset] box-border border-[2px] px-2 py-1 md:px-4 md:py-2 flex justify-center items-center">
-          Fund
-        </button>
-        <button className="text-[11px] md:text-[14px] lg:text-xl gray600 font-bold bg-[#d4e3ed] shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9] cursor-pointer rounded-[9px] md:rounded-[13px] [background:linear-gradient(125.26deg,_#d9d9d9,_#efefef_55.46%,_#fcfcfc)]  hover:shadow-[5px_5px_10px_rgba(186,_183,_183,_0.25),_5px_5px_16px_-1px_#b9b9b9_inset] box-border border-[2px] border-solid border-white px-2 py-1 md:px-4 md:py-2 flex justify-center items-center">
-          Proposal
-        </button> */}
+        
       </div>
 
       {/* projects */}

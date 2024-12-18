@@ -39,13 +39,13 @@ const LandingHero = () => {
   return (
     <div className="flex flex-col justify-center items-center w-screen">
       <div className="flex flex-col justify-center items-center -space-y-16 lg:space-y-3 pt-5 md:pt-10 lg:pt-20 lg:pb-10">
-        <h1 className="m-0 text-white text-2xl lg:text-5xl  relative text-inherit leading-[100px] capitalize font-bold">
+        <h1 className="m-0 text-white text-3xl lg:text-5xl  relative text-inherit leading-[100px] capitalize font-bold">
           empower your
         </h1>
-        <h1 className="m-0 text-white text-2xl lg:text-5xl  relative text-inherit leading-[100px] capitalize font-bold">
+        <h1 className="m-0 text-white text-3xl lg:text-5xl  relative text-inherit leading-[100px] capitalize font-bold">
           research
         </h1>
-        <h1 className="m-0 text-white text-2xl lg:text-5xl  relative text-inherit leading-[100px] capitalize font-bold">
+        <h1 className="m-0 text-white text-3xl lg:text-5xl  relative text-inherit leading-[100px] capitalize font-bold">
           journey
         </h1>
       </div>

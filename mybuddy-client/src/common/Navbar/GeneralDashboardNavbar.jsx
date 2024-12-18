@@ -48,7 +48,7 @@ const GeneralDashboardNavbar = () => {
       };
 
   return (
-    <div className="px-2 py-4 mx-auto  bg-tr md:pr-8 sm:px-5 lg:px-8 gray500 bg-[#DFF1FE] sm:bg-[#EFF4FA]">
+    <div className="px-2 ssm:py-4 mx-auto  bg-tr md:pr-8 sm:px-5 lg:px-8 gray500 bg-[#DFF1FE] sm:bg-[#EFF4FA]">
       <div className="relative flex items-center justify-between  w-full">
         <div className="xl:space-x-1">
           <button
@@ -199,7 +199,7 @@ const GeneralDashboardNavbar = () => {
                     </li>
                     <li className="border-b w-full text-center pb-2">
                       <Link
-                        to="/dashboard/sent-request"
+                        to="/dashboard/create-projects"
                         className={`${
                           isPageActive("/dashboard/recieve-request")
                             ? "font-bold"

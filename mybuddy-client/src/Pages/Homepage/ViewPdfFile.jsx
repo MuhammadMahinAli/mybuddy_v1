@@ -39,7 +39,7 @@ const ViewPdfFile = ({ pdf }) => {
   return (
     <div
       ref={containerRef}
-      className="lazy my-3 md:my-1  shadow-xl border w-full"
+      className="lazy my-3 md:my-1  shadow-xl border w-full overflow-hidden"
       data-src="your-url-to-trigger-load"
     >
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">

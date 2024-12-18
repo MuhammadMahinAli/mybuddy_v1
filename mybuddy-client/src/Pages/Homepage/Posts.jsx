@@ -212,19 +212,19 @@ const Posts = ({ theme }) => {
       <div
         className={`${
           theme !== "light" &&
-          "p-[1px] bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90% rounded-[15px] h-[210px] md:h-[355px] lg:h-[345px] xl:h-[347px]"
+          "p-[1px] bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90% rounded-[15px] h-[210px] sm:h-[272px] md:h-[355px] lg:h-[327px] xl:h-[347px]"
         }`}
       >
         <div className="relative h-[230px] md:h-[330px]  xl:h-[330px]">
           {theme === "light" && (
-            <div className="bg-[#f2f3f4] rounded-b-[14px] w-[230px] xs:w-[240px] sm:w-[350px] md:w-[560px] lg:w-[470px] xl:w-[640px] 2xl:w-[715px] 3xl:w-[760px] h-4 absolute -bottom-0 left-4" />
+            <div className="bg-[#f2f3f4] rounded-b-[14px] w-[270px] xs:w-[330px] ssm:w-[370px] sm:w-[550px] md:w-[670px] lg:w-[470px] xl:w-[640px] 2xl:w-[715px] 3xl:w-[760px] h-4 absolute -bottom-0 left-4" />
           )}
           <div
             className={`${
               theme === "light"
                 ? "bg-white"
                 : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover"
-            } shadow-[-1px_0px_56px_-6px_rgba(134,134,134,0.25)]  rounded-[15px] w-[270px] xs:w-[280px] sm:w-[350px] md:w-[600px] lg:w-[500px]  xl:w-[670px] 2xl:w-[750px] 3xl:w-[800px]`}
+            } shadow-[-1px_0px_56px_-6px_rgba(134,134,134,0.25)]  rounded-[15px] w-[270px] xs:w-[330px] ssm:w-[370px] sm:w-[550px] md:w-[670px] lg:w-[500px]  xl:w-[670px] 2xl:w-[750px] 3xl:w-[800px]`}
           >
             <ul className="flex justify-between items-center">
               <li

@@ -14,7 +14,7 @@ const generateOtp = () => {
 
 // Function to generate attendance link with OTP
 const generateAttendanceLink = (otp, meetingId) => {
-  const baseUrl = "http://localhost:5173/attendance";
+  const baseUrl = "https://researchbdy.com/attendance";
   const currentDate = moment().format("YYYY-MM-DD"); // Generate today's date in 'YYYY-MM-DD' format
   return `${baseUrl}?otp=${otp}&meetingId=${meetingId}&date=${currentDate}`;
 };

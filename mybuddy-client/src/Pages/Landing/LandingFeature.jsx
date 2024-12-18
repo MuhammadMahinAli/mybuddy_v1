@@ -16,7 +16,7 @@ const LandingFeature = () => {
             life all in one place.
           </div>
         </div>
-        <div className={`flex flex-col md:flex-row space-x-3`}>
+        <div className={`flex flex-col md:flex-row space-y-3 md:space-x-3`}>
           <div className="space-y-4 w-12/12 md:w-6/12">
           {/* card 1  grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-5 */}
           <div className={` rounded-xl bg-[#e9f2f9] p-5 md:py-9`}>
@@ -51,7 +51,7 @@ const LandingFeature = () => {
                 </div>
               </div>
               <img
-                className="w-[200px] h-[200px] md:w-[290px] md:h-[220px] xl:w-[300px] xl:h-[210px] 3xl:w-[400px] 3xl:h-[270px] relative object-cover"
+                className="w-[250px] h-[200px] md:w-[290px] md:h-[220px] xl:w-[300px] xl:h-[210px] 3xl:w-[400px] 3xl:h-[270px] relative object-cover"
                 loading="lazy"
                 alt=""
                 src="/frame-290-1@2x.png"

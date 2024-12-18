@@ -90,10 +90,13 @@ const Images = ({ setImages, images }) => {
           <label required htmlFor="image-two" className="">
             <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
               {loading.imageTwo ? (
-                <span className="loading loading-spinner loading-xs"></span>
+                <span className="loading loading-spinner loading-xs">
+                  
+                </span>
               ) : (
                 <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
-                 
+                 <img src="/upload.svg" className="h-3 lg:h-5" />
+                 <p className="text-[10px] md:text-[12px] font-normal capitalize pt-1">Add anotner image (optional) </p>
                 </div>
               )}
             </div>
@@ -123,7 +126,8 @@ const Images = ({ setImages, images }) => {
                 <span className="loading loading-spinner loading-xs"></span>
               ) : (
                 <div className="flex flex-col justify-center items-center absolute top-8 lg:top-12 xl:top-16 2xl:top-14 3xl:top-20 w-full">
-               
+               <img src="/upload.svg" className="h-3 lg:h-5" />
+                  <p className="text-[10px] md:text-[12px] font-normal capitalize pt-1">Add anotner image (optional) </p>
                 </div>
               )}
             </div>

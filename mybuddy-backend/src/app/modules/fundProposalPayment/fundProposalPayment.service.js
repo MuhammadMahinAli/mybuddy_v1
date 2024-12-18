@@ -33,8 +33,8 @@
 //         },
 //       ],
 //       mode: "payment",
-//       success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`, // Use session ID in the success URL
-//       cancel_url: `http://localhost:5173/funding-failed`,
+//       success_url: `https://researchbdy.com/success?session_id={CHECKOUT_SESSION_ID}`, // Use session ID in the success URL
+//       cancel_url: `https://researchbdy.com/funding-failed`,
 //       metadata: { requestedBy, requestedTo, projectId, status, amount }, // Include metadata for later use
 //     });
 

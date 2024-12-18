@@ -284,13 +284,13 @@ const FindProject = () => {
                   className={`${theme === "light"
                       ? "bg-[#fff] shadow-[-1px_0px_56px_-6px_rgba(134,_134,_134,_0.25)]]"
                       : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover "
-                    } py-6 md:px-4 px-6  rounded-[27px]`}
+                    } py-3 md:px-4 px-3  rounded-[27px]`}
                 >
                   {/* projet name & join */}
-                  <div className="flex justify-between">
+                  <div className="flex items-start justify-between">
                     {/* profile */}
                     <Link to={`/user/profile/${project?.user?._id}`}>
-                      <div className="flex space-x-2">
+                      <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 space-x-0 md:space-x-2 pb-1 md:pb-0">
                         <div className="relative">
                           <img
                             src={
@@ -341,7 +341,7 @@ const FindProject = () => {
                           )}
                           <p
                             className={`${theme === "light" ? "graish" : "text-white"
-                              } text-[11px] lg:text-[16px] 3xl:text-[18px] font-medium pl-1 pt-1`}
+                              } hidden md:block text-[11px] lg:text-[16px] 3xl:text-[18px] font-medium pl-1 pt-1`}
                           >
                             {statuss === "ended" ? (
                               <>
@@ -364,24 +364,6 @@ const FindProject = () => {
                               </>
                             )}
                           </p>
-
-                          {/* <p
-                            className={`${
-                              theme === "light" ? "graish" : "text-white"
-                            }  text-[11px] lg:text-[16px] 3xl:text-[18px] font-medium pl-1 pt-1`}
-                          >
-                            {statuss === "ended"
-                              ? `Project: ${
-                                  project.projectName
-                                } is <strong>ended</strong>. It started on ${startDate.toLocaleDateString()} and ended on ${endDate.toLocaleDateString()}.`
-                              : statuss === "upcoming"
-                              ? `Project: ${
-                                  project.projectName
-                                } will <strong>start</strong> very soon. It will start on ${startDate.toLocaleDateString()} and end on ${endDate.toLocaleDateString()}.`
-                              : `Project: ${
-                                  project.projectName
-                                } is <strong>ongoing</strong>. It started on ${startDate.toLocaleDateString()} and will end on ${endDate.toLocaleDateString()}.`}
-                          </p> */}
                         </div>
                       </div>
                     </Link>
@@ -435,7 +417,31 @@ const FindProject = () => {
                       </>
                     )}
                   </div>
-
+                  <p
+                            className={`${theme === "light" ? "graish" : "text-white"
+                              } text-[11px] md:hidden font-medium pl-1 pt-1`}
+                          >
+                            {statuss === "ended" ? (
+                              <>
+                                Project: <b>{project.projectName}</b> is <strong>ended</strong>. It started
+                                on {startDate.toLocaleDateString()} and ended on{" "}
+                                {endDate.toLocaleDateString()}.
+                              </>
+                            ) : statuss === "upcoming" ? (
+                              <>
+                                Project: <b>{project.projectName}</b> will{" "}
+                                <strong>start</strong> very soon. It will start on{" "}
+                                {startDate.toLocaleDateString()} and end on{" "}
+                                {endDate.toLocaleDateString()}.
+                              </>
+                            ) : (
+                              <>
+                                Project: <b>{project.projectName}</b> is <strong>ongoing</strong>. It started
+                                on {startDate.toLocaleDateString()} and will end on{" "}
+                                {endDate.toLocaleDateString()}.
+                              </>
+                            )}
+                          </p>
                   {/* Task Table */}
                   <TaskTable
                     tasks={project?.tasks}

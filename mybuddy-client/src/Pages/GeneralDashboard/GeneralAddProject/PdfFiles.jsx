@@ -97,9 +97,8 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
                   <span className="loading loading-spinner loading-xs"></span>
                 ) : (
                   <div className="flex flex-col justify-center items-center absolute top-8 lg:top-10 xl:top-16 2xl:top-14 3xl:top-16 w-full">
-                    {/* <img src={pdf} className="h-8" alt="Upload PDF" />
-                    <p className="text-[10px] font-normal capitalize">Drag & drop a PDF or</p>
-                    <p className="text-[10px] font-medium capitalize text-blue-500">browse</p> */}
+                    <img src={pdf} className="h-8 lg:h-10" alt="Upload PDF" />
+                    <p className="text-[10px] md:text-[12px] font-normal capitalize pt-1">Add anotner pdf (optional) </p>
                   </div>
                 )}
               </div>

@@ -24,28 +24,31 @@ const AddProject = () => {
       route: `/dashboard/create-project`,
     },
   ];
+
+
   return (
     <div
       data-aos="fade-left"
       data-aos-duration="1200"
-      className="flex flex-col-reverse md:flex-row justify-between   lg:space-x-6 items-start md:items-center lg:py-10 gray500 mr-4"
+      className="pt-5 flex flex-col-reverse md:flex-row justify-between   lg:space-x-6 items-start md:items-center lg:py-10 gray500 mr-4"
     >
+      
       {/* left */}
-      <div className="w-full md:w-6/12">
-        <div className="md:flex hidden items-center space-x-4">
-          <div className="flex items-center justify-center cursor-pointer [border:none] p-0 bg-[#fff] rounded-md shadow-[2px_2px_5px_2px_rgba(155,_155,_155,_0.3)] filter:blur(2px) backdrop-filter:blur(20px) w-8 h-[32px]">
-          <FaPen className="text-xl" />
-          </div>
-          <h1 className="text-3xl font-semibold">Create</h1>
-        </div>
+      <div className="w-full md:w-6/12 lg:w-6/12">
+      <div className="md:flex hidden items-center space-x-4">
+  <div className="flex items-center justify-center cursor-pointer [border:none] p-0 bg-[#fff] rounded-md shadow-[2px_2px_5px_2px_rgba(155,_155,_155,_0.3)] filter:blur(2px) backdrop-filter:blur(20px) w-8 h-[32px]">
+  <FaPen className="text-xl" />
+  </div>
+  <h1 className="text-3xl font-semibold">Create</h1>
+</div>
         {/* list */}
-        <div className="py-3 lg:py-8 space-y-4 lg:space-y-6">
+        <div className="py-3 xl:py-5 space-y-4 lg:space-y-6">
           {lists.map((list) => (
             <div
               type="button"
               onClick={openModal}
               key={list?._id}
-              className="flex items-center justify-between px-1 cursor-pointer bg-[#e6f3f3] rounded-xl shadow-[2px_2px_5px_2px_rgba(155,_155,_155,_0.3)] filter:blur(2px) backdrop-filter:blur(20px)"
+              className="flex items-center justify-between px-1 cursor-pointer md:h-[160px] lg:h-[150px] xl:h-[160px]  bg-[#e6f3f3] rounded-xl shadow-[2px_2px_5px_2px_rgba(155,_155,_155,_0.3)] filter:blur(2px) backdrop-filter:blur(20px)"
             >
               {/* left */}
               <div className="flex  items-center space-x-4">
@@ -76,9 +79,12 @@ const AddProject = () => {
         </div>
       </div>
       {/* right */}
-      <div className="flex justify-center items-center w-full md:w-4/12 lg:w-6/12 mb-2 md:pt-0">
-        <img src={dash} alt="" className="w-[300px]" />
+      <div className="flex justify-center items-center w-full md:w-6/12 lg:w-6/12 mb-2 md:pt-0">
+        <img src="/pp.png" 
+        alt="" className="w-[300px] md:w-[300px] lg:w-[500px] xl:w-[700px] 3xl:w-[700px] rounded-xl pl-3" />
       </div>
+
+
       {isOpen && (
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeModal}>

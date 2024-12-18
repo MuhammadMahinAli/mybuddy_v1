@@ -79,45 +79,6 @@ const GDashboard = () => {
           <p className="pl-2 text-[16px] md:text-[18px]  lg:text-[24px] font-semibold capitalize pb-3">
             Coming soon
           </p>
-          {/* <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 lg:justify-start gap-7 ">
-            {meetings.map((meeting, i) => (
-              <div
-                key={i}
-                className={`${
-                  i === 0
-                    ? " border-[#5397ea] bg-[#b2d4f0]"
-                    : i === 1
-                    ? " border-[#ff6c6c] bg-[#e8d7e0]"
-                    : i === 2
-                    ? " border-[#00a0ff] bg-[#b2d4f0]"
-                    : i === 3
-                    ? " border-[#ffb13b] bg-[#ddd6bc]"
-                    : " border-[#fd4deb] bg-[#d9c6f1]"
-                } rounded-md space-y-2 border-s-[6px] p-2 xl:p-3 md:p-4`}
-              >
-                <strong className="text-xl font-medium">
-                  {" "}
-                  {meeting.title}
-                </strong>
-
-                <div className="flex justify-start md:items-center space-x-1">
-                  <CiClock2 className="text-lg" />
-                  <p className="text-sm">
-                    {meeting?.startTime} To {meeting?.endTime}
-                  </p>
-                </div>
-                <div className="flex items-center space-x-1 xl:space-x-2 ">
-                  {meeting.users.map((member, i) => (
-                    <img
-                      key={i}
-                      src={member}
-                      className="h-8 w-8 md:h-10 md:w-10 lg:h-8 lg:w-8 xl:h-7 xl:w-7 2xl:h-10 2xl:w-10  rounded-full border-2 border-gray-500"
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div> */}
         </div>
       </div>
     </div>

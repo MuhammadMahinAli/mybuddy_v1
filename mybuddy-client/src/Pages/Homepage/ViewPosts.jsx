@@ -401,7 +401,7 @@ const ViewPosts = ({ theme }) => {
                 theme === "light"
                   ? "bg-white  relative"
                   : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover"
-              } shadow-[-1px_0px_56px_-6px_rgba(134,134,134,0.25)] rounded-[10px] w-[270px] xs:w-[280px] sm:w-[350px] md:w-[600px] lg:w-[500px] xl:w-[670px] 2xl:w-[750px] 3xl:w-[800px] 3xl:ml-[1px] `}
+              } shadow-[-1px_0px_56px_-6px_rgba(134,134,134,0.25)] rounded-[10px] w-[270px] xs:w-[330px] ssm:w-[370px] sm:w-[550px] md:w-[670px] lg:w-[500px] xl:w-[670px] 2xl:w-[750px] 3xl:w-[800px] 3xl:ml-[1px] `}
             >
               <div className=" flex justify-between items-center p-2 sm:px-3 sm:pt-3">
                 <div className="flex items-center space-x-3">
@@ -617,7 +617,7 @@ const ViewPosts = ({ theme }) => {
                             : "text-gray-600"
                         } ${
                           theme === "light" ? "text-gray-600" : "text-white"
-                        } font-medium`}
+                        } hidden ssm:block font-medium`}
                       >
                         {like
                           ? "Liked"
@@ -640,7 +640,8 @@ const ViewPosts = ({ theme }) => {
                       <span className="text-xl">
                         <PostComment theme={theme} />
                       </span>
-                      <span>Comment</span>
+                      <span className="hidden ssm:block">Comment</span>
+                    
                     </button>
                     <button
                       className={`${
@@ -650,7 +651,8 @@ const ViewPosts = ({ theme }) => {
                       <span className="text-xl">
                         <PostShare theme={theme} />
                       </span>
-                      <span>Share</span>
+                      <span className="hidden ssm:block">Share</span>
+                     
                     </button>
                   </div>
                   {hoveredPostId === post._id && (

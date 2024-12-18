@@ -201,12 +201,12 @@ const MeetingDetailsPage = ({ meetingDat, setSelectedMeeting }) => {
           ))}
         </ul>
 
-        {/* Update Button       http://localhost:5173/attendance?otp=241930&meetingId=67274fa0e0b950bcffb9235f&date=2024-11-03 */}
+        {/* Update Button       https://researchbdy.com/attendance?otp=241930&meetingId=67274fa0e0b950bcffb9235f&date=2024-11-03 */}
         {meetingDat?.attendenceLink !== null && (
           <div className="flex justify-center">
             {meetingDat?.creator._id !== userId && (
               <Link
-                to={`http://localhost:5173/attendance?meeting=${meetingDat?.title}&meetingId=${meetingDat?._id}&date=${meetingDat?.meetingTime}`}
+                to={`https://researchbdy.com/attendance?meeting=${meetingDat?.title}&meetingId=${meetingDat?._id}&date=${meetingDat?.meetingTime}`}
                 className="px-3 py-2 font-bold text-white [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] rounded-lg shadow hover:bg-green-500 transition-colors"
               >
                 Update Attendance

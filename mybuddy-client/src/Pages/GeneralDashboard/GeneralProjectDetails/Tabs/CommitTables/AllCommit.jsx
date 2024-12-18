@@ -15,7 +15,7 @@ const AllCommit = ({
   return (
     <>
     {commitOfProject?.length === 0  ? (
-        <h3 className="text-lg font-semibold text-gray-800 text-center">
+        <h3 className="text-lg font-semibold text-gray-800 text-center pt-14 ">
           {` No Commit Available To Present Right Now.`} 
 
         </h3>

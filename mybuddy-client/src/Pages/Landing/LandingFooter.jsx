@@ -6,7 +6,7 @@ const LandingFooter = () => {
   return (
     <div className="relative ">
       <div className="hidden md:block absolute">
-        <img src="./footer@3x.png" className="" />
+        <img src="./footer@2x.png" className="" />
       </div>
 
       <div className="py-5 z-40">
@@ -15,7 +15,7 @@ const LandingFooter = () => {
             subscribe us
           </h1>
 
-          <p className="m-0 text-sm md:text-lg text-center text-gray-700 z-40">
+          <p className="m-0 text-sm lg:text-lg text-center text-gray-700 z-40">
             Elevate Your Research Productivity To The Next Level. Manage Your
             Projects, Collaborate With Experts, And Stay Organized From Anywhere
             — At Your Desk Or On The Go.
@@ -55,7 +55,7 @@ const LandingFooter = () => {
               Empowering Researchers To Achieve More. Simplify Research
               Collaboration, Manage Tools, And Unlock Your Full Potential. Join
               Us Today To Revolutionize The Way You Conduct Research.{" "}
-              <p className="">Email: researchbdy@gmail.com</p>
+              <p className="">Email: <span className="lowercase">researchbdy@gmail.com</span></p>
             </div>
           </div>
           {/* right */}
