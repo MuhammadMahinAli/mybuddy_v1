@@ -1,4 +1,8 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 const LandingFooter = () => {
+  const { user } = useSelector((state) => state.auth);
   return (
     <div className="relative ">
       <div className="hidden md:block absolute">
@@ -32,7 +36,6 @@ const LandingFooter = () => {
             </button>
           </div>
         </div>
-
       </div>
 
       <div className="pt-10 md:pt-32 lg:pt-60 xl:pt-72 3xl:pt-80">
@@ -51,7 +54,8 @@ const LandingFooter = () => {
             <div className="relative text-base capitalize text-dimgray-300">
               Empowering Researchers To Achieve More. Simplify Research
               Collaboration, Manage Tools, And Unlock Your Full Potential. Join
-              Us Today To Revolutionize The Way You Conduct Research.
+              Us Today To Revolutionize The Way You Conduct Research.{" "}
+              <p className="">Email: researchbdy@gmail.com</p>
             </div>
           </div>
           {/* right */}
@@ -60,44 +64,77 @@ const LandingFooter = () => {
               <b className="relative text-mid capitalize text-dimgray-200">
                 Important Links
               </b>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
+              <Link
+                to={user ? "/home" : "/login"}
+                className="[text-decoration:none] hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]"
+              >
                 home
-              </a>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
+              </Link>
+              <Link
+                to={user ? "/home" : "/find/project"}
+                className="[text-decoration:none] hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]"
+              >
                 Project
-              </a>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
+              </Link>
+              <Link
+                to="/help"
+                className="[text-decoration:none] hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]"
+              >
                 Help
-              </a>
-              <div className="self-stretch relative capitalize">Contact</div>
+              </Link>
+              <div className="self-stretch relative hover:text-blue-500  cursor-pointer capitalize">
+                Contact
+              </div>
             </div>
             <div className="w-[118px] flex flex-col items-start justify-start py-0 pl-0 pr-0.5 box-border gap-[9px]">
               <b className="self-stretch relative text-mid capitalize text-dimgray-200">
                 community
               </b>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
+              <Link
+                to={user ? "/home" : "/login"}
+                className="[text-decoration:none]  hover:text-blue-500  cursor-pointer  self-stretch relative capitalize text-[inherit]"
+              >
                 news feed
-              </a>
-              <div className="self-stretch relative capitalize">profile</div>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
+              </Link>
+              <Link
+                to={user ? "/user/edit-profile" : "/login"}
+                className=" hover:text-blue-500  cursor-pointer self-stretch relative capitalize"
+              >
+                profile
+              </Link>
+              <Link
+                to={user ? "/dashboard" : "/login"}
+                className="[text-decoration:none]  hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]"
+              >
                 dashboard
-              </a>
-              <div className="self-stretch relative capitalize">friends</div>
+              </Link>
+              <Link
+                to={user ? "/user/friend" : "/login"}
+                className=" hover:text-blue-500  cursor-pointer self-stretch relative capitalize"
+              >
+                friends
+              </Link>
             </div>
             <div className="w-[118px] flex flex-col items-start justify-start py-0 pl-0 pr-0.5 box-border gap-[9px]">
               <b className="self-stretch relative text-mid capitalize text-dimgray-200">
                 followers
               </b>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
+              <a className="[text-decoration:none] hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]">
                 Facebook
               </a>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
+              <a className="[text-decoration:none] hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]">
                 twitter
               </a>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
+              <a
+                href="https://www.linkedin.com/company/kwstechnology"
+                className="[text-decoration:none] hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]"
+              >
                 Linkedin
               </a>
-              <a className="[text-decoration:none] self-stretch relative capitalize text-[inherit]">
+              <a
+                href="https://www.youtube.com/@NFTClosetX"
+                className="[text-decoration:none] hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]"
+              >
                 YouTube
               </a>
             </div>
@@ -109,7 +146,6 @@ const LandingFooter = () => {
           </div>
         </div>
       </div>
-     
     </div>
   );
 };
