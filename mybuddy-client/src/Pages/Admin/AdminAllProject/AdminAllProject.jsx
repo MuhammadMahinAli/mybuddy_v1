@@ -28,7 +28,7 @@ const AdminAllProject = () => {
     setLoading(true); // Set loading to true when fetching data
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/project/getAllProject`,
+        `https://test-two-22w0.onrender.com/api/v1/project/getAllProject`,
         {
           params: {
             page,
@@ -111,7 +111,7 @@ const AdminAllProject = () => {
                 <>
                 <div key={i}>
                   <div
-                    className={`pb-4 space-y-1 flex flex-col justify-start rounded-[15px] bg-skyblue shadow-lg overflow-hidden`}
+                    className={`h-[360px] ssm:h-[400px] sm:h-[460px] md:h-[430px] lg:h-[459px] xl:h-[440px] pb-4 space-y-1 flex flex-col justify-start rounded-[15px] bg-skyblue shadow-lg overflow-hidden`}
                   >
                     <div className="flex justify-center items-center h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[240px] rounded-[25px] bg-[#DCE2EA] shadow-[0px_1px_2px_rgba(0,_0,_0,_0.25),_-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)]">
                       <img
@@ -140,13 +140,17 @@ const AdminAllProject = () => {
                       <div
                         className="hidden ssm:block md:hidden pb-3"
                         dangerouslySetInnerHTML={{
-                          __html: p.description.slice(0, 130),
+                          __html: `${p.description.slice(0, 130)}${
+                            p.description.length > 130 ? "..." : ""
+                          }`,
                         }}
                       />
                       <div
                         className="hidden md:block pb-3"
                         dangerouslySetInnerHTML={{
-                          __html: p.description.slice(0, 100),
+                          __html: `${p.description.slice(0, 100)}${
+                            p.description.length > 100 ? " ..." : ""
+                          }`,
                         }}
                       />
                       <button className="w-full my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]">

@@ -251,7 +251,7 @@ const CommitModal = ({
                         </div>
                       )}
                     </div>
-                    <div className="md:p-4 lg:p-6 3xl:p-10 border rounded-xl shadow-xl">
+                    <div className="md:p-4 lg:p-6 3xl:p-10  rounded-xl shadow-xl">
                       <div>
                         <div className=" flex flex-col md:flex-row md:items-center justify-between  mb-4">
                           <label className="block text-gray-700 font-bold mb-2">

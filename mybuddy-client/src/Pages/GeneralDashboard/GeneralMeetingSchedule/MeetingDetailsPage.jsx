@@ -173,7 +173,7 @@ const MeetingDetailsPage = ({ meetingDat, setSelectedMeeting }) => {
                   }
                   loading="lazy"
                   alt={item?.memberId?.name?.firstName}
-                  className="h-9 w-9 rounded-full ml-2"
+                  className="h-7 w-7 md:h-9 md:w-9 rounded-full ml-2"
                 />
                 <div className="text-lg md:text-[18px] py-1 px-3 rounded-md font-bold capitalize">
                   {item?.memberId?.name?.firstName}{" "}

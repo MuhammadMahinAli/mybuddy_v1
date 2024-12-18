@@ -15,7 +15,7 @@ const ReactComponent = ({ postId, user, theme }) => {
   useEffect(() => {
     const fetchReactions = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/v1/PostReact/allReactions/${postId}`);
+        const response = await fetch(`https://test-two-22w0.onrender.com/api/v1/PostReact/allReactions/${postId}`);
         const result = await response.json();
         if (result.success) {
           setReactionsData(result.data.reactions || {});

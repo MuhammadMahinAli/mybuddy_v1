@@ -541,7 +541,7 @@ const TaskTab = ({
                 {inProgressTasks}
               </p>
               <div className="text-[14px] flex items-center space-x-2">
-                <MdOutlineCircle className="mr-1 graish text-[12px] md:text-[14px]" />{" "}
+                {/* <MdOutlineCircle className="mr-1 graish text-[12px] md:text-[14px]" />{" "} */}
                 In Progress
               </div>
             </div>
@@ -550,7 +550,7 @@ const TaskTab = ({
                 {upcomingTasks}
               </p>
               <div className="text-[14px] flex items-center space-x-2">
-                <MdOutlineCircle className="mr-1 graish text-[12px] md:text-[14px]" />{" "}
+                {/* <MdOutlineCircle className="mr-1 graish text-[12px] md:text-[14px]" />{" "} */}
                 Upcoming
               </div>
             </div>
@@ -559,7 +559,7 @@ const TaskTab = ({
                 {doneTasks}
               </p>
               <div className="text-[14px] flex items-center space-x-2">
-                <MdOutlineCircle className="mr-1 graish text-[12px] md:text-[14px]" />{" "}
+                {/* <MdOutlineCircle className="mr-1 graish text-[12px] md:text-[14px]" />{" "} */}
                 Done
               </div>
             </div>
@@ -893,7 +893,7 @@ const TaskTab = ({
                             </div>
                           </div>
                         </div>
-                        <div className="text-[13px] md:text-[16px] 3xl:text-[19px] capitalize text-center w-4/12 border-r border-[#C8CBD3] px-2">
+                        <div className="text-gray-800 text-[13px] md:text-[16px] 3xl:text-[19px] capitalize text-center w-4/12 border-r border-[#C8CBD3] px-2">
                           {tasks[selectedIndex]?.details.slice(0, 20)}...
                         </div>
 
@@ -929,79 +929,9 @@ const TaskTab = ({
               </h1>
 
               <>
-                <div className="w-[300px] xs:w-[330px] ssm:w-[370px] sm:w-[570px] md:w-[610px] lg:w-full overflow-x-auto ">
-                  {/* table head */}
-                  {/* <div className="min-w-[600px] md:min-w-[800px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
-                    <div className="text-[14px] md:text-[16px] font-semibold text-center w-4/12 border-r border-[#C8CBD3]">
-                      From
-                    </div>
-                    <div className="text-[14px] md:text-[16px] font-semibold text-center w-4/12 border-r border-[#C8CBD3]">
-                      Details
-                    </div>
-
-                    <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12">
-                      Action
-                    </div>
-                  </div> */}
-                  {/* table data */}
-                  {/* {req
-                    ?.filter((request) =>
-                      request.tasks.some(
-                        (task) => task?.title === tasks[selectedIndex]?.title
-                      )
-                    )
-                    .map(
-                      (filteredRequest, i) =>
-                        filteredRequest && (
-                          <div
-                            key={i}
-                            className="min-w-[500px] md:min-w-[600px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
-                          >
-                            <div className="flex justify-center items-center text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
-                              <img
-                                src={
-                                  filteredRequest.requestedBy?.profilePic
-                                    ? filteredRequest.requestedBy?.profilePic
-                                    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
-                                }
-                                alt="Profile"
-                                className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
-                              />
-                              <div>
-                                <div className="font-semibold text-gray-800 text-[14px] lg:text-[15px] 3xl:text-[18px]">
-                                  {filteredRequest.requestedBy?.name?.firstName}{" "}
-                                  <span>
-                                    {
-                                      filteredRequest.requestedBy?.name
-                                        ?.lastName
-                                    }
-                                  </span>
-                                </div>
-                                <div className=" text-gray-500 text-[13px] lg:text-[13px] 3xl:text-[17px]">
-                                  {filteredRequest.requestedBy?.role}
-                                </div>
-                              </div>
-                            </div>
-                            <p className="w-6/12 border-r-2 pl-2 text-[14px] md:text-[15px] lg:text-[16px] text-center 3xl:text-[19px]">
-                              {tasks[selectedIndex]?.details.slice(0, 90)}...
-                            </p>
-
-                            <div className="w-1/12 flex justify-center items-center ml-5 space-x-1 md:space-x-2">
-                              <img
-                                onClick={(e) => handleUpdateStatusAccept(e, i)}
-                                src={rightMark}
-                                className="h-5 md:h-7"
-                              />
-                              <img
-                                onClick={(e) => handleUpdateStatusReject(e, i)}
-                                src={xMark}
-                                className="h-5 md:h-7"
-                              />
-                            </div>
-                          </div>
-                        )
-                    )} */}
-                </div>
+                {/* <div className="w-[300px] xs:w-[330px] ssm:w-[370px] sm:w-[570px] md:w-[610px] lg:w-full overflow-x-auto ">
+                  
+                </div> */}
                 {req?.filter((request) =>
                   request.tasks.some(
                     (task) => task?.title === tasks[selectedIndex]?.title
@@ -1012,19 +942,19 @@ const TaskTab = ({
                   </p>
                 ) : (
                   <>
-                    <div className="gray600 space-y-6 w-12/12 md:w-full">
-                      <div className="w-full py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl">
-                        <div className="text-[15px] md:text-[21px] font-semibold border-r-2 text-center w-4/12 sm:w-3/12">
+                    <div className="w-[300px] xs:w-[330px] ssm:w-[370px] sm:w-[570px] md:w-[610px] lg:w-full overflow-x-auto ">
+                      <div className="min-w-[600px] md:min-w-[800px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
+                        <div className="text-[15px] md:text-[21px] font-semibold border-r-2 text-center w-4/12">
                           From
                         </div>
-                        <div className="text-[15px] md:text-[21px] font-semibold border-r-2 text-center w-2/12 sm:w-7/12">
+                        <div className="text-[15px] md:text-[21px] font-semibold border-r-2 text-center w-6/12">
                           Details
                         </div>
-                        <div className="text-[15px] md:text-[21px] w-3/12 sm:w-2/12">
+                        <div className="text-[15px] md:text-[21px] w-2/12">
                           <p className="font-semibold text-center">Action</p>
                         </div>
                       </div>
-                    </div>
+                 
 
                     {req
                       ?.filter((request) =>
@@ -1037,20 +967,20 @@ const TaskTab = ({
                           filteredRequest && (
                             <div
                               key={i}
-                              className="w-full px-1 py-4 flex my-5 justify-between items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
+                               className="min-w-[600px] md:min-w-[800px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
                             >
-                              <div className="flex justify-start pl-2   space-x-1 text-[16px] md:text-lg border-r-2 text-center w-4/12 sm:w-3/12">
+                              <div className="flex justify-start pl-2 text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
                                 <img
                                   src={
                                     filteredRequest.profileImagec ||
                                     "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
                                   }
-                                  className="w-8 h-8 md:w-10 md:h-10 border border-black rounded-full"
+                                  className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
                                   loading="lazy"
                                   alt=""
                                 />
-                                <div className="pl-1">
-                                  <p className="text-start text-[17px] font-bold capitalize md:pt-0">
+                                <div className="">
+                                  <p className="font-semibold text-gray-800 text-[14px] lg:text-[15px] 3xl:text-[19px]">
                                     {
                                       filteredRequest.requestedBy?.name
                                         ?.firstName
@@ -1060,13 +990,16 @@ const TaskTab = ({
                                         ?.lastName
                                     }
                                   </p>
+                                  <div className=" text-gray-500 text-[13px] lg:text-[13px] 3xl:text-[17px]">
+                              {filteredRequest?.requestedBy?.role}
+                            </div>
                                 </div>
                               </div>
-                              <p>
-                                {tasks[selectedIndex]?.details.slice(0, 90)}...
+                              <p className="text-gray-800 text-[13px] md:text-[16px] 3xl:text-[19px] capitalize text-center w-6/12 border-r border-[#C8CBD3] px-2">
+                                {tasks[selectedIndex]?.details.slice(0, 50)}...
                               </p>
 
-                              <div className="flex justify-center xs:space-x-2 items-center text-[16px] md:text-lg w-2/12 sm:w-2/12">
+                              <div className="flex justify-center space-x-2 xs:space-x-2 3xl:space-x-3 items-center text-[16px] md:text-lg w-2/12 sm:w-2/12">
                                 <img
                                   onClick={(e) =>
                                     handleUpdateStatusAccept(e, i)
@@ -1085,6 +1018,7 @@ const TaskTab = ({
                             </div>
                           )
                       )}
+                         </div>
                   </>
                 )}
               </>

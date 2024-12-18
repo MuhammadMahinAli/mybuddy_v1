@@ -62,7 +62,7 @@ const Feed = () => {
       switch (tab) {
         case "description":
           data = await apiFetch(
-            `http://localhost:3000/api/v1/member/getUserById/${userId}`,
+            `https://test-two-22w0.onrender.com/api/v1/member/getUserById/${userId}`,
             "GET"
           );
           setUserData((prevState) => ({
@@ -75,7 +75,7 @@ const Feed = () => {
           break;
         case "skill":
           data = await apiFetch(
-            `http://localhost:3000/api/v1/skill/getUserSkillById/${userId}`,
+            `https://test-two-22w0.onrender.com/api/v1/skill/getUserSkillById/${userId}`,
             "GET"
           );
           setUserData((prevState) => ({
@@ -88,7 +88,7 @@ const Feed = () => {
           break;
         case "project":
           data = await apiFetch(
-            `http://localhost:3000/api/v1/project/getUserProjectById/${userId}`,
+            `https://test-two-22w0.onrender.com/api/v1/project/getUserProjectById/${userId}`,
             "GET"
           );
           setUserData((prevState) => ({
@@ -101,7 +101,7 @@ const Feed = () => {
           break;
         case "social":
           data = await apiFetch(
-            `http://localhost:3000/api/v1/socialInfo/getSocialInfoByUser/${userId}`,
+            `https://test-two-22w0.onrender.com/api/v1/socialInfo/getSocialInfoByUser/${userId}`,
             "GET"
           );
           setUserData((prevState) => ({

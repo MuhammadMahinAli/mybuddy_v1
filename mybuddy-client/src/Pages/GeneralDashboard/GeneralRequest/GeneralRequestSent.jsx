@@ -149,7 +149,7 @@ const GeneralRequestSent = () => {
               key={i}
               className="w-full py-4  flex my-5 items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
             >
-              <div className="flex flex-col md:flex-row  items-center space-x-2 text-[16px] md:text-lg   border-r-2  text-center w-3/12 md:w-3/12 lg:w-3/12">
+              <div className="flex flex-col md:flex-row  items-center pl-2 space-x-2 text-[16px] md:text-lg   border-r-2  text-center w-3/12 md:w-3/12 lg:w-3/12">
                 <img
                   src={
                     request?.requestedTo?.profilePic ||
@@ -159,7 +159,7 @@ const GeneralRequestSent = () => {
                   loading="lazy"
                   alt=""
                 />
-                <p className="capitalize pt-1 md:pt-0">
+                <p className="capitalize font-semibold pt-1 md:pt-0">
                   {request?.requestedTo?.name?.firstName}{" "}
                   {request?.requestedTo?.name?.lastName}
                 </p>

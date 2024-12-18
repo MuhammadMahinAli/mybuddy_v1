@@ -51,7 +51,7 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
     if (projectID) {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/project-join-request/Accepted/teamMemberOf/${projectID}/${userId}`,
+          `https://test-two-22w0.onrender.com/api/v1/project-join-request/Accepted/teamMemberOf/${projectID}/${userId}`,
           {
             method: "GET",
             headers: {
@@ -264,7 +264,7 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
     try {
       // Submit form data to the API
       const response = await fetch(
-        "http://localhost:3000/api/v1/meeting/create-new",
+        "https://test-two-22w0.onrender.com/api/v1/meeting/create-new",
         {
           method: "POST",
           headers: {
@@ -703,7 +703,7 @@ export default MeetingForm;
 //     if (projectId) {
 //       // Fetch team members based on the selected project
 //       try {
-//         const response = await fetch(`http://localhost:3000/api/v1/project-join-request/Accepted/teamMemberOf/${projectId}/${userId}`, {
+//         const response = await fetch(`https://test-two-22w0.onrender.com/api/v1/project-join-request/Accepted/teamMemberOf/${projectId}/${userId}`, {
 //           method: 'GET',
 //           headers: {
 //             'Content-Type': 'application/json',
@@ -834,7 +834,7 @@ export default MeetingForm;
 // try {
 //   // Submit form data to the API
 //   const response = await fetch(
-//     "http://localhost:3000/api/v1/meeting/create-new",
+//     "https://test-two-22w0.onrender.com/api/v1/meeting/create-new",
 //     {
 //       method: "POST",
 //       headers: {

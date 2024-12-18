@@ -32,20 +32,7 @@ const LandingFooter = () => {
             </button>
           </div>
         </div>
-        {/* <div className="md:w-[200px] lg:w-[705px] [backdrop-filter:blur(42px)] rounded-31xl bg-white rounded-full border-primary-contrast border-[0.5px] border-solid box-border flex flex-col items-end justify-start max-w-full">
-              <button className="rounded-full cursor-pointer [border:none] pt-[15px] lg:px-[23px] pb-4 bg-[transparent] shadow-[0px_5px_5px_rgba(46,_213,_115,_0.15)] rounded-31xl [background:linear-gradient(-84.24deg,_#2c68ff,_#87a9ff)] flex flex-col items-start justify-start">
-                <div className="flex flex-row items-center justify-start gap-4">
-                  <b className="text-white relative text-lg capitalize font-nunito text-primary-contrast text-left">
-                    subscribe now
-                  </b>
-                  <img
-                    className="h-3  w-6 relative object-contain"
-                    alt=""
-                    src="/vector-6.svg"
-                  />
-                </div>
-              </button>
-            </div> */}
+
       </div>
 
       <div className="pt-10 md:pt-32 lg:pt-60 xl:pt-72 3xl:pt-80">

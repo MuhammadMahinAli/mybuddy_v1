@@ -21,12 +21,24 @@ const HelpPopular = () => {
       title: "profile setup",
       description:
         "customize your profile to represent your expertise and interests. ",
+      tutorials: [
+        {
+          text: "how to create an account?",
+          youtubeLink: "https://youtu.be/lL7AKQBjcyE?si=xpfl2bm7xvx5MgHM",
+        },
+      ],
     },
     {
       image: "./f3.png",
       title: "posting & feed",
       description:
         "share your updates and collaborate with others via posts and feeds.",
+      tutorials: [
+        {
+          text: "how to post in the feed?",
+          youtubeLink: "https://youtu.be/EdiEdjNm8CI?si=Ec6RkankGk0XNXbz",
+        },
+      ],
     },
     {
       image: "./f4.png",
@@ -39,6 +51,12 @@ const HelpPopular = () => {
       title: "project creation & management",
       description:
         "manage your projects seamlessly from creation to completion.",
+      tutorials: [
+        {
+          text: "how create a project?",
+          youtubeLink: "https://youtu.be/hsqNWcYIhQw?si=C5hngeAkqkvlwPYy",
+        },
+      ],
     },
     {
       image: "./f6.png",
@@ -50,11 +68,23 @@ const HelpPopular = () => {
       title: "funding projects",
       description:
         "get donations or attract stakeholders to fund your research.",
+      tutorials: [
+        {
+          text: "how to fund?",
+          youtubeLink: "https://youtu.be/SDYnBtyXKiQ?si=HX1aMhGr73vofTyq",
+        },
+      ],
     },
     {
       image: "./f8.png",
       title: "meetings & attendance",
       description: "schedule and track meetings effortlessly with your team.",
+      tutorials: [
+        {
+          text: "how to create a meeting?",
+          youtubeLink: "https://youtu.be/zsSQ3FIPflM?si=9ZKCECVWtgYv807Y",
+        },
+      ],
     },
     {
       image: "./f9.png",
@@ -76,9 +106,9 @@ const HelpPopular = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-7 px-5 lg:px-10">
         {features.map((feature) => (
-          <div key={feature?.title} className="">
+          <div key={feature?.title} className="cursor-pointer">
             <div
-            onClick={() => t(feature)}
+              onClick={() => t(feature)}
               className={`relative h-[200px] flex flex-col items-start justify-start border py-2 px-4 space-y-3 rounded-xl bg-[#e9f2f9]`}
             >
               <img
@@ -95,7 +125,6 @@ const HelpPopular = () => {
                 <div className="relative text-sm leading-[27px] capitalize text-slategray z-[1] mq450:text-mid mq450:leading-[22px]">
                   {feature.description}
                 </div>
-              
               </div>
             </div>
           </div>
@@ -108,7 +137,7 @@ const HelpPopular = () => {
           >
             <IoIosCloseCircleOutline
               onClick={() => setOpenPopupIndex(null)}
-              className="text-xl absolute right-3 top-3"
+              className="text-xl absolute right-3 top-3 cursor-pointer"
             />
             <img
               className="h-[90px] w-[90px] absolute -left-2 -top-2"
@@ -121,10 +150,28 @@ const HelpPopular = () => {
               <b className="relative capitalize z-[1] text-lg">
                 {openPopupIndex.title}
               </b>
-              <div className="relative text-sm leading-[27px] capitalize text-slategray z-[1] mq450:text-mid mq450:leading-[22px]">
+              <div className="relative  leading-[27px] capitalize text-slategray z-[1] mq450:text-mid mq450:leading-[22px]">
                 {openPopupIndex.description}
               </div>
             </div>
+            {openPopupIndex?.tutorials && (
+              <div className="-space-y- pt-4">
+                <p className="relative capitalize z-[1] text-lg font-bold">
+                  Tutorial:
+                </p>
+                <div>
+                  {openPopupIndex?.tutorials.map((tu) => (
+                    <a
+                      key={tu.text}
+                      className="capitalize text-blue-600 underline"
+                      href={tu.youtubeLink}
+                    >
+                      {tu.text}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -28,7 +28,7 @@ const AdminAllUser = () => {
     setLoading(true); // Set loading to true when fetching data
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/member/getAllMember`,
+        `https://test-two-22w0.onrender.com/api/v1/member/getAllMember`,
         {
           params: {
             page,
@@ -107,7 +107,7 @@ const AdminAllUser = () => {
             {users.length > 0 ? (
               users.map((p, i) => (
                 <div key={i}>
-                  <div className="my-10 bg-white rounded-2xl shadow-lg p-6  text-center relative">
+                  <div className="my-10 bg-white rounded-2xl shadow-lg p-6  text-center relative h-[300px]">
                     {/* Profile Image */}
                     <div className="relative md:w-24 h-16 w-16 md:h-24 mx-auto rounded-full overflow-hidden border-4 border-blue-500 -mt-16">
                       <img

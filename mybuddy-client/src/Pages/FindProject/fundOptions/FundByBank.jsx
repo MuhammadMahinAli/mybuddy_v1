@@ -102,7 +102,7 @@ const FundByBank = ({ selectedProject, userId,setSelectedProject,setIsPayModalOp
     const fetchAdminInfo = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/adminBankInfo/getAdminBankInfo/${adminId}`,
+          `https://test-two-22w0.onrender.com/api/v1/adminBankInfo/getAdminBankInfo/${adminId}`,
           {
             method: "GET",
             headers: {

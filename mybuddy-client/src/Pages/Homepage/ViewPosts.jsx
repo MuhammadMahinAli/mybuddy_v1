@@ -263,7 +263,7 @@ const ViewPosts = ({ theme }) => {
   const updateReaction = async (postId, reactedBy, reactionType) => {
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/PostReact/update-reaction",
+        "https://test-two-22w0.onrender.com/api/v1/PostReact/update-reaction",
         {
           method: "POST",
           headers: {

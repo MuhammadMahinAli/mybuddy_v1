@@ -16,7 +16,7 @@ const Meeting = () => {
   const fetchMeetingData = async (selectedFilter) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/meeting/status?userId=${userId}&filter=${selectedFilter}`
+        `https://test-two-22w0.onrender.com/api/v1/meeting/status?userId=${userId}&filter=${selectedFilter}`
       );
       const data = await response.json();
       setMeetingData({

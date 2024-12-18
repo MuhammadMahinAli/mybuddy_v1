@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../Context/UserContext";
 
 const MobileSidebar = ({
@@ -26,16 +26,21 @@ const MobileSidebar = ({
   openMyTools,
   handleAllPost,
   openAllPost,
-  logout
+  logout,
 }) => {
-  const{singleUser} = useContext(AuthContext);
-  const userImage = singleUser?.data?.profilePic ?  singleUser?.data?.profilePic  : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+  const { singleUser } = useContext(AuthContext);
+  const userImage = singleUser?.data?.profilePic
+    ? singleUser?.data?.profilePic
+    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
+
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="hidden md:block xl:hidden flex flex-col  border-2  w-[60px] md:w-[70px]  bg-[#dce2ea] absolute -top-0 -left-0">
       <div className="flex flex-col  rounded-xl py-2 pl-2 w-[50px] md:w-[60px]">
         <ul className=" ">
           <li className="flex justify-center items-center rounded-t-xl  bg-[#e4ecf7] w-full ">
-          <div className="block  py-1 px-4 lg:p-1 ">
+            <div className="block  py-1 px-4 lg:p-1 ">
               <img src="/logo.png" className="w-8 mt-2" />
             </div>
           </li>
@@ -111,10 +116,12 @@ const MobileSidebar = ({
           </li>
           {/* request */}
           <li
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
             onClick={handleRequest}
             className={`${
               openRequest === true ? "show-content pl-2" : "hide-content"
-            } border-b  cursor-pointer`}
+            } border-b  cursor-pointer relative`}
           >
             {openRequest && (
               <div className=" bg-[#e4ecf7] h-4 rounded-br-[60px]"></div>
@@ -124,19 +131,28 @@ const MobileSidebar = ({
               className={`${
                 openRequest === true
                   ? "bg-[#f3f6f8] rounded-[20px] py-2"
-                  : "bg-[#e4ecf7]  py-3"
+                  : "bg-[rgb(228,236,247)]  py-3"
               } flex relative  items-center justify-center`}
             >
-              <Link to="/dashboard/recieve-request">
-                <img src="/rqst.svg" className="h-5" />
-              </Link>
+              {/* <Link to="/dashboard/recieve-request"> */}
+              <img src="/rqst.svg" className="h-5" />
+              {/* </Link> */}
             </div>
-
             <div
               className={`${
                 openRequest === true ? "block" : "hidden"
               } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
             ></div>
+            {open && (
+              <div className="absolute md:left-14 top-0 z-50 bg-white w-36 space-y-2 rounded-lg shadow-lg px-3 py-3">
+                <p className="text-sm">
+                  <Link to="/dashboard/sent-request">Sent Request</Link>
+                </p>
+                <p className="text-sm">
+                  <Link to="/dashboard/recieve-request">Recieve Request</Link>
+                </p>
+              </div>
+            )}
           </li>
           {/* create project */}
           <li
@@ -157,7 +173,7 @@ const MobileSidebar = ({
               } flex relative  items-center justify-center`}
             >
               <Link to="/dashboard/create-projects">
-                <img src="/create-project.svg" className="h-6 md:h-5" />
+                <img src="/create-project.svg" className="h-6 md:h-7" />
               </Link>
             </div>
 
@@ -179,9 +195,11 @@ const MobileSidebar = ({
             )}
 
             <Link
-            to='/dashboard/fund-proposal'
+              to="/dashboard/fund-proposal"
               className={`${
-                openFund === true ? "bg-[#f3f6f8] rounded-[20px] py-2" : "bg-[#e4ecf7] py-3"
+                openFund === true
+                  ? "bg-[#f3f6f8] rounded-[20px] py-2"
+                  : "bg-[#e4ecf7] py-3"
               } flex relative  items-center justify-center`}
             >
               <img src="/fund2.svg" className="h-6 md:h-5" />
@@ -241,7 +259,7 @@ const MobileSidebar = ({
               } flex relative items-center justify-center`}
             >
               <Link to="/dashboard/my-tools">
-                <img src="/rqst2.svg" className="h-5" />
+                <img src="/myTool.svg" className="h-5 lg:h-6 w-6" />
               </Link>
             </div>
 
@@ -270,7 +288,7 @@ const MobileSidebar = ({
               } flex relative items-center justify-center`}
             >
               <Link to="/dashboard/all-post">
-                <img src="/rqst2.svg" className="h-5" />
+                <img src="/allPost.svg" className="h-5" />
               </Link>
             </div>
 
@@ -292,9 +310,11 @@ const MobileSidebar = ({
             )}
 
             <Link
-            to="/dashboard/meeting-schedule"
+              to="/dashboard/meeting-schedule"
               className={`${
-                openMeet === true ? "bg-[#f3f6f8] rounded-[20px] py-3" : "bg-[#e4ecf7]  py-3"
+                openMeet === true
+                  ? "bg-[#f3f6f8] rounded-[20px] py-3"
+                  : "bg-[#e4ecf7]  py-3"
               } flex relative  items-center justify-center`}
             >
               <img src="/video.svg" className="h-3" />
@@ -324,10 +344,9 @@ const MobileSidebar = ({
                   : "bg-[#e4ecf7]  py-3"
               } flex relative  items-center justify-center`}
             >
-              < Link to='/user/edit-profile'> 
-              <img src={userImage} className="h-6 w-7 rounded-full" />
+              <Link to="/user/edit-profile">
+                <img src={userImage} className="h-6 w-7 rounded-full" />
               </Link>
-
             </div>
 
             <div
@@ -348,7 +367,7 @@ const MobileSidebar = ({
             )}
 
             <Link
-            to='/dashboard/setting'
+              to="/dashboard/setting"
               className={`${
                 openSetting === true
                   ? "bg-[#f3f6f8] rounded-[20px] py-2"
@@ -370,11 +389,11 @@ const MobileSidebar = ({
               border-b  cursor-pointer  relative `}
           >
             <div
-            onClick={logout}
+              onClick={logout}
               className={`bg-[#e4ecf7] py-3
                  flex relative lg:space-x-3 xl:space-x-6 rounded-b-xl items-center justify-center`}
             >
-              <img src="/logout.svg" className="h-4" />
+              <img src="/logout.svg" className="h-7 " />
             </div>
           </li>
         </ul>
@@ -406,4 +425,4 @@ MobileSidebar.propTypes = {
   openRequestOption: PropTypes.bool.isRequired,
   setOpenRequestOption: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
-}
+};

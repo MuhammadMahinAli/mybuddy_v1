@@ -164,7 +164,7 @@ const TaskTable = ({ tasks, setSelectedTasks,  selectedTasks, theme, setIsOpen, 
                     </p>
                   </div>
                 </div>
-                <img className="hidden xs:block h-10 xl:h-12" src={man} />
+            
               </div>
             </div>
           ))}
@@ -252,7 +252,7 @@ const TaskTable = ({ tasks, setSelectedTasks,  selectedTasks, theme, setIsOpen, 
                           } text-[16px] capitalize font-semibold`}
                         >
                           {" "}
-                          {tasks[index]?.title.slice(0, 10)} ...
+                          {tasks[index]?.title.slice(0, 14)} ...
                         </p>
                         <p
                           className={`${
@@ -260,11 +260,11 @@ const TaskTable = ({ tasks, setSelectedTasks,  selectedTasks, theme, setIsOpen, 
                           } text-[15px] capitalize font-semibold`}
                         >
                           {" "}
-                          {tasks[index]?.details.slice(0, 10)} ...
+                          {tasks[index]?.details.slice(0, 13)} ...
                         </p>
                       </div>
                     </div>
-                    <img className="h-10 xl:h-12" src={man} />
+                
                   </div>
                 </div>
               )
@@ -348,7 +348,7 @@ const TaskTable = ({ tasks, setSelectedTasks,  selectedTasks, theme, setIsOpen, 
                           } text-[16px] capitalize font-semibold`}
                         >
                           {" "}
-                          {tasks[index]?.title.slice(0, 10)} ...
+                          {tasks[index]?.title.slice(0, 14)} ...
                         </p>
                         <p
                           className={`${
@@ -356,14 +356,11 @@ const TaskTable = ({ tasks, setSelectedTasks,  selectedTasks, theme, setIsOpen, 
                           } text-[15px] capitalize font-semibold`}
                         >
                           {" "}
-                          {tasks[index]?.details.slice(0, 10)} ...
+                          {tasks[index]?.details.slice(0, 13)} ...
                         </p>
                       </div>
                     </div>
-                    <img
-                      className="h-10 xl:h-12 lg:hidden xl:block"
-                      src={man}
-                    />
+                    
                   </div>
                 </div>
               )

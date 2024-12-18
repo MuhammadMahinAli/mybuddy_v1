@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const ViewTaskDetails = ({ isOpenModal, tasks, closeModal }) => {
   console.log("t1", tasks[0].details);
@@ -31,8 +32,12 @@ const ViewTaskDetails = ({ isOpenModal, tasks, closeModal }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full  transform overflow-hidden rounded-2xl bg-[#e0e5ec] p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full md:mx-9 lg:mx-20 3xl:mx-40 transform overflow-hidden rounded-2xl bg-[#e0e5ec] p-6 text-left align-middle shadow-xl transition-all">
                 <div>
+                  <IoIosCloseCircleOutline
+                    onClick={closeModal}
+                    className="text-xl float-right cursor-pointer"
+                  />
                   <h2 className="text-xl font-bold mb-4">Task Details</h2>
 
                   {tasks.map((t, i) => (

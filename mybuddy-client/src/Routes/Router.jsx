@@ -177,7 +177,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/details/:id",
         element: <GeneralProjectDetails />,
-        loader: ({ params }) => fetch(`http://localhost:3000/api/v1/project/getProjectById/${params.id}`)
+        loader: ({ params }) => fetch(`https://test-two-22w0.onrender.com/api/v1/project/getProjectById/${params.id}`)
       },
       {
         path: "/dashboard/test",
@@ -221,7 +221,7 @@ const router = createBrowserRouter([
       // {
       //   path: "/dashboard/details/:id",
       //   element: <GeneralProjectDetails />,
-      //   loader: ({ params }) => fetch(`http://localhost:3000/api/v1/project/getProjectById/${params.id}`)
+      //   loader: ({ params }) => fetch(`https://test-two-22w0.onrender.com/api/v1/project/getProjectById/${params.id}`)
       // },
      
     ],

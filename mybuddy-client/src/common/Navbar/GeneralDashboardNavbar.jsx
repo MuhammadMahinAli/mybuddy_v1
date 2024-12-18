@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/UserContext";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import { useAuthCheck } from "../../utils/useAuthCheck";
 
 const GeneralDashboardNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,6 +22,30 @@ const GeneralDashboardNavbar = () => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
+
+   // logout
+      const { logout: originalLogout } = useAuthCheck();
+      const navigate = useNavigate()
+      const logout = async () => {
+        const result = await Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, log me out!",
+        });
+    
+        if (result.isConfirmed) {
+          originalLogout();
+          Swal.fire({
+            icon: "success",
+            text: "Logged out successfully!",
+          });
+          navigate("/login");
+        }
+      };
 
   return (
     <div className="px-2 py-4 mx-auto  bg-tr md:pr-8 sm:px-5 lg:px-8 gray500 bg-[#DFF1FE] sm:bg-[#EFF4FA]">
@@ -50,11 +76,9 @@ const GeneralDashboardNavbar = () => {
             </Link>
           </li>
           <li>
-           
-              <p className="capitalize px-4 py-[5px] text-[18px] font-semibold rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
+            <p className="capitalize px-4 py-[5px] text-[18px] font-semibold rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
               connect wallet
-              </p>
-         
+            </p>
           </li>
           <li>
             <div className="px-3 py-1 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
@@ -65,16 +89,15 @@ const GeneralDashboardNavbar = () => {
           </li>
         </ul>
         <div className="md:hidden">
-          <button
-            aria-label="Open Menu"
-            title="Open Menu"
+          <Link
+          to="/user/edit-profile"
             className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
-            onClick={() => setIsMenuOpen(true)}
+            
           >
             <div className="px-2 py-1 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
               <img src="/user.svg" className="h-5" />
             </div>
-          </button>
+          </Link>
           {/* <button
             aria-label="Open Menu"
             title="Open Menu"
@@ -154,12 +177,36 @@ const GeneralDashboardNavbar = () => {
                       <Link
                         to="/dashboard/sent-request"
                         className={`${
+                          isPageActive("/dashboard/sent-request")
+                            ? "font-bold"
+                            : "font-medium"
+                        } tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400`}
+                      >
+                        Sent Requests
+                      </Link>
+                    </li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard/sent-request"
+                        className={`${
                           isPageActive("/dashboard/recieve-request")
                             ? "font-bold"
                             : "font-medium"
                         } tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400`}
                       >
-                        Requests
+                        Recieve Requests
+                      </Link>
+                    </li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard/sent-request"
+                        className={`${
+                          isPageActive("/dashboard/recieve-request")
+                            ? "font-bold"
+                            : "font-medium"
+                        } tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400`}
+                      >
+                        Create Project
                       </Link>
                     </li>
                     <li className="border-b w-full text-center pb-2">
@@ -186,6 +233,43 @@ const GeneralDashboardNavbar = () => {
                         Friend Request
                       </Link>
                     </li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard/all-post"
+                        className={`${
+                          isPageActive("/dashboard/all-post")
+                            ? "font-bold"
+                            : "font-medium"
+                        }  tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400`}
+                      >
+                        All Post
+                      </Link>
+                    </li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard/my-tools"
+                        className={`${
+                          isPageActive("/dashboard/my-tools")
+                            ? "font-bold"
+                            : "font-medium"
+                        }  tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400`}
+                      >
+                        My Tools
+                      </Link>
+                    </li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard/meeting-schedule"
+                        className={`${
+                          isPageActive("/dashboard/meeting-schedule")
+                            ? "font-bold"
+                            : "font-medium"
+                        }  tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400`}
+                      >
+                        Meeting
+                      </Link>
+                    </li>
+
                     <li className="w-full pt-2">
                       <Link
                         to="/user/edit-profile"
@@ -206,6 +290,28 @@ const GeneralDashboardNavbar = () => {
                           </p> */}
                         </div>
                       </Link>
+                    </li>
+                    <li className="border-b w-full text-center pb-2">
+                      <Link
+                        to="/dashboard/setting"
+                        className={`${
+                          isPageActive("/dashboard/setting")
+                            ? "font-bold"
+                            : "font-medium"
+                        }  tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400`}
+                      >
+                        Setting
+                      </Link>
+                    </li>
+                    <li
+                      onClick={logout}
+                      className="border-b w-full text-center pb-2"
+                    >
+                      <p
+                        className={` tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400`}
+                      >
+                        Logout
+                      </p>
                     </li>
                   </ul>
                 </nav>

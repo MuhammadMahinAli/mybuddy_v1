@@ -150,7 +150,7 @@ const GeneralRequestRecieve = () => {
               key={i}
               className="w-full px-1 py-4  flex my-5 justify-between items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
             >
-              <div className="flex  justify-start items-center space-x-1 text-[16px] md:text-lg   border-r-2  text-center w-4/12 sm:w-3/12">
+              <div className="flex  justify-start items-center pl-2 space-x-1 text-[16px] md:text-lg   border-r-2  text-center w-4/12 sm:w-3/12">
                 <img
                   src={
                     request?.requestedBy?.profilePic ||
@@ -160,9 +160,9 @@ const GeneralRequestRecieve = () => {
                   loading="lazy"
                   alt=""
                 />
-                <p className=" capitalize pt-1 md:pt-0">
+                <p className="font-semibold capitalize pt-1 md:pt-0">
                   {request?.requestedBy?.name?.firstName}{" "}
-                  <span className="hidden lg:inline-block">
+                  <span className="hidden lg:inline-block font-semibold">
                     {request?.requestedBy?.name?.lastName.length > 3
                       ? request?.requestedBy?.name?.lastName.slice(0, 3)
                       : request?.requestedBy?.name?.lastName}
@@ -180,7 +180,7 @@ const GeneralRequestRecieve = () => {
               </div>
               <div
                 onClick={(e) => openModal(e, i)}
-                className="text-center cursor-pointer px-3 text-[15px] hidden xs:block  border-r-2 sm:w-3/12 "
+                className="text-center cursor-pointer px-3 text-[16px] md:text-[18px] hidden xs:block  border-r-2 sm:w-3/12 "
               >
                 View Details
                 {/* modal */}

@@ -109,7 +109,7 @@ const FindProject = () => {
     setLoading(true); // Set loading to true when fetching data
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/project/getAll`,
+        `https://test-two-22w0.onrender.com/api/v1/project/getAll`,
         {
           params: {
             page,
@@ -130,7 +130,7 @@ const FindProject = () => {
       if (
         error.response &&
         error.response.data.message ===
-          "No project matched with the provided uniqueId."
+        "No project matched with the provided uniqueId."
       ) {
         setAllProjects([]); // No match found
       }
@@ -253,10 +253,10 @@ const FindProject = () => {
             //console.log(project);
             const buttonText =
               status === "Pending" ||
-              status === "Declined" ||
-              status === "Completed" ||
-              status === "Accepted" ||
-              status === "Done"
+                status === "Declined" ||
+                status === "Completed" ||
+                status === "Accepted" ||
+                status === "Done"
                 ? "Sent"
                 : "Join";
 
@@ -269,24 +269,22 @@ const FindProject = () => {
               today < startDate
                 ? "upcoming"
                 : today > endDate
-                ? "ended"
-                : "running";
+                  ? "ended"
+                  : "running";
 
             return (
               <div
                 key={i}
-                className={`${
-                  theme !== "light" &&
+                className={`${theme !== "light" &&
                   "p-[1px] bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90%  rounded-[27px]"
-                }`}
+                  }`}
               >
                 <div
                   key={i}
-                  className={`${
-                    theme === "light"
+                  className={`${theme === "light"
                       ? "bg-[#fff] shadow-[-1px_0px_56px_-6px_rgba(134,_134,_134,_0.25)]]"
                       : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover "
-                  } py-6 md:px-4 px-6  rounded-[27px]`}
+                    } py-6 md:px-4 px-6  rounded-[27px]`}
                 >
                   {/* projet name & join */}
                   <div className="flex justify-between">
@@ -317,9 +315,8 @@ const FindProject = () => {
 
                         <div>
                           <p
-                            className={`${
-                              theme === "light" ? "graish" : "text-white"
-                            } text-[14px] md:text-[16px] xl:text-[20px] font-semibold`}
+                            className={`${theme === "light" ? "graish" : "text-white"
+                              } text-[14px] md:text-[16px] xl:text-[20px] font-semibold`}
                           >
                             <span className=" pl-1 font-medium capitalize">
                               {" "}
@@ -329,22 +326,46 @@ const FindProject = () => {
                           </p>
                           {project?.user?.country && (
                             <p
-                              className={`${
-                                theme === "light" ? "graish" : "text-white"
-                              } text-[14px] md:text-[16px] xl:text-[20px]`}
+                              className={`${theme === "light" ? "graish" : "text-white"
+                                } text-[14px] md:text-[16px] xl:text-[20px]`}
                             >
                               <span
-                                className={`${
-                                  theme === "light"
+                                className={`${theme === "light"
                                     ? "text-gray-500"
                                     : "text-white"
-                                } capitalize text-[13px] md:text-[15px] xl:text-[19px] font-normal pl-1`}
+                                  } capitalize text-[13px] md:text-[15px] xl:text-[19px] font-normal pl-1`}
                               >
                                 {project?.user?.country}
                               </span>
                             </p>
                           )}
                           <p
+                            className={`${theme === "light" ? "graish" : "text-white"
+                              } text-[11px] lg:text-[16px] 3xl:text-[18px] font-medium pl-1 pt-1`}
+                          >
+                            {statuss === "ended" ? (
+                              <>
+                                Project: <b>{project.projectName}</b> is <strong>ended</strong>. It started
+                                on {startDate.toLocaleDateString()} and ended on{" "}
+                                {endDate.toLocaleDateString()}.
+                              </>
+                            ) : statuss === "upcoming" ? (
+                              <>
+                                Project: <b>{project.projectName}</b> will{" "}
+                                <strong>start</strong> very soon. It will start on{" "}
+                                {startDate.toLocaleDateString()} and end on{" "}
+                                {endDate.toLocaleDateString()}.
+                              </>
+                            ) : (
+                              <>
+                                Project: <b>{project.projectName}</b> is <strong>ongoing</strong>. It started
+                                on {startDate.toLocaleDateString()} and will end on{" "}
+                                {endDate.toLocaleDateString()}.
+                              </>
+                            )}
+                          </p>
+
+                          {/* <p
                             className={`${
                               theme === "light" ? "graish" : "text-white"
                             }  text-[11px] lg:text-[16px] 3xl:text-[18px] font-medium pl-1 pt-1`}
@@ -352,15 +373,15 @@ const FindProject = () => {
                             {statuss === "ended"
                               ? `Project: ${
                                   project.projectName
-                                } is ended. It started on ${startDate.toLocaleDateString()} and ended on ${endDate.toLocaleDateString()}.`
+                                } is <strong>ended</strong>. It started on ${startDate.toLocaleDateString()} and ended on ${endDate.toLocaleDateString()}.`
                               : statuss === "upcoming"
                               ? `Project: ${
                                   project.projectName
-                                } will start very soon. It will start on ${startDate.toLocaleDateString()} and end on ${endDate.toLocaleDateString()}.`
+                                } will <strong>start</strong> very soon. It will start on ${startDate.toLocaleDateString()} and end on ${endDate.toLocaleDateString()}.`
                               : `Project: ${
                                   project.projectName
-                                } is ongoing. It started on ${startDate.toLocaleDateString()} and will end on ${endDate.toLocaleDateString()}.`}
-                          </p>
+                                } is <strong>ongoing</strong>. It started on ${startDate.toLocaleDateString()} and will end on ${endDate.toLocaleDateString()}.`}
+                          </p> */}
                         </div>
                       </div>
                     </Link>
@@ -529,9 +550,8 @@ const FindProject = () => {
                   )}
                   <div
                     onClick={() => toggleDescription(i)}
-                    className={`${
-                      theme === "light" ? "graish" : "text-white"
-                    } flex justify-center items-center cursor-pointer pb-5 lg:pb-0 3xl:py-5`}
+                    className={`${theme === "light" ? "graish" : "text-white"
+                      } flex justify-center items-center cursor-pointer pb-5 lg:pb-0 3xl:py-5`}
                   >
                     <div className="flex flex-col justify-center items-center -space-y-1">
                       {openDescriptionIndex === i && (
@@ -560,9 +580,8 @@ const FindProject = () => {
                   </div> */}
 
                   <ul
-                    className={`${
-                      theme === "light" ? "graish" : "text-white"
-                    } flex space-x-3 md:space-x-6 pt-5 border-t `}
+                    className={`${theme === "light" ? "graish" : "text-white"
+                      } flex space-x-3 md:space-x-6 pt-5 border-t `}
                   >
                     <li className="flex items-center space-x-2">
                       <LikeIcon theme={theme} />
@@ -595,11 +614,10 @@ const FindProject = () => {
                   </ul>
                   {/* Popup Modal */}
                   {isPayModalOpen === true && (
-                    <div className={`${
-                      theme === "light"
+                    <div className={`${theme === "light"
                         ? "bg-black/5"
                         : "bg-black/15"
-                    }  z-50 fixed top-0 left-0  flex justify-center items-center  bg-opacity-50 w-screen h-screen overflow-y-scroll`}>
+                      }  z-50 fixed top-0 left-0  flex justify-center items-center  bg-opacity-50 w-screen h-screen overflow-y-scroll`}>
                       <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all md:w-[600px] 3xl:w-[800px] h-[600px] 3xl:h-[700px] overflow-y-scroll cursor-pointer">
                         <IoIosCloseCircleOutline
                           onClick={() => setIsPayModalOpen(false)}
@@ -649,11 +667,10 @@ const FindProject = () => {
                                   onClick={() =>
                                     handlePaymentSelection("Paypal")
                                   }
-                                  className={`cursor-pointer p-1 rounded-lg ${
-                                    selectedPayment === "Paypal"
+                                  className={`cursor-pointer p-1 rounded-lg ${selectedPayment === "Paypal"
                                       ? "border-2 p-2 lg:p-3 border-blue-500 bg-blue-100"
                                       : "border-2 p-2 lg:p-3 border-gray-300"
-                                  }`}
+                                    }`}
                                 >
                                   <img
                                     className="w-8 h-8 lg:h-12 lg:w-12"
@@ -665,11 +682,10 @@ const FindProject = () => {
                                   onClick={() =>
                                     handlePaymentSelection("Payoneer")
                                   }
-                                  className={`cursor-pointer p-1 rounded-lg ${
-                                    selectedPayment === "Payoneer"
+                                  className={`cursor-pointer p-1 rounded-lg ${selectedPayment === "Payoneer"
                                       ? "border-2 p-2 lg:p-3 border-blue-500 bg-blue-100"
                                       : "border-2 p-2 lg:p-3 border-gray-300"
-                                  }`}
+                                    }`}
                                 >
                                   <img
                                     className="w-8 h-8 lg:h-12 lg:w-12"
@@ -681,11 +697,10 @@ const FindProject = () => {
                                   onClick={() =>
                                     handlePaymentSelection("Stripe")
                                   }
-                                  className={`cursor-pointer p-1 rounded-lg ${
-                                    selectedPayment === "Stripe"
+                                  className={`cursor-pointer p-1 rounded-lg ${selectedPayment === "Stripe"
                                       ? "border-2  border-blue-500 px-3  py-2 bg-blue-100"
                                       : "border-2 px-2 py-1 lg:px-3 lg:py-2 border-gray-300"
-                                  }`}
+                                    }`}
                                 >
                                   <img
                                     className="h-10 w-10 lg:h-14 lg:w-14"
@@ -698,11 +713,10 @@ const FindProject = () => {
                                   onClick={() =>
                                     handlePaymentSelection("Bank transfer")
                                   }
-                                  className={`cursor-pointer p-1 rounded-lg ${
-                                    selectedPayment === "Bank transfer"
+                                  className={`cursor-pointer p-1 rounded-lg ${selectedPayment === "Bank transfer"
                                       ? "border-2 p-2 lg:p-3 border-blue-500 bg-blue-100"
                                       : "border-2 p-2 lg:p-3 border-gray-300"
-                                  }`}
+                                    }`}
                                 >
                                   <img
                                     className="w-8 h-8 lg:h-12 lg:w-12"
@@ -842,16 +856,14 @@ const FindProject = () => {
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className={`${
-                theme === "light" ? "text-gray-600" : "text-white"
-              } py-2 rounded-lg mx-2`}
+              className={`${theme === "light" ? "text-gray-600" : "text-white"
+                } py-2 rounded-lg mx-2`}
             >
               <FaRegArrowAltCircleLeft className="text-2xl" />
             </button>
             <span
-              className={`${
-                theme === "light" ? "text-gray-600" : "text-white"
-              }`}
+              className={`${theme === "light" ? "text-gray-600" : "text-white"
+                }`}
             >
               Page {currentPage} of {totalPages}
             </span>
@@ -860,9 +872,8 @@ const FindProject = () => {
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
-              className={`${
-                theme === "light" ? "text-gray-600" : "text-white"
-              } py-2 rounded-lg mx-2`}
+              className={`${theme === "light" ? "text-gray-600" : "text-white"
+                } py-2 rounded-lg mx-2`}
             >
               <FaRegArrowAltCircleRight className="text-2xl" />
             </button>
