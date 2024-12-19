@@ -4,9 +4,11 @@ import { AuthContext } from "../../Context/UserContext";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useAuthCheck } from "../../utils/useAuthCheck";
+import { IoIosArrowDown } from "react-icons/io";
 
 const GeneralDashboardNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const location = useLocation(); // Get the current location
   const isPageActive = (path) => {
@@ -23,33 +25,33 @@ const GeneralDashboardNavbar = () => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
-   // logout
-      const { logout: originalLogout } = useAuthCheck();
-      const navigate = useNavigate()
-      const logout = async () => {
-        const result = await Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, log me out!",
-        });
-    
-        if (result.isConfirmed) {
-          originalLogout();
-          Swal.fire({
-            icon: "success",
-            text: "Logged out successfully!",
-          });
-          navigate("/login");
-        }
-      };
+  // logout
+  const { logout: originalLogout } = useAuthCheck();
+  const navigate = useNavigate();
+  const logout = async () => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log me out!",
+    });
+
+    if (result.isConfirmed) {
+      originalLogout();
+      Swal.fire({
+        icon: "success",
+        text: "Logged out successfully!",
+      });
+      navigate("/login");
+    }
+  };
 
   return (
-    <div className="px-2 ssm:py-4 mx-auto  bg-tr md:pr-8 sm:px-5 lg:px-8 gray500 bg-[#DFF1FE] sm:bg-[#EFF4FA]">
-      <div className="relative flex items-center justify-between  w-full">
+    <div className="px-2  ssm:py-0 mx-auto  bg-tr md:pr-8 sm:px-5 lg:px-8 gray500 bg-[#DFF1FE] sm:bg-[#EFF4FA]">
+      <div className="relative flex items-center justify-between h-[60px] xs:h-[70px] w-full">
         <div className="xl:space-x-1">
           <button
             aria-label="Open Menu"
@@ -90,25 +92,14 @@ const GeneralDashboardNavbar = () => {
         </ul>
         <div className="md:hidden">
           <Link
-          to="/user/edit-profile"
+            to="/user/edit-profile"
             className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
-            
           >
             <div className="px-2 py-1 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
               <img src="/user.svg" className="h-5" />
             </div>
           </Link>
-          {/* <button
-            aria-label="Open Menu"
-            title="Open Menu"
-            01767884999  985236
-            className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
-            onClick={() => setIsMenuOpen(true)}
-          >
-            <div className="px-2 py-2 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
-              <img src="/hambrgr2.svg" className="h-4" />
-            </div>
-          </button> */}
+
           {isMenuOpen && (
             <div className="absolute top-0 left-0 w-full z-50">
               <div className="p-5 bg-[#DFF1FE] border rounded shadow-sm">
@@ -173,7 +164,7 @@ const GeneralDashboardNavbar = () => {
                         All Projects
                       </Link>
                     </li>
-                    <li className="border-b w-full text-center pb-2">
+                    {/* <li className="border-b w-full text-center pb-2">
                       <Link
                         to="/dashboard/sent-request"
                         className={`${
@@ -196,6 +187,36 @@ const GeneralDashboardNavbar = () => {
                       >
                         Recieve Requests
                       </Link>
+                    </li> */}
+                    <li
+                      onClick={() => setOpen(!open)}
+                      className="border-b flex items-center justify-center w-full text-center pb-2 "
+                    >
+                      <div>
+                        <div className="flex items-center space-x-5">
+                          <p
+                            className={`${
+                              isPageActive("/dashboard/recieve-request")
+                                ? "font-bold"
+                                : "font-medium"
+                            } tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400`}
+                          >
+                            Requests
+                          </p>
+                          <span className="flex-1">
+                            <IoIosArrowDown />
+                          </span>
+                        </div>
+                        {open && (
+                          <div className="flex flex-col justify-start items-start space-y-1 pl-2 pt-2">
+                            <Link to="/dashboard/sent-request"> Sent</Link>
+                            <Link to="/dashboard/recieve-request">
+                              {" "}
+                              Recieve
+                            </Link>
+                          </div>
+                        )}
+                      </div>
                     </li>
                     <li className="border-b w-full text-center pb-2">
                       <Link
@@ -269,7 +290,6 @@ const GeneralDashboardNavbar = () => {
                         Meeting
                       </Link>
                     </li>
-
                     <li className="w-full pt-2">
                       <Link
                         to="/user/edit-profile"

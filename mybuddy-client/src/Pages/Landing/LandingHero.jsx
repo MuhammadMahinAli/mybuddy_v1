@@ -140,9 +140,9 @@ const LandingHero = () => {
 
       {/* tab image */}
 
-      <div className="mx-3  [backdrop-filter:blur(42px)] rounded-xl [background:linear-gradient(112.83deg,_rgba(255,_255,_255,_0.2),_rgba(255,_255,_255,_0.55))] border-primary-contrast border-[0.1px] border-solid flex flex-col items-start justify-start  p-1 ">
+      <div className="mx-3  [backdrop-filter:blur(42px)] rounded-xl [background:linear-gradient(112.83deg,_rgba(255,_255,_255,_0.2),_rgba(255,_255,_255,_0.55))] border-primary-contrast border-[0.1px] border-solid flex flex-col items-start justify-start  p-3 ">
         <img
-          className="h-[170px] md:h-[350px] lg:h-[450px] relative rounded-lg  overflow-hidden  object-cover"
+          className="h-[170px] md:h-[310px] lg:h-[530px] xl:h-[650px] 3xl:h-[750px] relative rounded-lg  overflow-hidden  object-cover"
           loading="lazy"
           alt=""
           src={openFeed ? heroFeed : openManage ? heroManage : openProject ? heroProject : "/1280-1@2x.png"}

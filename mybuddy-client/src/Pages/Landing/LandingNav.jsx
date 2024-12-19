@@ -103,7 +103,8 @@ const LandingNav = () => {
               </p>
             </nav>
           </div>
-          <button className="rounded-full cursor-pointer [border:none] py-3.5 px-[35px] bg-[transparent] shadow-[1px_2px_5px_rgba(113,_157,_255,_0.15)] rounded-7xl [background:linear-gradient(-86.36deg,_#aec4fc,_#f1f5fe)] flex flex-row items-center justify-center">
+          {/* [background:linear-gradient(-86.36deg,_#aec4fc,_#f1f5fe)] */}
+          <button className="hover:[background:linear-gradient(-86.36deg,_#aec4fc,_#f1f5fe)] rounded-full cursor-pointer  py-3.5 px-[35px] bg-[transparent] shadow-[1px_2px_5px_rgba(113,_157,_255,_0.15)] rounded-7xl [background:linear-gradient(-86.36deg,_#f1f5fe,_#aec4fc)] flex flex-row items-center justify-center">
             <Link
               to="/sign-up"
               className="[text-decoration:none] relative text-xl capitalize font-semibold font-nunito text-dimgray-200 text-left"

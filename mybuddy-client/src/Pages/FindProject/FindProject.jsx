@@ -290,7 +290,7 @@ const FindProject = () => {
                   <div className="flex items-start justify-between">
                     {/* profile */}
                     <Link to={`/user/profile/${project?.user?._id}`}>
-                      <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 space-x-0 md:space-x-2 pb-1 md:pb-0">
+                      <div className="flex flex-col xs:flex-row space-y-2 xs:space-y-0 space-x-0 xs:space-x-2 pb-1 md:pb-0">
                         <div className="relative">
                           <img
                             src={
@@ -299,10 +299,10 @@ const FindProject = () => {
                             }
                             loading="lazy"
                             alt=""
-                            className="h-9 w-9 md:h-10 md:w-10 lg:w-8 lg:h-8 xl:w-16 xl:h-16  rounded-full p-[6px]"
+                            className="h-9 w-9 md:h-14 md:w-14 lg:w-16  lg:h-16 xl:w-16  rounded-full p-[6px]"
                           />
                           <img
-                            className="h-9 w-9 md:h-10 md:w-10 lg:w-8 lg:h-8 xl:w-16 xl:h-16 absolute top-0  md:right-0"
+                            className="h-9 w-9 md:h-14 md:w-14 lg:w-16  lg:h-16 xl:w-16 absolute top-0  md:right-0"
                             src={
                               theme === "light"
                                 ? feedDarkBorder

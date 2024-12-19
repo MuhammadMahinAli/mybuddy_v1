@@ -139,28 +139,28 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     <div className="w-full">
       {/* table */}
       {tasks?.length > 0 && (
-        <div className="w-[300px] xs:w-[330px] ssm:w-[370px] sm:w-[570px] md:w-[630px] lg:w-full overflow-x-auto xl:overflow-hidden">
+        <div className="w-[220px] xs:w-[280px] ssm:w-[310px] sm:w-[510px] md:w-[630px] lg:w-full overflow-x-auto xl:overflow-hidden">
           {/* table head */}
-          <div className="min-w-[900px] md:min-w-[900px] xl:min-w-[1000px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">
+          <div className="min-w-[800px] md:min-w-[900px] xl:min-w-[1000px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 xs:w-2/12 border-r border-[#C8CBD3]">
               Title
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-3/12 border-r border-[#C8CBD3]">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 xs:w-3/12 border-r border-[#C8CBD3]">
               Details
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-[#C8CBD3]">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-[100px] xs:w-1/12 border-r border-[#C8CBD3]">
               Budget
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 xs:w-2/12 border-r border-[#C8CBD3]">
               Deadline
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 xs:w-2/12 border-r border-[#C8CBD3]">
               Priority
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-[#C8CBD3]">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 xs:w-1/12 border-r border-[#C8CBD3]">
               Subtasks
             </div>
-            <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12">
+            <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 xs:w-2/12">
               Action
             </div>
           </div>
@@ -168,35 +168,35 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
           {tasks?.map((task, i) => (
             <div
               key={i}
-              className="min-w-[900px] md:min-w-[900px] xl:min-w-[1000px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
+              className="min-w-[800px] md:min-w-[900px] xl:min-w-[1000px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
             >
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 xs:w-2/12 border-r border-[#C8CBD3]">
                 {task.title.length > 9
                   ? `${task.title.slice(0, 9)}...`
                   : task.title}
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-3/12 border-r border-[#C8CBD3]">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 xs:w-3/12 border-r border-[#C8CBD3]">
                 {task.details.length > 20
                   ? `${task.details.slice(0, 22)}...`
                   : task.details}
               </div>
-              <div onClick={(e)=>e.preventDefault()} className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-[#C8CBD3] px-2">
+              <div onClick={(e)=>e.preventDefault()} className="text-[14px] md:text-[16px] capitalize text-center w-[100px] xs:w-1/12 border-r border-[#C8CBD3] px-2">
                 <p className=" px-3 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
                   Free
                 </p>
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 xs:w-2/12 border-r border-[#C8CBD3]">
                 {formatDate(task.endDate)}
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 xs:w-2/12 border-r border-[#C8CBD3]">
                 <p className={task.priority === "high" ? "bg-red-200 text-red-600  border-red-600 py-2 rounded-lg mx-5 border" : task.priority === "medium" ? "bg-[#ffe9d4] text-orange-600  border-orange-600 py-2 rounded-lg mx-5 border": "bg-blue-200 text-blue-600  border-blue-600 py-2 rounded-lg mx-5 border"}>
                   {task.priority}
                 </p>
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 border-r border-[#C8CBD3]">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 xs:w-1/12 border-r border-[#C8CBD3]">
                 {task.subTask.length}
               </div>
-              <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 flex justify-center items-center">
+              <div className="text-[14px] md:text-[16px] capitalize text-center w-1/12 xs:w-2/12 flex justify-center items-center">
                 <IoTrashOutline
                   onClick={() => removeTask(i)}
                   className="text-xl text-red-500 cursor-pointer"
@@ -234,12 +234,12 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
         </div>
 
         {/* details */}
-        <div className=" xs:w-full  md:w-9/12 lg:w-[550px] flex flex-col space-y-3 w-full">
+        <div className=" xs:w-full  md:w-9/12 lg:w-[550px] flex flex-col space-y-3">
           <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">
             <label className="text-[16px] md:text-xl md:pr-2 lg:pr-5">
               Budget:
             </label>
-            <p className=" px-5 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
+            <p className="w-28 text-center px-5 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
               Free
             </p>
           </div>
