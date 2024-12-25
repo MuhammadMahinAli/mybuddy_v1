@@ -186,7 +186,7 @@ const FriendSection = ({ theme }) => {
                             src={
                               user?.profilePic
                                 ? user?.profilePic
-                                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                                : "https://i.ibb.co.com/FKKD4mT/opp.png"
                             }
                             className={`h-[54px] w-[54px] rounded-full p-[5px] `}
                           />
@@ -259,7 +259,7 @@ const FriendSection = ({ theme }) => {
                               src={
                                 profilePic
                                   ? profilePic
-                                  : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                                  : "https://i.ibb.co.com/FKKD4mT/opp.png"
                               }
                               className={` h-[54px] w-[54px]  rounded-full p-[6px] `}
                             />
@@ -321,7 +321,7 @@ const FriendSection = ({ theme }) => {
                             src={
                               user?.requestedBy?.profilePic
                                 ? user?.requestedBy?.profilePic
-                                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                                : "https://i.ibb.co.com/FKKD4mT/opp.png"
                             }
                             className={`h-[54px] w-[54px] rounded-full p-[5px]  `}
                           />
@@ -384,7 +384,7 @@ export default FriendSection;
 //                     src={
 //                       user?.profilePic
 //                         ? user?.profilePic
-//                         : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//                         : "https://i.ibb.co.com/FKKD4mT/opp.png"
 //                     }
 //                     className={` ${
 //                       theme === "light" ? "border-gray-500" : "border-white"
@@ -427,7 +427,7 @@ export default FriendSection;
 //                    src={
 //                      user?.profilePic
 //                        ? user?.requestedBy?.profilePic
-//                        : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//                        : "https://i.ibb.co.com/FKKD4mT/opp.png"
 //                    }
 //                    className={` ${
 //                      theme === "light" ? "border-gray-500" : "border-white"

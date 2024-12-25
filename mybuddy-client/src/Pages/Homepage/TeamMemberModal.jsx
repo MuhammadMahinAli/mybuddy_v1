@@ -96,7 +96,7 @@ const TeamMemberModal = ({
                                 checked={selectedMembers.includes(item?.requestedBy?._id)}
                               />
                               <img
-                                src={item?.requestedBy?.profilePic || "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"}
+                                src={item?.requestedBy?.profilePic || "https://i.ibb.co.com/FKKD4mT/opp.png"}
                                 loading="lazy" alt={item?.requestedBy?.name?.firstName}
                                 className="h-9 w-9 rounded-lg ml-2"
                               />
@@ -147,7 +147,7 @@ const TeamMemberModal = ({
                                 <img
                                   src={
                                     profilePic ||
-                                    "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                                    "https://i.ibb.co.com/FKKD4mT/opp.png"
                                   }
                                   loading="lazy"
                                   alt={displayName}

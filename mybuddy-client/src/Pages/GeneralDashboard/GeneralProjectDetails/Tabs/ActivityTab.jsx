@@ -1,16 +1,14 @@
 /* eslint-disable react/prop-types */
 
-import { IoQrCodeOutline } from "react-icons/io5";
-import StatusDropdown from "../StatusDropdown";
 import Swal from "sweetalert2";
 import { useGetCommitByProjectQuery } from "../../../../features/commit/commitApi";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import { useState } from "react";
 import AllCommit from "./CommitTables/AllCommit";
 import MyCommit from "./CommitTables/MyCommit";
 import { FiUser, FiUsers } from "react-icons/fi";
 import { BsDownload } from "react-icons/bs";
+import * as XLSX from "xlsx";
+
 const ActivityTab = ({
   commits,
   getAllCommit,
@@ -43,109 +41,45 @@ const ActivityTab = ({
   // Utility function for filtering commits
   const filterCommitsByUserId = () => {
     return commitOfProject?.filter(
-      (commit) => commit.commitBy._id.toString() === userId
+      (commit) => commit?.commitBy?._id.toString() === userId
     );
   };
 
   const userFilteredCommits = filterCommitsByUserId();
 
-  const downloadPDF = () => {
-    const table = document.getElementById("table-to-pdf");
-
-    // Remove responsive styles and set a fixed width
-    table.style.minHeight = "auto";
-    table.style.width = "980px";
-    table.style.maxWidth = "980px";
-
-    // Remove all responsive classes
-    table.className = table.className.replace(/min-h-\[.*?\]/g, "");
-    table.className = table.className.replace(/w-\[.*?\]/g, "");
-    table.className = table.className.replace(/md:w-\[.*?\]/g, "");
-    table.className = table.className.replace(/lg:w-\[.*?\]/g, "");
-    table.className = table.className.replace(/xl:w-\[.*?\]/g, "");
-    table.className = table.className.replace(/2xl:w-\[.*?\]/g, "");
-    table.className = table.className.replace(/3xl:w-\[.*?\]/g, "");
-    table.className = table.className.replace(/4xl:w-\[.*?\]/g, "");
-
-    html2canvas(table, {
-      width: 1030, // Force canvas width to 1000px
-      scale: 2, // Increase scale for better resolution
-    }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const imgWidth = 600; // Fixed width for the PDF
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      const margin = 5;
-      const xOffset = (pageWidth - imgWidth / 2.83) / 2 + margin; // Center the table horizontally on the page (2.83 factor converts px to mm)
-      let yOffset = 10; // Top margin
-
-      if (imgHeight > pdf.internal.pageSize.getHeight() - 2 * margin) {
-        let remainingHeight = imgHeight;
-        while (remainingHeight > 0) {
-          pdf.addImage(
-            imgData,
-            "PNG",
-            xOffset,
-            yOffset,
-            imgWidth / 2.83,
-            Math.min(
-              imgHeight / 2.83,
-              pdf.internal.pageSize.getHeight() - 2 * margin
-            )
-          );
-          remainingHeight -= pdf.internal.pageSize.getHeight() - 2 * margin;
-          if (remainingHeight > 0) pdf.addPage();
-        }
-      } else {
-        pdf.addImage(
-          imgData,
-          "PNG",
-          xOffset,
-          yOffset,
-          imgWidth / 2.83,
-          imgHeight / 2.83
-        );
-      }
-
-      pdf.save("table.pdf");
-
-      // Restore original styles
-      table.style.minHeight = "";
-      table.style.width = "";
-      table.style.maxWidth = "";
-      table.className = table.className.replace(
-        /min-h-\[.*?\]/g,
-        "min-h-[800px]"
-      );
-      table.className = table.className.replace(/w-\[.*?\]/g, "w-[300px]");
-      table.className = table.className.replace(
-        /md:w-\[.*?\]/g,
-        "md:w-[630px]"
-      );
-      table.className = table.className.replace(
-        /lg:w-\[.*?\]/g,
-        "lg:w-[800px]"
-      );
-      table.className = table.className.replace(
-        /xl:w-\[.*?\]/g,
-        "xl:w-[850px]"
-      );
-      table.className = table.className.replace(
-        /2xl:w-\[.*?\]/g,
-        "2xl:w-[900px]"
-      );
-      table.className = table.className.replace(
-        /3xl:w-\[.*?\]/g,
-        "3xl:w-[950px]"
-      );
-      table.className = table.className.replace(
-        /4xl:w-\[.*?\]/g,
-        "4xl:w-[1080px]"
-      );
+  const handleDownload = () => {
+    const currentActivity = openAllCommit === true? commitOfProject : userFilteredCommits
+    // Process and flatten the data for Excel
+    const processedData = currentActivity?.map((item) => {
+      return {
+        "Commit ID": item._id,
+        "Commit By ID": item.commitBy._id,
+        "Commit By Name": `${item.commitBy.name.firstName} ${item.commitBy.name.lastName}`,
+        "Commit By Role": item.commitBy.role || "Not mentioned",
+        "Commit By Profile Picture": item.commitBy.profilePic || "Not Available",
+        "Project ID": item.project._id,
+       "Message": item.message,
+       "Media": item.media.length ? item.media.join(", ") : "N/A",
+        "External Link": item.externalLink || "N/A",
+        "Status": item.status || "N/A",
+        "Decline Message": item.declineMessage || "N/A",
+        "Commited Date": new Date(item.createdAt).toLocaleString(),
+        "Completed Task": item.completedTask?.task || "No Task",
+        "Completed SubTasks": item.completedTask?.subTask?.length
+          ? item.completedTask.subTask.join(", ")
+          : "No SubTasks",
+      };
     });
+
+    // Convert the processed data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(processedData);
+
+    // Create a workbook and append the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "All-activity");
+
+    // Write the workbook and trigger the download
+    XLSX.writeFile(workbook, `Activity-history.xlsx`);
   };
 
   const handleCommitMessage = (message, completedTask) => {
@@ -247,71 +181,56 @@ const ActivityTab = ({
     }
   };
 
+  console.log(commitOfProject);
+
   return (
     <div>
       <div className="xl:p-6 bg-gray-100 rounded-md">
         <div className="flex justify-between items-center pt-3 ">
           <h2 className="text-xl font-semibold text-gray-800">Activity</h2>
-          <div className="flex items-center space-x-3 relative">
-            <button
-              onClick={toggleAllCommit}
-              onMouseEnter={()=>setShowAllCommitAlert(true)}
-              onMouseLeave={()=>setShowAllCommitAlert(false)}
-              className="p-2 rounded-md bg-[#e9f2f9]"
-            >
-              {/* <IoQrCodeOutline className="text-2xl" /> */}
-              <FiUsers className="text-2xl text-gray-700" />
-            </button>
-            {
-                showAllCommitAlert &&
-                <div className="w-[120px]  space-x-4 px-4 py-2 rounded-[50px] absolute top-10 -left-10 bg-gray-50 shadow-gray-400 shadow-md border animate-fade-up">
-                All Activity
-              </div>
-              }
-            <button
-              onClick={toggleMyCommit}
-              onMouseEnter={()=>setShowMyCommitAlert(true)}
-              onMouseLeave={()=>setShowMyCommitAlert(false)}
-              className="p-2 rounded-md bg-[#e9f2f9]"
-            >
-              <FiUser className="text-2xl text-gray-700" />
-              {/* <svg
-                className="h-5"
-                viewBox="0 0 27 21"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+          {userId !== "67396ba011eb8789052c3cfd" && (
+            <div className="flex items-center space-x-3 relative">
+              <button
+                onClick={toggleAllCommit}
+                onMouseEnter={() => setShowAllCommitAlert(true)}
+                onMouseLeave={() => setShowAllCommitAlert(false)}
+                className="p-2 rounded-md bg-[#e9f2f9]"
               >
-                <path
-                  d="M7.8579 2.46057L25.4712 2.46154M7.8579 10.5898L25.4712 10.5909M7.8579 18.719L25.4712 18.7201M1.76099 2.45966H1.77454M1.76099 10.5889H1.77454M1.76099 18.7181H1.77454M2.43842 2.45966C2.43842 2.83379 2.13512 3.13709 1.76099 3.13709C1.38686 3.13709 1.08356 2.83379 1.08356 2.45966C1.08356 2.08553 1.38686 1.78223 1.76099 1.78223C2.13512 1.78223 2.43842 2.08553 2.43842 2.45966ZM2.43842 10.5889C2.43842 10.9629 2.13512 11.2663 1.76099 11.2663C1.38686 11.2663 1.08356 10.9629 1.08356 10.5889C1.08356 10.2148 1.38686 9.91143 1.76099 9.91143C2.13512 9.91143 2.43842 10.2148 2.43842 10.5889ZM2.43842 18.7181C2.43842 19.0922 2.13512 19.3955 1.76099 19.3955C1.38686 19.3955 1.08356 19.0922 1.08356 18.7181C1.08356 18.344 1.38686 18.0406 1.76099 18.0406C2.13512 18.0406 2.43842 18.344 2.43842 18.7181Z"
-                  stroke="#5D6271"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg> */}
-            </button>
-            {
-                showMyCommitAlert &&
+                <FiUsers className="text-2xl text-gray-700" />
+              </button>
+              {showAllCommitAlert && (
+                <div className="w-[120px]  space-x-4 px-4 py-2 rounded-[50px] absolute top-10 -left-10 bg-gray-50 shadow-gray-400 shadow-md border animate-fade-up">
+                  All Activity
+                </div>
+              )}
+              <button
+                onClick={toggleMyCommit}
+                onMouseEnter={() => setShowMyCommitAlert(true)}
+                onMouseLeave={() => setShowMyCommitAlert(false)}
+                className="p-2 rounded-md bg-[#e9f2f9]"
+              >
+                <FiUser className="text-2xl text-gray-700" />
+              </button>
+              {showMyCommitAlert && (
                 <div className="w-[120px]  space-x-4 px-4 py-2 rounded-[50px] absolute top-10 left-1 bg-gray-50 shadow-gray-400 shadow-md border animate-fade-up">
-                My Activity
-              </div>
-              }
-            <button
-              onClick={downloadPDF}
-              onMouseEnter={()=>setShowDownload(true)}
-              onMouseLeave={()=>setShowDownload(false)}
-              className="cursor-pointer p-2 rounded-md bg-[#e9f2f9]"
-            >
-              <BsDownload className="text-2xl text-gray-700" />
-              
-            </button>
-            {
-                showDownload &&
+                  My Activity
+                </div>
+              )}
+              <button
+                onClick={handleDownload}
+                onMouseEnter={() => setShowDownload(true)}
+                onMouseLeave={() => setShowDownload(false)}
+                className="cursor-pointer p-2 rounded-md bg-[#e9f2f9]"
+              >
+                <BsDownload className="text-2xl text-gray-700" />
+              </button>
+              {showDownload && (
                 <div className="w-[170px]  space-x-4 px-4 py-2 rounded-[50px] absolute top-10 right-2 bg-gray-50 shadow-gray-400 shadow-md border animate-fade-up">
-               Download Activity
-              </div>
-              }
-          </div>
+                  Download Activity
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

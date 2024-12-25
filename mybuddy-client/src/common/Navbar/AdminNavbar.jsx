@@ -14,7 +14,7 @@ const AdminNavbar = () => {
   const { singleUser } = useContext(AuthContext);
   const userImage = singleUser?.data?.profilePic
     ? singleUser?.data?.profilePic
-    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
+    : "https://i.ibb.co.com/FKKD4mT/opp.png";
 
   // Close the menu whenever the location (URL) changes
   useEffect(() => {

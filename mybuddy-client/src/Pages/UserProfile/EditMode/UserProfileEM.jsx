@@ -288,7 +288,7 @@ const UserProfileEM = () => {
                   src={
                     previewProfileImage ||
                     currentProfile ||
-                    "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                    "https://i.ibb.co.com/FKKD4mT/opp.png"
                   }
                   className="h-20 w-20 md:h-32 md:w-32 xl:w-36 xl:h-36 rounded-full p-2 md:p-[10px] lg:p-[12px] "
                 />

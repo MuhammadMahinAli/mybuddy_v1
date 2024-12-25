@@ -95,7 +95,7 @@ const FundByBank = ({ selectedProject, userId,setSelectedProject,setIsPayModalOp
     }
   };
   const [adminInfo, setAdminInfo] = useState(null); // Store admin info here
-  const adminId = "6736a6e54466ff850d99807e"; // Admin ID
+  const adminId = "67396ba011eb8789052c3cfd"; // Admin ID
 
   // Fetch admin info on component mount
   useEffect(() => {

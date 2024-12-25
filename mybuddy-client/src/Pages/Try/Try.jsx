@@ -1,57 +1,386 @@
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import * as XLSX from "xlsx";
+import { useState } from "react";
 
-const Try = () => {
-  const downloadPDF = () => {
-    const table = document.getElementById('table-to-pdf');
-    html2canvas(table).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 190;
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let position = 10;
+const Try = () => {  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
 
-      pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-      pdf.save('table.pdf');
+  const tableData = [
+    {
+      _id: "60d0fe4f5311236168a109ca",
+      commitBy: {
+        _id: "60d0fe4f5311236168a109ca",
+        name: {
+          firstName: "User",
+          lastName: "Name",
+        },
+        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+        role: "Developer",
+      },
+      project: "60d0fe4f5311236168a109cb",
+      message: "Initial commit with project setup.",
+      media: ["screenshot1.png", "diagram1.svg"],
+      externalLink: "https://example.com/initial-setup",
+      status: "Approved",
+      declineMessage: null,
+      createdAt: "2024-12-12T02:58:01.878+00:00",
+      completedTask: {
+        task: "Set up project repository",
+        subTask: ["Initialize Git", "Create README.md"],
+      },
+    },
+    {
+      _id: "60d0fe4f5311236168a109ca",
+      commitBy: {
+        _id: "60d0fe4f5311236168a109cc",
+        name: {
+          firstName: "User",
+          lastName: "Name",
+        },
+        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+        role: "Developer",
+      },
+      project: "60d0fe4f5311236168a109cd",
+      message: "Added user authentication module.",
+      media: ["auth_flowchart.png"],
+      externalLink: "https://example.com/auth-module",
+      status: "Pending",
+      declineMessage: null,
+      createdAt: "2024-12-12T02:58:01.878+00:00",
+      completedTask: {
+        task: "Implement authentication",
+        subTask: ["Design login page", "Set up OAuth"],
+      },
+    },
+    {
+      _id: "60d0fe4f5311236168a109ca",
+      commitBy: {
+        _id: "60d0fe4f5311236168a109ce",
+        name: {
+          firstName: "User",
+          lastName: "Name",
+        },
+        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+        role: "Developer",
+      },
+      project: "60d0fe4f5311236168a109cf",
+      message: "Fixed bugs in payment processing.",
+      media: [],
+      externalLink: null,
+      status: "Approved",
+      declineMessage: null,
+      createdAt: "2024-12-12T02:58:01.878+00:00",
+      completedTask: {
+        task: "Debug payment module",
+      },
+    },
+    {
+      _id: "60d0fe4f5311236168a109ca",
+      commitBy: {
+        _id: "60d0fe4f5311236168a109d0",
+        name: {
+          firstName: "User",
+          lastName: "Name",
+        },
+        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+        role: "Developer",
+      },
+      project: "60d0fe4f5311236168a109d1",
+      message: "Updated UI for dashboard.",
+      media: ["https://dashboard_mockup.jpg", "https://dashboard_mockup.jpg"],
+      externalLink: "https://example.com/dashboard-update",
+      status: "Declined",
+      declineMessage: "UI does not match design specifications.",
+      createdAt: "2024-12-12T02:58:01.878+00:00",
+      completedTask: {
+        task: "Revamp dashboard UI",
+      },
+    },
+    {
+      _id: "60d0fe4f5311236168a109ca",
+      commitBy: {
+        _id: "60d0fe4f5311236168a109d2",
+        name: {
+          firstName: "User",
+          lastName: "Name",
+        },
+        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+        role: "Developer",
+      },
+      project: "60d0fe4f5311236168a109d3",
+      message: "Integrated third-party analytics.",
+      media: ["analytics_setup_guide.pdf"],
+      externalLink: "https://example.com/analytics-integration",
+      status: "Pending",
+      declineMessage: null,
+      createdAt: "2024-12-12T02:58:01.878+00:00",
+      completedTask: {
+        subTask: ["Select analytics provider", "Embed tracking code"],
+      },
+    },
+    {
+      _id: "60d0fe4f5311236168a109ca",
+      commitBy: {
+        _id: "60d0fe4f5311236168a109d4",
+        name: {
+          firstName: "User",
+          lastName: "Name",
+        },
+        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+        role: "Developer",
+      },
+      project: "60d0fe4f5311236168a109d5",
+      message: "Refactored codebase for performance improvements.",
+      media: [],
+      externalLink: null,
+      status: "Approved",
+      declineMessage: null,
+      createdAt: "2024-12-12T02:58:01.878+00:00",
+      completedTask: {
+        subTask: ["Remove redundant code", "Enhance algorithm efficiency"],
+      },
+    },
+  ];
+
+  const handleDownload = () => {
+    // Process and flatten the data for Excel
+    const processedData = currentTableData.map((item) => {
+      return {
+        "Commit ID": item._id,
+        "Commit By ID": item.commitBy._id,
+        "Commit By Name": `${item.commitBy.name.firstName} ${item.commitBy.name.lastName}`,
+        "Commit By Role": item.commitBy.role || "Not mentioned",
+        "Commit By Profile Picture": item.commitBy.profilePic || "Not Available",
+        "Project ID": item.project,
+       "Message": item.message,
+       "Media": item.media.length ? item.media.join(", ") : "N/A",
+        "External Link": item.externalLink || "N/A",
+        "Status": item.status || "N/A",
+        "Decline Message": item.declineMessage || "N/A",
+        "Created At": new Date(item.createdAt).toLocaleString(),
+        "Completed Task": item.completedTask?.task || "No Task",
+        "Completed SubTasks": item.completedTask?.subTask?.length
+          ? item.completedTask.subTask.join(", ")
+          : "No SubTasks",
+      };
     });
+
+    // Convert the processed data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(processedData);
+
+    // Create a workbook and append the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Commits");
+
+    // Write the workbook and trigger the download
+    XLSX.writeFile(workbook, "commits.xlsx");
   };
+    // Calculate the data for the current page
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentTableData = tableData.slice(indexOfFirstItem, indexOfLastItem);
+  
+    // Total pages
+    const totalPages = Math.ceil(tableData.length / itemsPerPage);
+  
+    // Handle next page
+    const handleNext = () => {
+      if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    };
+  
+    // Handle previous page
+    const handlePrevious = () => {
+      if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
 
   return (
     <div>
       <button
-        onClick={downloadPDF}
+        onClick={handleDownload}
         className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
       >
-        Download Table as PDF
+        Download
       </button>
-      <table id="table-to-pdf" className="w-full border-collapse border border-gray-300 bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px)">
+      <>
+        {/* table head */}
+        <div className="min-w-[900px] md:min-w-[900px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
+          <div className="text-[14px] md:text-[16px] font-semibold text-center w-[120px] border-r border-[#C8CBD3]">
+            Serial No.
+          </div>
+          <div className="text-[14px] md:text-[16px] font-semibold text-center w-3/12 border-r border-[#C8CBD3]">
+            Name
+          </div>
+          <div className="text-[14px] md:text-[16px] font-semibold text-center w-3/12 border-r border-[#C8CBD3]">
+            Message
+          </div>
+          <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-[#C8CBD3]">
+            Media
+          </div>
+          <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-[#C8CBD3]">
+            Link
+          </div>
+          <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">
+            Date
+          </div>
+          <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12">
+            Action
+          </div>
+        </div>
+        {/* table data */}
+        {currentTableData?.map((commit, i) => (
+          <div
+            key={i}
+            className="min-w-[900px] md:min-w-[900px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
+          >
+            <div className="text-[13px] md:text-[16px] capitalize text-center w-[120px] border-r border-[#C8CBD3]">
+              #{commit?._id?.slice(-4)}
+            </div>
+            <div className="flex items-centertext-[14px] md:text-[16px] capitalize w-3/12 border-r border-[#C8CBD3]">
+              <img
+                src={
+                  commit?.commitBy?.profilePic
+                    ? commit?.commitBy?.profilePic
+                    : "https://i.ibb.co.com/FKKD4mT/opp.png"
+                }
+                alt="Profile"
+                className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
+              />
+              <div>
+                <div className="font-semibold text-gray-800 text-[14px] lg:text-[15px]">
+                  {commit?.commitBy?.name?.firstName}{" "}
+                  <span>{commit?.commitBy?.name?.lastName}</span>
+                </div>
+                <div className=" text-gray-500 text-[13px] lg:text-[13px]">
+                  {commit?.commitBy?.role}
+                </div>
+              </div>
+            </div>
+            <div
+              // onClick={() =>
+              //   handleCommitMessage(commit?.message, commit?.completedTask)
+              // }
+              className="cursor-pointer text-[13px] md:text-[16px] capitalize text-center w-3/12 border-r border-[#C8CBD3] px-2"
+            >
+              {commit?.message.slice(0, 20)}...
+            </div>
+            <div
+              // onClick={() => handleEmptyMedia(commit?.media)}
+              className="flex justify-center w-1/12 border-r border-[#C8CBD3]"
+            >
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.52673 13.8911C1.52673 8.11433 1.52673 5.22594 3.32135 3.43134C5.11596 1.63672 8.00435 1.63672 13.7811 1.63672C19.5578 1.63672 22.4463 1.63672 24.2409 3.43134C26.0355 5.22594 26.0355 8.11433 26.0355 13.8911C26.0355 19.6678 26.0355 22.5563 24.2409 24.3509C22.4463 26.1455 19.5578 26.1455 13.7811 26.1455C8.00435 26.1455 5.11596 26.1455 3.32135 24.3509C1.52673 22.5563 1.52673 19.6678 1.52673 13.8911Z"
+                  stroke="#2ABFFF"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M18.6829 11.4403C20.0365 11.4403 21.1338 10.343 21.1338 8.98945C21.1338 7.63587 20.0365 6.53857 18.6829 6.53857C17.3293 6.53857 16.232 7.63587 16.232 8.98945C16.232 10.343 17.3293 11.4403 18.6829 11.4403Z"
+                  stroke="#2ABFFF"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M1.52673 14.5046L3.6732 12.6265C4.78991 11.6495 6.47295 11.7055 7.52218 12.7547L12.779 18.0115C13.6211 18.8537 14.9468 18.9685 15.9212 18.2836L16.2867 18.0269C17.6888 17.0414 19.5859 17.1556 20.8599 18.3022L24.8101 21.8573"
+                  stroke="#2ABFFF"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+            <div
+              // onClick={() => handleEmptyExternalLink(commit?.externalLink)}
+              className="flex justify-center w-1/12 border-r border-[#C8CBD3]"
+            >
+              <svg
+                width="25"
+                height="26"
+                viewBox="0 0 25 26"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M23.6068 9.54492V1.93555M23.6068 1.93555H16.4008M23.6068 1.93555L13.9988 12.0814M10.3959 4.47201H7.7537C5.73585 4.47201 4.72692 4.47201 3.95621 4.88669C3.27826 5.25146 2.72708 5.8335 2.38165 6.5494C1.98895 7.36326 1.98895 8.42868 1.98895 10.5595V18.6762C1.98895 20.8071 1.98895 21.8724 2.38165 22.6863C2.72708 23.4022 3.27826 23.9842 3.95621 24.349C4.72692 24.7637 5.73585 24.7637 7.7537 24.7637H15.44C17.4579 24.7637 18.4668 24.7637 19.2376 24.349C19.9155 23.9842 20.4667 23.4022 20.8121 22.6863C21.2048 21.8724 21.2048 20.8071 21.2048 18.6762V15.8861"
+                  stroke="#2B68FF"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <div className="text-[13px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
+              {commit?.createdAt}
+            </div>
+            <div className="text-[13px] md:text-[16px] capitalize text-center w-2/12 flex justify-center items-center">
+              Pending
+            </div>
+          </div>
+        ))}
+      </>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center items-center mt-4">
+        <button
+          className="px-4 py-2 bg-gray-300 rounded-md mr-2"
+          onClick={handlePrevious}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span className="px-4">{currentPage} / {totalPages}</span>
+        <button
+          className="px-4 py-2 bg-gray-300 rounded-md ml-2"
+          onClick={handleNext}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
+      {/* <table>
         <thead>
           <tr>
-            <th className="border border-gray-300 px-4 py-2">Serial No.</th>
-            <th className="border border-gray-300 px-4 py-2">Name</th>
+            <th className="border border-gray-300 px-4 py-2">Commit Id</th>
+            <th className="border border-gray-300 px-4 py-2">Project Id</th>
             <th className="border border-gray-300 px-4 py-2">Message</th>
-            <th className="border border-gray-300 px-4 py-2">Date</th>
-            <th className="border border-gray-300 px-4 py-2">Status</th>
+            <th className="border border-gray-300 px-4 py-2">Media</th>
+            <th className="border border-gray-300 px-4 py-2">Link</th>
+            <th className="border border-gray-300 px-4 py-2">
+              Declined Message
+            </th>
+            <th className="border border-gray-300 px-4 py-2">Completed Task</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">#01</td>
-            <td className="border border-gray-300 px-4 py-2">Jane Thompson</td>
-            <td className="border border-gray-300 px-4 py-2">Completed Task</td>
-            <td className="border border-gray-300 px-4 py-2">5 Dec 2024</td>
-            <td className="border border-gray-300 px-4 py-2 text-green-600">Approved</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">#02</td>
-            <td className="border border-gray-300 px-4 py-2">John Doe</td>
-            <td className="border border-gray-300 px-4 py-2">In Progress</td>
-            <td className="border border-gray-300 px-4 py-2">4 Dec 2024</td>
-            <td className="border border-gray-300 px-4 py-2 text-blue-600">Pending</td>
-          </tr>
+          {tableData.map((data) => (
+            <tr key={data?.Name}>
+              <td>{data.commitBy.slice(0, 8)}</td>
+              <td>{data.project.slice(0, 8)}</td>
+              <td>{data.message.slice(0, 8)}</td>
+              <td>{data.media}</td>
+              <td>{data.externalLink}</td>
+              <td>{data.declineMessage}</td>
+              <td>
+                {data.completedTask.task && (
+                  <span>Task: {data.completedTask.task}</span>
+                )}
+                {data.completedTask.subTask && (
+                  <span>
+                    {" "}
+                    {data.completedTask.subTask.map((pa) => (
+                      <p key={pa}>Sub Task: {pa}</p>
+                    ))}
+                  </span>
+                )}
+              </td>
+            </tr>
+          ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 };
@@ -99,6 +428,7 @@ export default Try;
 //         },
 //       },
 //       {
+//  a9 3c 5b f5 2c cc 12
 //         memberId: {
 //           _id: "668e17dd91cba51e5b7481c3",
 //           email: "nemecay912@cartep.com",
@@ -135,6 +465,64 @@ export default Try;
 //     endDate: meetingData?.endDate || "",
 //     customDays: meetingData?.customDays || [],
 //   });
+
+//const handleDownload = ()=>{
+//
+//  // Extract headers and convert them to uppercase
+//const headers = Object.keys(tableData[0]).map(header => header.toUpperCase());
+//
+//// Determine the maximum length of data in each column for alignment
+//const columnWidths = headers.map((header, index) => {
+//  const maxDataLength = Math.max(
+//    ...tableData.map(row => String(Object.values(row)[index]).length)
+//  );
+//  return Math.max(header.length, maxDataLength);
+//});
+//
+//// Create the header row with padding for alignment
+//const headerRow = headers
+//  .map((header, index) => header.padEnd(columnWidths[index]))
+//  .join(' | ');
+//
+//// Create the separator row
+//const separatorRow = columnWidths.map(width => '-'.repeat(width)).join('-|-');
+//
+//// Create the data rows with padding for alignment
+//const dataRows = tableData.map(row =>
+//  Object.values(row)
+//    .map((value, index) => String(value).padEnd(columnWidths[index]))
+//    .join(' | ')
+//);
+//
+//// Combine all parts into the final file content with borders
+//const fileContent = [
+//  separatorRow, // Top border
+//  headerRow,
+//  separatorRow, // Separator between headers and data
+//  // ...dataRows,
+//  separatorRow, // Bottom border
+//  ...dataRows.map(row => `${row}\n${separatorRow}`), // Add border after each row
+//].join('\n');
+//
+//// Create a Blob object
+//const blob = new Blob([fileContent], { type: 'text/plain' });
+//
+//// Create a link element
+//const link = document.createElement('a');
+//link.href = URL.createObjectURL(blob);
+//link.download = 'tableData.txt';
+//
+//// Append the link to the body
+//document.body.appendChild(link);
+//
+//// Programmatically click the link to trigger the download
+//link.click();
+//
+//// Remove the link from the document
+//document.body.removeChild(link);
+//
+//
+//}
 
 //   // Update form field values
 //   const handleInputChange = (e) => {
@@ -191,8 +579,6 @@ export default Try;
 //       customDays: formData.customDays,
 //     };
 
-   
-
 //      // Get current time and calculate the 40-minute future time limit
 //   const currentTime = dayjs();
 //   const minAllowedTime = currentTime.add(40, "minute");
@@ -230,10 +616,10 @@ export default Try;
 //       { key: "endDate", label: "End Date" },
 //       {key:"weeklyRepeat", label:"Weekly Repeat"}
 //     ];
-  
+
 //     // Initial emptyFields array to track empty required fields
 //     const emptyFields = [];
-  
+
 //     // Check each required field if it's empty
 //     requiredFields.forEach(({ key, label }) => {
 //       const keys = key.split(".");
@@ -245,14 +631,12 @@ export default Try;
 //         emptyFields.push(label);
 //       }
 //     });
-  
- 
-  
+
 //     // Check if customDays array is empty when repeat is not "do not repeat"
 //     if (formData.repeat !== "dontRepeat" && formData.customDays.length === 0) {
 //       emptyFields.push("Select Days");
 //     }
-  
+
 //     // Show SweetAlert if there are any empty fields
 //     if (emptyFields.length > 0) {
 //       Swal.fire({
@@ -2504,7 +2888,7 @@ b                    </div> */
 //                   src={
 //                     meetingData.creator.profilePic
 //                       ? meetingData.creator.profilePic
-//                       : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//                       : "https://i.ibb.co.com/FKKD4mT/opp.png"
 //                   }
 //                   loading="lazy"
 //                   alt={meetingData.creator.name?.firstName}
@@ -2555,7 +2939,7 @@ b                    </div> */
 //                   src={
 //                     item?.memberId?.profilePic
 //                       ? item?.memberId?.profilePic
-//                       : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//                       : "https://i.ibb.co.com/FKKD4mT/opp.png"
 //                   }
 //                   loading="lazy"
 //                   alt={item?.memberId?.name?.firstName}

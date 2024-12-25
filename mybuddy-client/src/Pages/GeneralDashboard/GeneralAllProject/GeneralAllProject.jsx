@@ -131,7 +131,7 @@ const GeneralAllProject = () => {
         <div className="relative gray600">
           {/* cards */}
 
-          {projects?.length > 0 ? (
+          {projects?.length > 0 || currentTeamMember?.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {/* 1 */}
@@ -249,12 +249,6 @@ const GeneralAllProject = () => {
                   </div>
                 ))}
               </div>
-              {/* <div
-        onClick={() => setShowAll(!showAll)}
-        className="w-full flex justify-center items-center pt-3"
-      >
-        {!showAll ? <IoChevronDown /> : <IoIosArrowUp />}
-      </div> */}
             </>
           ) : (
             <p className="text-gray-600 text-[16px] md:text-[18px] lg:text-[24px] pb-5 font-medium text-start w-11/12 md:w-[600px] xl:pt-7">{`You've not posted any project yet.`}</p>

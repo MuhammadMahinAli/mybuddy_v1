@@ -1,18 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { fileUpload } from "../../../utils/cloudinary";
-const Images = ({ setImages, images }) => {
+const Images = ({ setImages, images,previewImage,setPreviewImage }) => {
   //const [images ,setImages] = useState([])
   const [loading, setLoading] = useState({
     imageOne: false,
     imageTwo: false,
     imageThree: false,
   });
-  const [previewImage, setPreviewImage] = useState({
-    imageOne: "",
-    imageTwo: "",
-    imageThree: "",
-  });
+
 
   const handlePreviewImage = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -40,7 +36,7 @@ const Images = ({ setImages, images }) => {
     }
   };
 
-  //console.log('image', images);
+  console.log('image', images[0]);
 
   return (
     <div className="flex flex-col space-y-5 md:space-y-0 font-medium gray600">

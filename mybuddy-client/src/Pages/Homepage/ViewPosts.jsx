@@ -411,7 +411,7 @@ const ViewPosts = ({ theme }) => {
                         data-src={
                           post?.postedBy?.profilePic
                             ? post?.postedBy?.profilePic
-                            : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                            : "https://i.ibb.co.com/FKKD4mT/opp.png"
                         }
                         className="lazy h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 rounded-full p-[6px]"
                       />
@@ -554,13 +554,16 @@ const ViewPosts = ({ theme }) => {
               <div className="py-2">
                 {/* Reaction and Comment Count Section */}
                 <div className="flex items-center justify-between px-4 pb-2">
-                  <div className="flex items-center space-x-1">
-                    <ReactComponent
-                      postId={post._id}
-                      user={user}
-                      theme={theme}
-                    />
-                  </div>
+               {
+                post?._id &&
+                <div className="flex items-center space-x-1">
+                <ReactComponent
+                  postId={post._id}
+                  user={user}
+                  theme={theme}
+                />
+              </div>
+               }
                   {/* <div
                     className={`${
                       theme === "light" ? "text-gray-600" : "text-white"

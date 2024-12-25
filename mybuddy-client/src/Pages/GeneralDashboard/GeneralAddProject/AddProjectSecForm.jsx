@@ -16,15 +16,36 @@ const AddProjectSecForm = ({
   pdfFiles,
   setPdfFiles,
   onFormChange,
+  previewImage,
+  setPreviewImage,
+  previewPdf,
+  setPreviewPdf,
+  previewDocx,
+  setPreviewDocx,
 }) => {
   return (
     <form className="p-3 md:p-6  md:w-11/12 space-y-4">
       {/* images */}
-      <Images images={images} setImages={setImages} />
+      <Images
+        images={images}
+        setImages={setImages}
+        previewImage={previewImage}
+        setPreviewImage={setPreviewImage}
+      />
       {/* docx */}
-      <Documents setDocuments={setDocuments} documents={documents} />
+      <Documents
+        setDocuments={setDocuments}
+        documents={documents}
+        previewDocx={previewDocx}
+        setPreviewDocx={setPreviewDocx}
+      />
       {/* pdf */}
-      <PdfFiles pdfFiles={pdfFiles} setPdfFiles={setPdfFiles} />
+      <PdfFiles
+        pdfFiles={pdfFiles}
+        setPdfFiles={setPdfFiles}
+        previewPdf={previewPdf}
+        setPreviewPdf={setPreviewPdf}
+      />
       {/* video link */}
       <div className="md:w-6/12 lg:w-10/12 flex flex-col space-y-2 font-medium gray600">
         <label className="text-[16px] md:text-xl font-bold">Video</label>

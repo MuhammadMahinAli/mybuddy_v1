@@ -32,7 +32,7 @@ const DekstopSidebar = ({
   const { singleUser } = useContext(AuthContext);
   const userImage = singleUser?.data?.profilePic
     ? singleUser?.data?.profilePic
-    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
+    : "https://i.ibb.co.com/FKKD4mT/opp.png";
   return (
     <div className="hidden xl:flex lg:relative lg:-left-1 lg:-top-20 py-4 pl-1  flex-col justify-center items-center space-y-12 lg:w-[270px]  xl:w-3/12  rounded-br-[33px] bg-[#f3f6f8] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
       <div className="w-11/12 pt-1 pl-1">

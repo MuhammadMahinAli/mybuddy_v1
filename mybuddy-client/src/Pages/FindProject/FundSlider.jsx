@@ -118,7 +118,7 @@
 //                     src={
 //                       f?.requestedBy?.profilePic
 //                         ? f?.requestedBy?.profilePic
-//                         : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//                         : "https://i.ibb.co.com/FKKD4mT/opp.png"
 //                     }
 //                     className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-600 object-cover"
 //                   />
@@ -149,7 +149,7 @@
 //                       src={
 //                         f?.requestedBy?.profilePic
 //                           ? f?.requestedBy?.profilePic
-//                           : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//                           : "https://i.ibb.co.com/FKKD4mT/opp.png"
 //                       }
 //                       className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-600 object-cover"
 //                     />
@@ -264,7 +264,7 @@ const FundSlider = ({ projectId, theme }) => {
                       src={
                         f?.requestedBy?.profilePic
                           ? f?.requestedBy?.profilePic
-                          : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                          : "https://i.ibb.co.com/FKKD4mT/opp.png"
                       }
                       className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-600 object-cover"
                     />
@@ -295,7 +295,7 @@ const FundSlider = ({ projectId, theme }) => {
                         src={
                           f?.requestedBy?.profilePic
                             ? f?.requestedBy?.profilePic
-                            : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                            : "https://i.ibb.co.com/FKKD4mT/opp.png"
                         }
                         className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-600 object-cover"
                       />

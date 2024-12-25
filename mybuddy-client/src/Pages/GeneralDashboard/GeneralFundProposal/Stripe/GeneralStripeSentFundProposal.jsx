@@ -46,7 +46,7 @@ const GeneralStripeSentFundProposal = () => {
             >
               <div className="flex justify-start items-center pl-3 space-x-2 text-[16px] md:text-lg   border-r-2 border-white text-center w-3/12 md:w-3/12 lg:w-3/12">
                 <img
-                  src="https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                  src="https://i.ibb.co.com/FKKD4mT/opp.png"
                   className="w-8 h-8 md:w-10 md:h-10 rounded-full"
                   loading="lazy"
                   alt=""

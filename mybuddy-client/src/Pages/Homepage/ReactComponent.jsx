@@ -10,7 +10,7 @@ const ReactComponent = ({ postId, user, theme }) => {
   const [userReaction, setUserReaction] = useState(null);
   const [reactionCountText, setReactionCountText] = useState("");
 
-  console.log("oo", reactionsData, userReaction, reactionCountText);
+  // console.log("oo", reactionsData, userReaction, reactionCountText);
 
   useEffect(() => {
     const fetchReactions = async () => {

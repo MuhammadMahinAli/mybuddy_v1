@@ -70,7 +70,7 @@ const OverviewTab = ({
   const userEmail = user?.email;
   const userProfilePic = user?.profilePic
     ? user?.profilePic
-    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
+    : "https://i.ibb.co.com/FKKD4mT/opp.png";
   const formattedDate = formatDate(user?.createdAt);
   const projectDeadline = formatDate(startDate) + " -" + formatDate(endDate);
   const projectFirstImage = images[0]
@@ -387,6 +387,7 @@ const OverviewTab = ({
           </ul>
         </div>
         {/* edit delete */}
+        { userId !== "67396ba011eb8789052c3cfd" &&
         <div className="absolute right-5 top-3">
           {ProjectInfo?.user?._id === userId ? (
             <div className="md:flex items-center space-x-3 hidden relative">
@@ -447,6 +448,7 @@ const OverviewTab = ({
             </>
           )}
         </div>
+        }
       </div>
       {openUpdateModal === true && (
         <UpdateProjectForm

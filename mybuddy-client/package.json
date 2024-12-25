@@ -41,7 +41,8 @@
     "sweetalert2": "^11.10.8",
     "swiper": "^11.1.0",
     "tailwind-scrollbar-hide": "^1.1.7",
-    "tailwindcss-animated": "^1.1.2"
+    "tailwindcss-animated": "^1.1.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

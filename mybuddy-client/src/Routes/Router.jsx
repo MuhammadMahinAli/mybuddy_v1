@@ -206,6 +206,11 @@ const router = createBrowserRouter([
         element: <AdminAllFund />,
       },
       {
+        path: "/admin/:id/project-details/:id",
+        element: <GeneralProjectDetails />,
+        loader: ({ params }) => fetch(`https://test-two-22w0.onrender.com/api/v1/project/getProjectById/${params.id}`)
+      },
+      {
         path: "/admin/:id/setting",
         element: <AdminSetting />,
       },

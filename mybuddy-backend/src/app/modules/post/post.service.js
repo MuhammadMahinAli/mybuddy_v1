@@ -64,7 +64,8 @@ export const getSingleMemberPostService = async (userId) => {
   try {
     const posts = await Post.find({ postedBy: userId })
       .populate("postedBy")
-      .populate("comments.commentedBy");
+      .populate("comments.commentedBy")
+      .sort({ createdAt: -1 });
     return posts;
   } catch (error) {
     console.error("Error fetching user's posts:", error);

@@ -22,7 +22,7 @@ const MobileNavbar = ({
             src={
               user?.profilePic
                 ? user?.profilePic
-                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                : "https://i.ibb.co.com/FKKD4mT/opp.png"
             }
             loading="lazy" alt=""
             className="w-10 h-10 md:w-12 md:h-12 xl:w-12 xl:h-12 p-[3px] mx-auto rounded-full aspect-square"

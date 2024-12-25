@@ -286,7 +286,7 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
                         <img
                           src={
                             profilePic ||
-                            "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                            "https://i.ibb.co.com/FKKD4mT/opp.png"
                           }
                           loading="lazy"
                           alt={displayName}

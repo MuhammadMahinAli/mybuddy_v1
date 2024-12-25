@@ -33,7 +33,7 @@ const TaskTab = ({
   formatDate,
   currentTeamMember,
   req,
-  teamMembers, 
+  teamMembers,
   setTeamMembers,
   projectId,
   allRecieveRequest,
@@ -194,9 +194,6 @@ const TaskTab = ({
 
   // is Matching useGetAllAcceptedProjectTeamMemberQuery
 
- 
-
- 
   // access of commit
 
   const currentTaskid = tasks[selectedIndex]?._id;
@@ -461,9 +458,8 @@ const TaskTab = ({
   // ----- leave task
 
   const handleLeaveTask = (task) => {
-   const taskId= task?._id
-    console.log("OP",projectId,
-      task?._id,);
+    const taskId = task?._id;
+    console.log("OP", projectId, task?._id);
     const capitalizedTitle = task?.title?.toUpperCase(); // Capitalize the task title
 
     Swal.fire({
@@ -491,8 +487,7 @@ const TaskTab = ({
     }).then((result) => {
       if (result.isConfirmed) {
         // If confirmed, proceed with the task leaving logic
-        leaveTaskFromProject(
-          {projectId,taskId}) // Replace this with your API call or function
+        leaveTaskFromProject({ projectId, taskId }) // Replace this with your API call or function
           .then(() => {
             Swal.fire(
               "Success!",
@@ -518,8 +513,8 @@ const TaskTab = ({
   // currentTeamMember?.forEach((request) => {
   //   request.tasks.forEach((t) => console.log(t));
   // });
-  console.log("pp",teamMembers);
-  
+  console.log("pp", teamMembers);
+
   return (
     <div
     // key={key}
@@ -601,14 +596,14 @@ const TaskTab = ({
                   <p className="text-gray-500 text-sm">
                     {formatDate(task.startDate)}
                   </p>
-                  {/* {ProjectInfo?.user?._id === userId && ( */}
-                  <button
-                    onClick={() => toggleOption(task)}
-                    className="absolute  right-0 top-0"
-                  >
-                    <HiOutlineDotsVertical />
-                  </button>
-                  {/* )} */}
+                  {userId !== "67396ba011eb8789052c3cfd" && (
+                    <button
+                      onClick={() => toggleOption(task)}
+                      className="absolute  right-0 top-0"
+                    >
+                      <HiOutlineDotsVertical />
+                    </button>
+                  )}
                   {isOpenOption &&
                     selectedTask &&
                     selectedTask?._id === task?._id && (
@@ -638,18 +633,18 @@ const TaskTab = ({
                           </>
                         )}
 
-                      {isMatchingMember  && 
-                            (<li
-                              key={index}
-                              onClick={() => handleLeaveTask(task)}
-                              className="hover:bg-gray-100 py-2 cursor-pointer flex items-center pl-5 space-x-2"
-                            >
-                              <span>
-                                <TbLogout className="text-xl text-gray-500" />
-                              </span>
-                              <span className="">Leave</span>
-                            </li>
-                          )}
+                        {isMatchingMember && (
+                          <li
+                            key={index}
+                            onClick={() => handleLeaveTask(task)}
+                            className="hover:bg-gray-100 py-2 cursor-pointer flex items-center pl-5 space-x-2"
+                          >
+                            <span>
+                              <TbLogout className="text-xl text-gray-500" />
+                            </span>
+                            <span className="">Leave</span>
+                          </li>
+                        )}
                       </ul>
                     )}
                   {isOpenUpdateModal &&
@@ -690,7 +685,7 @@ const TaskTab = ({
                         src={
                           ProjectInfo?.user?.profilePic
                             ? ProjectInfo?.user?.profilePic
-                            : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                            : "https://i.ibb.co.com/FKKD4mT/opp.png"
                         }
                         alt="Profile"
                         className="h-8 xl:w-8 w-8 xl:h-8 rounded-full border-2 border-white"
@@ -707,7 +702,7 @@ const TaskTab = ({
                             src={
                               request?.requestedBy?.profilePic
                                 ? request?.requestedBy?.profilePic
-                                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                                : "https://i.ibb.co.com/FKKD4mT/opp.png"
                             }
                             alt="Profile"
                             className="h-8 xl:w-8 w-8 xl:h-8 rounded-full border-2 border-white"
@@ -802,31 +797,32 @@ const TaskTab = ({
           )}
 
           {/* commit button  ProjectInfo?.user?._id !== userId && */}
-          {tasks[selectedIndex].title && (
-            <div className="pb-3">
-              <button
-                onClick={() => setIsOpenCommitModal(true)}
-                className={`float-right ${colors[selectedIndex].progressColor} text-white text-[18px] px-3 py-1 capitalize rounded-lg mt-10 `}
-              >
-                Commit
-              </button>
-              {isOpenCommitModal && (
-                <CommitModal
-                  isMatchingMember={isMatchingMember}
-                  textColor={colors[selectedIndex].textColor}
-                  cardBg={colors[selectedIndex].cardBg}
-                  buttonColor={colors[selectedIndex].progressColor}
-                  borderColor={colors[selectedIndex].borderColor}
-                  tasks={tasks[selectedIndex]}
-                  userId={userId}
-                  createCommit={createCommit}
-                  ProjectInfo={ProjectInfo}
-                  closeCommitModal={closeCommitModal}
-                  isOpenCommitModal={isOpenCommitModal}
-                />
-              )}
-            </div>
-          )}
+          {tasks[selectedIndex].title &&
+            userId !== "67396ba011eb8789052c3cfd" && (
+              <div className="pb-3">
+                <button
+                  onClick={() => setIsOpenCommitModal(true)}
+                  className={`float-right ${colors[selectedIndex].progressColor} text-white text-[18px] px-3 py-1 capitalize rounded-lg mt-10 `}
+                >
+                  Commit
+                </button>
+                {isOpenCommitModal && (
+                  <CommitModal
+                    isMatchingMember={isMatchingMember}
+                    textColor={colors[selectedIndex].textColor}
+                    cardBg={colors[selectedIndex].cardBg}
+                    buttonColor={colors[selectedIndex].progressColor}
+                    borderColor={colors[selectedIndex].borderColor}
+                    tasks={tasks[selectedIndex]}
+                    userId={userId}
+                    createCommit={createCommit}
+                    ProjectInfo={ProjectInfo}
+                    closeCommitModal={closeCommitModal}
+                    isOpenCommitModal={isOpenCommitModal}
+                  />
+                )}
+              </div>
+            )}
           {/* current task member */}
           {ProjectInfo?.user?._id === userId && (
             <>
@@ -859,6 +855,42 @@ const TaskTab = ({
                       Manage
                     </div>
                   </div>
+                  <div className="min-w-[600px] md:min-w-[800px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
+                    <div className="flex justify-start pl-2 text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
+                      <img
+                        src={
+                          ProjectInfo?.user?.profilePic
+                            ? ProjectInfo?.user?.profilePic
+                            : "https://i.ibb.co.com/FKKD4mT/opp.png"
+                        }
+                        alt="Profile"
+                        className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
+                      />
+                      <div>
+                        <div className="font-semibold text-gray-800 text-[14px] lg:text-[15px] 3xl:text-[19px]">
+                          {ProjectInfo?.user?.name?.firstName}{" "}
+                          <span>{ProjectInfo?.user?.name?.lastName}</span>
+                        </div>
+                        <div className=" text-gray-500 text-[13px] lg:text-[13px] 3xl:text-[17px]">
+                          Project's owner
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-gray-800 text-[13px] md:text-[16px] 3xl:text-[19px] capitalize text-center w-4/12 border-r border-[#C8CBD3] px-2">
+                      {tasks[selectedIndex]?.details.slice(0, 20)}...
+                    </div>
+
+                    <div className="text-[13px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
+                      <button className="border border-blue-500 capitalize bg-blue-200 text-blue-600 py-1 px-3 rounded-lg text-sm">
+                        in progress
+                      </button>
+                    </div>
+                    <div className="w-1/12 flex justify-center items-center ml-5 space-x-1 md:space-x-2">
+                      <button className="border border-green-500 capitalize bg-green-200 text-green-600 py-1 px-3 rounded-lg text-sm">
+                        Owner
+                      </button>
+                    </div>
+                  </div>
                   {/* table data */}
                   {currentTeamMember
                     ?.filter((request) =>
@@ -876,7 +908,7 @@ const TaskTab = ({
                             src={
                               request?.requestedBy?.profilePic
                                 ? request?.requestedBy?.profilePic
-                                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                                : "https://i.ibb.co.com/FKKD4mT/opp.png"
                             }
                             alt="Profile"
                             className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
@@ -954,71 +986,72 @@ const TaskTab = ({
                           <p className="font-semibold text-center">Action</p>
                         </div>
                       </div>
-                 
 
-                    {req
-                      ?.filter((request) =>
-                        request.tasks.some(
-                          (task) => task?.title === tasks[selectedIndex]?.title
+                      {req
+                        ?.filter((request) =>
+                          request.tasks.some(
+                            (task) =>
+                              task?.title === tasks[selectedIndex]?.title
+                          )
                         )
-                      )
-                      .map(
-                        (filteredRequest, i) =>
-                          filteredRequest && (
-                            <div
-                              key={i}
-                               className="min-w-[600px] md:min-w-[800px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
-                            >
-                              <div className="flex justify-start pl-2 text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
-                                <img
-                                  src={
-                                    filteredRequest.profileImagec ||
-                                    "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
-                                  }
-                                  className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
-                                  loading="lazy"
-                                  alt=""
-                                />
-                                <div className="">
-                                  <p className="font-semibold text-gray-800 text-[14px] lg:text-[15px] 3xl:text-[19px]">
-                                    {
-                                      filteredRequest.requestedBy?.name
-                                        ?.firstName
-                                    }{" "}
-                                    {
-                                      filteredRequest.requestedBy?.name
-                                        ?.lastName
+                        .map(
+                          (filteredRequest, i) =>
+                            filteredRequest && (
+                              <div
+                                key={i}
+                                className="min-w-[600px] md:min-w-[800px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
+                              >
+                                <div className="flex justify-start pl-2 text-[14px] md:text-[16px] capitalize w-4/12 border-r border-[#C8CBD3]">
+                                  <img
+                                    src={
+                                      filteredRequest.profileImagec ||
+                                      "https://i.ibb.co.com/FKKD4mT/opp.png"
                                     }
-                                  </p>
-                                  <div className=" text-gray-500 text-[13px] lg:text-[13px] 3xl:text-[17px]">
-                              {filteredRequest?.requestedBy?.role}
-                            </div>
+                                    className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
+                                    loading="lazy"
+                                    alt=""
+                                  />
+                                  <div className="">
+                                    <p className="font-semibold text-gray-800 text-[14px] lg:text-[15px] 3xl:text-[19px]">
+                                      {
+                                        filteredRequest.requestedBy?.name
+                                          ?.firstName
+                                      }{" "}
+                                      {
+                                        filteredRequest.requestedBy?.name
+                                          ?.lastName
+                                      }
+                                    </p>
+                                    <div className=" text-gray-500 text-[13px] lg:text-[13px] 3xl:text-[17px]">
+                                      {filteredRequest?.requestedBy?.role}
+                                    </div>
+                                  </div>
+                                </div>
+                                <p className="text-gray-800 text-[13px] md:text-[16px] 3xl:text-[19px] capitalize text-center w-6/12 border-r border-[#C8CBD3] px-2">
+                                  {tasks[selectedIndex]?.details.slice(0, 50)}
+                                  ...
+                                </p>
+
+                                <div className="flex justify-center space-x-2 xs:space-x-2 3xl:space-x-3 items-center text-[16px] md:text-lg w-2/12 sm:w-2/12">
+                                  <img
+                                    onClick={(e) =>
+                                      handleUpdateStatusAccept(e, i)
+                                    }
+                                    src={rightMark}
+                                    className="h-5 md:h-7"
+                                  />
+                                  <img
+                                    onClick={(e) =>
+                                      handleUpdateStatusReject(e, i)
+                                    }
+                                    src={xMark}
+                                    className="h-5 md:h-7"
+                                  />
                                 </div>
                               </div>
-                              <p className="text-gray-800 text-[13px] md:text-[16px] 3xl:text-[19px] capitalize text-center w-6/12 border-r border-[#C8CBD3] px-2">
-                                {tasks[selectedIndex]?.details.slice(0, 50)}...
-                              </p>
-
-                              <div className="flex justify-center space-x-2 xs:space-x-2 3xl:space-x-3 items-center text-[16px] md:text-lg w-2/12 sm:w-2/12">
-                                <img
-                                  onClick={(e) =>
-                                    handleUpdateStatusAccept(e, i)
-                                  }
-                                  src={rightMark}
-                                  className="h-5 md:h-7"
-                                />
-                                <img
-                                  onClick={(e) =>
-                                    handleUpdateStatusReject(e, i)
-                                  }
-                                  src={xMark}
-                                  className="h-5 md:h-7"
-                                />
-                              </div>
-                            </div>
-                          )
-                      )}
-                         </div>
+                            )
+                        )}
+                    </div>
                   </>
                 )}
               </>
@@ -1168,7 +1201,7 @@ export default TaskTab;
 //                     <img
 //                       src={
 //                         request?.requestedBy?.profilePic ||
-//                         "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//                         "https://i.ibb.co.com/FKKD4mT/opp.png"
 //                       }
 //                       className="w-8 h-8 md:w-12 md:h-12 border border-black rounded-full"
 //                       loading="lazy"
@@ -1246,7 +1279,7 @@ export default TaskTab;
 //                   <img
 //                     src={
 //                       filteredRequest.profileImagec ||
-//                       "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//                       "https://i.ibb.co.com/FKKD4mT/opp.png"
 //                     }
 //                     className="w-8 h-8 md:w-10 md:h-10 border border-black rounded-full"
 //                     loading="lazy"

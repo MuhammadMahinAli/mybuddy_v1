@@ -4,19 +4,15 @@ import docx from "../../../assets/docx-logo.png";
 import {useState} from "react";
 import { rawFileUpload } from "../../../utils/cloudinaryForRaw";
 
-const Documents = ({ setDocuments}) => {
+const Documents = ({ setDocuments,previewDocx,setPreviewDocx}) => {
   const [loading, setLoading] = useState({
-    imageOne: false,
-    imageTwo: false,
-    imageThree: false,
-  });
-  const [previewImage, setPreviewImage] = useState({
-    imageOne: "",
-    imageTwo: "",
-    imageThree: "",
+    docxOne: false,
+    docxTwo: false,
+    docxThree: false,
   });
 
-  const handlePreviewImage = async (e) => {
+
+  const handlePreviewDocx = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const name = e.target.name;
       setLoading({ ...loading, [name]: true });
@@ -34,8 +30,8 @@ const Documents = ({ setDocuments}) => {
           setDocuments((prevDoc) => [...prevDoc, uploadedUrl]);
 
           // Show a preview (using a placeholder like PDF logo)
-          setPreviewImage((prevPreviewImage) => ({
-            ...prevPreviewImage,
+          setPreviewDocx((prevPreviewDocx) => ({
+            ...prevPreviewDocx,
             [name]: uploadedUrl, // URL is saved here
           }));
         }
@@ -56,14 +52,14 @@ const Documents = ({ setDocuments}) => {
         <div className="pt-2 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-10 lg:space-x-11 xl:space-x-8 2xl:space-x-16 3xl:space-x-12 4xl:space-x-28 ">
           {/* doc one  */}
           <div className="relative ">
-            {previewImage.imageOne !== "" ? (
+            {previewDocx.docxOne !== "" ? (
               <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
                 <img className="h-20 lg:h-28 xl:h-32 3xl:h-36  w-5/12 lg:w-7/12 xl:w-5/12 md:w-6/12 3xl:w-5/12 rounded-md" src={docx} alt="" />
               </div>
             ) : (
               <label required htmlFor="doc-one" className="">
                 <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
-                  {loading.imageOne ? (
+                  {loading.docxOne ? (
                     <span className="loading loading-spinner loading-xs"></span>
                   ) : (
                     <div className="flex flex-col justify-center items-center absolute top-8 lg:top-10 xl:top-16 2xl:top-14 3xl:top-16 w-full">
@@ -80,22 +76,22 @@ const Documents = ({ setDocuments}) => {
                                                             focus:outline-none  bg-white text-gray-900 hidden"
               type="file"
               accept=".docx"
-              name="imageOne"
+              name="docxOne"
               id="doc-one"
-              onChange={handlePreviewImage}
+              onChange={handlePreviewDocx}
               required
             />
           </div>
           {/* doc two  */}
           <div className="relative ">
-            {previewImage.imageTwo !== "" ? (
+            {previewDocx.docxTwo !== "" ? (
             <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
             <img className="h-20 lg:h-28 xl:h-32 3xl:h-40  w-5/12 lg:w-7/12 xl:w-5/12 md:w-6/12 3xl:w-6/12 rounded-md" src={docx} alt="" />
           </div>
             ) : (
               <label required htmlFor="doc-two" className="">
                 <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
-                  {loading.imageTwo ? (
+                  {loading.docxTwo ? (
                     <span className="loading loading-spinner loading-xs"></span>
                   ) : (
                     <div className="flex flex-col justify-center items-center absolute top-8 lg:top-10 xl:top-16 2xl:top-14 3xl:top-16 w-full">
@@ -111,9 +107,9 @@ const Documents = ({ setDocuments}) => {
                                                             focus:outline-none  bg-white text-gray-900 hidden"
               type="file"
               accept=".docx"
-              name="imageTwo"
+              name="docxTwo"
               id="doc-two"
-              onChange={handlePreviewImage}
+              onChange={handlePreviewDocx}
               required
             />
           </div>

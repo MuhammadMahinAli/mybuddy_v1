@@ -31,7 +31,7 @@ const GeneralProjectDetails = () => {
   const currentTeamMember = allAcceptedRecieveRequest?.data;
 
   const req = allRecieveRequest?.data;
-  console.log("currentTeamMember", currentTeamMember);
+  console.log("currentTeamMember", userId);
   const info = useLoaderData();
   const ProjectInfo = info?.data;
   const { tasks, projectName, _id } = ProjectInfo;
@@ -55,7 +55,6 @@ const GeneralProjectDetails = () => {
   const projectId = ProjectInfo?._id;
   const [teamMembers, setTeamMembers] = useState(null);
 
-
   useEffect(() => {
     if (!projectId) {
       return;
@@ -70,7 +69,6 @@ const GeneralProjectDetails = () => {
     };
     fetchData();
   }, [projectId]);
-
 
   //------------- get accepted recieve project request to
   const {
@@ -165,20 +163,24 @@ const GeneralProjectDetails = () => {
     });
   };
 
-  console.log("p",teamMembers);
+  console.log("p", teamMembers);
   const projectJoinRequestData = teamMembers?.find(
     (item) => item.requestedBy._id === userId
   );
-  
+
   console.log("Matching Project:", projectJoinRequestData);
 
   return (
     <>
       <div className="md:flex items-center space-x-1 hidden">
         <BsHouseDoor className="text-xl text-blue-500" />
-        <Link to="/dashboard" className="text-blue-500 text-lg">Dashboard</Link>
+        <Link to="/dashboard" className="text-blue-500 text-lg">
+          Dashboard
+        </Link>
         <FaCaretRight className="text-xl text-blue-500" />
-        <Link to="/dashboard/all-projects" className="text-blue-500 text-lg">Project</Link>
+        <Link to="/dashboard/all-projects" className="text-blue-500 text-lg">
+          Project
+        </Link>
         <FaCaretRight className="text-xl text-blue-500" />
         <p className=" text-lg">{projectName}</p>
       </div>
@@ -264,9 +266,9 @@ const GeneralProjectDetails = () => {
 
         {isOpenOverviewTab && (
           <OverviewTab
-          projectJoinRequestData={projectJoinRequestData}
-          teamMembers={teamMembers}
-           setTeamMembers={setTeamMembers}
+            projectJoinRequestData={projectJoinRequestData}
+            teamMembers={teamMembers}
+            setTeamMembers={setTeamMembers}
             ProjectInfo={ProjectInfo}
             openUpdateModal={openUpdateModal}
             filteredMyself={filteredMyself}
@@ -286,9 +288,9 @@ const GeneralProjectDetails = () => {
         {/* task */}
         {isOpenTaskTab && (
           <TaskTab
-          teamMembers={teamMembers}
-          setTeamMembers={setTeamMembers}
-          projectId={ProjectInfo?._id}
+            teamMembers={teamMembers}
+            setTeamMembers={setTeamMembers}
+            projectId={ProjectInfo?._id}
             ProjectInfo={ProjectInfo}
             tasks={tasks}
             formatDate={formatDate}
@@ -298,7 +300,8 @@ const GeneralProjectDetails = () => {
             projectOwner={projectOwner}
             allRecieveRequest={allRecieveRequest}
             setIsOpenTaskTab={setIsOpenTaskTab}
-            userId={ userId}          />
+            userId={userId}
+          />
         )}
 
         {/* activity log */}
@@ -420,7 +423,7 @@ export default GeneralProjectDetails;
 //</td>
 //   <td className="px-4 py-4 flex items-center">
 //     <img
-//       src={commit?.commitBy?.profilePic ? commit?.commitBy?.profilePic : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"}
+//       src={commit?.commitBy?.profilePic ? commit?.commitBy?.profilePic : "https://i.ibb.co.com/FKKD4mT/opp.png"}
 //       alt="Profile"
 //       className="w-10 h-10 rounded-full mr-3"
 //     />

@@ -54,7 +54,7 @@ const HomepageLayout = () => {
       } else {
         navigate("/login");
       }
-    }, 1000); // 5-second delay
+    }, 2000); // 5-second delay
 
     // Clean up the timer
     return () => clearTimeout(timer);

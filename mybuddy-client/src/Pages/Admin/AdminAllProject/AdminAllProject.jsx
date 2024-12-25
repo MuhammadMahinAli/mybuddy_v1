@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
@@ -14,6 +14,7 @@ import {
   FaRegArrowAltCircleRight,
   FaRegArrowAltCircleLeft,
 } from "react-icons/fa";
+import { AuthContext } from "../../../Context/UserContext";
 
 const AdminAllProject = () => {
   const [uniqueId, setUniqueId] = useState("");
@@ -22,6 +23,7 @@ const AdminAllProject = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [isFiltered, setIsFiltered] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { userId } = useContext(AuthContext);
 
   // Fetch projects with pagination or uniqueId filter
   const fetchProjects = async (page = 1, uniqueIdFilter = "") => {
@@ -87,20 +89,19 @@ const AdminAllProject = () => {
             onChange={(e) => setUniqueId(e.target.value)}
             className="w-full h-9 md:h-10 lg:h-12 outline-none rounded-lg py-3 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] px-3 box-border border-solid border-gray-100"
           />
-          
+
           {isFiltered ? (
             <AiOutlineReload
               title="Reset"
               onClick={handleReset}
               className="text-2xl absolute right-3 cursor-pointer"
             />
-          )
-        :
-        <IoIosSearch
-            onClick={handleFilter}
-            className="text-2xl absolute right-3 cursor-pointer"
-          />
-        }
+          ) : (
+            <IoIosSearch
+              onClick={handleFilter}
+              className="text-2xl absolute right-3 cursor-pointer"
+            />
+          )}
         </div>
         {loading ? (
           <Loading />
@@ -109,68 +110,76 @@ const AdminAllProject = () => {
             {projects.length > 0 ? (
               projects.map((p, i) => (
                 <>
-                <div key={i}>
-                  <div
-                    className={`h-[360px] ssm:h-[400px] sm:h-[460px] md:h-[430px] lg:h-[459px] xl:h-[440px] pb-4 space-y-1 flex flex-col justify-start rounded-[15px] bg-skyblue shadow-lg overflow-hidden`}
-                  >
-                    <div className="flex justify-center items-center h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[240px] rounded-[25px] bg-[#DCE2EA] shadow-[0px_1px_2px_rgba(0,_0,_0,_0.25),_-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)]">
-                      <img
-                        src={p.images[0]}
-                        alt="Project"
-                        className="rounded-2xl h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[240px] w-full object-cover"
-                      />
-                    </div>
-                    <div className="px-2 pt-0 ssm:pt-1 lg:pt-3 xl:pt-3 3xl:pt-3 xl:p-3 md:px-5 lg:py-3 space-y-1 lg:space-y-1">
-                      <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold pt-2 ssm:py-0">
-                        {p.projectName.length > 15
-                          ? `${p.projectName.slice(0, 7)}...`
-                          : p.projectName}
-                      </p>
-                      <p className="hidden 2xl:block text-xl 3xl:text-[22px] font-bold py-0">
-                        {p.projectName}
-                      </p>
-                      <div
-                        className="ssm:hidden pb-3"
-                        dangerouslySetInnerHTML={{
-                          __html: `${p.description.slice(0, 100)}${
-                            p.description.length > 100 ? "..." : ""
-                          }`,
-                        }}
-                      />
-                      <div
-                        className="hidden ssm:block md:hidden pb-3"
-                        dangerouslySetInnerHTML={{
-                          __html: `${p.description.slice(0, 130)}${
-                            p.description.length > 130 ? "..." : ""
-                          }`,
-                        }}
-                      />
-                      <div
-                        className="hidden md:block pb-3"
-                        dangerouslySetInnerHTML={{
-                          __html: `${p.description.slice(0, 100)}${
-                            p.description.length > 100 ? " ..." : ""
-                          }`,
-                        }}
-                      />
-                      <button className="w-full my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]">
-                        <Link to={`/dashboard/details/${p?._id}`}>
-                          View More
-                        </Link>
-                      </button>
+                  <div key={i}>
+                    <div
+                      className={`h-[360px] ssm:h-[400px] sm:h-[460px] md:h-[430px] lg:h-[459px] xl:h-[440px] pb-4 space-y-1 flex flex-col justify-start rounded-[15px] bg-skyblue shadow-lg overflow-hidden`}
+                    >
+                      <div className="flex justify-center items-center h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[240px] rounded-[25px] bg-[#DCE2EA] shadow-[0px_1px_2px_rgba(0,_0,_0,_0.25),_-5px_-5px_20px_rgba(255,_255,_255,_0.8)_inset,_5px_5px_20px_rgba(0,_0,_0,_0.2)]">
+                        <img
+                          src={p.images[0]}
+                          alt="Project"
+                          className="rounded-2xl h-[180px] ssm:h-[220px] sm:h-[260px] md:h-[240px] xl:h-[240px] w-full object-cover"
+                        />
+                      </div>
+                      <div className="px-2 pt-0 ssm:pt-1 lg:pt-3 xl:pt-3 3xl:pt-3 xl:p-3 md:px-5 lg:py-3 space-y-1 lg:space-y-1">
+                        <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold pt-2 ssm:py-0">
+                          {p.projectName.length > 15
+                            ? `${p.projectName.slice(0, 7)}...`
+                            : p.projectName}
+                        </p>
+                        <p className="hidden 2xl:block text-xl 3xl:text-[22px] font-bold py-0">
+                          {p.projectName}
+                        </p>
+                        <div
+                          className="ssm:hidden pb-3"
+                          dangerouslySetInnerHTML={{
+                            __html: `${p.description.slice(0, 100)}${
+                              p.description.length > 100 ? "..." : ""
+                            }`,
+                          }}
+                        />
+                        <div
+                          className="hidden ssm:block md:hidden pb-3"
+                          dangerouslySetInnerHTML={{
+                            __html: `${p.description.slice(0, 130)}${
+                              p.description.length > 130 ? "..." : ""
+                            }`,
+                          }}
+                        />
+                        <div
+                          className="hidden md:block pb-3"
+                          dangerouslySetInnerHTML={{
+                            __html: `${p.description.slice(0, 100)}${
+                              p.description.length > 100 ? " ..." : ""
+                            }`
+                          }}
+                        />
+                        <button className="w-full my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[10px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]">
+                          <Link
+                            to={
+                              userId === "67396ba011eb8789052c3cfd"
+                                ? `/admin/${userId}/project-details/${p?._id}`
+                                : `/dashboard/details/${p?._id}`
+                            }
+                          >
+                            View More
+                          </Link>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-                
                 </>
               ))
             ) : (
               <p className="col-span-full text-center pt-10">
-              {`No project matched with the provided uniqueId. `}
-              <span className="text-blue-500 hover:underline cursor-pointer" onClick={handleReset}>
-                Refresh
-              </span>
-            </p>
+                {`No project matched with the provided uniqueId. `}
+                <span
+                  className="text-blue-500 hover:underline cursor-pointer"
+                  onClick={handleReset}
+                >
+                  Refresh
+                </span>
+              </p>
             )}
           </div>
         )}

@@ -58,7 +58,7 @@ const MyCommit = ({
                   src={
                     commit?.commitBy?.profilePic
                       ? commit?.commitBy?.profilePic
-                      : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                      : "https://i.ibb.co.com/FKKD4mT/opp.png"
                   }
                   alt="Profile"
                   className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"

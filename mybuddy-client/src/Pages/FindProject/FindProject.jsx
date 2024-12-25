@@ -295,7 +295,7 @@ const FindProject = () => {
                           <img
                             src={
                               project?.user?.profilePic ||
-                              "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                              "https://i.ibb.co.com/FKKD4mT/opp.png"
                             }
                             loading="lazy"
                             alt=""
@@ -915,7 +915,7 @@ export default FindProject;
 //      <div className="relative">
 //        <img
 //          src={project?.user?.profilePic ||
-//            "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//            "https://i.ibb.co.com/FKKD4mT/opp.png"
 //          }
 //          loading="lazy" alt=""
 //          className="h-9 w-9 md:h-10 md:w-10 lg:w-8 lg:h-8 xl:w-16 xl:h-16  rounded-full p-[6px]"

@@ -19,6 +19,36 @@ const GeneralAddProject = ({ closeModal }) => {
   const [pdfFiles, setPdfFiles] = useState([]);
   const [tasks, setTasks] = useState([]);
 
+  const [projectData, setProjectData] = useState({
+    projectName: "",
+    discord: "",
+    whatsApp: "",
+    startDate:"",
+    endDate: "",
+    category: "",
+    description: "",
+    videoUrl: "",
+  });
+  console.log(projectData);
+  
+  const [previewImage, setPreviewImage] = useState({
+    imageOne: "",
+    imageTwo: "",
+    imageThree: "",
+  });
+
+  const [previewPdf, setPreviewPdf] = useState({
+    pdfOne: "",
+    pdfTwo: "",
+    pdfThree: "",
+  });
+
+  const [previewDocx, setPreviewDocx] = useState({
+    docxOne: "",
+    docxTwo: "",
+    docxThree: "",
+  });
+
 
   const handleFirst = () => {
     setOpenFirstForm(false);
@@ -35,17 +65,7 @@ const GeneralAddProject = ({ closeModal }) => {
     setOpenSecondForm(false);
     setOpenThirdForm(false);
   };
-  const [projectData, setProjectData] = useState({
-    projectName: "",
-    discord: "",
-    whatsApp: "",
-    startDate:"",
-    endDate: "",
-    category: "",
-    description: "",
-    videoUrl: "",
-  });
-  console.log(projectData);
+
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -214,7 +234,13 @@ const GeneralAddProject = ({ closeModal }) => {
           {/* 2nd form */}
           {openSecondForm && (
             <AddProjectSecForm
+            previewImage={previewImage}
+            setPreviewImage={setPreviewImage}
               handleSecond={handleSecond}
+              previewPdf={previewPdf}
+              setPreviewPdf={setPreviewPdf}
+              previewDocx={previewDocx}
+              setPreviewDocx={setPreviewDocx}
               images={images}
               setImages={setImages}
               setDocuments={setDocuments}

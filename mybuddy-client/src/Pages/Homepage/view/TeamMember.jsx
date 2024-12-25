@@ -23,7 +23,7 @@ const TeamMember = ({ teamMembers,theme }) => {
                             src={
                               item?.member?.profilePic
                                 ?item?.member?.profilePic
-                                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                                : "https://i.ibb.co.com/FKKD4mT/opp.png"
                             }
                             className={`h-[40px] w-[40px] lg:h-[50px] lg:w-[50px] rounded-full p-[5px] `}
                           />
@@ -60,7 +60,7 @@ const TeamMember = ({ teamMembers,theme }) => {
               src={
                 item?.member?.profilePic
                   ? item?.member?.profilePic
-                  : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                  : "https://i.ibb.co.com/FKKD4mT/opp.png"
               }
               loading="lazy"
               alt={item?.member?.name?.firstName}

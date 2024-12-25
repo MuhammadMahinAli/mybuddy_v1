@@ -18,7 +18,7 @@ const ProfileTab = ({ openProfile, logout }) => {
 
 
     const userProfilePic = singleUser
-    && singleUser?.data?.profilePic ? singleUser?.data?.profilePic : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg" ;
+    && singleUser?.data?.profilePic ? singleUser?.data?.profilePic : "https://i.ibb.co.com/FKKD4mT/opp.png" ;
   const signOut=()=>{
     logout()
 

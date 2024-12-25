@@ -230,19 +230,19 @@ const UserProfileVM = () => {
             <div className="flex flex-col-reverse lg:flex-row justify-between items-center ">
               {/* left */}
               <div className="">
-                <ul className="flex justify-between items-center w-80">
+                <ul className="flex justify-between items-center w-64 xl:w-80">
                   <li className="flex flex-col items-center justify-center border-r-2  py-2 w-full text-center  font-medium">
                     <p
                       className={`${
                         theme === "light" ? "graish" : "text-white"
-                      } text-[16px] md:text-xl`}
+                      } text-[16px] xl:text-xl`}
                     >
                       {allPost?.length}
                     </p>
                     <p
                       className={`${
                         theme === "light" ? "text-gray-500" : "text-white"
-                      } font-medium text-[14px] md:text-[16px]`}
+                      } font-medium text-[14px] xl:text-[16px]`}
                     >
                       POSTS
                     </p>
@@ -251,14 +251,14 @@ const UserProfileVM = () => {
                     <p
                       className={`${
                         theme === "light" ? "graish" : "text-white"
-                      } text-[16px] md:text-xl`}
+                      } text-[16px] xl:text-xl`}
                     >
                       {allProject?.length}
                     </p>
                     <p
                       className={`${
                         theme === "light" ? "text-gray-500" : "text-white"
-                      } font-medium text-[14px] md:text-[16px]`}
+                      } font-medium text-[14px] xl:text-[16px]`}
                     >
                       PROJECTS
                     </p>
@@ -267,14 +267,14 @@ const UserProfileVM = () => {
                     <p
                       className={`${
                         theme === "light" ? "graish" : "text-white"
-                      } text-[16px] md:text-xl`}
+                      } text-[16px] xl:text-xl`}
                     >
                       {allFriend?.length}
                     </p>
                     <p
                       className={`${
                         theme === "light" ? "text-gray-500" : "text-white"
-                      } font-medium text-[14px] md:text-[16px]`}
+                      } font-medium text-[14px] xl:text-[16px]`}
                     >
                       FRIENDS
                     </p>
@@ -282,11 +282,11 @@ const UserProfileVM = () => {
                 </ul>
               </div>
               {/* center */}
-              <div className="hidden lg:flex flex-col justify-center items-center relative">
+              {/* <div className=" bg-red-400 hidden lg:flex flex-col justify-start items-start relative">
                 <img
                   src={
                     userData?.profilePic ||
-                    "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                    "https://i.ibb.co.com/FKKD4mT/opp.png"
                   }
                   className="h-32 w-32 -mt-[115px] rounded-full p-[9px] "
                 />
@@ -297,9 +297,9 @@ const UserProfileVM = () => {
                   loading="lazy"
                   alt="dashedborder"
                 />
-              </div>
+              </div> */}
               {/* right */}
-              <div className="py-6 lg:py-0 lg:px-3 3xl:px-8">
+              <div className=" py-6 lg:py-0 lg:px-3 3xl:px-8">
                 <div className="flex justify-between items-center space-x-3">
                   {/* {theme === "light" ? (
                     <div className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
@@ -358,13 +358,13 @@ const UserProfileVM = () => {
               </div>
 
               {/* profile for mobile and tab */}
-              <div className="lg:hidden flex flex-col justify-center items-center space-y-4 relative">
+              <div className=" lg:hidden flex flex-col justify-center items-center space-y-4 relative">
                 <img
                   src={
                     userData?.profilePic ||
-                    "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                    "https://i.ibb.co.com/FKKD4mT/opp.png"
                   }
-                  className="h-20 w-20 md:w-32 md:h-32 -mt-20 md:-mt-24 lg:-mt-28 rounded-full p-2 md:p-[10px] lg:p-[8px] "
+                  className=" h-20 w-20 md:w-32 md:h-32 -mt-20 md:-mt-24 lg:-mt-28 rounded-full p-2 md:p-[10px] lg:p-[8px] "
                 />
 
                 <img
@@ -380,7 +380,7 @@ const UserProfileVM = () => {
                   <h1
                     className={`${
                       theme === "light" ? "graish" : "text-white"
-                    } capitalize text-xl font-bold`}
+                    } text-center capitalize text-xl font-bold`}
                   >
                     {userData?.name?.firstName}
                     {userData?.name?.lastName}
@@ -472,8 +472,24 @@ const UserProfileVM = () => {
               </div>
             </div>
             {/* profile for dekstop */}
-            <div className="hidden lg:flex flex-col justify-center items-center space-y-3 lg:pt-6">
-              <div className="flex flex-col justify-center items-center space-y-3 pb-10">
+            <div className=" hidden lg:flex flex-col justify-center items-center space-y-3 lg:pt-6">
+            <div className="-mt-20  hidden lg:flex flex-col justify-start items-start relative">
+                <img
+                  src={
+                    userData?.profilePic ||
+                    "https://i.ibb.co.com/FKKD4mT/opp.png"
+                  }
+                  className="h-32 w-32 -mt-[115px] rounded-full p-[9px] "
+                />
+
+                <img
+                  className="w-8 lg:w-32 xl:h-32 xl:w-36 absolute -top-28 right-[12px] md:right-0"
+                  src={theme === "light" ? whiteBorder : darkBorder}
+                  loading="lazy"
+                  alt="dashedborder"
+                />
+              </div>
+              <div className="pt-8 xl:pt-10 3xl:pt-7 flex flex-col justify-center items-center space-y-3 pb-10">
                 <h1
                   className={`${
                     theme === "light" ? "graish" : "text-white"

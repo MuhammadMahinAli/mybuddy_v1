@@ -3,19 +3,15 @@ import {useState} from "react";
 import pdf from "../../../assets/home/pdf-icon.png";
 import pdfLogo from "../../../assets/pdf-logo3.png";
 import { rawFileUpload } from "../../../utils/cloudinaryForRaw";
-const PdfFiles = ({pdfFiles, setPdfFiles}) => {
+const PdfFiles = ({pdfFiles, setPdfFiles,previewPdf,setPreviewPdf}) => {
   const [loading, setLoading] = useState({
-    imageOne: false,
-    imageTwo: false,
-    imageThree: false,
+    pdfOne: false,
+    pdfTwo: false,
+    pdfThree: false,
   });
-  const [previewImage, setPreviewImage] = useState({
-    imageOne: "",
-    imageTwo: "",
-    imageThree: "",
-  });
+ 
 
-  const handlePreviewImage = async (e) => {
+  const handlePreviewPdf = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const name = e.target.name;
       setLoading({ ...loading, [name]: true });
@@ -33,8 +29,8 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
           setPdfFiles((prevDoc) => [...prevDoc, uploadedUrl]);
 
           // Show a preview (using a placeholder like PDF logo)
-          setPreviewImage((prevPreviewImage) => ({
-            ...prevPreviewImage,
+          setPreviewPdf((prevPreviewPdf) => ({
+            ...prevPreviewPdf,
             [name]: uploadedUrl, // URL is saved here
           }));
         }
@@ -57,14 +53,14 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
       <div className="pt-2 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-10">
         {/* PDF one */}
         <div className="relative">
-          {previewImage.imageOne ? (
+          {previewPdf.pdfOne ? (
             <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
               <img className="h-20 lg:h-28 xl:h-32 3xl:h-40  w-5/12 lg:w-7/12 xl:w-5/12 md:w-6/12 3xl:w-6/12 rounded-md" src={pdfLogo} alt="PDF preview" />
             </div>
           ) : (
             <label htmlFor="pdf-one">
               <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
-                {loading.imageOne ? (
+                {loading.pdfOne ? (
                   <span className="loading loading-spinner loading-xs"></span>
                 ) : (
                   <div className="flex flex-col justify-center items-center absolute top-8 lg:top-10 xl:top-16 2xl:top-14 3xl:top-16 w-full">
@@ -80,20 +76,20 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
             className="hidden"
             type="file"
             accept=".pdf"
-            name="imageOne"
+            name="pdfOne"
             id="pdf-one"
-            onChange={handlePreviewImage}
+            onChange={handlePreviewPdf}
           />
         </div>
         <div className="relative">
-          {previewImage.imageTwo ? (
+          {previewPdf.pdfTwo ? (
             <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 custom-shadow">
               <img className="h-20 lg:h-28 xl:h-32 3xl:h-36  w-5/12 lg:w-7/12 xl:w-5/12 md:w-6/12 3xl:w-5/12 rounded-md" src={pdfLogo} alt="PDF preview" />
             </div>
           ) : (
             <label htmlFor="pdf-two">
               <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none custom-shadow bg-white">
-                {loading.imageTwo ? (
+                {loading.pdfTwo ? (
                   <span className="loading loading-spinner loading-xs"></span>
                 ) : (
                   <div className="flex flex-col justify-center items-center absolute top-8 lg:top-10 xl:top-16 2xl:top-14 3xl:top-16 w-full">
@@ -108,9 +104,9 @@ const PdfFiles = ({pdfFiles, setPdfFiles}) => {
             className="hidden"
             type="file"
             accept=".pdf"
-            name="imageTwo"
+            name="pdfTwo"
             id="pdf-two"
-            onChange={handlePreviewImage}
+            onChange={handlePreviewPdf}
           />
         </div>
      

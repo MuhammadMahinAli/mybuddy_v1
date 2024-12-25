@@ -139,7 +139,7 @@ const RightSidebar = ({ theme }) => {
 
   const userImage = singleUser?.data?.profilePic
     ? singleUser?.data?.profilePic
-    : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
+    : "https://i.ibb.co.com/Qf0HmJw/user.png";
 
   console.log(userPostNumber);
   const users = [
@@ -242,7 +242,7 @@ const RightSidebar = ({ theme }) => {
               />
 
               <img
-                className="w-8 lg:w-32 xl:w-36 absolute -top-16 right-[12px] md:right-0"
+                className="h-[100px] w-[100px] absolute -top-16 right-[12px] md:right-0"
                 src={whiteBorder}
                 loading="lazy"
                 alt="dashedborder"

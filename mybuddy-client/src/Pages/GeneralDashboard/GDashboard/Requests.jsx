@@ -217,7 +217,7 @@ console.log(friendRequests);
                   <img
                     src={
                       p?.requestedBy?.profilePic ||
-                      "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                      "https://i.ibb.co.com/FKKD4mT/opp.png"
                     }
                     className="w-8 h-8 sm:w-12 sm:h-12 md:w-10 md:h-10 3xl:h-14 3xl:w-14 rounded-full border border-gray-500"
                     loading="lazy" alt=""

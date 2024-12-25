@@ -133,7 +133,7 @@ const CreatorTab = () => {
                   src={
                     meeting?.creator?.profilePic
                       ? meeting?.creator?.profilePic
-                      : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                      : "https://i.ibb.co.com/FKKD4mT/opp.png"
                   }
                   alt="Meeting"
                   className="w-10 h-10 rounded-full"
@@ -165,7 +165,7 @@ const CreatorTab = () => {
                       key={`${memberIndex}`}
                       src={
                         member?.memberId?.profilePic ||
-                        "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                        "https://i.ibb.co.com/FKKD4mT/opp.png"
                       }
                       className="w-7 h-7 rounded-full border-2 border-white"
                       alt={`Member ${memberIndex + 1}`}
@@ -274,7 +274,7 @@ export default CreatorTab;
 //                   src={
 //                     meeting?.creator?.profilePic
 //                       ? meeting?.creator?.profilePic
-//                       : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//                       : "https://i.ibb.co.com/FKKD4mT/opp.png"
 //                   }
 //                   alt="Meeting"
 //                   className="w-10 h-10 rounded-full"
@@ -303,7 +303,7 @@ export default CreatorTab;
 //                       key={`${memberIndex}`}
 //                       src={
 //                         member?.memberId?.profilePic ||
-//                         "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+//                         "https://i.ibb.co.com/FKKD4mT/opp.png"
 //                       }
 //                       className="w-7 h-7 rounded-full border-2 border-white"
 //                       alt={`Member ${memberIndex + 1}`}

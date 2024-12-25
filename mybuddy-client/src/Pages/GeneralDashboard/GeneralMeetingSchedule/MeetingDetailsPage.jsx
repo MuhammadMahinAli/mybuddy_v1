@@ -111,7 +111,7 @@ const MeetingDetailsPage = ({ meetingDat, setSelectedMeeting }) => {
             src={
               meetingDat?.creator.profilePic
                 ? meetingDat?.creator.profilePic
-                : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                : "https://i.ibb.co.com/FKKD4mT/opp.png"
             }
             loading="lazy"
             alt={meetingDat?.creator.name?.firstName}
@@ -169,7 +169,7 @@ const MeetingDetailsPage = ({ meetingDat, setSelectedMeeting }) => {
                   src={
                     item?.memberId?.profilePic
                       ? item?.memberId?.profilePic
-                      : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg"
+                      : "https://i.ibb.co.com/FKKD4mT/opp.png"
                   }
                   loading="lazy"
                   alt={item?.memberId?.name?.firstName}
