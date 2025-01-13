@@ -26,17 +26,39 @@ export const createNewPost = catchAsync(async (req, res, next) => {
 //-------get all users
 
 //-------get all posts with pagination
+// export const getAllPost = catchAsync(async (req, res) => {
+//   const page = parseInt(req.query.page) || 1;
+//   const limit = parseInt(req.query.limit) || 5;
+
+//   const result = await getAllPostService(page, limit);
+
+//   if (result.message) {
+//     return sendResponse(res, {
+//       statusCode: httpStatus.NOT_FOUND,
+//       success: false,
+//       message: result.message,
+//       data: [],
+//     });
+//   }
+
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Posts is retrieved successfully!",
+//     data: result,
+//   });
+// });
+
 export const getAllPost = catchAsync(async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 5;
 
-  const result = await getAllPostService(page, limit);
 
-  if (result.message) {
+  const result = await getAllPostService();
+
+  if (!result) {
     return sendResponse(res, {
       statusCode: httpStatus.NOT_FOUND,
       success: false,
-      message: result.message,
+      message: "No posts found",
       data: [],
     });
   }
@@ -44,35 +66,12 @@ export const getAllPost = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Posts is retrieved successfully!",
+    message: "Posts retrieved successfully",
     data: result,
   });
 });
 
 
-// export const getAllPost = catchAsync(async (req, res) => {
-//   const posts = await getAllPostService();
-
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Posts retrieved successfully!",
-//     data: posts,
-//   });
-// });
-
-//---------get specific user post
-
-// export const getSingleMemberPostController = async (req, res) => {
-//   const userId = req.params.id;
-//   const getPost = await getSingleMemberPostService(userId);
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Get posts successfully!",
-//     data: getPost,
-//   });
-// };
 export const getSingleMemberPostController= async (req, res) => {
   const userId = req.params.id;
 

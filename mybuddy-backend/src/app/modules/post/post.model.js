@@ -21,9 +21,7 @@ const PostSchema = new Schema(
     ref: 'Member',
    }
   }],
-  image: {
-    type: String,
-  },
+  image: [],
   comments: [
     {
       text: {

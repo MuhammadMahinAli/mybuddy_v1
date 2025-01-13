@@ -74,17 +74,43 @@ export const updateAttendanceStatus = async (req, res) => {
 
 // -- meeting member
 
-export const getMeetingsForMeetingMemberController = async (req, res) => {
-  const { memberId } = req.params;
+// export const getMeetingsForMeetingMemberController = async (req, res) => {
+//   const { memberId } = req.params;
 
-  const meetings = await getMeetingsByMeetingMember(memberId);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Meeting of member retrieved successfully!",
-    data: meetings,
-  });
-};
+//   const meetings = await getMeetingsByMeetingMember(memberId);
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Meeting of member retrieved successfully!",
+//     data: meetings,
+//   });
+// };
+
+export const getMeetingsForMeetingMemberController = catchAsync(async (req, res) => {
+  const  memberId  = req.params.id; // Extract userId from query params
+  const { filterType, subFilter } = req.query; // Extract filters
+console.log("mm", memberId, filterType);
+  if (!memberId) {
+    return res.status(400).json({
+      success: false,
+      message: "User ID is required.",
+    });
+  }
+
+  try {
+    const meetings = await getMeetingsByMeetingMember(memberId, { filterType, subFilter });
+    res.status(200).json({
+      success: true,
+      message: "Meetings fetched successfully",
+      data: meetings,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 
 // update attendenc
 
@@ -184,15 +210,40 @@ export const getMeetingStatus = async (req, res) => {
 
 //------------- get meetings of creator
 
+// export const getMeetingByCreatorController = catchAsync(async (req, res) => {
+//   const meetings = await getMeetingByCreatorService(req?.params?.id);
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "All meeting by creator retrived successfully",
+//     data: meetings,
+//   });
+// });
+
+
 export const getMeetingByCreatorController = catchAsync(async (req, res) => {
-  const meetings = await getMeetingByCreatorService(req?.params?.id);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "All meeting by creator retrived successfully",
-    data: meetings,
-  });
+  const memberId = req.params.id; // Member ID from URL params
+  const { filterType, subFilter } = req.query; // Filters from query parameters
+
+  try {
+    const meetings = await getMeetingByCreatorService(memberId, { filterType, subFilter });
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Meetings retrieved successfully",
+      data: meetings,
+    });
+  } catch (error) {
+    console.error("Error in getMeetingsByMemberController:", error);
+    sendResponse(res, {
+      statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+      success: false,
+      message: "Failed to fetch meetings",
+      data: null,
+    });
+  }
 });
+
 
 //--------- update meeting 
 export const updateMeetingController = async (req, res) => {

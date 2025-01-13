@@ -1,20 +1,27 @@
 import { CronJob } from "cron";
 import { ProjectJoinRequest } from "../projectJoinRequest/projectJoinRequest.model.js";
 import { Member } from "../member/member.model.js";
-
+// import dayjs from "dayjs";
+// import utc from "dayjs/plugin/utc.js";
+// import timezone from "dayjs/plugin/timezone.js";
 import moment from "moment-timezone";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import { Meeting } from "./meeting.model.js";
 
+
+// Extend dayjs to support timezone handling
+// dayjs.extend(utc);
+// dayjs.extend(timezone);
+
 // Function to generate OTP
 const generateOtp = () => {
   return crypto.randomInt(100000, 999999);
 };
-
-// Function to generate attendance link with OTP
+console.log(process.env.NODEMAIL_PASS, process.env.NODEMAIL_USER);
+// Function to generate attendance link with OTP       https://researchbdy.com
 const generateAttendanceLink = (otp, meetingId) => {
-  const baseUrl = "https://researchbdy.com/attendance";
+  const baseUrl = "http://localhost:5173/attendance";
   const currentDate = moment().format("YYYY-MM-DD"); // Generate today's date in 'YYYY-MM-DD' format
   return `${baseUrl}?otp=${otp}&meetingId=${meetingId}&date=${currentDate}`;
 };
@@ -23,6 +30,8 @@ const generateAttendanceLink = (otp, meetingId) => {
 
 // Function to send initial email and schedule reminders
 export const sendAndScheduleAttendanceEmailService = async (meeting) => {
+  console.log("Entered sendAndScheduleAttendanceEmailService...");
+  console.log("Meeting Details:", meeting);
   const {
     meetingMembers,
     creator,
@@ -50,6 +59,8 @@ export const sendAndScheduleAttendanceEmailService = async (meeting) => {
         pass: process.env.NODEMAIL_PASS,
       },
     });
+
+
 
     // Fetch meeting members by their IDs
     const memberIds = meetingMembers.map((member) => member.memberId);
@@ -314,6 +325,8 @@ export const sendAndScheduleAttendanceEmailService = async (meeting) => {
 
 
 
+
+
 export const createMeetingService = async (meetingData) => {
   const meeting = await Meeting.create(meetingData);
 
@@ -325,9 +338,11 @@ export const createMeetingService = async (meetingData) => {
     throw new Error("No meeting members to send emails to.");
   }
 
-  if (!meeting.meetingTime || moment(meeting.meetingTime).isBefore(moment())) {
-    throw new Error("Meeting time must be set to a future date.");
-  }
+
+// Ensure meeting time is in the future
+if (new Date(meetingData.meetingTime) <= new Date()) {
+  throw new Error("Meeting time must be set to a future date.");
+}
 
   if (
     meeting.repeat === "custom" &&
@@ -335,12 +350,20 @@ export const createMeetingService = async (meetingData) => {
   ) {
     throw new Error("Custom repeat meetings must have valid custom days.");
   }
-
+  console.log("About to call sendAndScheduleAttendanceEmailService...");
   try {
     await sendAndScheduleAttendanceEmailService(meeting);
+    console.log("Emails and reminders scheduled successfully.");
   } catch (error) {
     console.error("Error scheduling meeting emails:", error.message);
   }
+  console.log("After calling sendAndScheduleAttendanceEmailService...");
+  // try {
+  //   await sendAndScheduleAttendanceEmailService(meeting);
+  //   console.log("Emails and reminders scheduled successfully.");
+  // } catch (error) {
+  //   console.error("Error scheduling meeting emails:", error.message);
+  // }
 
   return meeting;
 };
@@ -383,28 +406,248 @@ export const updateMemberAttendance = async (
 };
 
 //---------- get meeting of specific user
-export const getMeetingByCreatorService = async (id) => {
-  const meetingByCreator = await Meeting.find({creator : id })
-    .populate("creator","name email profilePic")
-    .populate("meetingMembers.memberId","name email profilePic")
-    .populate("projectId", "projectName")
-    .sort({ createdAt: -1 });
-  return meetingByCreator;
+// export const getMeetingByCreatorService = async (id) => {
+//   const meetingByCreator = await Meeting.find({creator : id })
+//     .populate("creator","name email profilePic")
+//     .populate("meetingMembers.memberId","name email profilePic")
+//     .populate("projectId", "projectName")
+//     .sort({ createdAt: -1 });
+//   return meetingByCreator;
+// };
+
+// export const getMeetingByCreatorService = async (memberId, filters) => {
+//   const { filterType, subFilter } = filters; // Extract filter values
+//   const currentDate = new Date();
+//   const startOfToday = new Date(currentDate.setHours(0, 0, 0, 0));
+//   const endOfToday = new Date(currentDate.setHours(23, 59, 59, 999));
+
+//   // Base Query: Match meetings where the user is a member or the creator
+//   let query = {
+//     $or: [
+//       { "meetingMembers.memberId": memberId },
+//       { creator: memberId },
+//     ],
+//   };
+
+//   // Helper function to calculate date ranges
+//   const calculateDateRange = (days) => {
+//     const endDate = new Date();
+//     endDate.setDate(currentDate.getDate() + days);
+//     return { $gte: currentDate, $lte: endDate };
+//   };
+
+//   // Apply Date Filters Based on filterType
+//   if (filterType === "Today") {
+//     query.meetingTime = { $gte: startOfToday, $lte: endOfToday };
+//   } else if (filterType === "Weekly") {
+//     query.meetingTime = calculateDateRange(7);
+//   } else if (filterType === "Monthly") {
+//     const endOfMonth = new Date(currentDate);
+//     endOfMonth.setMonth(currentDate.getMonth() + 1);
+//     query.meetingTime = { $gte: currentDate, $lte: endOfMonth };
+//   }
+
+//   // Apply Subfilters Based on subFilter
+//   if (subFilter === "upcoming") {
+//     query.meetingTime = { $gte: new Date() };
+//   } else if (subFilter === "absent") {
+//     query["meetingMembers.attendance"] = false;
+//   } else if (subFilter === "attend") {
+//     query["meetingMembers.attendance"] = true;
+//   }
+
+//   try {
+//     const meetings = await Meeting.find(query)
+//       .populate("creator", "name profilePic")
+//       .populate("meetingMembers.memberId", "name profilePic")
+//       .exec();
+
+//     return meetings;
+//   } catch (error) {
+//     console.error("Error fetching meetings:", error);
+//     throw new Error("Failed to fetch meetings");
+//   }
+// };
+
+// export const getMeetingByCreatorService = async (memberId, filters) => {
+//   const { filterType = "Monthly", subFilter = "all" } = filters; // Default values
+//   const currentDate = new Date();
+//   const startOfToday = new Date(currentDate.setHours(0, 0, 0, 0));
+//   const endOfToday = new Date(currentDate.setHours(23, 59, 59, 999));
+
+//   // Base Query: Match meetings where the user is a member or the creator
+//   let query ={ creator: memberId };
+ 
+
+
+//   // Helper function to calculate date ranges
+//   const calculateDateRange = (days) => {
+//     const endDate = new Date();
+//     endDate.setDate(currentDate.getDate() + days);
+//     return { $gte: currentDate, $lte: endDate };
+//   };
+
+//   // Apply Date Filters Based on filterType
+//   if (filterType === "Today") {
+//     query.meetingTime = { $gte: startOfToday, $lte: endOfToday };
+//   } else if (filterType === "Weekly") {
+//     const startOfWeek = new Date();
+//     startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+//     query.meetingTime = {
+//       $gte: startOfWeek,
+//       $lte: calculateDateRange(7).$lte,
+//     };
+//   } else if (filterType === "Monthly") {
+//     const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+//     query.meetingTime = { $gte: currentDate, $lte: endOfMonth };
+//   }
+
+//   // Apply Subfilters Based on subFilter
+//   if (subFilter === "upcoming") {
+//     query.meetingTime = { $gte: new Date() };
+//   } else if (subFilter === "absent") {
+//     query["meetingMembers.attendance"] = false;
+//   } else if (subFilter === "attend") {
+//     query["meetingMembers.attendance"] = true;
+//   }
+
+//   try {
+//     const meetings = await Meeting.find(query)
+//       .populate("creator", "name profilePic")
+//       .populate("meetingMembers.memberId", "name profilePic")
+//       .exec();
+
+//     return meetings;
+//   } catch (error) {
+//     console.error("Error fetching meetings:", error);
+//     throw new Error("Failed to fetch meetings");
+//   }
+// };
+
+export const getMeetingByCreatorService = async (memberId, filters) => {
+  const { filterType = "Monthly", subFilter = "all" } = filters;
+  const currentDate = new Date();
+  const startOfToday = new Date(currentDate.setHours(0, 0, 0, 0));
+  const endOfToday = new Date(currentDate.setHours(23, 59, 59, 999));
+
+  // Base Query: Fetch meetings created by the user
+  let query = { creator: memberId };
+
+  // Helper function to calculate date ranges
+  const calculateDateRange = (days) => {
+    const endDate = new Date();
+    endDate.setDate(currentDate.getDate() + days);
+    return { $gte: currentDate, $lte: endDate };
+  };
+
+  // Apply Date Filters Based on filterType
+  if (filterType === "Today") {
+    query.meetingTime = { $gte: startOfToday, $lte: endOfToday };
+  } else if (filterType === "Weekly") {
+    const startOfWeek = new Date();
+    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+    query.meetingTime = {
+      $gte: startOfWeek,
+      $lte: calculateDateRange(7).$lte,
+    };
+  } else if (filterType === "Monthly") {
+    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+    query.meetingTime = { $gte: currentDate, $lte: endOfMonth };
+  }
+
+  // Apply Subfilters
+  if (subFilter === "upcoming") {
+    const now = new Date();
+    query.meetingTime = { ...query.meetingTime, $gte: now }; // Only future meetings today or later
+    query.endDate = { $gte: now }; // Exclude meetings past their endDate
+  }
+  else if (subFilter === "all") {
+    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+    query.meetingTime = { $gte: startOfMonth, $lte: endOfMonth }; // All meetings this month
+  }
+
+  try {
+    //console.log("Query:", JSON.stringify(query, null, 2)); // Debugging query
+    const meetings = await Meeting.find(query)
+      .populate("creator", "name profilePic")
+      .populate("meetingMembers.memberId", "name profilePic")
+      .sort({ createdAt: -1 })
+      .exec();
+
+    return meetings;
+  } catch (error) {
+    console.error("Error fetching meetings:", error);
+    throw new Error("Failed to fetch meetings");
+  }
 };
+
 
 //-------- meeting member
 
-export const getMeetingsByMeetingMember = async (memberId) => {
-  //console.log("Member ID:", memberId);
-  const meetings = await Meeting.find({
+// export const getMeetingsByMeetingMember = async (memberId) => {
+//   //console.log("Member ID:", memberId);
+//   const meetings = await Meeting.find({
+//     "meetingMembers.memberId": memberId,
+//   })
+//     .populate("projectId")
+//     .populate("creator")
+//     .populate("meetingMembers.memberId")
+//     .sort({ createdAt: -1 });
+//   return meetings;
+// };
+
+
+export const getMeetingsByMeetingMember = async (memberId, filters) => {
+  console.log("member", memberId);
+  const { filterType = "Monthly", subFilter = "all" } = filters;
+  const currentDate = new Date();
+  const startOfToday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+  const endOfToday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59, 59, 999);
+
+  let query = {
     "meetingMembers.memberId": memberId,
-  })
-    .populate("projectId")
-    .populate("creator")
-    .populate("meetingMembers.memberId")
-    .sort({ createdAt: -1 });
-  return meetings;
+  };
+
+  // Apply Date Filters Based on filterType
+  if (filterType === "Today") {
+    query.meetingTime = { $gte: startOfToday, $lte: endOfToday };
+  } else if (filterType === "Weekly") {
+    const startOfWeek = new Date();
+    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
+    query.meetingTime = { $gte: startOfWeek, $lte: endOfWeek };
+  } else if (filterType === "Monthly") {
+    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+    query.meetingTime = { $gte: startOfMonth, $lte: endOfMonth };
+  }
+
+  // Apply Subfilters
+  if (subFilter === "upcoming") {
+    query.meetingTime = { ...query.meetingTime, $gte: currentDate }; // Future meetings only
+    query.endDate = { $gte: currentDate }; // Exclude meetings past their endDate
+  } else if (subFilter === "attend") {
+    query["meetingMembers.attendance.isAttend"] = true; // Meetings attended by the member
+  } else if (subFilter === "absent") {
+    query["meetingMembers.attendance.isAttend"] = false; // Meetings not attended by the member
+  }
+
+  try {
+    const meetings = await Meeting.find(query)
+      .populate("projectId")
+      .populate("creator")
+      .populate("meetingMembers.memberId")
+      .sort({ createdAt: -1 });
+
+    return meetings;
+  } catch (error) {
+    console.error("Error fetching meetings:", error);
+    throw new Error("Failed to fetch meetings");
+  }
 };
+
 
 // update attendence
 

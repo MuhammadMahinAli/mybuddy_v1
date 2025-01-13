@@ -51,6 +51,8 @@ import GeneralAllPost from "../Pages/GeneralDashboard/GeneralAllPost/GeneralAllP
 import LandingPage from "../Pages/Landing/LandingPage";
 import Help from "../Pages/Help/Help";
 import LandingLayout from "../Layout/LandingLayout";
+import AdminConference from "../Pages/Admin/AdminConference/AdminConference";
+import AdminTutorials from "../Pages/Admin/AdminTutorials/AdminTutorials";
 
 
 const router = createBrowserRouter([
@@ -206,6 +208,10 @@ const router = createBrowserRouter([
         element: <AdminAllFund />,
       },
       {
+        path: "/admin/:id/tutorials",
+        element: <AdminTutorials />,
+      },
+      {
         path: "/admin/:id/project-details/:id",
         element: <GeneralProjectDetails />,
         loader: ({ params }) => fetch(`https://test-two-22w0.onrender.com/api/v1/project/getProjectById/${params.id}`)
@@ -221,6 +227,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/:id/all-tools",
         element: <AdminAllTool />,
+      },
+      {
+        path: "/admin/:id/set-conference",
+        element: <AdminConference />,
       },
     
       // {

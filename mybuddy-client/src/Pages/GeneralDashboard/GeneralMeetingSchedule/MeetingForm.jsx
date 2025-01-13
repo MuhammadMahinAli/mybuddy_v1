@@ -153,34 +153,66 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
     });
   };
 
+  const adjustToLocalTime = (date) => {
+    const offset = date.getTimezoneOffset() * 60000; // Offset in milliseconds
+    return new Date(date.getTime() - offset).toISOString();
+  };
+  
   useEffect(() => {
     if (formData.meetingTime) {
       const meetingTimeDate = new Date(formData.meetingTime);
-
+  
       if (isNaN(meetingTimeDate.getTime())) {
         console.error("Invalid meetingTime provided");
         return;
       }
-
+  
       if (formData.repeat === "do not repeat") {
-        // Set endDate same as meetingTime if 'do not repeat'
         setFormData((prev) => ({
           ...prev,
-          endDate: formData.meetingTime,
+          endDate: adjustToLocalTime(meetingTimeDate),
         }));
       } else {
-        // Calculate endDate based on weeklyRepeat
-        const calculatedEndDate = dayjs(formData.meetingTime)
-          .add(formData.weeklyRepeat, "week") // Add the number of weeks
-          .toISOString(); // Convert to ISO format (or your preferred format)
-
+        const calculatedEndDate = new Date(meetingTimeDate);
+        calculatedEndDate.setDate(calculatedEndDate.getDate() + formData.weeklyRepeat * 7);
+  
         setFormData((prev) => ({
           ...prev,
-          endDate: calculatedEndDate,
+          endDate: adjustToLocalTime(calculatedEndDate),
         }));
       }
     }
   }, [formData.repeat, formData.meetingTime, formData.weeklyRepeat]);
+  
+
+  // useEffect(() => {
+  //   if (formData.meetingTime) {
+  //     const meetingTimeDate = new Date(formData.meetingTime);
+
+  //     if (isNaN(meetingTimeDate.getTime())) {
+  //       console.error("Invalid meetingTime provided");
+  //       return;
+  //     }
+
+  //     if (formData.repeat === "do not repeat") {
+  //       // Set endDate same as meetingTime if 'do not repeat'
+  //       setFormData((prev) => ({
+  //         ...prev,
+  //         endDate: formData.meetingTime,
+  //       }));
+  //     } else {
+  //       // Calculate endDate based on weeklyRepeat
+  //       const calculatedEndDate = dayjs(formData.meetingTime)
+  //         .add(formData.weeklyRepeat, "week") // Add the number of weeks
+  //         .toISOString(); // Convert to ISO format (or your preferred format)
+
+  //       setFormData((prev) => ({
+  //         ...prev,
+  //         endDate: calculatedEndDate,
+  //       }));
+  //     }
+  //   }
+  // }, [formData.repeat, formData.meetingTime, formData.weeklyRepeat]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -221,7 +253,7 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
       { key: "duration", label: "Duration" },
       { key: "meetingTime", label: "Meeting Time" },
       { key: "endDate", label: "End Date" },
-      {key:"weeklyRepeat", label:"Weekly Repeat"}
+      // {key:"weeklyRepeat", label:"Weekly Repeat"}
     ];
   
     // Initial emptyFields array to track empty required fields
@@ -264,7 +296,7 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
     try {
       // Submit form data to the API
       const response = await fetch(
-        "https://test-two-22w0.onrender.com/api/v1/meeting/create-new",
+        "http://localhost:3000/api/v1/meeting/create-new",
         {
           method: "POST",
           headers: {
@@ -301,7 +333,7 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
       });
     }
   };
-
+console.log(formData);
   return (
     <>
       <div className="fixed top-0 left-0  flex justify-center items-center bg-black/40 bg-opacity-50 w-screen h-screen overflow-y-scroll">
@@ -475,13 +507,21 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
                           <input
                             type="datetime-local"
                             id="meetingTime"
-                
-                            onChange={(e) =>
+                            onChange={(e) => {
+                              const localTime = e.target.value; // This is the local time
+                              const utcTime = new Date(localTime).toISOString(); // Convert to UTC
+                          
                               setFormData({
                                 ...formData,
-                                meetingTime: e.target.value,
-                              })
-                            }
+                                meetingTime: utcTime, // Save UTC time in the form data
+                              });
+                            }}
+                            // onChange={(e) =>
+                            //   setFormData({
+                            //     ...formData,
+                            //     meetingTime: e.target.value,
+                            //   })
+                            // }
                             className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                           />
                         </div>

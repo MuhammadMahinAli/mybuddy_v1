@@ -80,9 +80,9 @@ const GeneralAllPost = () => {
                 >
                   <HiOutlineDotsVertical />
                 </button>
-                {post.image && (
+                {post.image?.length !== 0 && (
                   <img
-                    src={post.image}
+                    src={post.image[0]}
                     className="w-4/12 h-20 lg:h-32 3xl:h-36 rounded-md"
                   />
                 )}

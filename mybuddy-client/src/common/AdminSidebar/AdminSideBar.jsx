@@ -14,9 +14,9 @@ const AdminSideBar = () => {
   const [openAllFund, setOpenAllFund] = useState(false);
   const [openCreateTools, setOpenCreateTools] = useState(false);
   const [openAllTool, setOpenAllTool] = useState(false);
-  // const [openMeet, setOpenMeet] = useState(false);
+const [openConference, setOpenConference] = useState(false);
   const [openSetting, setOpenSetting] = useState(false);
-  // const [openProfile, setOpenProfile] = useState(false);
+  const [openTutorials, setOpenTutorials] = useState(false);
   // const [openRequestOption, setOpenRequestOption] = useState(false);
   const [userData, setUserData] = useState({});
   const{singleUser} = useContext(AuthContext);
@@ -43,6 +43,8 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenCreateTools,
       setOpenAllTool,
+      setOpenConference,
+      setOpenTutorials
     ]);
   const handleAllFund = () =>
     toggleState(setOpenAllFund, [
@@ -52,6 +54,8 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenCreateTools,
       setOpenAllTool,
+      setOpenConference,
+      setOpenTutorials
     ]);
   const handleAllProject = () =>
     toggleState(setOpenAllProject, [
@@ -61,6 +65,8 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenCreateTools,
       setOpenAllTool,
+      setOpenConference,
+      setOpenTutorials
     ]);
   const handleAllUser = () =>
     toggleState(setOpenAllUser, [
@@ -70,6 +76,8 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenCreateTools,
       setOpenAllTool,
+      setOpenConference,
+      setOpenTutorials
     ]);
   const handleSetting = () =>
     toggleState(setOpenSetting , [
@@ -79,6 +87,8 @@ setUserData(singleUser);
       setOpenAllProject,
       setOpenCreateTools,
       setOpenAllTool,
+      setOpenConference,
+      setOpenTutorials
     ]);
   const handleCreateTools = () =>
     toggleState( setOpenCreateTools, [
@@ -88,6 +98,8 @@ setUserData(singleUser);
       setOpenAllProject,
       setOpenSetting ,
       setOpenAllTool,
+      setOpenConference,
+      setOpenTutorials
     ]);
   const handleAllTools = () =>
     toggleState(setOpenAllTool, [
@@ -97,6 +109,31 @@ setUserData(singleUser);
       setOpenAllProject,
       setOpenSetting ,
       setOpenCreateTools,
+      setOpenConference,
+      setOpenTutorials
+    ]);
+
+  const handleAllConference = () =>
+    toggleState(setOpenConference, [
+      setOpenAllUser,
+      setOpenDashboard,
+      setOpenAllFund,
+      setOpenAllProject,
+      setOpenSetting ,
+      setOpenCreateTools,
+      setOpenAllTool,
+      setOpenTutorials   
+    ]);
+  const handleTutorials = () =>
+    toggleState(setOpenTutorials, [
+      setOpenAllUser,
+      setOpenDashboard,
+      setOpenAllFund,
+      setOpenAllProject,
+      setOpenSetting ,
+      setOpenCreateTools,
+      setOpenAllTool,
+      setOpenConference         
     ]);
   
     // logout
@@ -132,6 +169,10 @@ setUserData(singleUser);
         handleSetting={handleSetting}
         handleCreateTools={handleCreateTools}
         handleAllTools={handleAllTools}
+        handleAllConference={handleAllConference}
+        handleTutorials={handleTutorials}
+        openTutorials={openTutorials}
+        openConference={openConference}
         openAllTool={openAllTool}
         openCreateTools={openCreateTools}
         openSetting={openSetting}
@@ -151,6 +192,10 @@ setUserData(singleUser);
           handleSetting={handleSetting}
           handleCreateTool={handleCreateTools}
           handleAllTools={handleAllTools}
+          handleAllConference={handleAllConference}
+          handleTutorials={handleTutorials}
+        openTutorials={openTutorials}
+          openConference={openConference}
           openAllTool={openAllTool}
           openCreateTools={openCreateTools}
           openSetting={openSetting}

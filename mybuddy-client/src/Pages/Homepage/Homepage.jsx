@@ -5,13 +5,12 @@ import ViewPosts from "./ViewPosts";
 const Homepage = () => {
   const theme = useSelector((state) => state.theme.theme);
   return (
-  
-      <section className="space-y-7 text-gray-800">
+    <section className="space-y-7 text-gray-800 ">
       <Posts theme={theme} />
-      <ViewPosts theme={theme} />
+      <div className="max-h-[1200px] overflow-y-auto">
+        <ViewPosts theme={theme} />
+      </div>
     </section>
-   
-   
   );
 };
 

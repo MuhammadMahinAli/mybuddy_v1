@@ -11,7 +11,7 @@ export const createPostZodSchema = z.object({
       }),
       technicalRecommendations: z.array(z.string()).optional(),
       teamMembers: z.array(z.string()).optional(),
-      image:z.string().optional(),
+      image:z.array(z.string()).optional(),
       comments: z.array(z.string()).optional(),
       comments: z.array(
         z.object({

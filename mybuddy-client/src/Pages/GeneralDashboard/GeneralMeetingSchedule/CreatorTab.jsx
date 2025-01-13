@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 import MeetingForm from "./MeetingForm";
 import moment from "moment";
@@ -15,20 +15,49 @@ const CreatorTab = () => {
   const [selectedMeeting, setSelectedMeeting] = useState(null);
   const [selectMeeting, setSelectMeeting] = useState(null);
   const [isOpenUpdateMeeting, setIsOpenUpdateMeeting] = useState(false);
-  const [deleteMeeting]=useDeleteMeetingMutation();
-  const { getAllProjectByUser, userId, getAllMeetingByCreator } =
+  const [deleteMeeting] = useDeleteMeetingMutation();
+  const {  getAllProjectByUser, userId } =
     useContext(AuthContext);
-  // Store only one selected meeting
-  const meetingAsMembers = getAllMeetingByCreator?.data;
+    const [filter, setFilter] = useState("Monthly"); // Default filter
+    const [subFilter, setSubFilter] = useState("all"); // Default subfilter
+    const [meetingCounts, setMeetingCounts] = useState({
+      upcoming: 0,
+      attend: 0,
+      absent: 0,
+    });
+  const [filteredMeetings, setFilteredMeetings] = useState([]);
 
-  const toggleUpdateMeeting = (meetingData) => {
-    setSelectMeeting(meetingData);
-    setIsOpenUpdateMeeting(true);
+  const [getAllMeetingByCreator, setGetAllMeetingByCreator] = useState([]);
+
+  const fetchMeetings = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/v1/meeting/getAllMeetingOf/${userId}?filterType=${filter}&subFilter=${subFilter}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch meetings");
+      }
+
+      const data = await response.json();
+      setGetAllMeetingByCreator(data?.data || []);
+    } catch (error) {
+      console.error("Error fetching meetings:", error);
+    }
   };
-  const toggleOption = (meetingData) => {
-    setSelectMeeting(meetingData);
-    setIsOpenOption(!isOpenOption);
-  };
+
+  useEffect(() => {
+    fetchMeetings();
+  }, [filter, subFilter]);
+
+
+  //console.log("pop",getAllMeetingByCreator);
 
   const formatDateTime = (dateTimeString) => {
     const dateTime = moment(dateTimeString);
@@ -39,11 +68,106 @@ const CreatorTab = () => {
     const date = moment(isoDateString);
     return date.format("DD MMMM YYYY");
   };
+  const toggleOptionMenu = (meetingId) => {
+    setIsOpenOption(isOpenOption === meetingId ? null : meetingId);
+  };
+  // State for filters and subfilters
+
+
+  const meetingAsMembers = getAllMeetingByCreator;
+
+  useEffect(() => {
+    const filterMeetings = () => {
+      const currentDate = moment();
+      let filtered = meetingAsMembers;
+
+      if (filter === "Today") {
+        filtered = filtered?.filter((meeting) =>
+          moment(meeting.meetingTime).isSame(currentDate, "day")
+        );
+      } else if (filter === "Weekly") {
+        filtered = filtered?.filter((meeting) =>
+          moment(meeting.meetingTime).isBetween(
+            currentDate.clone().startOf("week"),
+            currentDate.clone().endOf("week"),
+            "day",
+            "[]"
+          )
+        );
+      } else if (filter === "Monthly") {
+        filtered = filtered?.filter((meeting) =>
+          moment(meeting.meetingTime).isSame(currentDate, "month")
+        );
+      }
+
+      if (subFilter === "upcoming") {
+        filtered = filtered?.filter((meeting) =>
+          moment(meeting.meetingTime).isAfter(currentDate)
+        );
+      } else if (subFilter === "attend") {
+        filtered = filtered?.filter((meeting) =>
+          meeting.meetingMembers.some(
+            (member) =>
+              member.attendance?.some((a) => a.isAttend) &&
+              member.memberId === meeting.creator
+          )
+        );
+      } else if (subFilter === "absent") {
+        filtered = filtered?.filter((meeting) =>
+          meeting.meetingMembers.some(
+            (member) =>
+              member.attendance?.some((a) => !a.isAttend) &&
+              member.memberId === meeting.creator
+          )
+        );
+      }
+
+      setFilteredMeetings(filtered);
+
+      // Update counts
+      const upcomingCount = filtered?.filter((meeting) =>
+        moment(meeting.meetingTime).isAfter(currentDate)
+      ).length;
+      const attendCount = filtered?.filter((meeting) =>
+        meeting.meetingMembers.some(
+          (member) =>
+            member.attendance?.some((a) => a.isAttend) &&
+            member.memberId === meeting.creator
+        )
+      ).length;
+      const absentCount = filtered?.filter((meeting) =>
+        meeting.meetingMembers.some(
+          (member) =>
+            member.attendance?.some((a) => !a.isAttend) &&
+            member.memberId === meeting.creator
+        )
+      ).length;
+
+      setMeetingCounts({
+        upcoming: upcomingCount,
+        attend: attendCount,
+        absent: absentCount,
+      });
+    };
+
+    filterMeetings();
+  }, [filter, subFilter, meetingAsMembers]);
+
+  console.log(filteredMeetings);
+
+  const toggleUpdateMeeting = (meetingData) => {
+    setSelectMeeting(meetingData);
+    setIsOpenUpdateMeeting(true);
+  };
+
+  const toggleOption = (meetingData) => {
+    setSelectMeeting(meetingData);
+    setIsOpenOption(!isOpenOption);
+  };
 
   const handleDeleteMeeting = (id) => {
-    console.log(id);
     Swal.fire({
-      title: "Are you sure to delete it ?",
+      title: "Are you sure to delete it?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -52,24 +176,16 @@ const CreatorTab = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteMeeting(id).unwrap()
+        deleteMeeting(id)
+          .unwrap()
           .then(() => {
-            Swal.fire(
-              "Well done!",
-              "This meeting has been deleted.",
-              "success"
+            setGetAllMeetingByCreator((prevMeetings) =>
+              prevMeetings.filter((meeting) => meeting._id !== id)
             );
-            // setTimeout(() => {
-            //   window.location.reload();
-            // }, 2500);
+            Swal.fire("Deleted!", "This meeting has been deleted.", "success");
           })
-          .catch((error) => {
-            console.log(error);
-            Swal.fire(
-              "Error!",
-              "There was an issue to delete meeting.",
-              "error"
-            );
+          .catch(() => {
+            Swal.fire("Error!", "Failed to delete the meeting.", "error");
           });
       }
     });
@@ -85,139 +201,164 @@ const CreatorTab = () => {
           </h2>
           <button
             onClick={() => setIsOpenMeeting(true)}
-            className={`text-sm xl:text-lg px-2 md:px-4 py-2 text-white rounded-lg shadow [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] font-bold hover:bg-green-500 transition-colors`}
+            className="text-sm xl:text-lg px-2 md:px-4 py-2 text-white rounded-lg shadow [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] font-bold hover:bg-green-500 transition-colors"
           >
             Create Meeting
           </button>
         </div>
 
-        {/* Meeting Cards Section  */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          {meetingAsMembers?.map((meeting, index) => (
-            <div
-              key={index}
-              className="bg-white shadow-md rounded-lg p-4 relative"
-            >
-              <button
-                onClick={() => toggleOption(meeting)}
-                className="float-right"
-              >
-                <HiOutlineDotsVertical />
-              </button>
-              {isOpenOption &&
-                selectMeeting &&
-                selectMeeting?._id === meeting?._id && (
-                  <ul className="absolute bg-white rounded-md text-center  right-4 top-8 shadow-xl w-28">
-                    <li
-                      onClick={() => toggleUpdateMeeting(meeting)}
-                      className="hover:bg-gray-100 py-1  cursor-pointer flex items-center pl-5 space-x-2"
-                    >
-                      {" "}
-                      <span>
-                        <FaRegPenToSquare className="text-gray-500" />
-                      </span>{" "}
-                      <span className=""> Edit</span>
-                    </li>
-                    <li onClick={()=>handleDeleteMeeting(meeting?._id)} className="hover:bg-gray-100 py-1  cursor-pointer flex items-center pl-5 space-x-2">
-                      {" "}
-                      <span>
-                        <FaRegTrashCan className="text-gray-500" />
-                      </span>{" "}
-                      <span className=""> Delete</span>
-                    </li>
-                  </ul>
-                )}
-
-              <div className="flex items-start mb-2">
-                <img
-                  src={
-                    meeting?.creator?.profilePic
-                      ? meeting?.creator?.profilePic
-                      : "https://i.ibb.co.com/FKKD4mT/opp.png"
-                  }
-                  alt="Meeting"
-                  className="w-10 h-10 rounded-full"
-                />
-                <div className="ml-4">
-                <h3 className="text-lg font-semibold capitalize lg:hidden">
-                    {meeting?.title?.length > 7 ? meeting?.title.slice(0,7)  + "..." :  meeting?.title}
-                  </h3>
-                  <h3 className="hidden text-lg font-semibold capitalize lg:block ">
-                    {meeting?.title}
-                  </h3>
-                  <span className="text-base">
-                    {formatDate(meeting.meetingTime)}
-                  </span>
-                  <p className="text-sm text-gray-500">
-                    {formatDateTime(meeting.meetingTime)} to{" "}
-                    {formatDateTime(
-                      moment(meeting.meetingTime).add(meeting.duration * 60000)
-                    )}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center mb-4">
-                {/* Members Avatars */}
-                <div className="flex -space-x-2">
-                  {meeting?.meetingMembers.map((member, memberIndex) => (
-                    <img
-                      key={`${memberIndex}`}
-                      src={
-                        member?.memberId?.profilePic ||
-                        "https://i.ibb.co.com/FKKD4mT/opp.png"
-                      }
-                      className="w-7 h-7 rounded-full border-2 border-white"
-                      alt={`Member ${memberIndex + 1}`}
-                    />
-                  ))}
-                </div>
-                {meeting?.meetingAsMembers?.length > 4 && (
-                  <span className="ml-2 text-gray-500">
-                    <span>+</span> {meeting?.meetingMembers?.length}
-                  </span>
-                )}
-              </div>
-              <button
-                onClick={() => setSelectedMeeting(meeting)} // Set only the clicked meeting
-                className="w-full py-2 text-white [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] rounded-lg shadow hover:bg-green-500 transition-colors"
-              >
-                View Details
-              </button>
-            </div>
-          ))}
+        {/* Filter Section */}
+        <div className="flex space-x-4 mb-4">
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="px-4 py-2 rounded border outline-none border-gray-300"
+          >
+            <option value="Today">Today</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
+          </select>
+          <select
+            value={subFilter}
+            onChange={(e) => setSubFilter(e.target.value)}
+            className="px-4 py-2 rounded border outline-none border-gray-300"
+          >
+            <option value="all">All</option>
+            <option value="upcoming">Upcoming</option>
+            {/* <option value="absent">Absent</option>
+            <option value="attend">Attend</option> */}
+          </select>
         </div>
+        {/* Meeting Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredMeetings && filteredMeetings.length > 0 ? (
+            filteredMeetings.map((meeting, index) => (
+              <>
+                <div
+                  key={index}
+                  className="bg-white shadow-md rounded-lg p-4 relative"
+                >
+                  {/* Options Menu */}
+                  <button
+                    onClick={() => toggleOptionMenu(meeting._id)}
+                    className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                  >
+                    <HiOutlineDotsVertical />
+                  </button>
+                  {isOpenOption === meeting._id && (
+                    <ul className="absolute bg-white rounded-md shadow-md top-10 right-4">
+                      <li
+                        onClick={() => toggleUpdateMeeting(meeting)}
+                        className="p-2 hover:bg-gray-100 cursor-pointer flex items-center space-x-2"
+                      >
+                        <FaRegPenToSquare />
+                        <span>Edit</span>
+                      </li>
+                      <li
+                        onClick={() => handleDeleteMeeting(meeting._id)}
+                        className="p-2 hover:bg-gray-100 cursor-pointer flex items-center space-x-2"
+                      >
+                        <FaRegTrashCan />
+                        <span>Delete</span>
+                      </li>
+                    </ul>
+                  )}
+
+                  <div className="flex items-start mb-2 ">
+                    <img
+                      src={
+                        meeting?.creator?.profilePic
+                          ? meeting?.creator?.profilePic
+                          : "https://i.ibb.co.com/FKKD4mT/opp.png"
+                      }
+                      alt="Meeting"
+                      className="w-10 h-10 rounded-full"
+                    />
+                    <div className="ml-4 ">
+                      <h3 className="text-lg font-semibold capitalize">
+                        {meeting?.title}
+                      </h3>
+                      <span className="text-base">
+                        {formatDate(meeting.meetingTime)}
+                      </span>
+                      <p className="text-sm text-gray-500">
+                        {formatDateTime(meeting.meetingTime)} to{" "}
+                        {formatDateTime(
+                          moment(meeting.meetingTime).add(
+                            meeting.duration * 60000
+                          )
+                        )}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center mb-4">
+                    {/* Members Avatars */}
+                    <div className="flex -space-x-2">
+                      {meeting?.meetingMembers.map((member, memberIndex) => (
+                        <img
+                          key={`${memberIndex}`}
+                          src={
+                            member?.memberId?.profilePic ||
+                            "https://i.ibb.co.com/FKKD4mT/opp.png"
+                          }
+                          className="w-7 h-7 rounded-full border-2 border-white"
+                          alt={`Member ${memberIndex + 1}`}
+                        />
+                      ))}
+                    </div>
+                    {meeting?.meetingAsMembers?.length > 4 && (
+                      <span className="ml-2 text-gray-500">
+                        {" "}
+                        <span>+</span> {meeting?.meetingMembers?.length}{" "}
+                      </span>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => setSelectedMeeting(meeting)}
+                    className="w-full py-2 text-white [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] rounded-lg shadow hover:bg-green-500 transition-colors"
+                  >
+                    View Details
+                  </button>
+                  {selectedMeeting !== null && (
+                    <MeetingDetailsPage
+                      meetingDat={selectedMeeting}
+                      setSelectedMeeting={setSelectedMeeting}
+                    />
+                  )}
+                  {isOpenMeeting === true && (
+                    <MeetingForm
+                      setIsOpenMeeting={setIsOpenMeeting}
+                      getAllProjectByUser={getAllProjectByUser}
+                      userId={userId}
+                    />
+                  )}
+                </div>
+              </>
+            ))
+          ) : (
+            <div className="col-span-full text-center">
+              <p className="text-lg font-semibold text-gray-700">
+                No meetings available.
+              </p>
+            </div>
+          )}
+        </div>
+        {isOpenUpdateMeeting && selectMeeting && (
+          <UpdateMeeting
+            meetingData={selectMeeting}
+            setSelectMeeting={setSelectMeeting}
+            setIsOpenUpdateMeeting={setIsOpenUpdateMeeting}
+          />
+        )}
       </div>
-
-      {/* Conditionally render selected meeting's details outside of the loop */}
-      {selectedMeeting && (
-        <MeetingDetailsPage
-          userId={userId}
-          meetingDat={selectedMeeting}
-          setSelectedMeeting={setSelectedMeeting}
-        />
-      )}
-
-      {isOpenMeeting && (
-        <MeetingForm
-          setIsOpenMeeting={setIsOpenMeeting}
-          getAllProjectByUser={getAllProjectByUser}
-          userId={userId}
-        />
-      )}
-
-      {isOpenUpdateMeeting && selectMeeting && (
-        <UpdateMeeting
-          meetingData={selectMeeting}
-          setSelectMeeting={setSelectMeeting}
-          setIsOpenUpdateMeeting={setIsOpenUpdateMeeting}
-        />
-      )}
     </>
   );
 };
 
 export default CreatorTab;
+
+//-----------------------------------------------------------------------------------------------
 
 // import { useContext, useState } from "react";
 // import { AuthContext } from "../../../Context/UserContext";
@@ -227,20 +368,20 @@ export default CreatorTab;
 
 // const CreatorTab = () => {
 //   const [isOpenMeeting, setIsOpenMeeting] = useState(false);
-//   const { getAllProjectByUser, userId, getAllMeetingByCreator } =
-//     useContext(AuthContext);
+// const { getAllProjectByUser, userId, getAllMeetingByCreator } =
+//   useContext(AuthContext);
 // const [selectedMeetings, setSelectedMeetings] = useState(null)
 //   const meetingAsMembers = getAllMeetingByCreator?.data;
 
-//   const formatDateTime = (dateTimeString) => {
-//     const dateTime = moment(dateTimeString);
-//     return dateTime.format("hh:mm A");
-//   };
+// const formatDateTime = (dateTimeString) => {
+//   const dateTime = moment(dateTimeString);
+//   return dateTime.format("hh:mm A");
+// };
 
-//   const formatDate = (isoDateString) => {
-//     const date = moment(isoDateString);
-//     return date.format("DD MMMM YYYY");
-//   };
+// const formatDate = (isoDateString) => {
+//   const date = moment(isoDateString);
+//   return date.format("DD MMMM YYYY");
+// };
 
 //   // const formatDuration = (durationInSeconds) => {
 //   //   const hours = Math.floor(durationInSeconds / 3600);
@@ -268,75 +409,75 @@ export default CreatorTab;
 //         {/* Meeting Cards Section */}
 //         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
 //           {meetingAsMembers?.map((meeting, index) => (
-//             <div key={index} className="bg-white shadow-md rounded-lg p-4">
-//               <div className="flex items-start mb-2 ">
-//                 <img
-//                   src={
-//                     meeting?.creator?.profilePic
-//                       ? meeting?.creator?.profilePic
-//                       : "https://i.ibb.co.com/FKKD4mT/opp.png"
-//                   }
-//                   alt="Meeting"
-//                   className="w-10 h-10 rounded-full"
-//                 />
-//                 <div className="ml-4 ">
-//                   <h3 className="text-lg font-semibold capitalize">
-//                     {meeting?.title}
-//                   </h3>
-//                   <span className="text-base">
-//                     {formatDate(meeting.meetingTime)}
-//                   </span>
-//                   <p className="text-sm text-gray-500">
-//                     {formatDateTime(meeting.meetingTime)} to{" "}
-//                     {formatDateTime(
-//                       moment(meeting.meetingTime).add(meeting.duration * 60000)
-//                     )}
-//                   </p>
-//                 </div>
-//               </div>
+// <div key={index} className="bg-white shadow-md rounded-lg p-4">
+//   <div className="flex items-start mb-2 ">
+//     <img
+//       src={
+//         meeting?.creator?.profilePic
+//           ? meeting?.creator?.profilePic
+//           : "https://i.ibb.co.com/FKKD4mT/opp.png"
+//       }
+//       alt="Meeting"
+//       className="w-10 h-10 rounded-full"
+//     />
+//     <div className="ml-4 ">
+//       <h3 className="text-lg font-semibold capitalize">
+//         {meeting?.title}
+//       </h3>
+//       <span className="text-base">
+//         {formatDate(meeting.meetingTime)}
+//       </span>
+//       <p className="text-sm text-gray-500">
+//         {formatDateTime(meeting.meetingTime)} to{" "}
+//         {formatDateTime(
+//           moment(meeting.meetingTime).add(meeting.duration * 60000)
+//         )}
+//       </p>
+//     </div>
+//   </div>
 
-//               <div className="flex items-center mb-4">
-//                 {/* Members Avatars */}
-//                 <div className="flex -space-x-2">
-//                   {meeting?.meetingMembers.map((member, memberIndex) => (
-//                     <img
-//                       key={`${memberIndex}`}
-//                       src={
-//                         member?.memberId?.profilePic ||
-//                         "https://i.ibb.co.com/FKKD4mT/opp.png"
-//                       }
-//                       className="w-7 h-7 rounded-full border-2 border-white"
-//                       alt={`Member ${memberIndex + 1}`}
-//                     />
-//                   ))}
-//                 </div>
-//                 {meeting?.meetingAsMembers?.length > 4 && (
-//                   <span className="ml-2 text-gray-500">
-//                     {" "}
-//                     <span>+</span> {meeting?.meetingMembers?.length}{" "}
-//                   </span>
-//                 )}
-//               </div>
-//               <button onClick={() => setSelectedMeetings(meeting)}  className="w-full py-2 text-white [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] rounded-lg shadow hover:bg-green-500 transition-colors">
-//                 View Details
-//               </button>
-//               {
-//                 selectedMeetings !== null &&
-//                 <MeetingDetailsPage meetingDat={selectedMeetings} />
-//               }
+//   <div className="flex items-center mb-4">
+//     {/* Members Avatars */}
+//     <div className="flex -space-x-2">
+//       {meeting?.meetingMembers.map((member, memberIndex) => (
+//         <img
+//           key={`${memberIndex}`}
+//           src={
+//             member?.memberId?.profilePic ||
+//             "https://i.ibb.co.com/FKKD4mT/opp.png"
+//           }
+//           className="w-7 h-7 rounded-full border-2 border-white"
+//           alt={`Member ${memberIndex + 1}`}
+//         />
+//       ))}
+//     </div>
+//     {meeting?.meetingAsMembers?.length > 4 && (
+//       <span className="ml-2 text-gray-500">
+//         {" "}
+//         <span>+</span> {meeting?.meetingMembers?.length}{" "}
+//       </span>
+//     )}
+//   </div>
+//   <button onClick={() => setSelectedMeetings(meeting)}  className="w-full py-2 text-white [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] rounded-lg shadow hover:bg-green-500 transition-colors">
+//     View Details
+//   </button>
+//   {
+//     selectedMeetings !== null &&
+//     <MeetingDetailsPage meetingDat={selectedMeetings} />
+//   }
 
-//             </div>
+// </div>
 //           ))}
 //         </div>
 //       </div>
 
-//       {isOpenMeeting === true && (
-//         <MeetingForm
-//           setIsOpenMeeting={setIsOpenMeeting}
-//           getAllProjectByUser={getAllProjectByUser}
-//           userId={userId}
-//         />
-//       )}
+// {isOpenMeeting === true && (
+//   <MeetingForm
+//     setIsOpenMeeting={setIsOpenMeeting}
+//     getAllProjectByUser={getAllProjectByUser}
+//     userId={userId}
+//   />
+// )}
 //     </>
 //   );
 // };

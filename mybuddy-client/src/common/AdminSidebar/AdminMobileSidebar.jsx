@@ -16,7 +16,11 @@ const AdminMobileSidebar = ({
   handleCreateTools,
   handleAllTools,
   openAllTool,
-  openCreateTools
+  openCreateTools,
+  handleAllConference,
+  openConference,
+  handleTutorials,
+  openTutorials
 }) => {
   const { singleUser } = useContext(AuthContext);
   const adminId = singleUser?.data?._id
@@ -186,6 +190,64 @@ const AdminMobileSidebar = ({
             <div
               className={`${
                 openCreateTools === true ? "block" : "hidden"
+              } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
+            ></div>
+          </li>
+          {/* add conference */}
+          <li
+            onClick={handleAllConference}
+            className={`${
+              openAllUser === true ? "show-content pl-2" : "hide-content"
+            } border-b  cursor-pointer`}
+          >
+            {openConference && (
+              <div className=" bg-[#e4ecf7] h-4 rounded-br-[60px]"></div>
+            )}
+
+            <div
+              className={`${
+                openConference === true
+                  ? "bg-[#f3f6f8] rounded-[20px] py-2"
+                  : "bg-[#e4ecf7]  py-3"
+              } flex relative  items-center justify-center`}
+            >
+              <Link to={`/admin/${adminId}/set-conference`}>
+                <img src="/create-project.svg" className="h-6 md:h-5" />
+              </Link>
+            </div>
+
+            <div
+              className={`${
+                openConference === true ? "block" : "hidden"
+              } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
+            ></div>
+          </li>
+          {/* add tutorials */}
+          <li
+            onClick={handleTutorials}
+            className={`${
+              openTutorials === true ? "show-content pl-2" : "hide-content"
+            } border-b  cursor-pointer`}
+          >
+            {openTutorials && (
+              <div className=" bg-[#e4ecf7] h-4 rounded-br-[60px]"></div>
+            )}
+
+            <div
+              className={`${
+                openTutorials === true
+                  ? "bg-[#f3f6f8] rounded-[20px] py-2"
+                  : "bg-[#e4ecf7]  py-3"
+              } flex relative  items-center justify-center`}
+            >
+              <Link to={`/admin/${adminId}/tutorials`}>
+                <img src="/create-project.svg" className="h-6 md:h-5" />
+              </Link>
+            </div>
+
+            <div
+              className={`${
+                openTutorials === true ? "block" : "hidden"
               } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
             ></div>
           </li>

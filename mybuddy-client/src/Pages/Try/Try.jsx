@@ -1,391 +1,1503 @@
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-import * as XLSX from "xlsx";
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import AboutTab from "../Feed/AboutTab";
+import ProjectTab from "../Feed/ProjectTab";
+import SkillTab from "../Feed/SkillTab";
+import SocialTab from "../Feed/SocialTab";
+// import MobileNavbar from "../../common/MobileNavbar/MobileNavbar";
+// import TabletNavbar from "../TabletNavbar/TabletNavbar";
+import { useSelector } from "react-redux";
+import feedWhiteBorder from "../../assets/home/feed-w-b.png";
+import feedDarkBorder from "../../assets/home/feed-d-b.png";
+import { AuthContext } from "../../Context/UserContext";
+import { apiFetch } from "../../utils/apiFetch";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import Loading from "../Loading/Loading";
+import axios from "axios";
+import MobileNavbar from "../../common/MobileNavbar/MobileNavbar";
+import TabletNavbar from "../TabletNavbar/TabletNavbar";
+import { MdOutlineEmail } from "react-icons/md";
+import {
+  FaRegArrowAltCircleLeft,
+  FaRegArrowAltCircleRight,
+} from "react-icons/fa";
 
-const Try = () => {  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
-
-  const tableData = [
-    {
-      _id: "60d0fe4f5311236168a109ca",
-      commitBy: {
-        _id: "60d0fe4f5311236168a109ca",
-        name: {
-          firstName: "User",
-          lastName: "Name",
-        },
-        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
-        role: "Developer",
-      },
-      project: "60d0fe4f5311236168a109cb",
-      message: "Initial commit with project setup.",
-      media: ["screenshot1.png", "diagram1.svg"],
-      externalLink: "https://example.com/initial-setup",
-      status: "Approved",
-      declineMessage: null,
-      createdAt: "2024-12-12T02:58:01.878+00:00",
-      completedTask: {
-        task: "Set up project repository",
-        subTask: ["Initialize Git", "Create README.md"],
-      },
-    },
-    {
-      _id: "60d0fe4f5311236168a109ca",
-      commitBy: {
-        _id: "60d0fe4f5311236168a109cc",
-        name: {
-          firstName: "User",
-          lastName: "Name",
-        },
-        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
-        role: "Developer",
-      },
-      project: "60d0fe4f5311236168a109cd",
-      message: "Added user authentication module.",
-      media: ["auth_flowchart.png"],
-      externalLink: "https://example.com/auth-module",
-      status: "Pending",
-      declineMessage: null,
-      createdAt: "2024-12-12T02:58:01.878+00:00",
-      completedTask: {
-        task: "Implement authentication",
-        subTask: ["Design login page", "Set up OAuth"],
-      },
-    },
-    {
-      _id: "60d0fe4f5311236168a109ca",
-      commitBy: {
-        _id: "60d0fe4f5311236168a109ce",
-        name: {
-          firstName: "User",
-          lastName: "Name",
-        },
-        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
-        role: "Developer",
-      },
-      project: "60d0fe4f5311236168a109cf",
-      message: "Fixed bugs in payment processing.",
-      media: [],
-      externalLink: null,
-      status: "Approved",
-      declineMessage: null,
-      createdAt: "2024-12-12T02:58:01.878+00:00",
-      completedTask: {
-        task: "Debug payment module",
-      },
-    },
-    {
-      _id: "60d0fe4f5311236168a109ca",
-      commitBy: {
-        _id: "60d0fe4f5311236168a109d0",
-        name: {
-          firstName: "User",
-          lastName: "Name",
-        },
-        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
-        role: "Developer",
-      },
-      project: "60d0fe4f5311236168a109d1",
-      message: "Updated UI for dashboard.",
-      media: ["https://dashboard_mockup.jpg", "https://dashboard_mockup.jpg"],
-      externalLink: "https://example.com/dashboard-update",
-      status: "Declined",
-      declineMessage: "UI does not match design specifications.",
-      createdAt: "2024-12-12T02:58:01.878+00:00",
-      completedTask: {
-        task: "Revamp dashboard UI",
-      },
-    },
-    {
-      _id: "60d0fe4f5311236168a109ca",
-      commitBy: {
-        _id: "60d0fe4f5311236168a109d2",
-        name: {
-          firstName: "User",
-          lastName: "Name",
-        },
-        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
-        role: "Developer",
-      },
-      project: "60d0fe4f5311236168a109d3",
-      message: "Integrated third-party analytics.",
-      media: ["analytics_setup_guide.pdf"],
-      externalLink: "https://example.com/analytics-integration",
-      status: "Pending",
-      declineMessage: null,
-      createdAt: "2024-12-12T02:58:01.878+00:00",
-      completedTask: {
-        subTask: ["Select analytics provider", "Embed tracking code"],
-      },
-    },
-    {
-      _id: "60d0fe4f5311236168a109ca",
-      commitBy: {
-        _id: "60d0fe4f5311236168a109d4",
-        name: {
-          firstName: "User",
-          lastName: "Name",
-        },
-        profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
-        role: "Developer",
-      },
-      project: "60d0fe4f5311236168a109d5",
-      message: "Refactored codebase for performance improvements.",
-      media: [],
-      externalLink: null,
-      status: "Approved",
-      declineMessage: null,
-      createdAt: "2024-12-12T02:58:01.878+00:00",
-      completedTask: {
-        subTask: ["Remove redundant code", "Enhance algorithm efficiency"],
-      },
-    },
+const Try = () => {
+  const [activeTab, setActiveTab] = useState({});
+  const [userData, setUserData] = useState({});
+  const [users, setUsers] = useState([]);
+  //const [allUsers, setAllUsers] = useState([]);
+  const theme = useSelector((state) => state.theme.theme);
+  const { getAllUsers, user, createNewRequest, getAllStatusFriendRequest } =
+    useContext(AuthContext);
+  const requestedId = user?._id;
+  const roles = [
+    "Frontend Developer",
+    "Backend Developer",
+    "MERN Stack Developer",
+    "UI/UX Designer",
+    "Project Manager",
+    "DevOps Engineer",
+    "Full Stack Developer",
+    "Data Scientist",
+    "Machine Learning Engineer",
+    "Mobile App Developer",
+    "Game Developer",
+    "Cloud Engineer",
+    "Cybersecurity Specialist",
+    "Blockchain Developer",
+    "Software Architect",
+    "Quality Assurance Engineer",
+    "System Administrator",
+    "AI Researcher",
+    "Database Administrator",
+    "Technical Support Specialist",
+    "Embedded Systems Developer",
+    "Product Manager",
+    "Business Analyst",
+    "Solutions Architect",
+    "Security Analyst",
+    "Network Engineer",
+    "IT Consultant",
+    "E-commerce Specialist",
+    "IT Support Technician",
+    "SEO Specialist",
+    "Digital Marketing Specialist",
+    "Content Creator",
+    "Graphic Designer",
+    "Hardware Engineer",
+    "Big Data Engineer",
+    "IoT Developer",
+    "Game Designer",
+    "Video Editor",
+    "Technical Writer",
+    "IT Manager",
   ];
-
-  const handleDownload = () => {
-    // Process and flatten the data for Excel
-    const processedData = currentTableData.map((item) => {
-      return {
-        "Commit ID": item._id,
-        "Commit By ID": item.commitBy._id,
-        "Commit By Name": `${item.commitBy.name.firstName} ${item.commitBy.name.lastName}`,
-        "Commit By Role": item.commitBy.role || "Not mentioned",
-        "Commit By Profile Picture": item.commitBy.profilePic || "Not Available",
-        "Project ID": item.project,
-       "Message": item.message,
-       "Media": item.media.length ? item.media.join(", ") : "N/A",
-        "External Link": item.externalLink || "N/A",
-        "Status": item.status || "N/A",
-        "Decline Message": item.declineMessage || "N/A",
-        "Created At": new Date(item.createdAt).toLocaleString(),
-        "Completed Task": item.completedTask?.task || "No Task",
-        "Completed SubTasks": item.completedTask?.subTask?.length
-          ? item.completedTask.subTask.join(", ")
-          : "No SubTasks",
-      };
-    });
-
-    // Convert the processed data to a worksheet
-    const worksheet = XLSX.utils.json_to_sheet(processedData);
-
-    // Create a workbook and append the worksheet
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Commits");
-
-    // Write the workbook and trigger the download
-    XLSX.writeFile(workbook, "commits.xlsx");
+  const handleRoleChange = (e) => {
+    setSelectedRole(e.target.value);
+    setCurrentPage(1); // Reset to first page when changing filters
   };
-    // Calculate the data for the current page
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentTableData = tableData.slice(indexOfFirstItem, indexOfLastItem);
-  
-    // Total pages
-    const totalPages = Math.ceil(tableData.length / itemsPerPage);
-  
-    // Handle next page
-    const handleNext = () => {
-      if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [selectedRole, setSelectedRole] = useState("");
+  const [isFiltered, setIsFiltered] = useState(false);
+
+  const fetchUsers = async (page = 1, roleFilter = "") => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/member/getAll`,
+        {
+          params: {
+            page,
+            limit: 6,
+            role: roleFilter,
+          },
+        }
+      );
+
+      const data = response.data.data;
+
+      console.log("data", data, roleFilter);
+
+      setUsers(data || []);
+      setCurrentPage(response.data?.data?.currentPage || 1);
+      setTotalPages(response.data?.data?.totalPages || 1);
+
+      setIsFiltered(!!roleFilter);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      setUsers([]);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchUsers(currentPage, selectedRole);
+  }, [currentPage, selectedRole]);
+
+  // Shuffle users list
+  const getShuffledUsers = (userList) => {
+    if (!userList || userList.length === 0) return [];
+
+    const shuffled = [...userList].sort(() => 0.5 - Math.random());
+    return shuffled;
+  };
+
+  // Automatically fetch and shuffle users on component mount
+  useEffect(() => {
+    const fetchAndShuffleUsers = async () => {
+      await fetchUsers(currentPage, selectedRole); // Fetch users from API
+      setUsers((prevUsers) => getShuffledUsers(prevUsers)); // Shuffle users
     };
-  
-    // Handle previous page
-    const handlePrevious = () => {
-      if (currentPage > 1) setCurrentPage(currentPage - 1);
+
+    fetchAndShuffleUsers();
+  }, []); // Runs only on initial page load
+
+  const toggleTab = async (userId, tab) => {
+    setActiveTab((prevState) => ({
+      ...prevState,
+      [userId]: tab,
+    }));
+
+    if (!userData[userId]?.[tab]) {
+      await fetchData(userId, tab);
+    }
+  };
+
+  console.log("datas", users.length);
+
+  const fetchData = async (userId, tab) => {
+    if (!userId || !tab) return;
+
+    try {
+      let data;
+      switch (tab) {
+        case "description":
+          data = await apiFetch(
+            `https://test-two-22w0.onrender.com/api/v1/member/getUserById/${userId}`,
+            "GET"
+          );
+          setUserData((prevState) => ({
+            ...prevState,
+            [userId]: {
+              ...prevState[userId],
+              description: data?.data ?? {},
+            },
+          }));
+          break;
+        case "skill":
+          data = await apiFetch(
+            `https://test-two-22w0.onrender.com/api/v1/skill/getUserSkillById/${userId}`,
+            "GET"
+          );
+          setUserData((prevState) => ({
+            ...prevState,
+            [userId]: {
+              ...prevState[userId],
+              skill: data?.data ?? [],
+            },
+          }));
+          break;
+        case "project":
+          data = await apiFetch(
+            `https://test-two-22w0.onrender.com/api/v1/project/getUserProjectById/${userId}`,
+            "GET"
+          );
+          setUserData((prevState) => ({
+            ...prevState,
+            [userId]: {
+              ...prevState[userId],
+              project: data?.data ?? [],
+            },
+          }));
+          break;
+        case "social":
+          data = await apiFetch(
+            `https://test-two-22w0.onrender.com/api/v1/socialInfo/getSocialInfoByUser/${userId}`,
+            "GET"
+          );
+          setUserData((prevState) => ({
+            ...prevState,
+            [userId]: {
+              ...prevState[userId],
+              social: data?.data ?? [],
+            },
+          }));
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    const defaultTabs = {};
+    users?.forEach((user) => {
+      defaultTabs[user?._id] = "description";
+    });
+    setActiveTab(defaultTabs);
+  }, [users]);
+
+  const sentFriendRequest = (user) => {
+    const datas = {
+      requestedBy: requestedId,
+      requestedTo: user?._id,
+      status: "Pending",
     };
+    createNewRequest(datas).unwrap();
+    Swal.fire({
+      icon: "success",
+      title: "Well done !",
+      text: "You've sent friend request successfully.",
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 2500);
+  };
+  // Function to get friend status based on `requestedId`
+  // const friendId = userData?._id;
+
+  // Function to get the friend request status
+  const getFriendStatus = (friendId) => {
+    const friend = getAllStatusFriendRequest?.data?.find(
+      (frnd) =>
+        frnd?.requestedBy?._id === friendId ||
+        frnd?.requestedTo?._id === friendId
+    );
+
+    return friend
+      ? { status: friend.status, friend }
+      : { status: "No friend request found.", friend: null };
+  };
+
+  console.log(getAllUsers?.data);
 
   return (
-    <div>
-      <button
-        onClick={handleDownload}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
-      >
-        Download
-      </button>
-      <>
-        {/* table head */}
-        <div className="min-w-[900px] md:min-w-[900px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
-          <div className="text-[14px] md:text-[16px] font-semibold text-center w-[120px] border-r border-[#C8CBD3]">
-            Serial No.
-          </div>
-          <div className="text-[14px] md:text-[16px] font-semibold text-center w-3/12 border-r border-[#C8CBD3]">
-            Name
-          </div>
-          <div className="text-[14px] md:text-[16px] font-semibold text-center w-3/12 border-r border-[#C8CBD3]">
-            Message
-          </div>
-          <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-[#C8CBD3]">
-            Media
-          </div>
-          <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-[#C8CBD3]">
-            Link
-          </div>
-          <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">
-            Date
-          </div>
-          <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12">
-            Action
-          </div>
-        </div>
-        {/* table data */}
-        {currentTableData?.map((commit, i) => (
-          <div
-            key={i}
-            className="min-w-[900px] md:min-w-[900px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
-          >
-            <div className="text-[13px] md:text-[16px] capitalize text-center w-[120px] border-r border-[#C8CBD3]">
-              #{commit?._id?.slice(-4)}
-            </div>
-            <div className="flex items-centertext-[14px] md:text-[16px] capitalize w-3/12 border-r border-[#C8CBD3]">
-              <img
-                src={
-                  commit?.commitBy?.profilePic
-                    ? commit?.commitBy?.profilePic
-                    : "https://i.ibb.co.com/FKKD4mT/opp.png"
-                }
-                alt="Profile"
-                className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
-              />
-              <div>
-                <div className="font-semibold text-gray-800 text-[14px] lg:text-[15px]">
-                  {commit?.commitBy?.name?.firstName}{" "}
-                  <span>{commit?.commitBy?.name?.lastName}</span>
+    <>
+      {/* Role Filter */}
+      <div className="my-4 ml-5 mr-2 md:ml-10 xl:ml-14 3xl:ml-16">
+        <select
+          id="role"
+          value={selectedRole}
+          onChange={handleRoleChange}
+          className="w-full ssm:w-60 outline-none px-4 py-2 border rounded-lg text-gray-700"
+        >
+          <option value="">All Researchers</option>
+          {roles.map((role) => (
+            <option key={role} value={role}>
+              {role}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="space-y-4">
+        {users?.map((user) => {
+          // Get friend status for each user
+          const { status, friend } = getFriendStatus(user?._id);
+          const buttonText =
+            status === "Accepted"
+              ? "Friend"
+              : status === "Pending"
+              ? "Request Sent"
+              : status === "Rejected"
+              ? "Rejected"
+              : "Send Request";
+
+          return (
+            <div
+              key={user?._id}
+              className={`${
+                theme !== "light" &&
+                "p-[1px] ml-5 md:ml-10 xl:ml-14 3xl:ml-16 w-11/12 bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90%  rounded-[20px]"
+              }`}
+            >
+              <div
+                className={`${
+                  theme === "light"
+                    ? "bg-[#fff]  ml-5 md:ml-10 xl:ml-14 3xl:ml-16 shadow-[-7px_-7px_19px_rgba(255,_255,_255,_0.6),_9px_9px_16px_rgba(163,_177,_198,_0.6)] box-border border-[0.8px] border-solid border-gray w-11/12"
+                    : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover 3xl:mr-[1px] w-12/12"
+                }  text-graish p-3 xl:p-5 rounded-[20px]`}
+              >
+                {/* User details and buttons */}
+                <div className="lg:flex hidden flex-col lg:flex-row justify-between items-center md:space-y-4 lg:space-y-0">
+                  {/* Left */}
+                  <div className="flex justify-between items-center space-x-3">
+                    <div className="relative">
+                      <img
+                        src={
+                          user?.profilePic
+                            ? user?.profilePic
+                            : "https://i.ibb.co.com/FKKD4mT/opp.png"
+                        }
+                        loading="lazy"
+                        alt=""
+                        className="w-8 h-8 md:w-12 md:h-12 xl:w-12 xl:h-12 rounded-full p-1"
+                      />
+                      <img
+                        className="w-8 h-8 md:w-12 md:h-12 xl:w-12 xl:h-12 absolute top-0  md:right-0"
+                        src={
+                          theme === "light" ? feedDarkBorder : feedWhiteBorder
+                        }
+                        loading="lazy"
+                        alt="dashedborder"
+                      />
+                    </div>
+
+                    {/* Description Button */}
+                    {theme === "light" ? (
+                      <div
+                        onClick={() => toggleTab(user?._id, "description")}
+                        className={`${
+                          activeTab[user?._id] === "description"
+                            ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
+                            : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
+                        }  cursor-pointer rounded-[27px] bg-[#d0f5fe] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
+                      >
+                        <p className="graish lg:text-sm xl:text-lg font-semibold">
+                          Description
+                        </p>
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => toggleTab(user?._id, "description")}
+                        className="relative flex flex-col items-center py-2"
+                      >
+                        {activeTab[user?._id] === "description" && (
+                          <div className="absolute top-[40%] w-7/12 md:w-10/12 h-[7px] lg:h-[20px] shadow-[0px_0px_5px_#f58e9f,_0px_0px_15px_#f58e9f,_0px_0px_30px_#f58e9f,_0px_0px_60px_#f58e9f] rounded-3xs bg-[#f33d5c] rounded-t-xl blur-[1px]" />
+                        )}
+                        <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(13px)] box-border">
+                          Description
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Skill Button */}
+                    {theme === "light" ? (
+                      <div
+                        onClick={() => toggleTab(user?._id, "skill")}
+                        className={`${
+                          activeTab[user?._id] === "skill"
+                            ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
+                            : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
+                        }  cursor-pointer rounded-[27px] bg-[#fde4f7] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
+                      >
+                        <p className="graish lg:text-sm xl:text-lg font-semibold">
+                          All Skills
+                        </p>
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => toggleTab(user?._id, "skill")}
+                        className="relative flex flex-col items-center py-2"
+                      >
+                        {activeTab[user?._id] === "skill" && (
+                          <div className="absolute top-[40%] w-7/12 md:w-10/12 h-[7px] lg:h-[20px] shadow-[0px_0px_5px_#f58e9f,_0px_0px_15px_#f58e9f,_0px_0px_30px_#f58e9f,_0px_0px_60px_#f58e9f] rounded-3xs bg-[#f33d5c] rounded-t-xl blur-[1px]" />
+                        )}
+                        <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(13px)]  box-border">
+                          All Skills
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Projects Button */}
+                    {theme === "light" ? (
+                      <div
+                        onClick={() => toggleTab(user?._id, "project")}
+                        className={`${
+                          activeTab[user?._id] === "project"
+                            ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
+                            : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
+                        }  cursor-pointer rounded-[27px] bg-[#fdeed4] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
+                      >
+                        <p className="graish lg:text-sm xl:text-lg font-semibold">
+                          Projects
+                        </p>
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => toggleTab(user?._id, "project")}
+                        className="relative flex flex-col items-center py-2"
+                      >
+                        {activeTab[user?._id] === "project" && (
+                          <div className="absolute top-[40%] w-7/12 md:w-11/12 h-[8px] lg:h-[10px] shadow-[0px_0px_5px_#FFCB33,_0px_0px_15px_#FFCB33,_0px_0px_30px_#FFCB33,_0px_0px_60px_#FFCB33] rounded-3xs bg-[#FFCB33] rounded-t-xl blur-[12px]" />
+                        )}
+                        <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(0px)]  box-border">
+                          Projects
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Social Button */}
+                    {theme === "light" ? (
+                      <div
+                        onClick={() => toggleTab(user?._id, "social")}
+                        className={`${
+                          activeTab[user?._id] === "social"
+                            ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
+                            : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
+                        }  cursor-pointer rounded-[27px] bg-[#caf79a73] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
+                      >
+                        <p className="graish lg:text-sm xl:text-lg font-semibold">
+                          Social Media
+                        </p>
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => toggleTab(user?._id, "social")}
+                        className="relative flex flex-col items-center py-2"
+                      >
+                        {activeTab[user?._id] === "social" && (
+                          <div className="absolute top-[40%] w-7/12 md:w-11/12 h-[8px] lg:h-[10px] shadow-[0px_0px_5px_#4EEBFF,_0px_0px_15px_#4EEBFF,_0px_0px_30px_#4EEBFF,_0px_0px_60px_#4EEBFF] rounded-3xs bg-[#4EEBFF] rounded-t-xl blur-[12px]" />
+                        )}
+                        <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(0px)]  box-border">
+                          Social Media
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Right */}
+                  <div className="flex justify-between items-center space-x-3">
+                    <Link to={`/user/profile/${user?._id}`}>
+                      {theme === "light" ? (
+                        <div className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
+                          <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
+                            Profile
+                          </button>
+                        </div>
+                      ) : (
+                        <p className="cursor-pointer text-sm lg:text-[14px] font-medium rounded-[15px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[-2px_-2px_100px_rgba(255,_255,_255,_0.1)_inset,_2px_2px_100px_rgba(66,_66,_66,_0.1)_inset] [backdrop-filter:blur(50px)]  box-border">
+                          profile
+                        </p>
+                      )}
+                    </Link>
+
+                    {/* Friend request button */}
+                    {theme === "light" ? (
+                      buttonText === "Send Request" ? (
+                        <button
+                          onClick={() => sentFriendRequest(user)}
+                          className="lg:text-sm xl:text-lg rounded-[13px] font-semibold px-3 py-2 xl:px-4 xl:py-2 bg-gradient-to-l from-[#2adba4] to-[#69f9cc] text-white"
+                        >
+                          {buttonText}
+                        </button>
+                      ) : (
+                        <div className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
+                          <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
+                            {buttonText}
+                          </button>
+                        </div>
+                      )
+                    ) : (
+                      <button
+                        onClick={
+                          buttonText === "Send Request"
+                            ? () => sentFriendRequest(user)
+                            : undefined
+                        }
+                        className="friendRequestBtn"
+                      >
+                        <p>{buttonText}</p>
+                      </button>
+                    )}
+
+                    <div
+                      className={`${
+                        theme === "light"
+                          ? "bg-red-200"
+                          : "border border-[#9370DB]"
+                      } rounded-[11px] px-3 py-2 xl:px-3 xl:py-2 flex justify-center items-center`}
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                      >
+                        <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402m5.726-20.583c-2.203 0-4.446 1.042-5.726 3.238-1.285-2.206-3.522-3.248-5.719-3.248-3.183 0-6.281 2.187-6.281 6.191 0 4.661 5.571 9.429 12 15.809 6.43-6.38 12-11.148 12-15.809 0-4.011-3.095-6.181-6.274-6.181" />
+                      </svg>
+                      {/* <FaRegHeart className="text-2xl font-semibold text-red-500 bg-white cursor-pointer" /> */}
+                    </div>
+                  </div>
                 </div>
-                <div className=" text-gray-500 text-[13px] lg:text-[13px]">
-                  {commit?.commitBy?.role}
+
+                {/* Mobile and Tablet navbar components */}
+                <div className="lg:hidden flex justify-between items-center py-1">
+                  <MobileNavbar
+                    toggleTab={toggleTab}
+                    user={user}
+                    activeTab={activeTab}
+                    theme={theme}
+                    sentFriendRequest={sentFriendRequest}
+                  />
                 </div>
+                <div className="hidden md:flex md:justify-between md:items-center lg:py-1">
+                  <TabletNavbar
+                    toggleTab={toggleTab}
+                    user={user}
+                    activeTab={activeTab}
+                    theme={theme}
+                    sentFriendRequest={sentFriendRequest}
+                  />
+                </div>
+
+                {/* Tabs content rendering */}
+                {activeTab[user?._id] === "description" && (
+                  <AboutTab theme={theme} user={user} />
+                )}
+                {activeTab[user?._id] === "skill" && (
+                  <SkillTab
+                    user={user}
+                    theme={theme}
+                    skills={userData[user?._id]?.skill || []}
+                  />
+                )}
+                {activeTab[user?._id] === "project" && (
+                  <ProjectTab
+                    user={user}
+                    theme={theme}
+                    projects={userData[user?._id]?.project || []}
+                  />
+                )}
+                {activeTab[user?._id] === "social" && (
+                  <SocialTab
+                    user={user}
+                    theme={theme}
+                    socialInfos={userData[user?._id]?.social || []}
+                  />
+                )}
               </div>
             </div>
-            <div
-              // onClick={() =>
-              //   handleCommitMessage(commit?.message, commit?.completedTask)
-              // }
-              className="cursor-pointer text-[13px] md:text-[16px] capitalize text-center w-3/12 border-r border-[#C8CBD3] px-2"
-            >
-              {commit?.message.slice(0, 20)}...
-            </div>
-            <div
-              // onClick={() => handleEmptyMedia(commit?.media)}
-              className="flex justify-center w-1/12 border-r border-[#C8CBD3]"
-            >
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1.52673 13.8911C1.52673 8.11433 1.52673 5.22594 3.32135 3.43134C5.11596 1.63672 8.00435 1.63672 13.7811 1.63672C19.5578 1.63672 22.4463 1.63672 24.2409 3.43134C26.0355 5.22594 26.0355 8.11433 26.0355 13.8911C26.0355 19.6678 26.0355 22.5563 24.2409 24.3509C22.4463 26.1455 19.5578 26.1455 13.7811 26.1455C8.00435 26.1455 5.11596 26.1455 3.32135 24.3509C1.52673 22.5563 1.52673 19.6678 1.52673 13.8911Z"
-                  stroke="#2ABFFF"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M18.6829 11.4403C20.0365 11.4403 21.1338 10.343 21.1338 8.98945C21.1338 7.63587 20.0365 6.53857 18.6829 6.53857C17.3293 6.53857 16.232 7.63587 16.232 8.98945C16.232 10.343 17.3293 11.4403 18.6829 11.4403Z"
-                  stroke="#2ABFFF"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M1.52673 14.5046L3.6732 12.6265C4.78991 11.6495 6.47295 11.7055 7.52218 12.7547L12.779 18.0115C13.6211 18.8537 14.9468 18.9685 15.9212 18.2836L16.2867 18.0269C17.6888 17.0414 19.5859 17.1556 20.8599 18.3022L24.8101 21.8573"
-                  stroke="#2ABFFF"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-            <div
-              // onClick={() => handleEmptyExternalLink(commit?.externalLink)}
-              className="flex justify-center w-1/12 border-r border-[#C8CBD3]"
-            >
-              <svg
-                width="25"
-                height="26"
-                viewBox="0 0 25 26"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M23.6068 9.54492V1.93555M23.6068 1.93555H16.4008M23.6068 1.93555L13.9988 12.0814M10.3959 4.47201H7.7537C5.73585 4.47201 4.72692 4.47201 3.95621 4.88669C3.27826 5.25146 2.72708 5.8335 2.38165 6.5494C1.98895 7.36326 1.98895 8.42868 1.98895 10.5595V18.6762C1.98895 20.8071 1.98895 21.8724 2.38165 22.6863C2.72708 23.4022 3.27826 23.9842 3.95621 24.349C4.72692 24.7637 5.73585 24.7637 7.7537 24.7637H15.44C17.4579 24.7637 18.4668 24.7637 19.2376 24.349C19.9155 23.9842 20.4667 23.4022 20.8121 22.6863C21.2048 21.8724 21.2048 20.8071 21.2048 18.6762V15.8861"
-                  stroke="#2B68FF"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-            <div className="text-[13px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
-              {commit?.createdAt}
-            </div>
-            <div className="text-[13px] md:text-[16px] capitalize text-center w-2/12 flex justify-center items-center">
-              Pending
-            </div>
-          </div>
-        ))}
-      </>
+          );
+        })}
 
-      {/* Pagination Controls */}
-      <div className="flex justify-center items-center mt-4">
-        <button
-          className="px-4 py-2 bg-gray-300 rounded-md mr-2"
-          onClick={handlePrevious}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span className="px-4">{currentPage} / {totalPages}</span>
-        <button
-          className="px-4 py-2 bg-gray-300 rounded-md ml-2"
-          onClick={handleNext}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
+        {loading === true && <Loading />}
+        {users?.length === 0 && loading === false && (
+          <div className="xl:text-[20px] text-center text-gray-500 pt-10 xl:pt-20 capitalize">No researchers found</div>
+        )}
+        {users?.length > 10 && loading === false && (
+          <div className="mt-6 flex justify-center items-center space-x-4">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2  rounded-lg mx-2"
+            >
+              <FaRegArrowAltCircleLeft className="text-2xl text-gray-700" />
+            </button>
+
+            <span className="text-lg font-medium">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="px-4 py-2  rounded-lg mx-2"
+            >
+              <FaRegArrowAltCircleRight className="text-2xl text-gray-700" />
+            </button>
+          </div>
+        )}
       </div>
-      {/* <table>
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-4 py-2">Commit Id</th>
-            <th className="border border-gray-300 px-4 py-2">Project Id</th>
-            <th className="border border-gray-300 px-4 py-2">Message</th>
-            <th className="border border-gray-300 px-4 py-2">Media</th>
-            <th className="border border-gray-300 px-4 py-2">Link</th>
-            <th className="border border-gray-300 px-4 py-2">
-              Declined Message
-            </th>
-            <th className="border border-gray-300 px-4 py-2">Completed Task</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((data) => (
-            <tr key={data?.Name}>
-              <td>{data.commitBy.slice(0, 8)}</td>
-              <td>{data.project.slice(0, 8)}</td>
-              <td>{data.message.slice(0, 8)}</td>
-              <td>{data.media}</td>
-              <td>{data.externalLink}</td>
-              <td>{data.declineMessage}</td>
-              <td>
-                {data.completedTask.task && (
-                  <span>Task: {data.completedTask.task}</span>
-                )}
-                {data.completedTask.subTask && (
-                  <span>
-                    {" "}
-                    {data.completedTask.subTask.map((pa) => (
-                      <p key={pa}>Sub Task: {pa}</p>
-                    ))}
-                  </span>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
-    </div>
+    </>
   );
 };
 
 export default Try;
+
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+
+// const Try = () => {
+//   const [users, setUsers] = useState([]);
+//   const [loading, setLoading] = useState(false);
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [totalPages, setTotalPages] = useState(1);
+//   const [selectedRole, setSelectedRole] = useState("");
+//   const [isFiltered, setIsFiltered] = useState(false);
+
+//   const roles = [
+//     "Frontend Developer",
+//     "Backend Developer",
+//     "MERN Stack Developer",
+//     "UI/UX Designer",
+//     "Project Manager",
+//     "DevOps Engineer",
+//   ]; // Add as many roles as needed
+
+//   const fetchUsers = async (page = 1, roleFilter = "") => {
+//     setLoading(true);
+//     try {
+//       const response = await axios.get(
+//         `http://localhost:3000/api/v1/member/getAll`,
+//         {
+//           params: {
+//             page,
+//             limit: 6,
+//             role: roleFilter,
+//           },
+//         }
+//       );
+
+//       const data = response.data.data;
+
+//       console.log("data",data,roleFilter);
+
+//       setUsers(data || []);
+//       setCurrentPage(response.data?.data?.currentPage || 1);
+//       setTotalPages(response.data?.data?.totalPages || 1);
+
+//       setIsFiltered(!!roleFilter);
+//     } catch (error) {
+//       console.error("Error fetching users:", error);
+//       setUsers([]);
+//     }
+//     setLoading(false);
+//   };
+
+//   useEffect(() => {
+//     fetchUsers(currentPage, selectedRole);
+//   }, [currentPage, selectedRole]);
+
+//   const handleRoleChange = (e) => {
+//     setSelectedRole(e.target.value);
+//     setCurrentPage(1); // Reset to first page when changing filters
+//   };
+
+//   console.log(users);
+//   const allUsers = users?.users;
+
+//   return (
+//     <div className="p-6 max-w-4xl mx-auto">
+//       <h1 className="text-2xl font-bold text-center mb-4">Member List</h1>
+
+//       {/* Role Filter */}
+//       <div className="mb-4">
+//         <label
+//           htmlFor="role"
+//           className="block text-lg font-medium text-gray-700 mb-2"
+//         >
+//           Filter by Role
+//         </label>
+//         <select
+//           id="role"
+//           value={selectedRole}
+//           onChange={handleRoleChange}
+//           className="w-full px-4 py-2 border rounded-lg text-gray-700"
+//         >
+//           <option value="">All Roles</option>
+//           {roles.map((role) => (
+//             <option key={role} value={role}>
+//               {role}
+//             </option>
+//           ))}
+//         </select>
+//       </div>
+
+//       {/* User List */}
+//       {loading ? (
+//         <div className="text-center">Loading...</div>
+//       ) : users?.length === 0 ? (
+//         <div className="text-center text-gray-500">No members found</div>
+//       ) : (
+//         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+//           {users?.map((user) => (
+//             <li
+//               key={user._id}
+//               className="p-4 border rounded-lg shadow hover:shadow-lg"
+//             >
+//               <h3 className="text-xl font-semibold">{`${user.name.firstName} ${user.name.lastName}`}</h3>
+//               <p className="text-gray-600">{user.role}</p>
+//               <p className="text-gray-500">{user.email}</p>
+//             </li>
+//           ))}
+//         </ul>
+//       )}
+
+//       {/* Pagination */}
+//       <div className="mt-6 flex justify-center items-center space-x-4">
+//         <button
+//           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+//           disabled={currentPage === 1}
+//           className={`px-4 py-2 border rounded-lg ${
+//             currentPage === 1
+//               ? "bg-gray-200 cursor-not-allowed"
+//               : "bg-blue-500 text-white hover:bg-blue-600"
+//           }`}
+//         >
+//           Previous
+//         </button>
+//         <span className="text-lg font-medium">
+//           Page {currentPage} of {totalPages}
+//         </span>
+//         <button
+//           onClick={() =>
+//             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+//           }
+//           disabled={currentPage === totalPages}
+//           className={`px-4 py-2 border rounded-lg ${
+//             currentPage === totalPages
+//               ? "bg-gray-200 cursor-not-allowed"
+//               : "bg-blue-500 text-white hover:bg-blue-600"
+//           }`}
+//         >
+//           Next
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Try;
+
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import "swiper/css";
+// import "swiper/css/pagination";
+// import { Autoplay, Navigation, Pagination } from "swiper/modules";
+// import "swiper/css/navigation";
+
+// const Try = () => {
+//     const images = [
+//     "https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-800x525.jpg",
+//     "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+//     "https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-800x525.jpg",
+//     "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+//   ];
+//   return (
+//     <div>
+//        <div className="w-[100px] h-[180px] xs:w-[280px] xs:h-[240px] md:h-[350px] md:w-[400px] xl:w-[400px] 3xl:h-[300px] md:pt-5">
+//       <Swiper
+//         navigation={true}
+//         modules={[Navigation]}
+
+//         className="mySwiper"
+//       >
+//         {images?.map((im, i) => (
+//           <SwiperSlide className="" key={i}>
+//             <img
+//               src={im}
+//               className="object-center w-[100px] h-[180px] xs:w-[280px] xs:h-[240px] md:h-[300px] md:w-[390px] xl:w-[400px] 3xl:h-[300px] rounded-[10px]"
+//               loading="lazy" alt="hero"
+//             />
+//           </SwiperSlide>
+//         ))}
+//       </Swiper>
+//     </div>
+//     </div>
+//   );
+// };
+
+// export default Try;
+
+// import { useState } from "react";
+// import { fileUpload } from "../../utils/cloudinary";
+// import { BsPlusCircle } from "react-icons/bs";
+// import { FaRegTrashAlt } from "react-icons/fa";
+
+// const Try = () => {
+//   const [images, setImages] = useState([]);
+//   const [primaryImage, setPrimaryImage] = useState(null);
+//   const [loading, setLoading] = useState(false);
+
+//   const handleImageUpload = async (e) => {
+//     if (e.target.files && e.target.files.length > 0) {
+//       const file = e.target.files[0];
+//       setLoading(true);
+
+//       try {
+//         const imageUrl = await fileUpload(file);
+//         setImages((prev) => [...prev, imageUrl]);
+//         if (!primaryImage) setPrimaryImage(imageUrl);
+//       } catch (error) {
+//         console.error("Error uploading image:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     }
+//   };
+
+//   const handlePrimaryImageChange = (image) => {
+//     setPrimaryImage(image); // Update primary image
+//   };
+
+//   const handleDeleteImage = (imageToDelete) => {
+//     setImages(images.filter((image) => image !== imageToDelete));
+//     if (primaryImage === imageToDelete) {
+//       setPrimaryImage(images.find((image) => image !== imageToDelete) || null);
+//     }
+//   };
+
+//   console.log("k", images);
+
+//   return (
+//     <div className="flex justify-center items-center border-4 p-2 lg:p-4">
+//       {/* Primary Image Section */}
+//       <div className="w-full lg:w-10/12  relative pt-2 lg:mb-4">
+//         {primaryImage ? (
+//           <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 sm:space-y-7 lg:space-y-0 ">
+//             <div className="w-full md:w-7/12 lg:w-8/12 xl:w-9/12 py-2 md:py-8 bg-gray-100 h-[350px] md:h-[400px] xl:h-[500px] rounded-2xl">
+//               {images?.length !== 0 && (
+//                 <div className="p-2 lg:p-3 md:hidden flex items-end justify-end space-x-4">
+//                   <label htmlFor="image-upload">
+//                     <BsPlusCircle className="text-[20px] cursor-pointer hover:text-blue-500 text-gray-600" />
+//                   </label>
+//                   <FaRegTrashAlt
+//                     className="text-[20px] text-gray-600 hover:text-red-500 cursor-pointer"
+//                     onClick={() => handleDeleteImage(primaryImage)}
+//                   />
+//                 </div>
+//               )}
+//               <img
+//                 className="px-3 lg:px-0 w-full h-[290px] md:h-[350px] lg:h-full object-contain rounded-3xl"
+//                 src={primaryImage}
+//                 alt="Primary"
+//               />
+//             </div>
+//             <div className="grid grid-cols-3 xs:grid-cols-4 md:grid-cols-3 xl:grid-cols-2 3xl:grid-cols-2 gap-3  max-h-[500px] lg:h-auto overflow-x-auto">
+//               {images.map((image, index) => (
+//                 <div
+//                   key={index}
+//                   className={` cursor-pointer border-2 p-1 rounded-md ${
+//                     image === primaryImage
+//                       ? "border-blue-500"
+//                       : "border-gray-200"
+//                   }`}
+//                   onClick={() => handlePrimaryImageChange(image)}
+//                 >
+//                   <img
+//                     className="h-16 w-16 xl:h-[100px] xl:w-[100px] object-cover rounded-md"
+//                     src={image}
+//                     alt={`Thumbnail ${index}`}
+//                   />
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//         ) : (
+//           <div className="flex flex-col  justify-center items-center py-5 space-y-2  rounded-lg  w-full border-2 border-gray-100">
+//             <img
+//               src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-25537.jpg"
+//               className="w-80"
+//             />
+//             <p className="text-xl">Select image from your device</p>
+//             <label
+//               htmlFor="image-upload"
+//               className="px-6 py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
+//             >
+//               {loading ? "Uploading..." : "Select An Image"}
+//             </label>
+//           </div>
+//         )}
+//         {images?.length !== 0 && (
+//           <div className="pt-7 hidden md:flex  space-x-4">
+//             <label htmlFor="image-upload">
+//               <BsPlusCircle className="text-[30px] cursor-pointer hover:text-blue-500 text-gray-600" />
+//             </label>
+//             <FaRegTrashAlt
+//               className="text-[30px] text-gray-600 hover:text-red-500 cursor-pointer"
+//               onClick={() => handleDeleteImage(primaryImage)}
+//             />
+//           </div>
+//         )}
+//       </div>
+
+//       <input
+//         id="image-upload"
+//         type="file"
+//         accept="image/*"
+//         className="hidden"
+//         onChange={handleImageUpload}
+//       />
+
+//     </div>
+//   );
+// };
+
+// export default Try;
+
+// import { useState } from "react";
+// import { fileUpload } from "../../utils/cloudinary";
+
+// const Try = () => {
+//   const [images, setImages] = useState([]);
+//   const [previewImage, setPreviewImage] = useState({
+//     imageOne: "",
+//     imageTwo: "",
+//     imageThree: "",
+//   });
+//   const [loading, setLoading] = useState({
+//     imageOne: false,
+//     imageTwo: false,
+//     imageThree: false,
+//   });
+
+//   const handlePreviewImage = async (e) => {
+//     if (e.target.files && e.target.files.length > 0) {
+//       const name = e.target.name;
+//       setLoading({
+//         ...loading,
+//         [name]: true,
+//       });
+//       const files = e.target.files;
+//       try {
+//         const urls = await Promise.all(
+//           Array.from(files).map(async (file) => {
+//             const imageUrl = await fileUpload(file); // Upload file to Cloudinary
+//             return imageUrl;
+//           })
+//         );
+//         setImages([...images, ...urls]);
+//         setLoading({
+//           imageOne: false,
+//           imageTwo: false,
+//           imageThree: false,
+//         });
+//         setPreviewImage({
+//           ...previewImage,
+//           [name]: URL.createObjectURL(files[0]),
+//         });
+//       } catch (error) {
+//         console.error("Error uploading images:", error);
+//       }
+//     }
+//   };
+
+//   return (
+//     <div className="border">
+//       <div className="relative pt-2">
+//         {previewImage.imageOne ? (
+//           <div className="flex justify-center items-center rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100">
+//             <img
+//               className="object-cover h-full rounded-md"
+//               src={previewImage.imageOne}
+//               alt=""
+//             />
+//           </div>
+//         ) : (
+//           <label required htmlFor="image-one" className="">
+//             <div className="rounded-lg h-[110px] w-[200px] md:w-[150px] lg:h-[150px] lg:w-[220px]  xl:h-[170px] xl:w-[300px] 3xl:h-[200px] 3xl:w-[330px]  box-border border-2 border-gray-100 outline-none">
+//               {loading.imageOne ? (
+//                 <span className="loading loading-spinner loading-xs"></span>
+//               ) : (
+//                 <div>
+//                   <p>select an image</p>
+//                   <label required htmlFor="image-one">
+//                     <button className="my-3 px-6 py-1 md:px-8 md:py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]">
+//                       upload an image
+//                     </button>
+//                   </label>
+//                 </div>
+//               )}
+//             </div>
+//           </label>
+//         )}{" "}
+//         <input
+//           className="px-3 py-2 rounded-lg shadow-sm border border-none w-full focus:outline-none bg-white text-gray-900 hidden"
+//           type="file"
+//           name="imageOne"
+//           id="image-one"
+//           onChange={handlePreviewImage}
+//           accept="image/*"
+//           required
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Try;
+
+//--------------------------------------- post view ------------------------------------//
+// const Try = () => {
+//   const images = [
+//     "https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-800x525.jpg",
+//     "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+//     "https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-800x525.jpg",
+//     "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+//   ];
+//   return (
+//     <>
+//     <div className="w-[500px] bg-red-400">
+//       {/* 2 image */}
+//     {/* {images.length === 2 && (
+//       <div className="grid grid-cols-2">
+//         {images.map((image, index) => (
+//           <img
+//             key={index}
+//             src={image}
+//             alt={`Image ${index + 1}`}
+//             className="w-12/12 h-full object-cover rounded-lg shadow-lg"
+//           />
+//         ))}
+//       </div>
+//     )} */}
+
+//       {/* 3 image */}
+//     {/* {images.length === 3 && (
+//       <div className="grid grid-cols-2">
+
+//           <img
+//             src={images[0]}
+//             alt={`Image`}
+//             className="w-12/12 h-full object-cover rounded-lg shadow-lg"
+//           />
+//      <div className="grid grid-rows-2">
+//      <img
+//             src={images[1]}
+//             alt={`Image`}
+//             className="w-12/12 h-full object-cover rounded-lg shadow-lg"
+//           />
+//            <img
+//             src={images[2]}
+//             alt={`Image`}
+//             className="w-12/12 h-full object-cover rounded-lg shadow-lg"
+//           />
+//      </div>
+//       </div>
+//     )}
+//     {images.length === 4 && (
+//   <div className="grid grid-cols-12 gap-2">
+
+//     <div className="col-span-8">
+//       <img
+//         src={images[0]}
+//         alt={`Image`}
+//         className="w-full h-full object-cover rounded-lg shadow-lg"
+//       />
+//     </div>
+
+//     <div className="col-span-4 grid grid-rows-3 gap-2">
+//       <img
+//         src={images[1]}
+//         alt={`Image`}
+//         className="w-full h-full object-cover rounded-lg shadow-lg"
+//       />
+//       <img
+//         src={images[2]}
+//         alt={`Image`}
+//         className="w-full h-full object-cover rounded-lg shadow-lg"
+//       />
+//       <img
+//         src={images[3]}
+//         alt={`Image`}
+//         className="w-full h-full object-cover rounded-lg shadow-lg"
+//       />
+//     </div>
+//   </div>
+// )} */}
+//       {/* 4 image */}
+//     {/* {images.length === 4 && (
+//       <div className="grid grid-cols-2">
+
+//           <img
+//             src={images[0]}
+//             alt={`Image`}
+//             className="w-12/12 h-full object-cover rounded-lg shadow-lg"
+//           />
+//      <div className="grid grid-rows-2">
+//      <img
+//             src={images[1]}
+//             alt={`Image`}
+//             className="w-12/12 h-full object-cover rounded-lg shadow-lg"
+//           />
+//            <img
+//             src={images[2]}
+//             alt={`Image`}
+//             className="w-12/12 h-full object-cover rounded-lg shadow-lg"
+//           />
+//            <img
+//             src={images[3]}
+//             alt={`Image`}
+//             className="w-12/12 h-full object-cover rounded-lg shadow-lg"
+//           />
+//      </div>
+//       </div>
+//     )} */}
+//     </div>
+//       {/* 1 image */}
+//     {/* <img className="w-full max-h-full object-cover rounded-lg" src={images[0]} loading="lazy" alt="Post" /> */}
+
+//   </>
+//   );
+// };
+
+// export default Try;
+
+// import jsPDF from "jspdf";
+// import html2canvas from "html2canvas";
+// import * as XLSX from "xlsx";
+// import { useState } from "react";
+
+// const Try = () => {  const [currentPage, setCurrentPage] = useState(1);
+//   const itemsPerPage = 3;
+
+//   const tableData = [
+//     {
+//       _id: "60d0fe4f5311236168a109ca",
+//       commitBy: {
+//         _id: "60d0fe4f5311236168a109ca",
+//         name: {
+//           firstName: "User",
+//           lastName: "Name",
+//         },
+//         profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+//         role: "Developer",
+//       },
+//       project: "60d0fe4f5311236168a109cb",
+//       message: "Initial commit with project setup.",
+//       media: ["screenshot1.png", "diagram1.svg"],
+//       externalLink: "https://example.com/initial-setup",
+//       status: "Approved",
+//       declineMessage: null,
+//       createdAt: "2024-12-12T02:58:01.878+00:00",
+//       completedTask: {
+//         task: "Set up project repository",
+//         subTask: ["Initialize Git", "Create README.md"],
+//       },
+//     },
+//     {
+//       _id: "60d0fe4f5311236168a109ca",
+//       commitBy: {
+//         _id: "60d0fe4f5311236168a109cc",
+//         name: {
+//           firstName: "User",
+//           lastName: "Name",
+//         },
+//         profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+//         role: "Developer",
+//       },
+//       project: "60d0fe4f5311236168a109cd",
+//       message: "Added user authentication module.",
+//       media: ["auth_flowchart.png"],
+//       externalLink: "https://example.com/auth-module",
+//       status: "Pending",
+//       declineMessage: null,
+//       createdAt: "2024-12-12T02:58:01.878+00:00",
+//       completedTask: {
+//         task: "Implement authentication",
+//         subTask: ["Design login page", "Set up OAuth"],
+//       },
+//     },
+//     {
+//       _id: "60d0fe4f5311236168a109ca",
+//       commitBy: {
+//         _id: "60d0fe4f5311236168a109ce",
+//         name: {
+//           firstName: "User",
+//           lastName: "Name",
+//         },
+//         profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+//         role: "Developer",
+//       },
+//       project: "60d0fe4f5311236168a109cf",
+//       message: "Fixed bugs in payment processing.",
+//       media: [],
+//       externalLink: null,
+//       status: "Approved",
+//       declineMessage: null,
+//       createdAt: "2024-12-12T02:58:01.878+00:00",
+//       completedTask: {
+//         task: "Debug payment module",
+//       },
+//     },
+//     {
+//       _id: "60d0fe4f5311236168a109ca",
+//       commitBy: {
+//         _id: "60d0fe4f5311236168a109d0",
+//         name: {
+//           firstName: "User",
+//           lastName: "Name",
+//         },
+//         profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+//         role: "Developer",
+//       },
+//       project: "60d0fe4f5311236168a109d1",
+//       message: "Updated UI for dashboard.",
+//       media: ["https://dashboard_mockup.jpg", "https://dashboard_mockup.jpg"],
+//       externalLink: "https://example.com/dashboard-update",
+//       status: "Declined",
+//       declineMessage: "UI does not match design specifications.",
+//       createdAt: "2024-12-12T02:58:01.878+00:00",
+//       completedTask: {
+//         task: "Revamp dashboard UI",
+//       },
+//     },
+//     {
+//       _id: "60d0fe4f5311236168a109ca",
+//       commitBy: {
+//         _id: "60d0fe4f5311236168a109d2",
+//         name: {
+//           firstName: "User",
+//           lastName: "Name",
+//         },
+//         profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+//         role: "Developer",
+//       },
+//       project: "60d0fe4f5311236168a109d3",
+//       message: "Integrated third-party analytics.",
+//       media: ["analytics_setup_guide.pdf"],
+//       externalLink: "https://example.com/analytics-integration",
+//       status: "Pending",
+//       declineMessage: null,
+//       createdAt: "2024-12-12T02:58:01.878+00:00",
+//       completedTask: {
+//         subTask: ["Select analytics provider", "Embed tracking code"],
+//       },
+//     },
+//     {
+//       _id: "60d0fe4f5311236168a109ca",
+//       commitBy: {
+//         _id: "60d0fe4f5311236168a109d4",
+//         name: {
+//           firstName: "User",
+//           lastName: "Name",
+//         },
+//         profilePic: "https://i.ibb.co.com/Dpq7yYh/print-1309087-159.jpg",
+//         role: "Developer",
+//       },
+//       project: "60d0fe4f5311236168a109d5",
+//       message: "Refactored codebase for performance improvements.",
+//       media: [],
+//       externalLink: null,
+//       status: "Approved",
+//       declineMessage: null,
+//       createdAt: "2024-12-12T02:58:01.878+00:00",
+//       completedTask: {
+//         subTask: ["Remove redundant code", "Enhance algorithm efficiency"],
+//       },
+//     },
+//   ];
+
+//   const handleDownload = () => {
+//     // Process and flatten the data for Excel
+//     const processedData = currentTableData.map((item) => {
+//       return {
+//         "Commit ID": item._id,
+//         "Commit By ID": item.commitBy._id,
+//         "Commit By Name": `${item.commitBy.name.firstName} ${item.commitBy.name.lastName}`,
+//         "Commit By Role": item.commitBy.role || "Not mentioned",
+//         "Commit By Profile Picture": item.commitBy.profilePic || "Not Available",
+//         "Project ID": item.project,
+//        "Message": item.message,
+//        "Media": item.media.length ? item.media.join(", ") : "N/A",
+//         "External Link": item.externalLink || "N/A",
+//         "Status": item.status || "N/A",
+//         "Decline Message": item.declineMessage || "N/A",
+//         "Created At": new Date(item.createdAt).toLocaleString(),
+//         "Completed Task": item.completedTask?.task || "No Task",
+//         "Completed SubTasks": item.completedTask?.subTask?.length
+//           ? item.completedTask.subTask.join(", ")
+//           : "No SubTasks",
+//       };
+//     });
+
+//     // Convert the processed data to a worksheet
+//     const worksheet = XLSX.utils.json_to_sheet(processedData);
+
+//     // Create a workbook and append the worksheet
+//     const workbook = XLSX.utils.book_new();
+//     XLSX.utils.book_append_sheet(workbook, worksheet, "Commits");
+
+//     // Write the workbook and trigger the download
+//     XLSX.writeFile(workbook, "commits.xlsx");
+//   };
+//     // Calculate the data for the current page
+//     const indexOfLastItem = currentPage * itemsPerPage;
+//     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+//     const currentTableData = tableData.slice(indexOfFirstItem, indexOfLastItem);
+
+//     // Total pages
+//     const totalPages = Math.ceil(tableData.length / itemsPerPage);
+
+//     // Handle next page
+//     const handleNext = () => {
+//       if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+//     };
+
+//     // Handle previous page
+//     const handlePrevious = () => {
+//       if (currentPage > 1) setCurrentPage(currentPage - 1);
+//     };
+
+//   return (
+//     <div>
+//       <button
+//         onClick={handleDownload}
+//         className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
+//       >
+//         Download
+//       </button>
+//       <>
+//         {/* table head */}
+//         <div className="min-w-[900px] md:min-w-[900px]  py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl">
+//           <div className="text-[14px] md:text-[16px] font-semibold text-center w-[120px] border-r border-[#C8CBD3]">
+//             Serial No.
+//           </div>
+//           <div className="text-[14px] md:text-[16px] font-semibold text-center w-3/12 border-r border-[#C8CBD3]">
+//             Name
+//           </div>
+//           <div className="text-[14px] md:text-[16px] font-semibold text-center w-3/12 border-r border-[#C8CBD3]">
+//             Message
+//           </div>
+//           <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-[#C8CBD3]">
+//             Media
+//           </div>
+//           <div className="text-[14px] md:text-[16px] font-semibold text-center w-1/12 border-r border-[#C8CBD3]">
+//             Link
+//           </div>
+//           <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12 border-r border-[#C8CBD3]">
+//             Date
+//           </div>
+//           <div className="text-[14px] md:text-[16px] font-semibold text-center w-2/12">
+//             Action
+//           </div>
+//         </div>
+//         {/* table data */}
+//         {currentTableData?.map((commit, i) => (
+//           <div
+//             key={i}
+//             className="min-w-[900px] md:min-w-[900px] py-4 flex my-5 items-center bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px) rounded-xl"
+//           >
+//             <div className="text-[13px] md:text-[16px] capitalize text-center w-[120px] border-r border-[#C8CBD3]">
+//               #{commit?._id?.slice(-4)}
+//             </div>
+//             <div className="flex items-centertext-[14px] md:text-[16px] capitalize w-3/12 border-r border-[#C8CBD3]">
+//               <img
+//                 src={
+//                   commit?.commitBy?.profilePic
+//                     ? commit?.commitBy?.profilePic
+//                     : "https://i.ibb.co.com/FKKD4mT/opp.png"
+//                 }
+//                 alt="Profile"
+//                 className="h-8 xl:w-10 w-8 xl:h-10 rounded-full mr-3"
+//               />
+//               <div>
+//                 <div className="font-semibold text-gray-800 text-[14px] lg:text-[15px]">
+//                   {commit?.commitBy?.name?.firstName}{" "}
+//                   <span>{commit?.commitBy?.name?.lastName}</span>
+//                 </div>
+//                 <div className=" text-gray-500 text-[13px] lg:text-[13px]">
+//                   {commit?.commitBy?.role}
+//                 </div>
+//               </div>
+//             </div>
+//             <div
+//               // onClick={() =>
+//               //   handleCommitMessage(commit?.message, commit?.completedTask)
+//               // }
+//               className="cursor-pointer text-[13px] md:text-[16px] capitalize text-center w-3/12 border-r border-[#C8CBD3] px-2"
+//             >
+//               {commit?.message.slice(0, 20)}...
+//             </div>
+//             <div
+//               // onClick={() => handleEmptyMedia(commit?.media)}
+//               className="flex justify-center w-1/12 border-r border-[#C8CBD3]"
+//             >
+//               <svg
+//                 width="28"
+//                 height="28"
+//                 viewBox="0 0 28 28"
+//                 fill="none"
+//                 xmlns="http://www.w3.org/2000/svg"
+//               >
+//                 <path
+//                   d="M1.52673 13.8911C1.52673 8.11433 1.52673 5.22594 3.32135 3.43134C5.11596 1.63672 8.00435 1.63672 13.7811 1.63672C19.5578 1.63672 22.4463 1.63672 24.2409 3.43134C26.0355 5.22594 26.0355 8.11433 26.0355 13.8911C26.0355 19.6678 26.0355 22.5563 24.2409 24.3509C22.4463 26.1455 19.5578 26.1455 13.7811 26.1455C8.00435 26.1455 5.11596 26.1455 3.32135 24.3509C1.52673 22.5563 1.52673 19.6678 1.52673 13.8911Z"
+//                   stroke="#2ABFFF"
+//                   strokeWidth="2"
+//                 />
+//                 <path
+//                   d="M18.6829 11.4403C20.0365 11.4403 21.1338 10.343 21.1338 8.98945C21.1338 7.63587 20.0365 6.53857 18.6829 6.53857C17.3293 6.53857 16.232 7.63587 16.232 8.98945C16.232 10.343 17.3293 11.4403 18.6829 11.4403Z"
+//                   stroke="#2ABFFF"
+//                   strokeWidth="2"
+//                 />
+//                 <path
+//                   d="M1.52673 14.5046L3.6732 12.6265C4.78991 11.6495 6.47295 11.7055 7.52218 12.7547L12.779 18.0115C13.6211 18.8537 14.9468 18.9685 15.9212 18.2836L16.2867 18.0269C17.6888 17.0414 19.5859 17.1556 20.8599 18.3022L24.8101 21.8573"
+//                   stroke="#2ABFFF"
+//                   strokeWidth="2"
+//                   strokeLinecap="round"
+//                 />
+//               </svg>
+//             </div>
+//             <div
+//               // onClick={() => handleEmptyExternalLink(commit?.externalLink)}
+//               className="flex justify-center w-1/12 border-r border-[#C8CBD3]"
+//             >
+//               <svg
+//                 width="25"
+//                 height="26"
+//                 viewBox="0 0 25 26"
+//                 fill="none"
+//                 xmlns="http://www.w3.org/2000/svg"
+//               >
+//                 <path
+//                   d="M23.6068 9.54492V1.93555M23.6068 1.93555H16.4008M23.6068 1.93555L13.9988 12.0814M10.3959 4.47201H7.7537C5.73585 4.47201 4.72692 4.47201 3.95621 4.88669C3.27826 5.25146 2.72708 5.8335 2.38165 6.5494C1.98895 7.36326 1.98895 8.42868 1.98895 10.5595V18.6762C1.98895 20.8071 1.98895 21.8724 2.38165 22.6863C2.72708 23.4022 3.27826 23.9842 3.95621 24.349C4.72692 24.7637 5.73585 24.7637 7.7537 24.7637H15.44C17.4579 24.7637 18.4668 24.7637 19.2376 24.349C19.9155 23.9842 20.4667 23.4022 20.8121 22.6863C21.2048 21.8724 21.2048 20.8071 21.2048 18.6762V15.8861"
+//                   stroke="#2B68FF"
+//                   strokeWidth="2"
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                 />
+//               </svg>
+//             </div>
+//             <div className="text-[13px] md:text-[16px] capitalize text-center w-2/12 border-r border-[#C8CBD3]">
+//               {commit?.createdAt}
+//             </div>
+//             <div className="text-[13px] md:text-[16px] capitalize text-center w-2/12 flex justify-center items-center">
+//               Pending
+//             </div>
+//           </div>
+//         ))}
+//       </>
+
+//       {/* Pagination Controls */}
+//       <div className="flex justify-center items-center mt-4">
+//         <button
+//           className="px-4 py-2 bg-gray-300 rounded-md mr-2"
+//           onClick={handlePrevious}
+//           disabled={currentPage === 1}
+//         >
+//           Previous
+//         </button>
+//         <span className="px-4">{currentPage} / {totalPages}</span>
+//         <button
+//           className="px-4 py-2 bg-gray-300 rounded-md ml-2"
+//           onClick={handleNext}
+//           disabled={currentPage === totalPages}
+//         >
+//           Next
+//         </button>
+//       </div>
+//       {/* <table>
+//         <thead>
+//           <tr>
+//             <th className="border border-gray-300 px-4 py-2">Commit Id</th>
+//             <th className="border border-gray-300 px-4 py-2">Project Id</th>
+//             <th className="border border-gray-300 px-4 py-2">Message</th>
+//             <th className="border border-gray-300 px-4 py-2">Media</th>
+//             <th className="border border-gray-300 px-4 py-2">Link</th>
+//             <th className="border border-gray-300 px-4 py-2">
+//               Declined Message
+//             </th>
+//             <th className="border border-gray-300 px-4 py-2">Completed Task</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {tableData.map((data) => (
+//             <tr key={data?.Name}>
+//               <td>{data.commitBy.slice(0, 8)}</td>
+//               <td>{data.project.slice(0, 8)}</td>
+//               <td>{data.message.slice(0, 8)}</td>
+//               <td>{data.media}</td>
+//               <td>{data.externalLink}</td>
+//               <td>{data.declineMessage}</td>
+//               <td>
+//                 {data.completedTask.task && (
+//                   <span>Task: {data.completedTask.task}</span>
+//                 )}
+//                 {data.completedTask.subTask && (
+//                   <span>
+//                     {" "}
+//                     {data.completedTask.subTask.map((pa) => (
+//                       <p key={pa}>Sub Task: {pa}</p>
+//                     ))}
+//                   </span>
+//                 )}
+//               </td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table> */}
+//     </div>
+//   );
+// };
+
+// export default Try;
 
 // import dayjs from "dayjs";
 // import React, { useEffect, useState } from "react";

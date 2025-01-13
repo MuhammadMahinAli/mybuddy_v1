@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 import DescriptionTextArea from "./DescriptionTextArea";
 import PropTypes from "prop-types";
 
@@ -8,6 +9,45 @@ const AddProjectFirstForm = ({
   projectData,
   setProjectData,
 }) => {
+  const categories = [
+    "Technology",
+    "Tech",
+    "Software",
+    "Cloud Computing",
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Internet of Things",
+    "Data Science",
+    "Blockchain",
+    "Cybersecurity",
+    "Web Development",
+    "Wab Development",
+    "Wob Development",
+    "Mobile Development",
+    "DevOps",
+    "Robotics",
+    "Game Development",
+    "VR/AR",
+    "Embedded Systems",
+  ];
+  
+  const [filteredCategories, setFilteredCategories] = useState(categories);
+
+  const handleCategoryInput = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    const reorderedCategories = categories
+      .slice() // Make a copy of the categories array
+      .sort((a, b) => {
+        const aStartsWith = a.toLowerCase().startsWith(searchValue);
+        const bStartsWith = b.toLowerCase().startsWith(searchValue);
+        if (aStartsWith && !bStartsWith) return -1; // Move `a` to the top
+        if (!aStartsWith && bStartsWith) return 1; // Move `b` to the top
+        return a.localeCompare(b); // Sort alphabetically otherwise
+      });
+    setFilteredCategories(reorderedCategories);
+  };
+
+  
   const handleDescriptionChange = (description) => {
     setProjectData((prevState) => ({
       ...prevState,
@@ -28,37 +68,67 @@ const AddProjectFirstForm = ({
         />
       </div>
       {/* category */}
+      <>
+      <label className="text-[18px] md:text-xl text-gray-600">
+                            Category:
+                          </label>
+  <input
+    type="text"
+    list="categoryList"
+    id="category"
+    name="category"
+    value={projectData.category}
+    onChange={onFormChange}
+    className="pl-6 xs:px-2 xs:w-full py-3 w-11/12 rounded-lg box-border border-[0.5px] border-solid border-gray-100 bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] outline-none md:w-[430px] lg:w-[460px] flex flex-col space-y-2 font-medium gray600"
+    placeholder="Please select"
+  />
 
-      <div className="pl-6 xs:pl-0 xs:w-full w-11/12 md:w-[430px]  lg:w-[460px] flex flex-col space-y-2 font-medium gray600">
-        <div className="flex flex-col md:flex-row md:items-center justify-between space-y-3 md:space-y-0 md:space-x-3">
-          <label className="text-[18px] md:text-xl ">Category:</label>
-          <select
-            value={projectData.category}
-            onChange={onFormChange}
-            name="category"
-            className="lg:mx-9 outline-none rounded-lg py-3 px-2 md:w-[315px] lg:w-[340px]  bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset] box-border border-[0.5px] border-solid border-gray-100"
-          >
-            <option value="">Select</option>
-            <option value="technology">Technology</option>
-            <option value="tech">Tech</option>
-            <option value="software">Software</option>
-            <option value="cloud-computing">Cloud Computing</option>
-            <option value="ai">Artificial Intelligence</option>
-            <option value="machine-learning">Machine Learning</option>
-            <option value="iot">Internet of Things</option>
-            <option value="data-science">Data Science</option>
-            <option value="blockchain">Blockchain</option>
-            <option value="cybersecurity">Cybersecurity</option>
-            <option value="web-development">Web Development</option>
-            <option value="mobile-development">Mobile Development</option>
-            <option value="devops">DevOps</option>
-            <option value="robotics">Robotics</option>
-            <option value="game-development">Game Development</option>
-            <option value="vr-ar">VR/AR</option>
-            <option value="embedded-systems">Embedded Systems</option>
-          </select>
-        </div>
-      </div>
+  <span className="absolute inset-y-0 end-0 flex w-8 items-center">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="size-5 text-gray-500"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+      />
+    </svg>
+  </span>
+
+  <datalist id="categoryList">
+    {Array.from(
+      new Set([
+        "",
+        "Technology",
+        "Tech",
+        "Software",
+        "Cloud Computing",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Internet of Things",
+        "Data Science",
+        "Blockchain",
+        "Cybersecurity",
+        "Web Development",
+        "Mobile Development",
+        "DevOps",
+        "Robotics",
+        "Game Development",
+        "VR/AR",
+        "Embedded Systems",
+      ])
+    ).map((option, index) => (
+      <option key={index} value={option}>
+        {option}
+      </option>
+    ))}
+  </datalist>
+</>
       {/* Whatsapp */}
       <div className="pl-6 xs:pl-0 xs:w-full w-11/12 md:w-[430px]  lg:w-[460px] flex flex-col space-y-2 font-medium gray600">
         <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-3">

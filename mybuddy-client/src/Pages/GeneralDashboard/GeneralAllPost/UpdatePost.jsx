@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect,  useState } from "react";
 import { fileUpload } from "../../../utils/cloudinary";
 import { AuthContext } from "../../../Context/UserContext";
 import UpdateTechnicalRecommendation from "./UpdateTechnicalRecommendation";
@@ -8,6 +8,8 @@ import { useUpdatePostInfoMutation } from "../../../features/post/postApi";
 import Swal from "sweetalert2";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
+import { BsPlusCircle } from "react-icons/bs";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
   const [updatePostInfo] = useUpdatePostInfoMutation();
@@ -30,38 +32,48 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
     }));
   };
 
-  // const handleInputChange = (e) => {
-  //   const { innerText } = e.target;
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     description: innerText,
-  //   }));
-  // };
+  // --------- update image
 
- 
+  const [primaryImage, setPrimaryImage] = useState(formData?.image[0] || null);
+  const [images, setImages] = useState(formData?.image || []);
+  const [loading, setLoading] = useState(false);
 
-  //  ---- image update
+  useEffect(() => {
+    // Sync the images array to formData.image
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      image: images,
+    }));
+  }, [images, setFormData]);
 
-  const [previewImage, setPreviewImage] = useState("");
-  const [isFileLoading, setIsFileLoading] = useState(false);
+  const handlePrimaryImageChange = (image) => {
+    setPrimaryImage(image); // Update primary image
+  };
 
-  const handlePreviewImage = async (e) => {
+  const handleImageUpload = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      setPreviewImage(URL.createObjectURL(file)); // For local preview
-      setIsFileLoading(true);
+      setLoading(true);
 
       try {
         const imageUrl = await fileUpload(file);
-        setFormData((prevState) => ({
-          ...prevState,
-          image: imageUrl,
-        }));
+        setImages((prev) => [...prev, imageUrl]);
+        if (!primaryImage) setPrimaryImage(imageUrl);
       } catch (error) {
         console.error("Error uploading image:", error);
+      } finally {
+        setLoading(false);
       }
+    }
+  };
 
-      setIsFileLoading(false);
+  const handleDeleteImage = (imageToDelete) => {
+    // Remove the image from the array
+    setImages(images.filter((image) => image !== imageToDelete));
+
+    // If the deleted image is the primary image, update the primary image
+    if (primaryImage === imageToDelete) {
+      setPrimaryImage(images.find((image) => image !== imageToDelete) || null);
     }
   };
 
@@ -128,6 +140,7 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
   //------- update pdf
 
   const [pdfFile, setPdfFile] = useState(post?.pdf || "");
+  const [isFileLoading,setIsFileLoading]= useState(false)
   const handlePdfUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -159,6 +172,7 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
     // console.log("Selected Members:", formData);
     const id = post?._id;
     const updatedPostData = formData;
+    console.log("form", formData);
     try {
       const result = await updatePostInfo({
         id,
@@ -190,11 +204,11 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
     }
   };
 
-  console.log(currentFriend);
+
 
   return (
     <div className="fixed top-0 left-0  flex justify-center items-center bg-black/25 bg-opacity-50 w-screen h-screen overflow-y-scroll z-50">
-      <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all md:w-[750px] md:h-[600px] overflow-y-scroll 3xl:w-[800px] cursor-pointer">
+      <div className="w-full lg:w-[850px]  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all md:w-[750px] md:h-[600px] overflow-y-scroll  3xl:w-[800px] cursor-pointer">
         <IoIosCloseCircleOutline
           onClick={() => setIsOpenUpdateModal(false)}
           className="text-xl float-right"
@@ -210,24 +224,6 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
             className="w-full outline-none"
             style={{ height: textareaHeight }}
           />
-          {/* <section
-            name="description"
-            contentEditable={true}
-            ref={descriptionRef}
-            onInput={(e) => {
-              saveCursorPosition();
-              handleInputChange(e);
-            }}
-            onFocus={restoreCursorPosition}
-            className="w-full outline-none text-xl my-3 py-3 cursor-auto"
-            style={{
-              whiteSpace: "pre-wrap",
-              minHeight: "50px",
-              padding: "8px",
-            }}
-          >
-            {formData.description}
-          </section> */}
 
           {/* Technical Recommendations Section */}
           {formData?.technicalRecommendations.length !== 0 && (
@@ -300,13 +296,134 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
                   })}
                 </div>
               </div>
+     
             </div>
+            
           )}
+            <hr className="pb-3"/>
+           <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 sm:space-y-7 md:space-y-0">
+           
+      {/* Image Display Section */}
+      <div className="w-full md:w-7/12 lg:w-7/12 3xl:w-8/12 py-2 md:py-8 bg-gray-100 lg:h-[320px] xl:h-[420px] 3xl:h-[450px] rounded-2xl">
+        {images.length !== 0 && (
+          <div className="pt-1 xs:pt-3 xs:pb-5 lg:pb-5 px-2 flex items-end justify-end space-x-4">
+            {/* Upload Button */}
+            <label htmlFor="updateImg">
+              <BsPlusCircle className="text-[22px] cursor-pointer hover:text-blue-500 text-gray-600" />
+            </label>
+            {/* Delete Button */}
+            <FaRegTrashAlt
+              className="text-[22px] text-gray-600 hover:text-red-500 cursor-pointer"
+              onClick={() => handleDeleteImage(primaryImage)}
+            />
+          </div>
+        )}
+        {/* Primary Image */}
+        {primaryImage &&
+          <img
+            className="px-3 lg:px-0 w-full h-[290px] md:h-[350px] lg:h-[220px] xl:h-[260px] 3xl:h-[280px] object-contain rounded-3xl"
+            src={primaryImage}
+            alt="Primary"
+          />}
+      </div>
 
-          {formData?.image && formData?.image !== " " && (
+      {/* Image Thumbnails Section */}
+      <div className="grid grid-cols-3 xs:grid-cols-4 md:grid-cols-3 xl:grid-cols-2 3xl:grid-cols-2 gap-3 max-h-[500px] lg:max-h-[320px] xl:max-h-[420px] 3xl:max-h-[450px] lg:h-auto overflow-x-auto">
+        {images.map((singleImg, index) => (
+          <div
+            key={index}
+            className={`cursor-pointer border-2 p-1 rounded-md ${
+              singleImg === primaryImage
+                ? "border-blue-500"
+                : "border-gray-200"
+            }`}
+            onClick={() => handlePrimaryImageChange(singleImg)}
+          >
+            <img
+              className="h-16 w-16 xl:h-[100px] xl:w-[100px] object-cover rounded-md"
+              src={singleImg}
+              alt={`Thumbnail ${index}`}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Hidden File Input for Upload */}
+      <input
+        type="file"
+        id="updateImg"
+        accept="image/*"
+        onChange={handleImageUpload}
+        className="hidden"
+      />
+    </div>
+{/* 
+            <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 sm:space-y-7 lg:space-y-0 ">
+              <div className="w-full md:w-7/12 lg:w-8/12 xl:w-8/12 py-2 md:py-8 bg-gray-100 lg:h-[320px] xl:h-[420px] 3xl:h-[450px] rounded-2xl">
+                {formData?.image?.length !== 0 && (
+                  <div className="pb-2 lg:pb-5 px-2   flex items-end justify-end space-x-4">
+                    <label      htmlFor="updateImg">
+                      <BsPlusCircle className="text-[22px] cursor-pointer hover:text-blue-500 text-gray-600" />
+                    </label>
+                    <FaRegTrashAlt
+                      className="text-[22px] text-gray-600 hover:text-red-500 cursor-pointer"
+                      onClick={() => handleDeleteImage(primaryImage)}
+                    />
+                  </div>
+                )}
+                <img
+                  className="px-3 lg:px-0 w-full h-[290px] md:h-[350px] lg:h-full xl:h-[330px]  object-contain rounded-3xl"
+                  src={primaryImage}
+                  alt="Primary"
+                />
+              </div>
+              <div className="grid grid-cols-3 xs:grid-cols-4 md:grid-cols-3 xl:grid-cols-2 3xl:grid-cols-2 gap-3  max-h-[500px] lg:max-h-[320px] xl:max-h-[420px] 3xl:max-h-[450px] lg:h-auto overflow-x-auto">
+                {formData.image?.map((singleImg, index) => (
+                  <div
+                    key={index}
+                    className={` cursor-pointer border-2 p-1 rounded-md ${
+                      singleImg === primaryImage
+                        ? "border-blue-500"
+                        : "border-gray-200"
+                    }`}
+                   onClick={() => handlePrimaryImageChange(singleImg)}
+                  >
+                    <img
+                      className="h-16 w-16 xl:h-[100px] xl:w-[100px] object-cover rounded-md"
+                      src={singleImg}
+                      alt={`Thumbnail ${index}`}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <input
+                  type="file"
+                  id="updateImg"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                /> */}
+           {/*  // ) : (
+          //   <div className="flex flex-col  justify-center items-center py-5 space-y-2  rounded-lg  w-full  border-gray-100">
+          //     <img
+          //       src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-25537.jpg"
+          //       className="w-80"
+          //     />
+          //     <p className="text-xl">Select image from your device</p>
+          //     <label
+          //       htmlFor="image-upload"
+          //       className="px-6 py-2 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)]"
+          //     >
+          //       {loading ? "Uploading..." : "Select An Image"}
+          //     </label>
+          //   </div>
+          // )}
+        {formData?.image && formData?.image !== " " && (
             <>
-              <hr />
-              {/* Image Preview */}
+            
+       
               <div className="relative mt-4">
                 <label
                   htmlFor="updateImg"
@@ -314,14 +431,7 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
                 >
                   <p>Edit</p>
                 </label>
-                {/* File Upload Input */}
-                <input
-                  type="file"
-                  id="updateImg"
-                  accept="image/*"
-                  onChange={handlePreviewImage}
-                  className="hidden"
-                />
+             
                 <img
                   src={previewImage || formData.image}
                   alt="Preview"
@@ -329,7 +439,7 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
                 />
               </div>
             </>
-          )}
+          )} */}
           {formData?.pdf && formData?.pdf !== " " && (
             <>
               <div className="relative mt-4 ">

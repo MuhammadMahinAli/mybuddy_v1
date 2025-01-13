@@ -193,6 +193,8 @@ const GeneralAddProject = ({ closeModal }) => {
       setOpenSecondForm(false);
     }
   };
+
+  console.log(projectData.category);
   return (
     <div>
       <div className="flex justify-between items-center pb-5">

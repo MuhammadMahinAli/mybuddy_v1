@@ -2,8 +2,13 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useGetUsersConferenceLinkQuery } from "../../features/conference/conferenceApi";
 
 const FindDropdown = ({ theme }) => {
+  const {data:getUsersConferenceLink}= useGetUsersConferenceLinkQuery();
+
+  const conferenceUrl = getUsersConferenceLink?.data?.conferenceLink;
+  console.log("po",conferenceUrl);
   return (
     <Transition
       as={Fragment}
@@ -53,6 +58,23 @@ const FindDropdown = ({ theme }) => {
                   Find Project
                 </button>
               </Link>
+            )}
+          </Menu.Item>
+          <Menu.Item>
+            {({ active }) => (
+              <a href={conferenceUrl}>
+                <button
+                  className={`${
+                    active
+                      ? theme === "light"
+                        ? "bg-[#2adba4] text-white"
+                        : "bg-[#333333] text-white"
+                      : ""
+                  } group flex w-full items-center rounded-md px-2 py-2 text-[16px] `}
+                >
+                  Find Conference
+                </button>
+              </a>
             )}
           </Menu.Item>
         </div>

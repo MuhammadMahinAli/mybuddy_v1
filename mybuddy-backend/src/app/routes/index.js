@@ -22,6 +22,8 @@ import { BankTransferFundInfoRoutes  } from "../modules/banktransferfund/bankTra
 import { AdminBankInfoRoutes } from "../modules/adminBankInfo/adminBankInfo.routes.js";
 import { AdminToolsRoutes } from "../modules/tools/tools.routes.js";
 import { UsersToolsRoutes } from "../modules/usersTools/usersTools.routes.js";
+import { ConferenceLinkRoutes } from "../modules/conference/conference.routes.js";
+import { TutorialsRoutes } from "../modules/tutorials/tutorials.routes.js";
 
 const router = express.Router();
 const moduleRoutes = [
@@ -48,6 +50,8 @@ const moduleRoutes = [
     { path:"/adminBankInfo", route:AdminBankInfoRoutes},
     { path:"/adminTools", route:AdminToolsRoutes},
     { path:"/userTools", route:UsersToolsRoutes},
+    { path:"/conference", route:ConferenceLinkRoutes},
+    { path:"/tutorials", route:TutorialsRoutes},
 
 ];
 

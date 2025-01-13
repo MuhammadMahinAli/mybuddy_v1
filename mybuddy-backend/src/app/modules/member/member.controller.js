@@ -116,16 +116,43 @@ export const resendVerificationEmail = catchAsync(async (req, res) => {
 });
 
 //-------get all users
+// export const getAllMembers = catchAsync(async (req, res) => {
+//   const members = await getAllMemberService();
+
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Members retrieved successfully!",
+//     data: members,
+//   });
+// });
+
 export const getAllMembers = catchAsync(async (req, res) => {
-  const members = await getAllMemberService();
+  const { id, role, page } = req.query; // Extract query parameters
+
+  const filter = {};
+  if (id) {
+    filter._id = id; // Search by ID
+  }
+  if (role) {
+    filter.role = role; // Search by role
+  }
+
+  const result = await getAllMemberService(filter, Number(page) || 1);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Members retrieved successfully!",
-    data: members,
+    data: result.members,
+    pagination: {
+      totalMembers: result.totalMembers,
+      totalPages: result.totalPages,
+      currentPage: result.currentPage,
+    },
   });
 });
+
 
 //------get single user
 export const getSingleMemberById = catchAsync(async (req, res) => {

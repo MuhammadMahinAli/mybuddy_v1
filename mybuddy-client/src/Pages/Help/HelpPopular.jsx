@@ -1,9 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const HelpPopular = () => {
   const [openPopup, setOpenPopup] = useState(false);
   const [openPopupIndex, setOpenPopupIndex] = useState(null);
+   const [tutorialInfo, setTutorialInfo] = useState(null); // Store admin info here
+
+  
+    // Fetch admin info on component mount
+    useEffect(() => {
+      const fetchTutorialInfo = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/v1/tutorials/getAll`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+  
+          if (!response.ok) {
+            throw new Error(
+              `Error fetching admin info: ${response.statusText}`
+            );
+          }
+  
+          const data = await response.json();
+          setTutorialInfo(data.data); // Assuming `data.data` contains the admin info
+        } catch (error) {
+          console.error("Error fetching admin info:", error);
+        }
+      };
+  
+      fetchTutorialInfo();
+    }, []); 
+
+console.log("tt", tutorialInfo?.profile);
 
   const t = (feature) => {
     setOpenPopup(true);
@@ -15,83 +49,93 @@ const HelpPopular = () => {
       title: "unified tools integration",
       description:
         "Access and manage tools like Canva, Blender, and Google Docs from one dashboard.",
-    },
+        tutorials: tutorialInfo?.tools
+      },
     {
       image: "./f2.png",
       title: "profile setup",
       description:
         "customize your profile to represent your expertise and interests. ",
-      tutorials: [
-        {
-          text: "how to create an account?",
-          youtubeLink: "https://youtu.be/lL7AKQBjcyE?si=xpfl2bm7xvx5MgHM",
-        },
-      ],
+      tutorials: tutorialInfo?.profile
+      // tutorials: [
+      //   {
+      //     text: "how to create an account?",
+      //     youtubeLink: "https://youtu.be/lL7AKQBjcyE?si=xpfl2bm7xvx5MgHM",
+      //   },
+      // ],
     },
     {
       image: "./f3.png",
       title: "posting & feed",
       description:
         "share your updates and collaborate with others via posts and feeds.",
-      tutorials: [
-        {
-          text: "how to post in the feed?",
-          youtubeLink: "https://youtu.be/EdiEdjNm8CI?si=Ec6RkankGk0XNXbz",
-        },
-      ],
+        tutorials: tutorialInfo?.feeds
+      // tutorials: [
+      //   {
+      //     text: "how to post in the feed?",
+      //     youtubeLink: "https://youtu.be/EdiEdjNm8CI?si=Ec6RkankGk0XNXbz",
+      //   },
+      // ],
     },
     {
       image: "./f4.png",
       title: "researcher network",
       description:
         "connect with experts and collaborate on innovative projects.",
-    },
+        tutorials: tutorialInfo?.researchers
+      },
     {
       image: "./f5.png",
       title: "project creation & management",
       description:
         "manage your projects seamlessly from creation to completion.",
-      tutorials: [
-        {
-          text: "how create a project?",
-          youtubeLink: "https://youtu.be/hsqNWcYIhQw?si=C5hngeAkqkvlwPYy",
-        },
-      ],
+        tutorials: tutorialInfo?.projects
+        // tutorials: [
+      //   {
+      //     text: "how create a project?",
+      //     youtubeLink: "https://youtu.be/hsqNWcYIhQw?si=C5hngeAkqkvlwPYy",
+      //   },
+      // ],
     },
     {
       image: "./f6.png",
       title: "task commitments",
       description: "organize tasks and track commitments effectively.",
+      tutorials: tutorialInfo?.tasks
     },
     {
       image: "./f7.png",
       title: "funding projects",
       description:
         "get donations or attract stakeholders to fund your research.",
-      tutorials: [
-        {
-          text: "how to fund?",
-          youtubeLink: "https://youtu.be/SDYnBtyXKiQ?si=HX1aMhGr73vofTyq",
-        },
-      ],
+      tutorials: tutorialInfo?.funds
+        // tutorials: [
+      //   {
+      //     text: "how to fund?",
+      //     youtubeLink: "https://youtu.be/SDYnBtyXKiQ?si=HX1aMhGr73vofTyq",
+      //   },
+      // ],
     },
     {
       image: "./f8.png",
       title: "meetings & attendance",
       description: "schedule and track meetings effortlessly with your team.",
-      tutorials: [
-        {
-          text: "how to create a meeting?",
-          youtubeLink: "https://youtu.be/zsSQ3FIPflM?si=9ZKCECVWtgYv807Y",
-        },
-      ],
+      tutorials: tutorialInfo?.meetings
+      // tutorials: [
+      //   {
+      //     text: "how to create a meeting?",
+      //     youtubeLink: "https://youtu.be/zsSQ3FIPflM?si=9ZKCECVWtgYv807Y",
+      //   },
+      // ],
     },
     {
       image: "./f9.png",
       title: "appearance setting",
       description:
         "customize your work pace with dark mode and light mode option.",
-    },
+        tutorials: tutorialInfo?.appearence
+      },
+    
   ];
   return (
     <>
@@ -156,17 +200,20 @@ const HelpPopular = () => {
             </div>
             {openPopupIndex?.tutorials && (
               <div className="-space-y- pt-4">
-                <p className="relative capitalize z-[1] text-lg font-bold">
-                  Tutorial:
+                
+                {openPopupIndex?.tutorials[0] &&
+                  <p className="relative capitalize z-[1] text-lg font-bold">
+                  Tutoriala:
                 </p>
-                <div>
+            }
+                <div className="flex flex-col">
                   {openPopupIndex?.tutorials.map((tu) => (
                     <a
                       key={tu.text}
                       className="capitalize text-blue-600 underline"
-                      href={tu.youtubeLink}
+                      href={tu.tutorialUrl}
                     >
-                      {tu.text}
+                      {tu.displayText}
                     </a>
                   ))}
                 </div>
@@ -175,6 +222,7 @@ const HelpPopular = () => {
           </div>
         </div>
       )}
+      
     </>
   );
 };

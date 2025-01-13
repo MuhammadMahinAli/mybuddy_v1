@@ -19,24 +19,27 @@ const AdminDekstopSidebar = ({
   openCreateTools,
   handleAllTools,
   openAllTool,
-
+  handleAllConference,
+  openConference,
+  handleTutorials,
+  openTutorials
 }) => {
   const { singleUser } = useContext(AuthContext);
-const adminId = singleUser?.data?._id
+  const adminId = singleUser?.data?._id;
   const userImage = singleUser?.data?.profilePic
     ? singleUser?.data?.profilePic
     : "https://as1.ftcdn.net/v2/jpg/01/68/80/20/1000_F_168802088_1msBk8PpBRCCVo012WJTpWG90KHvoMWf.jpg";
   return (
     <div className="hidden xl:flex lg:relative lg:-left-1 lg:-top-20 py-4 pl-1  flex-col justify-center items-center space-y-12 lg:w-[270px]  xl:w-3/12  rounded-br-[33px] bg-[#f3f6f8] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
       <div className="w-11/12 pt-1 pl-1">
-      <Link to="/home" className="inline-flex items-center ml-0 ">
-        <div className="p-2 rounded-lg shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
-          <img src="/logo.png" className="h-8" />
-        </div>
-        <span className="ml-2 text-[17px] graish font-bold tracking-wide uppercase">
-          Research Buddy
-        </span>
-      </Link>
+        <Link to="/home" className="inline-flex items-center ml-0 ">
+          <div className="p-2 rounded-lg shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
+            <img src="/logo.png" className="h-8" />
+          </div>
+          <span className="ml-2 text-[17px] graish font-bold tracking-wide uppercase">
+            Research Buddy
+          </span>
+        </Link>
       </div>
       <div
         onClick={handleDashboard}
@@ -68,7 +71,6 @@ const adminId = singleUser?.data?._id
             ></div>
 
             <Link
-           
               to={`/admin/${adminId}/all-project`}
               className={`${
                 openAllProject === true
@@ -168,7 +170,7 @@ const adminId = singleUser?.data?._id
             >
               <img src="/video.svg" className="h-4" />
               <p className="lg:text-[18px] xl:text-[22px] font-medium text-xl gray600 xl:pr-5">
-              All Fund
+                All Fund
               </p>
             </Link>
 
@@ -191,7 +193,7 @@ const adminId = singleUser?.data?._id
             ></div>
 
             <Link
-              to={`/admin/${adminId}/all-user`} 
+              to={`/admin/${adminId}/all-user`}
               className={`${
                 openAllUser === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -200,7 +202,7 @@ const adminId = singleUser?.data?._id
             >
               <img src="/video.svg" className="h-4" />
               <p className="lg:text-[18px] xl:text-[22px] font-medium text-xl gray600 xl:pr-5">
-              All User
+                All User
               </p>
             </Link>
 
@@ -213,7 +215,7 @@ const adminId = singleUser?.data?._id
         </ul>
       </div>
       {/* center */}
-  <div className="m-4 lg:w-[230px] xl:w-[230px] 2xl:w-[230px] 3xl:w-[260px] pt-2 pb-9 flex justify-center items-center rounded-[25px] bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">
+      <div className="m-4 lg:w-[230px] xl:w-[230px] 2xl:w-[230px] 3xl:w-[260px] pt-2 pb-9 flex justify-center items-center rounded-[25px] bg-[#e4ecf7] shadow-[-2px_-3px_9px_rgba(255,_255,_255,_0.88)_inset,_2px_3px_14px_#c7d3e1_inset]">
         <ul className="text-xl font-semibold relative">
           <li
             onClick={handleCreateTools}
@@ -247,38 +249,70 @@ const adminId = singleUser?.data?._id
               } bg-[#e4ecf7] w-52 h-5 rounded-tr-[50px]`}
             ></div>
           </li>
-          {/* <li
-            onClick={handleFriendRqst}
+          <li
+            onClick={handleAllConference}
             className={`${
-              openFrndRqst === true ? "show-content" : "hide-content"
+              openConference === true ? "show-content" : "hide-content"
             } border-b  cursor-pointer  relative ml-1 lg:-right-[7px] xl:-right-[11px] 2xl:-right-[16px] 3xl:-right-[23px]`}
           >
             <div
               className={`${
-                !openFrndRqst && "hidden"
+                !openConference && "hidden"
               } bg-[#e4ecf7] h-5 rounded-br-[60px]`}
             ></div>
 
             <Link
-              to="/admin/friend-request"
+              to={`/admin/${adminId}/set-conference`}
               className={`${
-                openFrndRqst === true
+                openConference === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
                   : "bg-[#e4ecf7] border-b border-white py-3"
               } flex relative space-x-4  items-center pl-3 `}
             >
               <img src="/rqst2.svg" className="h-6" />
               <p className="lg:text-[18px] xl:text-[22px] font-medium gray600">
-                Friend Request
+                Conference
               </p>
             </Link>
 
             <div
               className={`${
-                openFrndRqst === true ? "block" : "hidden"
+                openConference === true ? "block" : "hidden"
               } bg-[#e4ecf7]  h-5 rounded-tr-[50px]`}
             ></div>
-          </li>*/}
+          </li>
+          <li
+            onClick={handleTutorials}
+            className={`${
+              openTutorials === true ? "show-content" : "hide-content"
+            } border-b  cursor-pointer  relative ml-1 lg:-right-[7px] xl:-right-[11px] 2xl:-right-[16px] 3xl:-right-[23px]`}
+          >
+            <div
+              className={`${
+                !openTutorials && "hidden"
+              } bg-[#e4ecf7] h-5 rounded-br-[60px]`}
+            ></div>
+
+            <Link
+              to={`/admin/${adminId}/tutorials`}
+              className={`${
+                openTutorials === true
+                  ? "bg-[#f3f6f8] rounded-l-2xl py-2"
+                  : "bg-[#e4ecf7] border-b border-white py-3"
+              } flex relative space-x-4  items-center pl-3 `}
+            >
+              <img src="/rqst2.svg" className="h-6" />
+              <p className="lg:text-[18px] xl:text-[22px] font-medium gray600">
+              Tutorials
+              </p>
+            </Link>
+
+            <div
+              className={`${
+                openTutorials === true ? "block" : "hidden"
+              } bg-[#e4ecf7]  h-5 rounded-tr-[50px]`}
+            ></div>
+          </li>
           <li
             onClick={handleAllTools}
             className={`${
@@ -292,7 +326,7 @@ const adminId = singleUser?.data?._id
             ></div>
 
             <Link
-              to= {`/admin/${adminId}/all-tools`}
+              to={`/admin/${adminId}/all-tools`}
               className={`${
                 openAllTool === true
                   ? "bg-[#f3f6f8] rounded-l-2xl py-2"
@@ -310,9 +344,9 @@ const adminId = singleUser?.data?._id
                 openAllTool === true ? "block" : "hidden"
               } bg-[#e4ecf7]  h-5 rounded-tr-[50px]`}
             ></div>
-          </li> 
+          </li>
         </ul>
-      </div> 
+      </div>
       {/* bottom */}
       {/* <Link
         to="/user/edit-profile"
@@ -333,7 +367,8 @@ const adminId = singleUser?.data?._id
 
       {/* setting logout */}
       <div className="space-y-3">
-      <Link to= {`/admin/${adminId}/setting`} 
+        <Link
+          to={`/admin/${adminId}/setting`}
           onClick={handleSetting}
           className={`${
             openSetting === true ? "bg-[#dce2ea]" : "bg-[#e4ecf7] py-4"
@@ -355,7 +390,7 @@ const adminId = singleUser?.data?._id
             Log out
           </p>
         </div>
-      </div> 
+      </div>
     </div>
   );
 };

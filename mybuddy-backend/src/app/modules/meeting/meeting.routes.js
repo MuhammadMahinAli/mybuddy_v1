@@ -5,7 +5,7 @@ import {createMeetingController, deleteMeetingController, getMeetingByCreatorCon
 
 router.post('/create-new', createMeetingController);
 router.get('/getMeetingById/:id', getSingleMeetingById)
-router.get('/getMeetingByMeetingMember/:memberId', getMeetingsForMeetingMemberController)
+router.get('/getMeetingByMeetingMember/:id', getMeetingsForMeetingMemberController)
 router.patch('/update-attendance', updateAttendanceStatus);
 router.put('/update-info/:id', updateMeetingController);
 router.post('/updateAttendance', updateMembersAttendanceStatusController);

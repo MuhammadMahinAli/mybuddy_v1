@@ -118,14 +118,33 @@ export const resendEmailService = async (email) => {
   return { message: "Verification email sent" };
 };
 
-///get all users
+///--------- get all users
+
 // export const getAllMemberService = async () => {
-//   const users = await Member.find({});
+//   const users = await Member.find({ email: { $ne: "researchbdy@gmail.com" } }); // Exclude "researchbdy@gmail.com"
 //   return users;
 // };
-export const getAllMemberService = async () => {
-  const users = await Member.find({ email: { $ne: "researchbdy@gmail.com" } }); // Exclude "researchbdy@gmail.com"
-  return users;
+export const getAllMemberService = async (filter, page = 1) => {
+  const pageSize = 10; // 10 members per page
+  const skip = (page - 1) * pageSize;
+
+  const query = {
+    email: { $ne: "researchbdy@gmail.com" }, // Exclude "researchbdy@gmail.com"
+    ...filter, // Add dynamic filtering based on the request
+  };
+
+  const members = await Member.find(query)
+    .skip(skip)
+    .limit(pageSize);
+
+  const totalMembers = await Member.countDocuments(query);
+
+  return {
+    members,
+    totalMembers,
+    totalPages: Math.ceil(totalMembers / pageSize),
+    currentPage: page,
+  };
 };
 
 
@@ -298,7 +317,7 @@ export const resetPasswordService = async (id, token, newPassword) => {
 // // Modified service function to get members with pagination and uniqueId filter
 export const getAllMemberByFilterService = async (page, limit, uniqueId) => {
   const skip = (page - 1) * limit;
-console.log('un',uniqueId);
+
   // If uniqueId is provided, search for that specific project/member
   if (uniqueId) {
     const user = await Member.findOne({ uniqueId });

@@ -16,10 +16,12 @@ import { IoIosCloseCircle } from "react-icons/io";
 import Swal from "sweetalert2";
 import PostMediaIcon from "../../icons/PostMediaIcon";
 import PostProjectIcon from "../../icons/PostProjectIcon";
+import MultipleMediaModal from "./MultipleMediaModal";
 
 const Posts = ({ theme }) => {
   const navigate = useNavigate();
   const [mediaTab, setMediaTab] = useState(true);
+  const [mediaModal, setMediaModal] = useState(false);
   const [projectTab, setProjectTab] = useState(false);
   const [articleTab, setArticleTab] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -53,6 +55,7 @@ const Posts = ({ theme }) => {
   };
 
   const [previewImage, setPreviewImage] = useState("");
+  const [images, setImages] = useState([]);
   // const handlePreviewImage = async (e) => {
   //   if (e.target.files && e.target.files.length > 0) {
   //     const file = e.target.files[0];
@@ -87,7 +90,6 @@ const Posts = ({ theme }) => {
     }
   };
 
-  console.log(previewImage);
 
   const handlePdfUpload = (e) => {
     const file = e.target.files[0];
@@ -108,7 +110,7 @@ const Posts = ({ theme }) => {
   // teamMembers: [],
   const [formData, setFormData] = useState({
     description: "",
-    image: "",
+    image: [],
     technicalRecommendations: [],
     teamMembers: [],
     comments: [],
@@ -140,7 +142,7 @@ const Posts = ({ theme }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
-      navigate("/login");
+      navigate("/");
       return;
     }
     if (!formData.description) {
@@ -206,6 +208,9 @@ const Posts = ({ theme }) => {
       pdf: "",
     }));
   };
+
+  
+  console.log("form",formData);
 
   return (
     <div className="z-0">
@@ -322,9 +327,9 @@ const Posts = ({ theme }) => {
             <div className="flex justify-between items-center py-2 px-3">
               <div className="flex space-x-3 xl:space-x-4 items-center">
                 {mediaTab && (
-                  <label htmlFor="media">
+                  <div onClick={() => setMediaModal(true)}>
                     <MediaIcon theme={theme} />
-                  </label>
+                  </div>
                 )}
                 {projectTab && (
                   <>
@@ -334,19 +339,22 @@ const Posts = ({ theme }) => {
                     <button type="button" onClick={() => setIsOpen(true)}>
                       <TechnicalIcon theme={theme} />
                     </button>
-                    <label htmlFor="media">
+                    <div onClick={() => setMediaModal(true)}>
                       <MediaIcon theme={theme} />
-                    </label>
+                    </div>
                   </>
                 )}
-                <input
+                {mediaModal && (
+                  <MultipleMediaModal setFormData={setFormData} setMediaModal={setMediaModal} images={images} setImages={setImages} />
+                )}
+                {/* <input
                   className="hidden"
                   type="file"
                   name="file"
                   id="media"
                   onChange={handlePreviewImage}
                   accept="image/*"
-                />
+                /> */}
                 {articleTab && (
                   <>
                     <label htmlFor="pdf">
@@ -371,7 +379,7 @@ const Posts = ({ theme }) => {
                   ></div>
                 )}
                 {/* preview image */}
-                {formData?.image && (
+                {/* {formData?.image && (
                   <div className="relative  bg-gray-300 rounded-lg h-7 w-10 md:h-14 md:w-28 lg:ml-4">
                     <div
                       onClick={handleRemoveImage}
@@ -385,7 +393,7 @@ const Posts = ({ theme }) => {
                       className="h-7 w-10 md:h-14 md:w-full border border-gray-400 shadow-xl rounded-lg"
                     />
                   </div>
-                )}
+                )} */}
                 {/* preview pdf */}
                 {formData?.pdf && (
                   <div className="relative bg-gray-300 rounded-lg h-10 w-10 md:h-14 md:w-14 lg:ml-4">
