@@ -26,6 +26,34 @@ export const createNewPost = catchAsync(async (req, res, next) => {
 //-------get all users
 
 //-------get all posts with pagination
+
+export const getAllPost = catchAsync(async (req, res) => {
+  const limit = parseInt(req.query.limit) || 5;
+  const excludeIds = req.query.excludeIds ? req.query.excludeIds.split(",") : [];
+
+  console.log(limit, excludeIds);
+
+  const result = await getAllPostService(limit, excludeIds);
+
+  if (!result.posts.length) {
+    return sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: "No posts found",
+      data: [],
+    });
+  }
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Posts retrieved successfully!",
+    data: result,
+  });
+});
+
+
+
 // export const getAllPost = catchAsync(async (req, res) => {
 //   const page = parseInt(req.query.page) || 1;
 //   const limit = parseInt(req.query.limit) || 5;
@@ -49,27 +77,27 @@ export const createNewPost = catchAsync(async (req, res, next) => {
 //   });
 // });
 
-export const getAllPost = catchAsync(async (req, res) => {
+// export const getAllPost = catchAsync(async (req, res) => {
 
 
-  const result = await getAllPostService();
+//   const result = await getAllPostService();
 
-  if (!result) {
-    return sendResponse(res, {
-      statusCode: httpStatus.NOT_FOUND,
-      success: false,
-      message: "No posts found",
-      data: [],
-    });
-  }
+//   if (!result) {
+//     return sendResponse(res, {
+//       statusCode: httpStatus.NOT_FOUND,
+//       success: false,
+//       message: "No posts found",
+//       data: [],
+//     });
+//   }
 
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Posts retrieved successfully",
-    data: result,
-  });
-});
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Posts retrieved successfully",
+//     data: result,
+//   });
+// });
 
 
 export const getSingleMemberPostController= async (req, res) => {

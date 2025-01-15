@@ -20,7 +20,7 @@ const AdminTutorials = () => {
     const fetchTutorialInfo = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/tutorials/getAll`,
+          `https://test-two-22w0.onrender.com/api/v1/tutorials/getAll`,
           {
             method: "GET",
             headers: {
@@ -62,7 +62,7 @@ const AdminTutorials = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/tutorials/addTutorial",
+        "https://test-two-22w0.onrender.com/api/v1/tutorials/addTutorial",
         {
           method: "POST",
           headers: {
@@ -114,7 +114,7 @@ const AdminTutorials = () => {
   const handleDeleteTutorial = async (field, tutorialUrl) => {
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/tutorials/deleteTutorial",
+        "https://test-two-22w0.onrender.com/api/v1/tutorials/deleteTutorial",
         {
           method: "DELETE",
           headers: {

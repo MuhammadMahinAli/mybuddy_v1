@@ -10,6 +10,15 @@ body {
   margin: 0;
   padding: 0;
 }
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar width for Chrome, Safari, Opera */
+  height: 0; /* Remove horizontal scrollbar height */
+}
 .cal {
   color: #4164f0;
 }
@@ -19,6 +28,7 @@ body {
 .gray500 {
   color: #6b7280;
 }
+
 .rectangle {
   border-radius: 13px;
   background: linear-gradient(125.26deg, #d9d9d9, #efefef 55.46%, #fcfcfc);

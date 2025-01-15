@@ -28,6 +28,33 @@ export const createPost = async (postData) => {
 
 //--------get all post
 
+export const getAllPostService = async (page, limit, excludeIds = []) => {
+  try {
+    const skip = (page - 1) * limit;
+
+    // Fetch posts excluding already sent ones
+    const posts = await Post.find({ _id: { $nin: excludeIds } })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate("postedBy", "name email profilePic role")
+      .populate("teamMembers.member", "name profilePic role");
+
+    const remainingPostsCount = await Post.countDocuments({
+      _id: { $nin: excludeIds },
+    });
+   
+    return {
+      posts,
+      totalRemaining: remainingPostsCount,
+    };
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    throw new Error("Failed to retrieve posts");
+  }
+};
+
+
 
 // export const getAllPostService = async (page , limit) => {
 //   try {
@@ -48,18 +75,18 @@ export const createPost = async (postData) => {
 //     throw new Error("Failed to retrieve posts");
 //   }
 // };
-export const getAllPostService = async () => {
-  try {
-    const posts = await Post.find()
-      .sort({ createdAt: -1 })// Total number of posts
-    return {
-      posts
-    };
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    throw new Error("Failed to retrieve posts");
-  }
-};
+// export const getAllPostService = async () => {
+//   try {
+//     const posts = await Post.find()
+//       .sort({ createdAt: -1 })// Total number of posts
+//     return {
+//       posts
+//     };
+//   } catch (error) {
+//     console.error("Error fetching posts:", error);
+//     throw new Error("Failed to retrieve posts");
+//   }
+// };
 
 
 //-------get post of specific user
@@ -105,3 +132,4 @@ export const deletePostService = async (id) => {
   const result = await Post.findByIdAndDelete({ _id: id });
   return result;
 };
+

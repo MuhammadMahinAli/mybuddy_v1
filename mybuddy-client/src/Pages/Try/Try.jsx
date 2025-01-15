@@ -88,7 +88,7 @@ const Try = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/member/getAll`,
+        `https://test-two-22w0.onrender.com/api/v1/member/getAll`,
         {
           params: {
             page,
@@ -616,7 +616,7 @@ export default Try;
 //     setLoading(true);
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:3000/api/v1/member/getAll`,
+//         `https://test-two-22w0.onrender.com/api/v1/member/getAll`,
 //         {
 //           params: {
 //             page,

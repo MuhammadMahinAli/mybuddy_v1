@@ -16,7 +16,7 @@ const MeetingMemberTab = () => {
     try {
       console.log(userId);
       const response = await fetch(
-        `http://localhost:3000/api/v1/meeting/getMeetingByMeetingMember/${userId}?filterType=${filterType}&subFilter=${subFilter}`
+        `https://test-two-22w0.onrender.com/api/v1/meeting/getMeetingByMeetingMember/${userId}?filterType=${filterType}&subFilter=${subFilter}`
       );
       const data = await response.json();
       if (data.success) {

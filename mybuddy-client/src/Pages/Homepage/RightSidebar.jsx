@@ -15,6 +15,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/UserContext";
 import FriendSection from "./FriendSection";
 import { FaLocationArrow } from "react-icons/fa";
+import GoogleAdComponent from "../../GoogleAdComponent/GoogleAdComponent";
 
 const RightSidebar = ({ theme }) => {
   //   {
@@ -344,6 +345,8 @@ const RightSidebar = ({ theme }) => {
         </div>
       </div>
 
+      <GoogleAdComponent/>
+      
       {/* center */}
       <FriendSection theme={theme} active={active} />
 
