@@ -53,7 +53,7 @@ const LandingNav = () => {
           <div className="h-[25px]  flex flex-col items-start justify-start  ">
             <nav className="m-0 self-stretch flex flex-row items-center justify-between space-x-5 xl:space-x-10 ">
               <Link
-                to={user ? "/home" : "/login"}
+                to="/home"
                 className={`${
                   location.pathname === "/"
                     ? "text-blue-500"
@@ -62,6 +62,16 @@ const LandingNav = () => {
               >
                 home
               </Link>
+              {/* <Link
+                to={user ? "/home" : "/login"}
+                className={`${
+                  location.pathname === "/"
+                    ? "text-blue-500"
+                    : "text-cornflowerblue-100"
+                } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-bold inline-block min-w-[58px]`}
+              >
+                home
+              </Link> */}
               <p
                 onClick={handleScroll}
                 className={`${
@@ -83,7 +93,7 @@ const LandingNav = () => {
                 Help
               </Link>
               <Link
-                to={user ? "/home" : "/login"}
+                to="/home"
                 className={`${
                   location.pathname === "/home"
                     ? "text-blue-500"
@@ -92,6 +102,16 @@ const LandingNav = () => {
               >
                 Feed
               </Link>
+              {/* <Link
+                to={user ? "/home" : "/login"}
+                className={`${
+                  location.pathname === "/home"
+                    ? "text-blue-500"
+                    : "text-cornflowerblue-100"
+                } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold `}
+              >
+                Feed
+              </Link> */}
               <p
                 className={`${
                   location.pathname === "/contact"
@@ -217,12 +237,20 @@ const LandingNav = () => {
                       <ul className="space-y-4">
                         <li>
                           <Link
-                            to={user ? "/home" : "/login"}
+                            to="/home"
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Home
                           </Link>
                         </li>
+                        {/* <li>
+                          <Link
+                            to={user ? "/home" : "/login"}
+                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                          >
+                            Home
+                          </Link>
+                        </li> */}
                         <li className="md:hidden" onClick={handleScrollMbl}>
                           <p className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
                             Features
@@ -246,12 +274,20 @@ const LandingNav = () => {
                         </li>
                         <li>
                           <Link
-                            to={user ? "/home" : "/login"}
+                            to="/home"
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Feed
                           </Link>
                         </li>
+                        {/* <li>
+                          <Link
+                            to={user ? "/home" : "/login"}
+                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                          >
+                            Feed
+                          </Link>
+                        </li> */}
                         <li>
                           <p className="font-medium capitalize tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
                             contact

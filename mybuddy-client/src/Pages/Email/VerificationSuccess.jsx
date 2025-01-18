@@ -6,6 +6,7 @@ import qrcode from "../../assets/qrcode.png";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/UserContext";
 import Loading from "../Loading/Loading";
+import GoogleAdComponent from "../../GoogleAdComponent/GoogleAdComponent";
 
 const VerificationSuccess = () => {
   const { token } = useParams();
@@ -166,6 +167,7 @@ const VerificationSuccess = () => {
             <p className="text-green-700 px-5 font-normal text-center  text-[16px] md:text-[17px] 3xl:text-[20px] tracking-wide">
               {`You can now start using all our services without any limitations. Explore our features and discover what we have in store for you. Should you need any support, don't hesitate to contact us.`}
             </p>
+            <GoogleAdComponent />
             <Link to="/login" target="blank">
               <button className="my-5 px-6 py-1 md:px-8 md:py-3 text-[16px] md:text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,213,115,0.15)] rounded-[6px] [background:linear-gradient(-1110.24deg,#6cd894,#298e4e)] hover:[background:linear-gradient(-1000.24deg,#298e4e,#6cd894)]">
                 Login To Your Account

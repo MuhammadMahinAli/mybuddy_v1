@@ -31,10 +31,10 @@ const UserProfileLayout = () => {
     }, 1500);
   }, []);
 
-  if (!user) {
-    navigate("/login");
-    return;
-  }
+  // if (!user) {
+  //   navigate("/login");
+  //   return;
+  // }
   return (
     <>
       {!authChecked ? (

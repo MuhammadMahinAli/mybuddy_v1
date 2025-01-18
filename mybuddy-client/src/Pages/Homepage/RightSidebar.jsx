@@ -367,7 +367,7 @@ const RightSidebar = ({ theme }) => {
           <div className="flex flex-col justify-center items-center py-4">
             <p className="text-xl font-bold pt-3 ">Browse Our</p>
             <p className="text-lg font-normal pb-3">Projects</p>
-            <a href={singleUser ? "/dashboard/create-projects" : "/login"}>
+            <a href="/dashboard/create-projects">
               {theme === "light" ? (
                 <button className="px-8 py-2 text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)]">
                   Post Project
@@ -376,16 +376,19 @@ const RightSidebar = ({ theme }) => {
                 <button className="postProjectBtn">
                   <p>Post Project</p>
                 </button>
-
-                // <div className="flex flex-col items-center py-2">
-                //   <div className="w-5 md:w-7 h-[4px] md:h-[5px] shadow-[0px_0px_5px_#0cfc34,_0px_0px_15px_#0cfc34,_0px_0px_30px_#0cfc34,_0px_0px_60px_#0cfc34] rounded-3xs bg-[#2ADBA4] rounded-t-xl blur-[1px]" />
-                //   <p className="text-sm lg:text-[18px] rounded-2xl py-1 md:py-2 lg:py-3 px-4 md:px-7 tracking-wide text-white font-bold shadow-[-2px_-2px_100px_rgba(255,_255,_255,_0.1)_inset,_2px_2px_100px_rgba(66,_66,_66,_0.1)_inset] [backdrop-filter:blur(50px)]  box-border">
-                //     Post Project
-                //   </p>
-                //   <div className="w-5 md:w-7 h-[4px] md:h-[5px] shadow-[0px_0px_5px_#1eff45,_0px_0px_15px_#1eff45,_0px_0px_30px_#1eff45,_0px_0px_60px_#1eff45] rounded-3xs bg-[#2ADBA4] rounded-b-xl blur-[1px]" />
-                // </div>
               )}
             </a>
+            {/* <a href={singleUser ? "/dashboard/create-projects" : "/login"}>
+              {theme === "light" ? (
+                <button className="px-8 py-2 text-xl text-white font-semibold shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)] rounded-[22px] [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)]">
+                  Post Project
+                </button>
+              ) : (
+                <button className="postProjectBtn">
+                  <p>Post Project</p>
+                </button>
+              )}
+            </a> */}
             <img className="pt-10" src={postCover} loading="lazy" alt="" />
           </div>
         </div>

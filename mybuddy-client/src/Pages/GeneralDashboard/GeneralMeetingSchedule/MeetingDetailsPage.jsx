@@ -206,7 +206,7 @@ const MeetingDetailsPage = ({ meetingDat, setSelectedMeeting }) => {
           <div className="flex justify-center">
             {meetingDat?.creator._id !== userId && (
               <Link
-                to={`http://localhost:5173/attendance?meeting=${meetingDat?.title}&meetingId=${meetingDat?._id}&date=${meetingDat?.meetingTime}`}
+                to={`https://researchbdy.com/attendance?meeting=${meetingDat?.title}&meetingId=${meetingDat?._id}&date=${meetingDat?.meetingTime}`}
                 className="px-3 py-2 font-bold text-white [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] rounded-lg shadow hover:bg-green-500 transition-colors"
               >
                 Update Attendance

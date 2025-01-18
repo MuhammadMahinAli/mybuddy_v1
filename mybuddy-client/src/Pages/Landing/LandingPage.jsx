@@ -40,12 +40,20 @@ const LandingPage = () => {
       <div className="flex flex-row items-center justify-center pb-8">
         <button className="  px-5 py-2 cursor-pointer bg-[transparent] shadow-[0px_5px_5px_rgba(46,_213,_115,_0.15)] rounded-lg [background:linear-gradient(-84.24deg,_#2c68ff,_#87a9ff)]  flex-wrap content-center">
           <Link
-            to={user ? "/home" : "/login"}
+            to="/home"
             className="relative text-white xl:text-xl capitalize font-nunito text-primary-contrast text-left"
           >
             get started
           </Link>
         </button>
+        {/* <button className="  px-5 py-2 cursor-pointer bg-[transparent] shadow-[0px_5px_5px_rgba(46,_213,_115,_0.15)] rounded-lg [background:linear-gradient(-84.24deg,_#2c68ff,_#87a9ff)]  flex-wrap content-center">
+          <Link
+            to={user ? "/home" : "/login"}
+            className="relative text-white xl:text-xl capitalize font-nunito text-primary-contrast text-left"
+          >
+            get started
+          </Link>
+        </button> */}
       </div>
       <GoogleAdComponent />
 

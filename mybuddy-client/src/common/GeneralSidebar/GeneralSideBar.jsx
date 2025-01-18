@@ -211,7 +211,7 @@ setUserData(singleUser);
           icon: "success",
           text: "Logged out successfully!",
         });
-        navigate("/login");
+        // navigate("/login");
       }
     };
   return (

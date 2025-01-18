@@ -124,7 +124,7 @@ const Image = ({ image, i }) => {
       </>
       {isOpen && (
         <div className="z-50 fixed top-0 left-0 flex justify-center items-center bg-black/40 w-full h-full">
-          <div className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left transition-all w-[90%] max-w-[1000px] h-[90%] max-h-[650px]">
+          <div className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left transition-all w-[90%] max-w-[1000px] h-auto xl:h-[90%] xl:max-h-[650px]">
             <IoIosCloseCircleOutline
               onClick={closeModal}
               className="text-2xl absolute right-5 top-5 cursor-pointer"

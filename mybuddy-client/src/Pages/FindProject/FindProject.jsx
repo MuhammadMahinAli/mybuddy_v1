@@ -119,7 +119,7 @@ const FindProject = () => {
       );
       const data = response.data.data;
 
-      console.log("dd", data);
+  //    console.log("dd", data);
 
       setAllProjects(data.projects || []);
       setCurrentPage(data.currentPage || 1);
@@ -237,6 +237,82 @@ const FindProject = () => {
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
   };
+  //------------------------------------------------------
+
+  const categories = [
+    "Technology",
+    "Tech",
+    "Software",
+    "Cloud Computing",
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Internet of Things",
+    "Data Science",
+    "Blockchain",
+    "Cybersecurity",
+    "Web Development",
+    "Wab Development",
+    "Wob Development",
+    "Mobile Development",
+    "DevOps",
+    "Robotics",
+    "Game Development",
+    "VR/AR",
+    "Embedded Systems",
+  ];
+
+  const [selectedRole, setSelectedRole] = useState("");
+  const [filterProjects, setFilterProjects] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+  const handleRoleChange = (e) => {
+    setSelectedRole(e.target.value);
+    setCurrentPage(1); // Reset to first page when changing filters
+  };
+
+  const fetchUsers = async (page = 1, categoryFilter = "") => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `https://test-two-22w0.onrender.com/api/v1/project/getAllProjectByCategory`,
+        {
+          params: {
+            page,
+            limit: 10,
+            category: categoryFilter,
+          },
+        }
+      );
+
+      const data = response.data.data;
+
+      //console.log("data", data, categoryFilter);
+
+      setFilterProjects(data || []);
+      setCurrentPage(response.data?.data?.currentPage || 1);
+      setTotalPages(response.data?.data?.totalPages || 1);
+
+      setIsFiltered(!!categoryFilter);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      setFilterProjects([]);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchUsers(currentPage, selectedRole);
+  }, [currentPage, selectedRole]);
+
+
+
+
+console.log("filter",filterProjects);
+
+
+
+
+
 
   //------------ switch end
 
@@ -246,9 +322,27 @@ const FindProject = () => {
 
   return (
     <>
+     
       <div className={` py-1 w-12/12 sm:w-full`}>
+      {/* Role Filter */}
+    <div className="my-4 ml-5 mr-2 md:ml-10 xl:ml-14 3xl:ml-16">
+      <select
+        id="category"
+        value={selectedRole}
+        onChange={handleRoleChange}
+        className="w-full ssm:w-60 outline-none text-[15px] xl:text-[18px] px-4 py-2 border rounded-lg text-gray-700"
+      >
+        <option value="">All Projects</option>
+        {categories.map((category) => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
+      </select>
+    </div>
+
         <div className="mx-3 md:mx-6 3xl:mx-20 my-5 p-3 xl:p-3 space-y-5">
-          {projects?.map((project, i) => {
+          {filterProjects?.map((project, i) => {
             const { status } = getRequestStatus(project?._id);
             //console.log(project);
             const buttonText =
@@ -857,7 +951,10 @@ const FindProject = () => {
             );
           })}
         </div>
-        {projects?.length !== 0 && loading === false && (
+        {filterProjects?.length === 0 && loading === false && (
+        <div className="xl:text-[20px] text-center text-gray-500 pt-10 xl:pt-20 capitalize">{` No Ptoject found.`}</div>
+      )}
+        {projects?.length > 10&& loading === false && (
           <div className="space-x-2 pagination flex items-center justify-center mt-5">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

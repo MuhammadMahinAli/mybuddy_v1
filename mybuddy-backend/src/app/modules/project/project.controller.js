@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import { catchAsync } from "../../../utils/catchAsync.js";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { addTaskToProjectService, createProject,deleteProjectService,deleteTaskFromProjectService,getAllProjectService,getProjectByUserService, getProjectsService, getSingleProjectService, updateProjectService, updateProjectTasks, updateProjetRequestStatusService, updateTaskService, updateTaskStatusService } from "./project.service.js";
+import { addTaskToProjectService, createProject,deleteProjectService,deleteTaskFromProjectService,getAllProjectByCategoryService,getAllProjectService,getProjectByUserService, getProjectsService, getSingleProjectService, updateProjectService, updateProjectTasks, updateProjetRequestStatusService, updateTaskService, updateTaskStatusService } from "./project.service.js";
 
 
 // ************** create project
@@ -248,7 +248,32 @@ export const getAllProjectController = catchAsync(async (req, res) => {
   });
 });
 
+//project by category
+export const getAllProjectByCategoryController = catchAsync(async (req, res) => {
+  const {  category, page } = req.query; // Extract query parameters
 
+  const filter = {};
+  // if (id) {
+  //   filter._id = id; // Search by ID
+  // }
+  if (category) {
+    filter.category = category; // Search by category
+  }
+
+  const result = await getAllProjectByCategoryService(filter, Number(page) || 1);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Project By Category retrieved successfully!",
+    data: result.projects,
+    pagination: {
+      totalProjects: result.totalProjects,
+      totalPages: result.totalPages,
+      currentPage: result.currentPage,
+    },
+  });
+}); 
 
 
 

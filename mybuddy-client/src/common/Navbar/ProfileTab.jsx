@@ -55,11 +55,16 @@ const ProfileTab = ({ openProfile, logout }) => {
             <p className="text-[15px] text-gray-500 capitalize">{userRole}</p>
           </div>
         </div>
-        < Link to={user? "/user/edit-profile":"/login"}>
+        < Link to="/user/edit-profile">
           <button className="mb-2 py-1 w-full md:py-1 text-[14px] graish font-semibold shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)] rounded-[6px] [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)]">
             View Profile
           </button>
         </Link>
+        {/* < Link to={user? "/user/edit-profile":"/login"}>
+          <button className="mb-2 py-1 w-full md:py-1 text-[14px] graish font-semibold shadow-[0px_10px_10px_rgba(46,_213,_115,_0.15)] rounded-[6px] [background:linear-gradient(-84.24deg,_#2adba4,_#76ffd4)]">
+            View Profile
+          </button>
+        </Link> */}
       </div>
       {/* quick links 1 */}
       {/* <div className="my-1 p-2 border-gray-400  border-t">

@@ -269,3 +269,25 @@ export const getAllProjectService = async (page, limit, uniqueId) => {
   };
 };
 
+// PROJECT FILTER BY CATEGORY
+export const getAllProjectByCategoryService = async (filter, page = 1) => {
+  const pageSize = 10; // 10 projects per page
+  const skip = (page - 1) * pageSize;
+
+  const query = {  ...filter };
+
+  console.log(query);
+
+  const projects = await Project.find(query).sort({ createdAt: -1 }).skip(skip).limit(pageSize).populate('user', "name email profilePic country")
+    .skip(skip)
+    .limit(pageSize);
+
+  const totalProjects = await Project.countDocuments(query);
+
+  return {
+    projects,
+    totalProjects,
+    totalPages: Math.ceil(totalProjects / pageSize),
+    currentPage: page,
+  };
+};

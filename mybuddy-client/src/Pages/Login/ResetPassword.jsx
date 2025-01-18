@@ -5,6 +5,7 @@ import { useResetPasswordMutation, useUpdatePasswordMutation } from "../../featu
 import { validatePass } from "../../utils/validation";
 import { AiOutlineEye } from "react-icons/ai";
 import { GoEyeClosed } from "react-icons/go";
+import GoogleAdComponent from "../../GoogleAdComponent/GoogleAdComponent";
 
 const ResetPassword = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -115,7 +116,7 @@ const ResetPassword = () => {
           icon: "success",
           text: "Password has been reset successfully!",
         });
-        navigate("/login");
+        // navigate("/login");
       })
       .catch((error) => {
         setIsLoading(false);
@@ -241,6 +242,8 @@ const ResetPassword = () => {
                     character & must be 8 characters or longer.
                   </span>
                 )}
+
+<GoogleAdComponent />
                 <button
                   type="submit"
                   className="w-full py-2 mt-4 text-white bg-[#49a133] hover:bg-[#2dc70a] rounded"
