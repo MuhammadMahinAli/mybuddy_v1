@@ -19,9 +19,9 @@ const generateOtp = () => {
   return crypto.randomInt(100000, 999999);
 };
 console.log(process.env.NODEMAIL_PASS, process.env.NODEMAIL_USER);
-// Function to generate attendance link with OTP       https://researchbdy.com
+// Function to generate attendance link with OTP   http://localhost:5173/    https://researchbdy.com
 const generateAttendanceLink = (otp, meetingId) => {
-  const baseUrl = "http://localhost:5173/attendance";
+  const baseUrl = "https://researchbdy.com/attendance";
   const currentDate = moment().format("YYYY-MM-DD"); // Generate today's date in 'YYYY-MM-DD' format
   return `${baseUrl}?otp=${otp}&meetingId=${meetingId}&date=${currentDate}`;
 };

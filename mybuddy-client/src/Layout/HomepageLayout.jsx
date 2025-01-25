@@ -50,7 +50,7 @@ const HomepageLayout = () => {
   //   const timer = setTimeout(() => {
   //     setIsLoading(false); 
   //     if (user) {
-  //       navigate("/home");
+  //       navigate("/feed");
   //     } else {
   //       navigate("/login");
   //     }

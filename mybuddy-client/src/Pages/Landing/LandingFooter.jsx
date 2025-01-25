@@ -65,13 +65,13 @@ const LandingFooter = () => {
                 Important Links
               </b>
               <Link
-                to={user ? "/home" : "/login"}
+                to={user ? "/feed" : "/login"}
                 className="[text-decoration:none] hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]"
               >
                 home
               </Link>
               <Link
-                to={user ? "/home" : "/find/project"}
+                to={user ? "/feed" : "/find/project"}
                 className="[text-decoration:none] hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]"
               >
                 Project
@@ -91,7 +91,7 @@ const LandingFooter = () => {
                 community
               </b>
               <Link
-                to={user ? "/home" : "/login"}
+                to={user ? "/feed" : "/login"}
                 className="[text-decoration:none]  hover:text-blue-500  cursor-pointer  self-stretch relative capitalize text-[inherit]"
               >
                 news feed

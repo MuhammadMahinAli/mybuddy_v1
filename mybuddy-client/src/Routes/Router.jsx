@@ -69,11 +69,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/home",
+    path: "/feed",
     element: <HomepageLayout />,
     children: [
       {
-        path: "/home",
+        path: "/feed",
         element: <Homepage /> ,
       },
 

@@ -304,8 +304,9 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
            <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 sm:space-y-7 md:space-y-0">
            
       {/* Image Display Section */}
+      {images.length !== 0 && (
       <div className="w-full md:w-7/12 lg:w-7/12 3xl:w-8/12 py-2 md:py-8 bg-gray-100 lg:h-[320px] xl:h-[420px] 3xl:h-[450px] rounded-2xl">
-        {images.length !== 0 && (
+       
           <div className="pt-1 xs:pt-3 xs:pb-5 lg:pb-5 px-2 flex items-end justify-end space-x-4">
             {/* Upload Button */}
             <label htmlFor="updateImg">
@@ -317,7 +318,7 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
               onClick={() => handleDeleteImage(primaryImage)}
             />
           </div>
-        )}
+     
         {/* Primary Image */}
         {primaryImage &&
           <img
@@ -326,7 +327,7 @@ const UpdatePost = ({ post, setIsOpenUpdateModal, setSelectedPost }) => {
             alt="Primary"
           />}
       </div>
-
+    )}
       {/* Image Thumbnails Section */}
       <div className="grid grid-cols-3 xs:grid-cols-4 md:grid-cols-3 xl:grid-cols-2 3xl:grid-cols-2 gap-3 max-h-[500px] lg:max-h-[320px] xl:max-h-[420px] 3xl:max-h-[450px] lg:h-auto overflow-x-auto">
         {images.map((singleImg, index) => (

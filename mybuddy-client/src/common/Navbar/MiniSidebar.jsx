@@ -42,7 +42,7 @@ const MiniSidebar = ({ user, theme }) => {
     >
       
       <li className="sidebar-list">
-        <Link to="/home" className="relative">
+        <Link to="/feed" className="relative">
           <p>
             <div
               className="flex items-center justify-center cursor-pointer [border:none] p-0 box1 rounded-xl"
@@ -51,7 +51,7 @@ const MiniSidebar = ({ user, theme }) => {
             >
               <div
                 className={`${
-                  isPageActive("/home") || theme === "light"
+                  isPageActive("/feed") || theme === "light"
                     ? "shadow-[1px_3px_24px_#fff_inset]"
                     : "shadow-[1px_3px_24px_rgba(170,_170,_170,_0.45)_inset]"
                 } box2 py-2 px-2 md:px-3 shadow-[1px_3px_24px_#fff_inset] rounded-[5px]`}
@@ -62,7 +62,7 @@ const MiniSidebar = ({ user, theme }) => {
           </p>
           {openFeed && (
             <div className="absolute left-16 top-1 ">
-              <HoveredText text={"Home"} theme={theme} />
+              <HoveredText text={"Feed"} theme={theme} />
             </div>
           )}
         </Link>

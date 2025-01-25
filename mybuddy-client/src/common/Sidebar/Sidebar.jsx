@@ -72,13 +72,13 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
             >
               <li className="sidebar-list">
                 <Link
-                  to="/home"
+                  to="/feed"
                   className="flex space-x-3 items-center cursor-pointer px-2 py-3 rounded-xl"
                 >
                   <div className="flex items-center justify-center cursor-pointer box1 [border:none]">
                     <div
                       className={`${
-                        isPageActive("/home") || theme === "light"
+                        isPageActive("/feed") || theme === "light"
                           ? "shadow-[1px_3px_24px_#fff_inset]"
                           : "shadow-[1px_3px_24px_rgba(170,_170,_170,_0.45)_inset]"
                       } box2 py-2 px-3 shadow-[1px_3px_24px_#fff_inset] rounded-[5px]`}
@@ -91,7 +91,7 @@ const Sidebar = ({ openSidebar, toggleSidebar, theme, isPageActive, user }) => {
                       theme === "light" ? "sidebar-text" : ""
                     } text-[18px] font-semibold`}
                   >
-                    Home
+                    Feed
                   </p>
                 </Link>
               </li>

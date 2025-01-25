@@ -89,7 +89,7 @@ const Image = ({ image, i }) => {
           )}
           {/* 4 image */}
           {image.length === 4 && (
-            <div className="grid grid-cols-3 w-full bg-red-300 ">
+            <div className="grid grid-cols-3 w-full  ">
               <img
                 onClick={() => openModal(0)}
                 src={image[0]}
@@ -115,6 +115,41 @@ const Image = ({ image, i }) => {
                   alt={`Image`}
                   className="w-12/12 p-1  object-cover rounded-lg shadow-lg"
                 />
+              </div>
+            </div>
+          )}
+          {/* 4 image */}
+          {image.length > 4 && (
+            <div className="grid grid-cols-3 w-full  ">
+              <img
+                onClick={() => openModal(0)}
+                src={image[0]}
+                alt={`Image`}
+                className="w-12/12 col-span-2 p-1 h-full object-cover rounded-lg shadow-lg"
+              />
+              <div className="grid  w-12/12">
+                <img
+                  onClick={() => openModal(1)}
+                  src={image[1]}
+                  alt={`Image`}
+                  className="w-12/12 p-1  object-cover rounded-lg shadow-lg"
+                />
+                <img
+                  onClick={() => openModal(2)}
+                  src={image[2]}
+                  alt={`Image`}
+                  className="w-12/12 p-1  object-cover rounded-lg shadow-lg"
+                />
+                <div className="relative">
+                <img
+                  onClick={() => openModal(3)}
+                  src={image[3]}
+                  alt={`Image`}
+                  className="w-12/12  p-1  object-cover rounded-lg shadow-lg filter brightness-50"
+                />
+                <p className="absolute top-[35%] left-[30%] font-semibold text-[50px] text-white">+{image?.length-4}</p>
+                </div>
+       
               </div>
             </div>
           )}

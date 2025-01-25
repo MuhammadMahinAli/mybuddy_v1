@@ -7,12 +7,7 @@ import {globalErrorHandler} from "./app/middlewars/gloalErrorHandler.js";
 
 const app = express();
 
-// const corsOptions = {
-//   origin: 'https://researchbdy.com/',
-//   credentials:true
-// };
 
-// app.use(cors(corsOptions));
 //for localhost
 app.use(cors());
 const bodyParserLimit = '100mb';

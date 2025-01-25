@@ -53,7 +53,7 @@ const LandingNav = () => {
           <div className="h-[25px]  flex flex-col items-start justify-start  ">
             <nav className="m-0 self-stretch flex flex-row items-center justify-between space-x-5 xl:space-x-10 ">
               <Link
-                to="/home"
+                to="/"
                 className={`${
                   location.pathname === "/"
                     ? "text-blue-500"
@@ -63,7 +63,7 @@ const LandingNav = () => {
                 home
               </Link>
               {/* <Link
-                to={user ? "/home" : "/login"}
+                to={user ? "/feed" : "/login"}
                 className={`${
                   location.pathname === "/"
                     ? "text-blue-500"
@@ -93,9 +93,9 @@ const LandingNav = () => {
                 Help
               </Link>
               <Link
-                to="/home"
+                to="/feed"
                 className={`${
-                  location.pathname === "/home"
+                  location.pathname === "/feed"
                     ? "text-blue-500"
                     : "text-cornflowerblue-100"
                 } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold `}
@@ -103,9 +103,9 @@ const LandingNav = () => {
                 Feed
               </Link>
               {/* <Link
-                to={user ? "/home" : "/login"}
+                to={user ? "/feed" : "/login"}
                 className={`${
-                  location.pathname === "/home"
+                  location.pathname === "/feed"
                     ? "text-blue-500"
                     : "text-cornflowerblue-100"
                 } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold `}
@@ -237,7 +237,7 @@ const LandingNav = () => {
                       <ul className="space-y-4">
                         <li>
                           <Link
-                            to="/home"
+                            to="/"
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Home
@@ -245,7 +245,7 @@ const LandingNav = () => {
                         </li>
                         {/* <li>
                           <Link
-                            to={user ? "/home" : "/login"}
+                            to={user ? "/feed" : "/login"}
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Home
@@ -274,7 +274,7 @@ const LandingNav = () => {
                         </li>
                         <li>
                           <Link
-                            to="/home"
+                            to="/feed"
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Feed
@@ -282,7 +282,7 @@ const LandingNav = () => {
                         </li>
                         {/* <li>
                           <Link
-                            to={user ? "/home" : "/login"}
+                            to={user ? "/feed" : "/login"}
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Feed

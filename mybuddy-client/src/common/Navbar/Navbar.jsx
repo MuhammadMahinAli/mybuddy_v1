@@ -130,10 +130,18 @@ const Navbar = ({ darkMode, toggleSidebar, openSidebar, theme }) => {
 
             <li className="pl-12">
               <Link
-                to="/home"
+                to="/feed"
                 className="text-[18px] font-medium tracking-wide  transition-colors duration-200 hover:text-deep-purple-accent-400"
               >
                 Home
+              </Link>
+            </li>
+            <li className="">
+              <Link
+                to="/feed"
+                className="text-[18px] font-medium tracking-wide  transition-colors duration-200 hover:text-deep-purple-accent-400"
+              >
+                Feed
               </Link>
             </li>
             <li>
@@ -154,14 +162,14 @@ const Navbar = ({ darkMode, toggleSidebar, openSidebar, theme }) => {
                 </div>
               </Menu>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/find/academic"
                 className="text-[18px] font-medium tracking-wide  transition-colors duration-200 hover:text-deep-purple-accent-400"
               >
                 Academic
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         {/* right */}
@@ -313,7 +321,7 @@ const Navbar = ({ darkMode, toggleSidebar, openSidebar, theme }) => {
             }`}
           >
             <Link
-              to="/home"
+              to="/feed"
               className={`${
                 theme === "light" ? "bg-[#2adba4]" : "bg-[#525252]"
               } h-[49px] md:h-[71px]  3xl:h-[71px] flex justify-center items-center px-1 md:px-0  md:w-[80px]`}

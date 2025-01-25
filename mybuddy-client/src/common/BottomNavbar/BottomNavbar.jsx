@@ -28,9 +28,9 @@ const BottomNavbar = ({ theme }) => {
         {/* left */}
         <ul className="flex items-center space-x-14">
           <li>
-            <Link to="/home">
+            <Link to="/feed">
               {" "}
-              <BtmHomeIcon theme={theme} isPageActive={isPageActive("/home")} />
+              <BtmHomeIcon theme={theme} isPageActive={isPageActive("/feed")} />
             </Link>
           </li>
           <li>
@@ -57,7 +57,7 @@ const BottomNavbar = ({ theme }) => {
                 : "bg-[#554a52] bg-cover bg-no-repeat"
             } h-12 w-12 rounded-full flex justify-center items-center`}
           >
-            <Link to="/home">
+            <Link to="/feed">
               <FaPlus className=" text-xl text-white" />
             </Link>
           </div>

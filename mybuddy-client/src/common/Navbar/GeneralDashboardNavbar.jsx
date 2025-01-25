@@ -63,7 +63,7 @@ const GeneralDashboardNavbar = () => {
               <img src="/hambrgr2.svg" className="h-[14px]" />
             </div>
           </button>
-          <Link to="/home" className="inline-flex items-center">
+          <Link to="/feed" className="inline-flex items-center">
             <div className="block py-1 px-2 lg:p-1 rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
               <img src="/logo.png" className="w-5" />
             </div>
@@ -71,9 +71,9 @@ const GeneralDashboardNavbar = () => {
         </div>
         <ul className="flex items-center hidden space-x-8 md:flex ">
           <li>
-            <Link to="/home">
+            <Link to="/feed">
               <p className="px-4 py-[5px] text-[18px] font-semibold rounded-lg bg-[#e7edf2] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
-                Home
+                Feed
               </p>
             </Link>
           </li>
@@ -112,7 +112,7 @@ const GeneralDashboardNavbar = () => {
               <div className="p-5 bg-[#DFF1FE] border rounded shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <Link to="/home" className="inline-flex items-center">
+                    <Link to="/feed" className="inline-flex items-center">
                       <div className="p-1 rounded-lg shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)]">
                         <img src="/logo.png" className="h-8" />
                       </div>
@@ -141,10 +141,10 @@ const GeneralDashboardNavbar = () => {
                   <ul className="flex flex-col justify-center items-center space-y-4">
                     <li className="border-b w-full text-center pb-2">
                       <Link
-                        to="/home"
+                        to="/feed"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
-                        Home
+                        Feed
                       </Link>
                     </li>
                     <li className="border-b w-full text-center pb-2">

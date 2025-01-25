@@ -36,7 +36,7 @@ const UserProfileActivityEM = () => {
             <p className="text-lg md:text-2xl font-semibold">Activity</p>
             <p className="text-sm pt-1">422 Followers</p>
           </div>
-          <Link to="/home">
+          <Link to="/feed">
             {theme === "light" ? (
               <div className="lg:text-sm xl:text-lg text-white font-semibold rounded-[10px] px-2 py-2 xl:px-4 xl:py-2 cursor-pointer bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
                 {/* <EditIcon /> */}

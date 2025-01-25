@@ -101,7 +101,7 @@ const ProfileTab = ({ openProfile, logout }) => {
         </p>
         <ul className="pl-3 space-y-1">
           <li className="text-[11px] lg:text-[13px] text-gray-500 font-medium capitalize">
-            <Link to="/home">
+            <Link to="/feed">
             post
             </Link>
           </li>
