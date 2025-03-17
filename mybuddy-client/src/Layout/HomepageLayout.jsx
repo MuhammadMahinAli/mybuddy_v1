@@ -46,19 +46,19 @@ const HomepageLayout = () => {
     }, 1000);
   }, []);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false); 
-  //     if (user) {
-  //       navigate("/feed");
-  //     } else {
-  //       navigate("/login");
-  //     }
-  //   }, 2000); // 5-second delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false); 
+      if (user) {
+        navigate("/feed");
+      } else {
+        navigate("/login");
+      }
+    }, 2000); // 5-second delay
 
-    // Clean up the timer
-  //   return () => clearTimeout(timer);
-  // }, [user, navigate]);
+   // Clean up the timer
+    return () => clearTimeout(timer);
+  }, [user, navigate]);
 
   if (isLoading) {
     return <Loading />; 

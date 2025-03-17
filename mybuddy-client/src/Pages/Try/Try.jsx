@@ -1,596 +1,1363 @@
-import { useEffect, useState, useContext } from "react";
-import AboutTab from "../Feed/AboutTab";
-import ProjectTab from "../Feed/ProjectTab";
-import SkillTab from "../Feed/SkillTab";
-import SocialTab from "../Feed/SocialTab";
-// import MobileNavbar from "../../common/MobileNavbar/MobileNavbar";
-// import TabletNavbar from "../TabletNavbar/TabletNavbar";
-import { useSelector } from "react-redux";
-import feedWhiteBorder from "../../assets/home/feed-w-b.png";
-import feedDarkBorder from "../../assets/home/feed-d-b.png";
-import { AuthContext } from "../../Context/UserContext";
-import { apiFetch } from "../../utils/apiFetch";
-import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
-import Loading from "../Loading/Loading";
-import axios from "axios";
-import MobileNavbar from "../../common/MobileNavbar/MobileNavbar";
-import TabletNavbar from "../TabletNavbar/TabletNavbar";
-import { MdOutlineEmail } from "react-icons/md";
+import { useRef, useState } from "react";
+import { AiOutlineExpandAlt, AiOutlineFilePdf } from "react-icons/ai";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { FiCheckSquare, FiEdit3 } from "react-icons/fi";
+import { GoClock } from "react-icons/go";
+import { GrAttachment } from "react-icons/gr";
 import {
-  FaRegArrowAltCircleLeft,
-  FaRegArrowAltCircleRight,
-} from "react-icons/fa";
+  IoIosArrowBack,
+  IoIosArrowDown,
+  IoIosArrowForward,
+  IoIosArrowUp,
+} from "react-icons/io";
+import { IoCalendarOutline } from "react-icons/io5";
+import { PiShareFatLight } from "react-icons/pi";
+import Quill from "./Quill";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { rawFileUpload } from "../../utils/cloudinaryForRaw";
 
 const Try = () => {
-  const [activeTab, setActiveTab] = useState({});
-  const [userData, setUserData] = useState({});
-  const [users, setUsers] = useState([]);
-  //const [allUsers, setAllUsers] = useState([]);
-  const theme = useSelector((state) => state.theme.theme);
-  const { getAllUsers, user, createNewRequest, getAllStatusFriendRequest } =
-    useContext(AuthContext);
-  const requestedId = user?._id;
-  const roles = [
-    "Frontend Developer",
-    "Backend Developer",
-    "MERN Stack Developer",
-    "UI/UX Designer",
-    "Project Manager",
-    "DevOps Engineer",
-    "Full Stack Developer",
-    "Data Scientist",
-    "Machine Learning Engineer",
-    "Mobile App Developer",
-    "Game Developer",
-    "Cloud Engineer",
-    "Cybersecurity Specialist",
-    "Blockchain Developer",
-    "Software Architect",
-    "Quality Assurance Engineer",
-    "System Administrator",
-    "AI Researcher",
-    "Database Administrator",
-    "Technical Support Specialist",
-    "Embedded Systems Developer",
-    "Product Manager",
-    "Business Analyst",
-    "Solutions Architect",
-    "Security Analyst",
-    "Network Engineer",
-    "IT Consultant",
-    "E-commerce Specialist",
-    "IT Support Technician",
-    "SEO Specialist",
-    "Digital Marketing Specialist",
-    "Content Creator",
-    "Graphic Designer",
-    "Hardware Engineer",
-    "Big Data Engineer",
-    "IoT Developer",
-    "Game Designer",
-    "Video Editor",
-    "Technical Writer",
-    "IT Manager",
-  ];
-  const handleRoleChange = (e) => {
-    setSelectedRole(e.target.value);
-    setCurrentPage(1); // Reset to first page when changing filters
-  };
+  const [isOpen, setIsOpen] = useState(false);
+  const [loading , setLoading] = useState(false);
+  const [isOpenCheckbox, setIsOpenCheckbox] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const fileInputRef = useRef(null);
 
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [selectedRole, setSelectedRole] = useState("");
-  const [isFiltered, setIsFiltered] = useState(false);
-
-  const fetchUsers = async (page = 1, roleFilter = "") => {
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        `https://test-two-22w0.onrender.com/api/v1/member/getAll`,
-        {
-          params: {
-            page,
-            limit: 6,
-            role: roleFilter,
-          },
-        }
-      );
-
-      const data = response.data.data;
-
-      console.log("data", data, roleFilter);
-
-      setUsers(data || []);
-      setCurrentPage(response.data?.data?.currentPage || 1);
-      setTotalPages(response.data?.data?.totalPages || 1);
-
-      setIsFiltered(!!roleFilter);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      setUsers([]);
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Programmatically trigger file input
     }
-    setLoading(false);
   };
 
-  useEffect(() => {
-    fetchUsers(currentPage, selectedRole);
-  }, [currentPage, selectedRole]);
+  // Format date as "Wednesday, 29 January"
+  const formattedDate = selectedDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
 
-  // Shuffle users list
-  const getShuffledUsers = (userList) => {
-    if (!userList || userList.length === 0) return [];
-
-    const shuffled = [...userList].sort(() => 0.5 - Math.random());
-    return shuffled;
+  // Function to handle month navigation
+  const changeMonth = (direction) => {
+    const newDate = new Date(selectedDate);
+    newDate.setMonth(selectedDate.getMonth() + direction);
+    setSelectedDate(newDate);
   };
 
-  // Automatically fetch and shuffle users on component mount
-  useEffect(() => {
-    const fetchAndShuffleUsers = async () => {
-      await fetchUsers(currentPage, selectedRole); // Fetch users from API
-      setUsers((prevUsers) => getShuffledUsers(prevUsers)); // Shuffle users
-    };
+  // ---------------- sliding box
+  const [formData, setFormData] = useState({
+    title: "Untitled document",
+    description: "",
+    checklist: [], // Checklist items
+    attachments: [ ],
+  });
 
-    fetchAndShuffleUsers();
-  }, []); // Runs only on initial page load
+  // Update title
+  const handleTitleChange = (e) => {
+    setFormData((prev) => ({ ...prev, title: e.target.value }));
+  };
 
-  const toggleTab = async (userId, tab) => {
-    setActiveTab((prevState) => ({
+  const handleTodoDesciption = (description) => {
+    setFormData((prevState) => ({
       ...prevState,
-      [userId]: tab,
+      description: description,
     }));
 
-    if (!userData[userId]?.[tab]) {
-      await fetchData(userId, tab);
-    }
+    console.log("description", description);
+  };
+  // State for checklist items
+  const [checklistItems, setChecklistItems] = useState([
+    { id: 1, text: "lorem ipsum", checked: false },
+    { id: 2, text: "lorem-ipsum", checked: true },
+  ]);
+
+  // Add new checklist item
+  const handleAddChecklistItem = () => {
+    const newItem = { id: Date.now(), text: "Add new item", checked: false };
+    setFormData((prev) => ({
+      ...prev,
+      checklist: [newItem, ...prev.checklist],
+    }));
   };
 
-  console.log("datas", users.length);
+  // Toggle checklist item checked state
+  const handleToggleChecklist = (id) => {
+    setFormData((prev) => ({
+      ...prev,
+      checklist: prev.checklist.map((item) =>
+        item.id === id ? { ...item, checked: !item.checked } : item
+      ),
+    }));
+  };
 
-  const fetchData = async (userId, tab) => {
-    if (!userId || !tab) return;
+  // Remove checklist item
+  const handleRemoveChecklistItem = (id) => {
+    setFormData((prev) => ({
+      ...prev,
+      checklist: prev.checklist.filter((item) => item.id !== id),
+    }));
+  };
 
-    try {
-      let data;
-      switch (tab) {
-        case "description":
-          data = await apiFetch(
-            `https://test-two-22w0.onrender.com/api/v1/member/getUserById/${userId}`,
-            "GET"
-          );
-          setUserData((prevState) => ({
-            ...prevState,
-            [userId]: {
-              ...prevState[userId],
-              description: data?.data ?? {},
-            },
+  // Handle file attachment upload
+  // const handleFileUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const newAttachment = {
+  //       id: Date.now(),
+  //       fileName: file.name,
+  //       uploadedAt: new Date().toLocaleString(),
+  //       fileType: file.type,
+  //     };
+      // setFormData((prev) => ({
+      //   ...prev,
+      //   attachments: [...prev.attachments, newAttachment],
+      // }));
+  //   }
+  // };
+  const handlePreviewPdf = async (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const name = e.target.name;
+      setLoading((prev) => ({ ...prev, [name]: true }));
+  
+      const file = e.target.files[0];
+  
+      try {
+        // Upload PDF to Cloudinary
+        const uploadedUrl = await rawFileUpload(file, "raw");
+  
+        if (uploadedUrl) {
+          console.log("Uploaded PDF URL:", uploadedUrl);
+  
+          // Create an attachment object
+          const newAttachment = {
+            id: Date.now(),
+            fileName: file.name,
+            uploadedAt: new Date().toLocaleString(),
+            fileType: file.type,
+            fileUrl: uploadedUrl,
+          };
+  
+          // Update formData with the new attachment
+          setFormData((prev) => ({
+            ...prev,
+            attachments: [...prev.attachments, newAttachment],
           }));
-          break;
-        case "skill":
-          data = await apiFetch(
-            `https://test-two-22w0.onrender.com/api/v1/skill/getUserSkillById/${userId}`,
-            "GET"
-          );
-          setUserData((prevState) => ({
-            ...prevState,
-            [userId]: {
-              ...prevState[userId],
-              skill: data?.data ?? [],
-            },
-          }));
-          break;
-        case "project":
-          data = await apiFetch(
-            `https://test-two-22w0.onrender.com/api/v1/project/getUserProjectById/${userId}`,
-            "GET"
-          );
-          setUserData((prevState) => ({
-            ...prevState,
-            [userId]: {
-              ...prevState[userId],
-              project: data?.data ?? [],
-            },
-          }));
-          break;
-        case "social":
-          data = await apiFetch(
-            `https://test-two-22w0.onrender.com/api/v1/socialInfo/getSocialInfoByUser/${userId}`,
-            "GET"
-          );
-          setUserData((prevState) => ({
-            ...prevState,
-            [userId]: {
-              ...prevState[userId],
-              social: data?.data ?? [],
-            },
-          }));
-          break;
-        default:
-          break;
+        }
+      } catch (error) {
+        console.error("Error uploading PDF:", error);
+      } finally {
+        setLoading((prev) => ({ ...prev, [name]: false }));
       }
-    } catch (error) {
-      console.error("Error fetching data: ", error);
     }
   };
 
-  useEffect(() => {
-    const defaultTabs = {};
-    users?.forEach((user) => {
-      defaultTabs[user?._id] = "description";
-    });
-    setActiveTab(defaultTabs);
-  }, [users]);
 
-  const sentFriendRequest = (user) => {
-    const datas = {
-      requestedBy: requestedId,
-      requestedTo: user?._id,
-      status: "Pending",
-    };
-    createNewRequest(datas).unwrap();
-    Swal.fire({
-      icon: "success",
-      title: "Well done !",
-      text: "You've sent friend request successfully.",
-    });
-    setTimeout(() => {
-      window.location.reload();
-    }, 2500);
+  
+  // Remove an attachment
+  const handleRemoveAttachment = (id) => {
+    setFormData((prev) => ({
+      ...prev,
+      attachments: prev.attachments.filter((att) => att.id !== id),
+    }));
   };
-  // Function to get friend status based on `requestedId`
-  // const friendId = userData?._id;
+  
 
-  // Function to get the friend request status
-  const getFriendStatus = (friendId) => {
-    const friend = getAllStatusFriendRequest?.data?.find(
-      (frnd) =>
-        frnd?.requestedBy?._id === friendId ||
-        frnd?.requestedTo?._id === friendId
-    );
 
-    return friend
-      ? { status: friend.status, friend }
-      : { status: "No friend request found.", friend: null };
-  };
 
-  console.log(getAllUsers?.data);
+  // Count completed items for progress bar
+  // const completedCount = checklistItems.filter((item) => item.checked).length;
+  // const totalItems = checklistItems.length;
+  // const progressPercent =
+  //   totalItems > 0 ? Math.round((completedCount / totalItems) * 100) : 0;
 
   return (
     <>
-      {/* Role Filter */}
-      <div className="my-4 ml-5 mr-2 md:ml-10 xl:ml-14 3xl:ml-16">
-        <select
-          id="role"
-          value={selectedRole}
-          onChange={handleRoleChange}
-          className="w-full ssm:w-60 outline-none px-4 py-2 border rounded-lg text-gray-700"
-        >
-          <option value="">All Researchers</option>
-          {roles.map((role) => (
-            <option key={role} value={role}>
-              {role}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="space-y-4">
-        {users?.map((user) => {
-          // Get friend status for each user
-          const { status, friend } = getFriendStatus(user?._id);
-          const buttonText =
-            status === "Accepted"
-              ? "Friend"
-              : status === "Pending"
-              ? "Request Sent"
-              : status === "Rejected"
-              ? "Rejected"
-              : "Send Request";
-
-          return (
-            <div
-              key={user?._id}
-              className={`${
-                theme !== "light" &&
-                "p-[1px] ml-5 md:ml-10 xl:ml-14 3xl:ml-16 w-11/12 bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90%  rounded-[20px]"
-              }`}
-            >
-              <div
-                className={`${
-                  theme === "light"
-                    ? "bg-[#fff]  ml-5 md:ml-10 xl:ml-14 3xl:ml-16 shadow-[-7px_-7px_19px_rgba(255,_255,_255,_0.6),_9px_9px_16px_rgba(163,_177,_198,_0.6)] box-border border-[0.8px] border-solid border-gray w-11/12"
-                    : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover 3xl:mr-[1px] w-12/12"
-                }  text-graish p-3 xl:p-5 rounded-[20px]`}
+      <div className="relative">
+        {/* primary content */}
+        <div className="w-full max-w-xl mx-auto p-4 space-y-4 bg-blue-50 min-h-screen">
+          {/* Header / Date Navigation */}
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-0 border rounded-md">
+              <button
+                type="button"
+                onClick={() => changeMonth(-1)}
+                className="rounded-l-md border-r px-2 py-1 bg-white hover:bg-gray-100"
               >
-                {/* User details and buttons */}
-                <div className="lg:flex hidden flex-col lg:flex-row justify-between items-center md:space-y-4 lg:space-y-0">
-                  {/* Left */}
-                  <div className="flex justify-between items-center space-x-3">
-                    <div className="relative">
-                      <img
-                        src={
-                          user?.profilePic
-                            ? user?.profilePic
-                            : "https://i.ibb.co.com/FKKD4mT/opp.png"
-                        }
-                        loading="lazy"
-                        alt=""
-                        className="w-8 h-8 md:w-12 md:h-12 xl:w-12 xl:h-12 rounded-full p-1"
-                      />
-                      <img
-                        className="w-8 h-8 md:w-12 md:h-12 xl:w-12 xl:h-12 absolute top-0  md:right-0"
-                        src={
-                          theme === "light" ? feedDarkBorder : feedWhiteBorder
-                        }
-                        loading="lazy"
-                        alt="dashedborder"
-                      />
-                    </div>
+                <IoIosArrowBack />
+              </button>
 
-                    {/* Description Button */}
-                    {theme === "light" ? (
-                      <div
-                        onClick={() => toggleTab(user?._id, "description")}
-                        className={`${
-                          activeTab[user?._id] === "description"
-                            ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
-                            : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
-                        }  cursor-pointer rounded-[27px] bg-[#d0f5fe] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
-                      >
-                        <p className="graish lg:text-sm xl:text-lg font-semibold">
-                          Description
-                        </p>
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => toggleTab(user?._id, "description")}
-                        className="relative flex flex-col items-center py-2"
-                      >
-                        {activeTab[user?._id] === "description" && (
-                          <div className="absolute top-[40%] w-7/12 md:w-10/12 h-[7px] lg:h-[20px] shadow-[0px_0px_5px_#f58e9f,_0px_0px_15px_#f58e9f,_0px_0px_30px_#f58e9f,_0px_0px_60px_#f58e9f] rounded-3xs bg-[#f33d5c] rounded-t-xl blur-[1px]" />
-                        )}
-                        <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(13px)] box-border">
-                          Description
-                        </p>
-                      </div>
-                    )}
+              {/* Calendar Picker */}
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                dateFormat="dd/MM/yyyy"
+                className="hidden" // Hide default input
+                id="date-picker"
+              />
+              <button
+                type="button"
+                className="border-r px-2 py-1 bg-white hover:bg-gray-100"
+                onClick={() => document.getElementById("date-picker").click()}
+              >
+                <IoCalendarOutline />
+              </button>
 
-                    {/* Skill Button */}
-                    {theme === "light" ? (
-                      <div
-                        onClick={() => toggleTab(user?._id, "skill")}
-                        className={`${
-                          activeTab[user?._id] === "skill"
-                            ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
-                            : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
-                        }  cursor-pointer rounded-[27px] bg-[#fde4f7] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
-                      >
-                        <p className="graish lg:text-sm xl:text-lg font-semibold">
-                          All Skills
-                        </p>
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => toggleTab(user?._id, "skill")}
-                        className="relative flex flex-col items-center py-2"
-                      >
-                        {activeTab[user?._id] === "skill" && (
-                          <div className="absolute top-[40%] w-7/12 md:w-10/12 h-[7px] lg:h-[20px] shadow-[0px_0px_5px_#f58e9f,_0px_0px_15px_#f58e9f,_0px_0px_30px_#f58e9f,_0px_0px_60px_#f58e9f] rounded-3xs bg-[#f33d5c] rounded-t-xl blur-[1px]" />
-                        )}
-                        <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(13px)]  box-border">
-                          All Skills
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Projects Button */}
-                    {theme === "light" ? (
-                      <div
-                        onClick={() => toggleTab(user?._id, "project")}
-                        className={`${
-                          activeTab[user?._id] === "project"
-                            ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
-                            : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
-                        }  cursor-pointer rounded-[27px] bg-[#fdeed4] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
-                      >
-                        <p className="graish lg:text-sm xl:text-lg font-semibold">
-                          Projects
-                        </p>
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => toggleTab(user?._id, "project")}
-                        className="relative flex flex-col items-center py-2"
-                      >
-                        {activeTab[user?._id] === "project" && (
-                          <div className="absolute top-[40%] w-7/12 md:w-11/12 h-[8px] lg:h-[10px] shadow-[0px_0px_5px_#FFCB33,_0px_0px_15px_#FFCB33,_0px_0px_30px_#FFCB33,_0px_0px_60px_#FFCB33] rounded-3xs bg-[#FFCB33] rounded-t-xl blur-[12px]" />
-                        )}
-                        <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(0px)]  box-border">
-                          Projects
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Social Button */}
-                    {theme === "light" ? (
-                      <div
-                        onClick={() => toggleTab(user?._id, "social")}
-                        className={`${
-                          activeTab[user?._id] === "social"
-                            ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
-                            : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
-                        }  cursor-pointer rounded-[27px] bg-[#caf79a73] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
-                      >
-                        <p className="graish lg:text-sm xl:text-lg font-semibold">
-                          Social Media
-                        </p>
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => toggleTab(user?._id, "social")}
-                        className="relative flex flex-col items-center py-2"
-                      >
-                        {activeTab[user?._id] === "social" && (
-                          <div className="absolute top-[40%] w-7/12 md:w-11/12 h-[8px] lg:h-[10px] shadow-[0px_0px_5px_#4EEBFF,_0px_0px_15px_#4EEBFF,_0px_0px_30px_#4EEBFF,_0px_0px_60px_#4EEBFF] rounded-3xs bg-[#4EEBFF] rounded-t-xl blur-[12px]" />
-                        )}
-                        <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(0px)]  box-border">
-                          Social Media
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right */}
-                  <div className="flex justify-between items-center space-x-3">
-                    <Link to={`/user/profile/${user?._id}`}>
-                      {theme === "light" ? (
-                        <div className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
-                          <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
-                            Profile
-                          </button>
-                        </div>
-                      ) : (
-                        <p className="cursor-pointer text-sm lg:text-[14px] font-medium rounded-[15px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[-2px_-2px_100px_rgba(255,_255,_255,_0.1)_inset,_2px_2px_100px_rgba(66,_66,_66,_0.1)_inset] [backdrop-filter:blur(50px)]  box-border">
-                          profile
-                        </p>
-                      )}
-                    </Link>
-
-                    {/* Friend request button */}
-                    {theme === "light" ? (
-                      buttonText === "Send Request" ? (
-                        <button
-                          onClick={() => sentFriendRequest(user)}
-                          className="lg:text-sm xl:text-lg rounded-[13px] font-semibold px-3 py-2 xl:px-4 xl:py-2 bg-gradient-to-l from-[#2adba4] to-[#69f9cc] text-white"
-                        >
-                          {buttonText}
-                        </button>
-                      ) : (
-                        <div className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
-                          <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
-                            {buttonText}
-                          </button>
-                        </div>
-                      )
-                    ) : (
-                      <button
-                        onClick={
-                          buttonText === "Send Request"
-                            ? () => sentFriendRequest(user)
-                            : undefined
-                        }
-                        className="friendRequestBtn"
-                      >
-                        <p>{buttonText}</p>
-                      </button>
-                    )}
-
-                    <div
-                      className={`${
-                        theme === "light"
-                          ? "bg-red-200"
-                          : "border border-[#9370DB]"
-                      } rounded-[11px] px-3 py-2 xl:px-3 xl:py-2 flex justify-center items-center`}
-                    >
-                      <svg
-                        width="24"
-                        height="24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                      >
-                        <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402m5.726-20.583c-2.203 0-4.446 1.042-5.726 3.238-1.285-2.206-3.522-3.248-5.719-3.248-3.183 0-6.281 2.187-6.281 6.191 0 4.661 5.571 9.429 12 15.809 6.43-6.38 12-11.148 12-15.809 0-4.011-3.095-6.181-6.274-6.181" />
-                      </svg>
-                      {/* <FaRegHeart className="text-2xl font-semibold text-red-500 bg-white cursor-pointer" /> */}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Mobile and Tablet navbar components */}
-                <div className="lg:hidden flex justify-between items-center py-1">
-                  <MobileNavbar
-                    toggleTab={toggleTab}
-                    user={user}
-                    activeTab={activeTab}
-                    theme={theme}
-                    sentFriendRequest={sentFriendRequest}
-                  />
-                </div>
-                <div className="hidden md:flex md:justify-between md:items-center lg:py-1">
-                  <TabletNavbar
-                    toggleTab={toggleTab}
-                    user={user}
-                    activeTab={activeTab}
-                    theme={theme}
-                    sentFriendRequest={sentFriendRequest}
-                  />
-                </div>
-
-                {/* Tabs content rendering */}
-                {activeTab[user?._id] === "description" && (
-                  <AboutTab theme={theme} user={user} />
-                )}
-                {activeTab[user?._id] === "skill" && (
-                  <SkillTab
-                    user={user}
-                    theme={theme}
-                    skills={userData[user?._id]?.skill || []}
-                  />
-                )}
-                {activeTab[user?._id] === "project" && (
-                  <ProjectTab
-                    user={user}
-                    theme={theme}
-                    projects={userData[user?._id]?.project || []}
-                  />
-                )}
-                {activeTab[user?._id] === "social" && (
-                  <SocialTab
-                    user={user}
-                    theme={theme}
-                    socialInfos={userData[user?._id]?.social || []}
-                  />
-                )}
-              </div>
+              <button
+                type="button"
+                onClick={() => changeMonth(1)}
+                className="rounded-r-md px-2 py-1 bg-white hover:bg-gray-100"
+              >
+                <IoIosArrowForward />
+              </button>
             </div>
-          );
-        })}
 
-        {loading === true && <Loading />}
-        {users?.length === 0 && loading === false && (
-          <div className="xl:text-[20px] text-center text-gray-500 pt-10 xl:pt-20 capitalize">No researchers found</div>
-        )}
-        {users?.length > 10 && loading === false && (
-          <div className="mt-6 flex justify-center items-center space-x-4">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-4 py-2  rounded-lg mx-2"
-            >
-              <FaRegArrowAltCircleLeft className="text-2xl text-gray-700" />
-            </button>
+            {/* Display Selected Date */}
+            <div className="text-gray-700 font-medium">{formattedDate}</div>
 
-            <span className="text-lg font-medium">
-              Page {currentPage} of {totalPages}
-            </span>
+            {/* Return to Today Button */}
             <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-              className="px-4 py-2  rounded-lg mx-2"
+              type="button"
+              className="text-blue-600 hover:underline"
+              onClick={() => setSelectedDate(new Date())}
             >
-              <FaRegArrowAltCircleRight className="text-2xl text-gray-700" />
+              Return To Today
             </button>
           </div>
-        )}
+
+          {/* Input for new to-do */}
+          <div className="bg-white rounded-lg shadow p-3 flex items-center space-x-2">
+            <span role="img" aria-label="pencil" className="text-gray-500">
+              <FiEdit3 />
+            </span>
+            <input
+              type="text"
+              placeholder="Write The Title Of Your To-Do"
+              className="flex-grow px-2 py-1 focus:outline-none"
+            />
+            <button
+              type="button"
+              onClick={() => setIsOpen(true)}
+              className="bg-blue-500 text-white rounded px-3 py-1 text-xl hover:bg-blue-600"
+            >
+              +
+            </button>
+          </div>
+
+          {/* Existing to-do item */}
+          <div className="bg-white rounded-lg shadow p-4">
+            {/* Title row */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <button type="button" className="text-gray-500">
+                  <IoIosArrowForward />
+                </button>
+                <span className="font-medium text-gray-800">Title</span>
+              </div>
+              <div
+                onClick={() => setIsOpen(true)}
+                className="bg-purple-100 text-purple-800 text-sm px-2 py-1 rounded flex items-center space-x-2"
+              >
+                <p> To-Do</p>
+                <IoIosArrowDown />
+              </div>
+            </div>
+
+            {/* Days left */}
+            <div className="text-gray-500 text-sm mt-2 flex items-center space-x-2">
+              <GoClock />
+              <span>10 days left</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Sliding Box */}
+        <div
+          className={`fixed top-0 right-0 h-screen max-h-screen w-[800px] bg-white shadow-xl border-l p-4 transition-transform duration-500 overflow-y-auto ${
+            isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className=" bg-white rounded-lg shadow-md p-4 space-y-4">
+            {/* Top bar with placeholders for "Share" and "Expand" */}
+            <div className="flex justify-between items-center text-gray-500 text-sm">
+              <div className="flex items-center space-x-5">
+                <button className="hover:underline flex items-center space-x-1">
+                  <PiShareFatLight className="text-xl" />
+                  <p>Share</p>
+                </button>
+
+                <button className="hover:underline flex items-center space-x-1">
+                  <AiOutlineExpandAlt className="text-xl" />
+                  <p>Expand</p>
+                </button>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="focus:outline-none text-gray-400"
+              >
+                {/* 'X' button placeholder to close */}✕
+              </button>
+            </div>
+
+            {/* Title Row */}
+            <div className="flex items-center space-x-2">
+              <button className="text-gray-500 focus:outline-none text-lg">
+                {/* Expand/collapse arrow icon placeholder */}
+                <IoIosArrowUp />
+              </button>
+              <input
+                type="text"
+                value={formData.title}
+                onChange={handleTitleChange}
+                className="text-2xl font-bold text-gray-800 w-full bg-transparent focus:outline-none"
+              />
+            </div>
+
+            {/* Status & Date Row */}
+            <div className="flex items-center space-x-2">
+              {/* Status dropdown placeholder */}
+              <div className="relative">
+                <button className="bg-green-100 text-green-700 px-3 py-1 rounded-md focus:outline-none flex items-center space-x-1">
+                  <span>Working</span>
+                  {/* Down arrow icon */}
+                  <IoIosArrowDown />
+                </button>
+              </div>
+              {/* Date label */}
+
+              <div className="text-gray-500 text-sm  flex items-center space-x-2">
+                <GoClock className="text-xl" />
+                <span> July 10–14</span>
+              </div>
+            </div>
+
+            {/* Time Spent Bar */}
+            <div className="flex items-center justify-between bg-[linear-gradient(to_right,_#EFF4FA_0%,_#B4D9F6_8%,_#D6B6F9_90%)] rounded-md p-3 text-gray-600">
+              <div className="flex items-center space-x-2">
+                {/* Play icon placeholder 8.46> 3.12 */}
+                <span className="text-xl text-white bg-[#D6B6F9] px-2 rounded-md">
+                  ▶
+                </span>
+                <span>Time Spent On This Project</span>
+              </div>
+              <div className="text-xl font-bold">12:45:00</div>
+            </div>
+
+            {/* Editor Section */}
+            <div>
+              {/* Editor toolbar (placeholders) */}
+              <Quill
+                formData={formData}
+                handleTodoDesciption={handleTodoDesciption}
+              />
+            </div>
+
+            {/* Buttons Row */}
+            <div className="flex space-x-4">
+              <button onClick={()=>setIsOpenCheckbox(true)} className="flex items-center space-x-2 bg-blue-100 text-blue-700 border border-blue-700 px-4 py-2 rounded-md hover:bg-blue-200">
+                <FiCheckSquare className="text-xl" />
+                <p>Create checklist</p>
+              </button>
+         
+  <button
+    type="button"
+    onClick={handleButtonClick}
+    className="flex items-center space-x-2 bg-orange-100 text-orange-600 border border-orange-500 px-4 py-2 rounded-md hover:bg-orange-200"
+  >
+    <GrAttachment className="text-xl" />
+    <p>Add Attachment</p>
+  </button>
+
+
+<input
+   ref={fileInputRef}
+  className="hidden"
+  type="file"
+  accept=".pdf"
+  id="attachment"
+  onChange={(e) => handlePreviewPdf(e)}
+/>
+            </div>
+            
+             {/* Checklist Section */}
+             {
+              isOpenCheckbox &&
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <IoIosArrowDown onClick={()=>setIsOpenCheckbox(false)} />
+
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    Checklist{" "}
+                    {formData.checklist.filter((item) => item.checked).length}/
+                    {formData.checklist.length}
+                  </h3>
+                </div>
+              </div>
+
+              {/* Progress Bar */}
+              <div className="flex justify-between items-center">
+                <div className="bg-blue-100 h-2 rounded relative w-11/12">
+                  <div
+                    className="bg-blue-500 h-2 rounded absolute left-0 top-0 transition-all duration-500"
+                    style={{
+                      width: `${
+                        formData.checklist.length > 0
+                          ? Math.round(
+                              (formData.checklist.filter((item) => item.checked)
+                                .length /
+                                formData.checklist.length) *
+                                100
+                            )
+                          : 0
+                      }%`,
+                    }}
+                  />
+                </div>
+                <span className="text-sm text-gray-600">
+                  {formData.checklist.length > 0
+                    ? Math.round(
+                        (formData.checklist.filter((item) => item.checked)
+                          .length /
+                          formData.checklist.length) *
+                          100
+                      )
+                    : 0}
+                  %
+                </span>
+              </div>
+
+              {/* Checklist Items */}
+              <div className="space-y-4">
+                {formData.checklist.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center space-x-2 p-3 bg-[#E5E5E5] rounded-xl border"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={item.checked}
+                      onChange={() => handleToggleChecklist(item.id)}
+                      className="form-checkbox h-4 w-4 text-blue-600"
+                    />
+                    {item.checked ? (
+                      <del className="flex-grow text-gray-600">{item.text}</del>
+                    ) : (
+                      <input
+                        type="text"
+                        value={item.text}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            checklist: prev.checklist.map((curr) =>
+                              curr.id === item.id
+                                ? { ...curr, text: e.target.value }
+                                : curr
+                            ),
+                          }))
+                        }
+                        className="bg-transparent flex-grow outline-none"
+                      />
+                    )}
+
+                    <button
+                      onClick={() => handleRemoveChecklistItem(item.id)}
+                      className="text-red-600 hover:text-red-800 ml-auto"
+                    >
+                      <FaRegTrashAlt />
+                    </button>
+                  </div>
+                ))}
+
+                {/* "Add new item" button */}
+                <div
+                  onClick={handleAddChecklistItem}
+                  className="flex items-center space-x-2 p-2 bg-[#E5E5E5] rounded-xl border cursor-pointer"
+                >
+                  <p className="border px-2 rounded-md border-gray-400">+</p>
+                  <p className="flex-grow capitalize">Add new item</p>
+                </div>
+                <div
+                  className="hidden md:block pb-3"
+                  dangerouslySetInnerHTML={{
+                    __html: `${formData.description}
+                            `,
+                  }}
+                />
+              </div>
+            </div>
+            }
+
+            {/* Attachments Section */}
+            <div className="space-y-2">
+              <div className="flex items-center space-x-3">
+                <IoIosArrowDown />
+                <h3 className="text-lg font-semibold text-gray-700">
+                  Attachments
+                </h3>
+              </div>
+
+              <div className="flex flex-col items-center justify-between space-y-4 bg-gray-50 p-2 rounded w-full">
+             
+                  {/* Attachment icon placeholder */}
+
+                  {formData.attachments.length > 0 ? (
+                    formData.attachments.map((attachment) => (
+                      <div
+                        key={attachment.id}
+                        className="flex items-center justify-between bg-gray-50 p-2 rounded border w-full"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <div className="bg-blue-100 rounded-md p-2">
+                            <AiOutlineFilePdf className="text-3xl" />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-sm text-gray-800">
+                              {attachment.fileName}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              {attachment.uploadedAt}
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                      onClick={() => handleRemoveAttachment(attachment.id)}
+                      className="text-red-600 hover:text-red-800 ml-auto"
+                    >
+                      <FaRegTrashAlt />
+                    </button>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500 text-sm">
+                      No attachments uploaded
+                    </p>
+                  )}
+        
+              </div>
+            </div>
+
+           
+          </div>
+        </div>
       </div>
     </>
   );
 };
 
 export default Try;
+//-----------------------------------text edit
+
+// const editorRef = useRef(null);
+// const [content, setContent] = useState(""); // Will store HTML content
+
+// // Apply formatting to the selected text inside the editor
+// const applyFormat = (format) => {
+//   if (!editorRef.current) return;
+//   editorRef.current.focus();
+
+//   const selection = window.getSelection();
+//   if (!selection.rangeCount) return;
+//   const range = selection.getRangeAt(0);
+//   const selectedText = range.toString();
+//   if (!selectedText) return;
+
+//   let html = "";
+//   if (format === "h1") {
+//     html = `<span style="font-size:24px;">${selectedText}</span>`;
+//   } else if (format === "h2") {
+//     html = `<span style="font-size:20px;">${selectedText}</span>`;
+//   } else if (format === "h3") {
+//     html = `<span style="font-size:16px;">${selectedText}</span>`;
+//   } else if (format === "b") {
+//     html = `<strong>${selectedText}</strong>`;
+//   } else if (format === "i") {
+//     html = `<em>${selectedText}</em>`;
+//   } else if (format === "u") {
+//     html = `<u>${selectedText}</u>`;
+//   } else if (format === "link") {
+//     const url = prompt("Enter a URL:");
+//     if (!url) return;
+//     html = `<a href="${url}" target="_blank">${selectedText}</a>`;
+//   } else {
+//     return;
+//   }
+
+//   // Replace the selected text with our formatted HTML.
+//   document.execCommand("insertHTML", false, html);
+//   // Update state with the new HTML content
+//   setContent(editorRef.current.innerHTML);
+// };
+
+// // Whenever the user types or pastes, update content
+// const handleInput = () => {
+//   if (editorRef.current) {
+//     setContent(editorRef.current.innerHTML);
+//   }
+// };
+
+// const editorRef = useRef(null);
+// const [content, setContent] = useState("");
+
+// const handleInput = () => {
+//   if (editorRef.current) {
+//     setContent(editorRef.current.innerHTML);
+//   }
+// };
+
+// const applyFormat = (format) => {
+//   if (!editorRef.current) return;
+//   editorRef.current.focus();
+
+//   // Ensure styles apply as inline CSS (preserving multiple styles)
+//   document.execCommand("styleWithCSS", false, true);
+
+//   switch (format) {
+//     /* ------------------ HEADINGS WITH CUSTOM SIZES ------------------ */
+//     case "h1":
+//     case "h2":
+//     case "h3": {
+//       // Step 1: Use fontSize=7 to get largest built-in size
+//       document.execCommand("fontSize", false, "7");
+
+//       // Step 2: Decide custom px size
+//       let size = 16;
+//       if (format === "h1") size = 24;
+//       if (format === "h2") size = 20;
+//       if (format === "h3") size = 16; // default anyway
+
+//       // Step 3: Replace <font size="7"> with <span style="font-size:XXpx">
+//       const editorEl = editorRef.current;
+//       const fonts = editorEl.querySelectorAll('font[size="7"]');
+//       fonts.forEach((fontEl) => {
+//         const span = document.createElement("span");
+//         span.style.fontSize = `${size}px`;
+//         // Move all child nodes from <font> to <span>
+//         while (fontEl.firstChild) {
+//           span.appendChild(fontEl.firstChild);
+//         }
+//         fontEl.replaceWith(span);
+//       });
+//       break;
+//     }
+
+//     /* ------------------ BASIC STYLES ------------------ */
+//     case "bold":
+//       document.execCommand("bold", false, null);
+//       break;
+//     case "italic":
+//       document.execCommand("italic", false, null);
+//       break;
+//     case "underline":
+//       document.execCommand("underline", false, null);
+//       break;
+//     case "strike":
+//       document.execCommand("strikeThrough", false, null);
+//       break;
+
+//     /* ------------------ LINKS ------------------ */
+//     case "link": {
+//       const url = prompt("Enter a URL:");
+//       if (url) {
+//         document.execCommand("createLink", false, url);
+//       }
+//       break;
+//     }
+
+//     /* ------------------ LISTS ------------------ */
+//     case "ul":
+//       document.execCommand("insertUnorderedList", false, null);
+//       break;
+//     case "ol":
+//       document.execCommand("insertOrderedList", false, null);
+//       break;
+
+//     /* ------------------ ALIGNMENT ------------------ */
+//     case "alignLeft":
+//       document.execCommand("justifyLeft", false, null);
+//       break;
+//     case "alignCenter":
+//       document.execCommand("justifyCenter", false, null);
+//       break;
+//     case "alignRight":
+//       document.execCommand("justifyRight", false, null);
+//       break;
+
+//     /* ------------------ CHECKBOX ------------------ */
+//     case "checkbox": {
+//       // Insert a single checkbox at cursor
+//       // or replace selected text with a "label + checkbox"
+//       const selection = window.getSelection();
+//       if (!selection.rangeCount) break;
+//       const selectedText = selection.toString();
+//       let html = `<input type="checkbox" />`;
+//       if (selectedText) {
+//         html = `<label style="margin-right:4px;"><input type="checkbox" /> ${selectedText}</label>`;
+//       }
+//       document.execCommand("insertHTML", false, html);
+//       break;
+//     }
+
+//     /* ------------------ IMAGE ------------------ */
+//     case "image": {
+//       const imageUrl = prompt("Enter the image URL:");
+//       if (imageUrl) {
+//         document.execCommand("insertImage", false, imageUrl);
+//       }
+//       break;
+//     }
+
+//     /* ------------------ REMOVE FORMAT ------------------ */
+//     case "removeFormat":
+//       // Removes all formatting (bold, italic, spans, fonts, etc.) from selection
+//       document.execCommand("removeFormat", false, null);
+//       break;
+
+//     default:
+//       break;
+//   }
+
+//   // Update content state after applying
+//   setContent(editorRef.current.innerHTML);
+// };
+
+{
+  /* <div className="space-y-4 p-4 max-w-xl mx-auto">
+      
+      <div className="flex space-x-2 text-gray-500 mb-2">
+        <button onClick={() => applyFormat("h1")} className="hover:bg-gray-100 px-2 py-1 rounded">
+          H1
+        </button>
+        <button onClick={() => applyFormat("h2")} className="hover:bg-gray-100 px-2 py-1 rounded">
+          H2
+        </button>
+        <button onClick={() => applyFormat("h3")} className="hover:bg-gray-100 px-2 py-1 rounded">
+          H3
+        </button>
+        <button onClick={() => applyFormat("b")} className="hover:bg-gray-100 px-2 py-1 rounded">
+          B
+        </button>
+        <button onClick={() => applyFormat("i")} className="hover:bg-gray-100 px-2 py-1 rounded">
+          I
+        </button>
+        <button onClick={() => applyFormat("u")} className="hover:bg-gray-100 px-2 py-1 rounded">
+          U
+        </button>
+        <button onClick={() => applyFormat("link")} className="hover:bg-gray-100 px-2 py-1 rounded">
+          🔗
+        </button>
+      </div>
+
+    
+      <div
+        ref={editorRef}
+        contentEditable
+        onInput={handleInput}
+        className="w-full border border-gray-300 rounded p-2 focus:outline-none min-h-[100px]"
+      >
+        Write your text here...
+      </div>
+
+   
+      <div className="p-4 border border-gray-200 rounded">
+        <h2 className="text-lg font-semibold mb-2">Preview:</h2>
+        <div dangerouslySetInnerHTML={{ __html: content }} />
+      </div>
+    </div> */
+}
+
+// import { useEffect, useState, useContext } from "react";
+// import AboutTab from "../Feed/AboutTab";
+// import ProjectTab from "../Feed/ProjectTab";
+// import SkillTab from "../Feed/SkillTab";
+// import SocialTab from "../Feed/SocialTab";
+// // import MobileNavbar from "../../common/MobileNavbar/MobileNavbar";
+// // import TabletNavbar from "../TabletNavbar/TabletNavbar";
+// import { useSelector } from "react-redux";
+// import feedWhiteBorder from "../../assets/home/feed-w-b.png";
+// import feedDarkBorder from "../../assets/home/feed-d-b.png";
+// import { AuthContext } from "../../Context/UserContext";
+// import { apiFetch } from "../../utils/apiFetch";
+// import Swal from "sweetalert2";
+// import { Link } from "react-router-dom";
+// import Loading from "../Loading/Loading";
+// import axios from "axios";
+// import MobileNavbar from "../../common/MobileNavbar/MobileNavbar";
+// import TabletNavbar from "../TabletNavbar/TabletNavbar";
+// import { MdOutlineEmail } from "react-icons/md";
+// import {
+//   FaRegArrowAltCircleLeft,
+//   FaRegArrowAltCircleRight,
+// } from "react-icons/fa";
+
+// const Try = () => {
+//   const [activeTab, setActiveTab] = useState({});
+//   const [userData, setUserData] = useState({});
+//   const [users, setUsers] = useState([]);
+//   //const [allUsers, setAllUsers] = useState([]);
+//   const theme = useSelector((state) => state.theme.theme);
+//   const { getAllUsers, user, createNewRequest, getAllStatusFriendRequest } =
+//     useContext(AuthContext);
+//   const requestedId = user?._id;
+//   const roles = [
+//     "Frontend Developer",
+//     "Backend Developer",
+//     "MERN Stack Developer",
+//     "UI/UX Designer",
+//     "Project Manager",
+//     "DevOps Engineer",
+//     "Full Stack Developer",
+//     "Data Scientist",
+//     "Machine Learning Engineer",
+//     "Mobile App Developer",
+//     "Game Developer",
+//     "Cloud Engineer",
+//     "Cybersecurity Specialist",
+//     "Blockchain Developer",
+//     "Software Architect",
+//     "Quality Assurance Engineer",
+//     "System Administrator",
+//     "AI Researcher",
+//     "Database Administrator",
+//     "Technical Support Specialist",
+//     "Embedded Systems Developer",
+//     "Product Manager",
+//     "Business Analyst",
+//     "Solutions Architect",
+//     "Security Analyst",
+//     "Network Engineer",
+//     "IT Consultant",
+//     "E-commerce Specialist",
+//     "IT Support Technician",
+//     "SEO Specialist",
+//     "Digital Marketing Specialist",
+//     "Content Creator",
+//     "Graphic Designer",
+//     "Hardware Engineer",
+//     "Big Data Engineer",
+//     "IoT Developer",
+//     "Game Designer",
+//     "Video Editor",
+//     "Technical Writer",
+//     "IT Manager",
+//   ];
+//   const handleRoleChange = (e) => {
+//     setSelectedRole(e.target.value);
+//     setCurrentPage(1); // Reset to first page when changing filters
+//   };
+
+//   const [loading, setLoading] = useState(false);
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [totalPages, setTotalPages] = useState(1);
+//   const [selectedRole, setSelectedRole] = useState("");
+//   const [isFiltered, setIsFiltered] = useState(false);
+
+//   const fetchUsers = async (page = 1, roleFilter = "") => {
+//     setLoading(true);
+//     try {
+//       const response = await axios.get(
+//         `https://test-two-22w0.onrender.com/api/v1/member/getAll`,
+//         {
+//           params: {
+//             page,
+//             limit: 6,
+//             role: roleFilter,
+//           },
+//         }
+//       );
+
+//       const data = response.data.data;
+
+//       console.log("data", data, roleFilter);
+
+//       setUsers(data || []);
+//       setCurrentPage(response.data?.data?.currentPage || 1);
+//       setTotalPages(response.data?.data?.totalPages || 1);
+
+//       setIsFiltered(!!roleFilter);
+//     } catch (error) {
+//       console.error("Error fetching users:", error);
+//       setUsers([]);
+//     }
+//     setLoading(false);
+//   };
+
+//   useEffect(() => {
+//     fetchUsers(currentPage, selectedRole);
+//   }, [currentPage, selectedRole]);
+
+//   // Shuffle users list
+//   const getShuffledUsers = (userList) => {
+//     if (!userList || userList.length === 0) return [];
+
+//     const shuffled = [...userList].sort(() => 0.5 - Math.random());
+//     return shuffled;
+//   };
+
+//   // Automatically fetch and shuffle users on component mount
+//   useEffect(() => {
+//     const fetchAndShuffleUsers = async () => {
+//       await fetchUsers(currentPage, selectedRole); // Fetch users from API
+//       setUsers((prevUsers) => getShuffledUsers(prevUsers)); // Shuffle users
+//     };
+
+//     fetchAndShuffleUsers();
+//   }, []); // Runs only on initial page load
+
+//   const toggleTab = async (userId, tab) => {
+//     setActiveTab((prevState) => ({
+//       ...prevState,
+//       [userId]: tab,
+//     }));
+
+//     if (!userData[userId]?.[tab]) {
+//       await fetchData(userId, tab);
+//     }
+//   };
+
+//   console.log("datas", users.length);
+
+//   const fetchData = async (userId, tab) => {
+//     if (!userId || !tab) return;
+
+//     try {
+//       let data;
+//       switch (tab) {
+//         case "description":
+//           data = await apiFetch(
+//             `https://test-two-22w0.onrender.com/api/v1/member/getUserById/${userId}`,
+//             "GET"
+//           );
+//           setUserData((prevState) => ({
+//             ...prevState,
+//             [userId]: {
+//               ...prevState[userId],
+//               description: data?.data ?? {},
+//             },
+//           }));
+//           break;
+//         case "skill":
+//           data = await apiFetch(
+//             `https://test-two-22w0.onrender.com/api/v1/skill/getUserSkillById/${userId}`,
+//             "GET"
+//           );
+//           setUserData((prevState) => ({
+//             ...prevState,
+//             [userId]: {
+//               ...prevState[userId],
+//               skill: data?.data ?? [],
+//             },
+//           }));
+//           break;
+//         case "project":
+//           data = await apiFetch(
+//             `https://test-two-22w0.onrender.com/api/v1/project/getUserProjectById/${userId}`,
+//             "GET"
+//           );
+//           setUserData((prevState) => ({
+//             ...prevState,
+//             [userId]: {
+//               ...prevState[userId],
+//               project: data?.data ?? [],
+//             },
+//           }));
+//           break;
+//         case "social":
+//           data = await apiFetch(
+//             `https://test-two-22w0.onrender.com/api/v1/socialInfo/getSocialInfoByUser/${userId}`,
+//             "GET"
+//           );
+//           setUserData((prevState) => ({
+//             ...prevState,
+//             [userId]: {
+//               ...prevState[userId],
+//               social: data?.data ?? [],
+//             },
+//           }));
+//           break;
+//         default:
+//           break;
+//       }
+//     } catch (error) {
+//       console.error("Error fetching data: ", error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     const defaultTabs = {};
+//     users?.forEach((user) => {
+//       defaultTabs[user?._id] = "description";
+//     });
+//     setActiveTab(defaultTabs);
+//   }, [users]);
+
+//   const sentFriendRequest = (user) => {
+//     const datas = {
+//       requestedBy: requestedId,
+//       requestedTo: user?._id,
+//       status: "Pending",
+//     };
+//     createNewRequest(datas).unwrap();
+//     Swal.fire({
+//       icon: "success",
+//       title: "Well done !",
+//       text: "You've sent friend request successfully.",
+//     });
+//     setTimeout(() => {
+//       window.location.reload();
+//     }, 2500);
+//   };
+//   // Function to get friend status based on `requestedId`
+//   // const friendId = userData?._id;
+
+//   // Function to get the friend request status
+//   const getFriendStatus = (friendId) => {
+//     const friend = getAllStatusFriendRequest?.data?.find(
+//       (frnd) =>
+//         frnd?.requestedBy?._id === friendId ||
+//         frnd?.requestedTo?._id === friendId
+//     );
+
+//     return friend
+//       ? { status: friend.status, friend }
+//       : { status: "No friend request found.", friend: null };
+//   };
+
+//   console.log(getAllUsers?.data);
+
+//   return (
+//     <>
+//       {/* Role Filter */}
+//       <div className="my-4 ml-5 mr-2 md:ml-10 xl:ml-14 3xl:ml-16">
+//         <select
+//           id="role"
+//           value={selectedRole}
+//           onChange={handleRoleChange}
+//           className="w-full ssm:w-60 outline-none px-4 py-2 border rounded-lg text-gray-700"
+//         >
+//           <option value="">All Researchers</option>
+//           {roles.map((role) => (
+//             <option key={role} value={role}>
+//               {role}
+//             </option>
+//           ))}
+//         </select>
+//       </div>
+//       <div className="space-y-4">
+//         {users?.map((user) => {
+//           // Get friend status for each user
+//           const { status, friend } = getFriendStatus(user?._id);
+//           const buttonText =
+//             status === "Accepted"
+//               ? "Friend"
+//               : status === "Pending"
+//               ? "Request Sent"
+//               : status === "Rejected"
+//               ? "Rejected"
+//               : "Send Request";
+
+//           return (
+//             <div
+//               key={user?._id}
+//               className={`${
+//                 theme !== "light" &&
+//                 "p-[1px] ml-5 md:ml-10 xl:ml-14 3xl:ml-16 w-11/12 bg-gradient-to-r from-[#4EEBFF] from-10% via-[#AA62F9] via-30% to-[#F857FF] to-90%  rounded-[20px]"
+//               }`}
+//             >
+//               <div
+//                 className={`${
+//                   theme === "light"
+//                     ? "bg-[#fff]  ml-5 md:ml-10 xl:ml-14 3xl:ml-16 shadow-[-7px_-7px_19px_rgba(255,_255,_255,_0.6),_9px_9px_16px_rgba(163,_177,_198,_0.6)] box-border border-[0.8px] border-solid border-gray w-11/12"
+//                     : "bg-[url('/gradient-background1.png')] bg-no-repeat bg-cover 3xl:mr-[1px] w-12/12"
+//                 }  text-graish p-3 xl:p-5 rounded-[20px]`}
+//               >
+//                 {/* User details and buttons */}
+//                 <div className="lg:flex hidden flex-col lg:flex-row justify-between items-center md:space-y-4 lg:space-y-0">
+//                   {/* Left */}
+//                   <div className="flex justify-between items-center space-x-3">
+//                     <div className="relative">
+//                       <img
+//                         src={
+//                           user?.profilePic
+//                             ? user?.profilePic
+//                             : "https://i.ibb.co.com/FKKD4mT/opp.png"
+//                         }
+//                         loading="lazy"
+//                         alt=""
+//                         className="w-8 h-8 md:w-12 md:h-12 xl:w-12 xl:h-12 rounded-full p-1"
+//                       />
+//                       <img
+//                         className="w-8 h-8 md:w-12 md:h-12 xl:w-12 xl:h-12 absolute top-0  md:right-0"
+//                         src={
+//                           theme === "light" ? feedDarkBorder : feedWhiteBorder
+//                         }
+//                         loading="lazy"
+//                         alt="dashedborder"
+//                       />
+//                     </div>
+
+//                     {/* Description Button */}
+//                     {theme === "light" ? (
+//                       <div
+//                         onClick={() => toggleTab(user?._id, "description")}
+//                         className={`${
+//                           activeTab[user?._id] === "description"
+//                             ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
+//                             : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
+//                         }  cursor-pointer rounded-[27px] bg-[#d0f5fe] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
+//                       >
+//                         <p className="graish lg:text-sm xl:text-lg font-semibold">
+//                           Description
+//                         </p>
+//                       </div>
+//                     ) : (
+//                       <div
+//                         onClick={() => toggleTab(user?._id, "description")}
+//                         className="relative flex flex-col items-center py-2"
+//                       >
+//                         {activeTab[user?._id] === "description" && (
+//                           <div className="absolute top-[40%] w-7/12 md:w-10/12 h-[7px] lg:h-[20px] shadow-[0px_0px_5px_#f58e9f,_0px_0px_15px_#f58e9f,_0px_0px_30px_#f58e9f,_0px_0px_60px_#f58e9f] rounded-3xs bg-[#f33d5c] rounded-t-xl blur-[1px]" />
+//                         )}
+//                         <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(13px)] box-border">
+//                           Description
+//                         </p>
+//                       </div>
+//                     )}
+
+//                     {/* Skill Button */}
+//                     {theme === "light" ? (
+//                       <div
+//                         onClick={() => toggleTab(user?._id, "skill")}
+//                         className={`${
+//                           activeTab[user?._id] === "skill"
+//                             ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
+//                             : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
+//                         }  cursor-pointer rounded-[27px] bg-[#fde4f7] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
+//                       >
+//                         <p className="graish lg:text-sm xl:text-lg font-semibold">
+//                           All Skills
+//                         </p>
+//                       </div>
+//                     ) : (
+//                       <div
+//                         onClick={() => toggleTab(user?._id, "skill")}
+//                         className="relative flex flex-col items-center py-2"
+//                       >
+//                         {activeTab[user?._id] === "skill" && (
+//                           <div className="absolute top-[40%] w-7/12 md:w-10/12 h-[7px] lg:h-[20px] shadow-[0px_0px_5px_#f58e9f,_0px_0px_15px_#f58e9f,_0px_0px_30px_#f58e9f,_0px_0px_60px_#f58e9f] rounded-3xs bg-[#f33d5c] rounded-t-xl blur-[1px]" />
+//                         )}
+//                         <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(13px)]  box-border">
+//                           All Skills
+//                         </p>
+//                       </div>
+//                     )}
+
+//                     {/* Projects Button */}
+//                     {theme === "light" ? (
+//                       <div
+//                         onClick={() => toggleTab(user?._id, "project")}
+//                         className={`${
+//                           activeTab[user?._id] === "project"
+//                             ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
+//                             : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
+//                         }  cursor-pointer rounded-[27px] bg-[#fdeed4] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
+//                       >
+//                         <p className="graish lg:text-sm xl:text-lg font-semibold">
+//                           Projects
+//                         </p>
+//                       </div>
+//                     ) : (
+//                       <div
+//                         onClick={() => toggleTab(user?._id, "project")}
+//                         className="relative flex flex-col items-center py-2"
+//                       >
+//                         {activeTab[user?._id] === "project" && (
+//                           <div className="absolute top-[40%] w-7/12 md:w-11/12 h-[8px] lg:h-[10px] shadow-[0px_0px_5px_#FFCB33,_0px_0px_15px_#FFCB33,_0px_0px_30px_#FFCB33,_0px_0px_60px_#FFCB33] rounded-3xs bg-[#FFCB33] rounded-t-xl blur-[12px]" />
+//                         )}
+//                         <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(0px)]  box-border">
+//                           Projects
+//                         </p>
+//                       </div>
+//                     )}
+
+//                     {/* Social Button */}
+//                     {theme === "light" ? (
+//                       <div
+//                         onClick={() => toggleTab(user?._id, "social")}
+//                         className={`${
+//                           activeTab[user?._id] === "social"
+//                             ? "shadow-[0px_2px_3px_rgba(0,_0,_0,_0.25)_inset]"
+//                             : "shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]"
+//                         }  cursor-pointer rounded-[27px] bg-[#caf79a73] border-[2px] border-solid px-4 py-2 flex justify-center items-center`}
+//                       >
+//                         <p className="graish lg:text-sm xl:text-lg font-semibold">
+//                           Social Media
+//                         </p>
+//                       </div>
+//                     ) : (
+//                       <div
+//                         onClick={() => toggleTab(user?._id, "social")}
+//                         className="relative flex flex-col items-center py-2"
+//                       >
+//                         {activeTab[user?._id] === "social" && (
+//                           <div className="absolute top-[40%] w-7/12 md:w-11/12 h-[8px] lg:h-[10px] shadow-[0px_0px_5px_#4EEBFF,_0px_0px_15px_#4EEBFF,_0px_0px_30px_#4EEBFF,_0px_0px_60px_#4EEBFF] rounded-3xs bg-[#4EEBFF] rounded-t-xl blur-[12px]" />
+//                         )}
+//                         <p className="cursor-pointer text-sm xl:text-[16px] rounded-[27px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[1px_1px_5px_#eae3e3_inset] [backdrop-filter:blur(0px)]  box-border">
+//                           Social Media
+//                         </p>
+//                       </div>
+//                     )}
+//                   </div>
+
+//                   {/* Right */}
+//                   <div className="flex justify-between items-center space-x-3">
+//                     <Link to={`/user/profile/${user?._id}`}>
+//                       {theme === "light" ? (
+//                         <div className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
+//                           <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
+//                             Profile
+//                           </button>
+//                         </div>
+//                       ) : (
+//                         <p className="cursor-pointer text-sm lg:text-[14px] font-medium rounded-[15px] py-1 md:py-3 px-3 xl:px-5  text-white tracking-wider shadow-[-2px_-2px_100px_rgba(255,_255,_255,_0.1)_inset,_2px_2px_100px_rgba(66,_66,_66,_0.1)_inset] [backdrop-filter:blur(50px)]  box-border">
+//                           profile
+//                         </p>
+//                       )}
+//                     </Link>
+
+//                     {/* Friend request button */}
+//                     {theme === "light" ? (
+//                       buttonText === "Send Request" ? (
+//                         <button
+//                           onClick={() => sentFriendRequest(user)}
+//                           className="lg:text-sm xl:text-lg rounded-[13px] font-semibold px-3 py-2 xl:px-4 xl:py-2 bg-gradient-to-l from-[#2adba4] to-[#69f9cc] text-white"
+//                         >
+//                           {buttonText}
+//                         </button>
+//                       ) : (
+//                         <div className="p-[2px] rounded-[13px] bg-gradient-to-l from-[#2adba4] to-[#69f9cc]">
+//                           <button className="lg:text-sm xl:text-lg rounded-[13px] font-semibold graish px-3 py-2 xl:px-4 xl:py-2 bg-white">
+//                             {buttonText}
+//                           </button>
+//                         </div>
+//                       )
+//                     ) : (
+//                       <button
+//                         onClick={
+//                           buttonText === "Send Request"
+//                             ? () => sentFriendRequest(user)
+//                             : undefined
+//                         }
+//                         className="friendRequestBtn"
+//                       >
+//                         <p>{buttonText}</p>
+//                       </button>
+//                     )}
+
+//                     <div
+//                       className={`${
+//                         theme === "light"
+//                           ? "bg-red-200"
+//                           : "border border-[#9370DB]"
+//                       } rounded-[11px] px-3 py-2 xl:px-3 xl:py-2 flex justify-center items-center`}
+//                     >
+//                       <svg
+//                         width="24"
+//                         height="24"
+//                         xmlns="http://www.w3.org/2000/svg"
+//                         fillRule="evenodd"
+//                         clipRule="evenodd"
+//                       >
+//                         <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402m5.726-20.583c-2.203 0-4.446 1.042-5.726 3.238-1.285-2.206-3.522-3.248-5.719-3.248-3.183 0-6.281 2.187-6.281 6.191 0 4.661 5.571 9.429 12 15.809 6.43-6.38 12-11.148 12-15.809 0-4.011-3.095-6.181-6.274-6.181" />
+//                       </svg>
+//                       {/* <FaRegHeart className="text-2xl font-semibold text-red-500 bg-white cursor-pointer" /> */}
+//                     </div>
+//                   </div>
+//                 </div>
+
+//                 {/* Mobile and Tablet navbar components */}
+//                 <div className="lg:hidden flex justify-between items-center py-1">
+//                   <MobileNavbar
+//                     toggleTab={toggleTab}
+//                     user={user}
+//                     activeTab={activeTab}
+//                     theme={theme}
+//                     sentFriendRequest={sentFriendRequest}
+//                   />
+//                 </div>
+//                 <div className="hidden md:flex md:justify-between md:items-center lg:py-1">
+//                   <TabletNavbar
+//                     toggleTab={toggleTab}
+//                     user={user}
+//                     activeTab={activeTab}
+//                     theme={theme}
+//                     sentFriendRequest={sentFriendRequest}
+//                   />
+//                 </div>
+
+//                 {/* Tabs content rendering */}
+//                 {activeTab[user?._id] === "description" && (
+//                   <AboutTab theme={theme} user={user} />
+//                 )}
+//                 {activeTab[user?._id] === "skill" && (
+//                   <SkillTab
+//                     user={user}
+//                     theme={theme}
+//                     skills={userData[user?._id]?.skill || []}
+//                   />
+//                 )}
+//                 {activeTab[user?._id] === "project" && (
+//                   <ProjectTab
+//                     user={user}
+//                     theme={theme}
+//                     projects={userData[user?._id]?.project || []}
+//                   />
+//                 )}
+//                 {activeTab[user?._id] === "social" && (
+//                   <SocialTab
+//                     user={user}
+//                     theme={theme}
+//                     socialInfos={userData[user?._id]?.social || []}
+//                   />
+//                 )}
+//               </div>
+//             </div>
+//           );
+//         })}
+
+//         {loading === true && <Loading />}
+//         {users?.length === 0 && loading === false && (
+//           <div className="xl:text-[20px] text-center text-gray-500 pt-10 xl:pt-20 capitalize">No researchers found</div>
+//         )}
+//         {users?.length > 10 && loading === false && (
+//           <div className="mt-6 flex justify-center items-center space-x-4">
+//             <button
+//               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+//               disabled={currentPage === 1}
+//               className="px-4 py-2  rounded-lg mx-2"
+//             >
+//               <FaRegArrowAltCircleLeft className="text-2xl text-gray-700" />
+//             </button>
+
+//             <span className="text-lg font-medium">
+//               Page {currentPage} of {totalPages}
+//             </span>
+//             <button
+//               onClick={() =>
+//                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+//               }
+//               disabled={currentPage === totalPages}
+//               className="px-4 py-2  rounded-lg mx-2"
+//             >
+//               <FaRegArrowAltCircleRight className="text-2xl text-gray-700" />
+//             </button>
+//           </div>
+//         )}
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Try;
 
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";

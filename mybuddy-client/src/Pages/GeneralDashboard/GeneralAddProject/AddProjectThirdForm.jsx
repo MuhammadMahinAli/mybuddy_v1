@@ -5,19 +5,8 @@ import { IoTrashOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import Swal from "sweetalert2";
 
-const AddProjectThirdForm = ({ tasks, setTasks }) => {
- 
-  const [taskInput, setTaskInput] = useState({
-    title: "",
-    details: "",
-    taskType: "free",
-    coin: "0",
-    priority: "low",
-    status: "pending",
-    startDate: "",
-    endDate: "",
-    subTask: [{ todo: "Describe the sub task", status: "pending" }],
-  });
+const AddProjectThirdForm = ({ tasks, setTasks, setTaskInput,taskInput,setTodos }) => {
+
 
   const addTask = (e) => {
     e.preventDefault();
@@ -47,6 +36,17 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     }
     if (taskInput.title !== "") {
       setTasks([...tasks, { ...taskInput }]);
+      const newTodo = {
+        title: taskInput.title,
+        description: taskInput.details,
+        startDate: taskInput.startDate,
+        endDate: taskInput.endDate,
+        status: "working",
+        timer: "",
+      };
+    
+      // Append the new todo
+      setTodos((prevTodos) => [...prevTodos, newTodo]);
       setTaskInput({
         title: "",
         details: "",
@@ -115,6 +115,9 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
     setSelectedPriority(priority);
     handleTaskChange({ target: { name: "priority", value: priority } });
   };
+ 
+
+
 
   const buttonClasses = (priority) => {
     let baseClasses =
@@ -180,7 +183,10 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
                   ? `${task.details.slice(0, 22)}...`
                   : task.details}
               </div>
-              <div onClick={(e)=>e.preventDefault()} className="text-[14px] md:text-[16px] capitalize text-center w-[100px] xs:w-1/12 border-r border-[#C8CBD3] px-2">
+              <div
+                onClick={(e) => e.preventDefault()}
+                className="text-[14px] md:text-[16px] capitalize text-center w-[100px] xs:w-1/12 border-r border-[#C8CBD3] px-2"
+              >
                 <p className=" px-3 py-1 border rounded-2xl bg-[#ecffcd] text-[#77d804]  border-[#77d804]">
                   Free
                 </p>
@@ -189,7 +195,15 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
                 {formatDate(task.endDate)}
               </div>
               <div className="text-[14px] md:text-[16px] capitalize text-center w-2/12 xs:w-2/12 border-r border-[#C8CBD3]">
-                <p className={task.priority === "high" ? "bg-red-200 text-red-600  border-red-600 py-2 rounded-lg mx-5 border" : task.priority === "medium" ? "bg-[#ffe9d4] text-orange-600  border-orange-600 py-2 rounded-lg mx-5 border": "bg-blue-200 text-blue-600  border-blue-600 py-2 rounded-lg mx-5 border"}>
+                <p
+                  className={
+                    task.priority === "high"
+                      ? "bg-red-200 text-red-600  border-red-600 py-2 rounded-lg mx-5 border"
+                      : task.priority === "medium"
+                      ? "bg-[#ffe9d4] text-orange-600  border-orange-600 py-2 rounded-lg mx-5 border"
+                      : "bg-blue-200 text-blue-600  border-blue-600 py-2 rounded-lg mx-5 border"
+                  }
+                >
                   {task.priority}
                 </p>
               </div>
@@ -348,6 +362,8 @@ const AddProjectThirdForm = ({ tasks, setTasks }) => {
             Save
           </button>
         </div>
+
+      
       </form>
     </div>
   );

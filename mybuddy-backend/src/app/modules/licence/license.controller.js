@@ -1,8 +1,13 @@
-import { createLicenseService, updateLicenseService, getLicensesByUserService} from "./license.service.js";
+import {
+  createLicenseService,
+  updateLicenseService,
+  getLicensesByUserService,
+} from "./license.service.js";
 import { catchAsync } from "../../../utils/catchAsync.js";
 import { sendResponse } from "../../../utils/sendResponse.js";
 import httpStatus from "http-status";
 
+//---- create license
 export const postCreateLicenseController = catchAsync(async (req, res) => {
   const data = req.body;
   const newLicense = await createLicenseService(data);
@@ -14,6 +19,7 @@ export const postCreateLicenseController = catchAsync(async (req, res) => {
   });
 });
 
+//---- update license
 export const putUpdateLicenseController = catchAsync(async (req, res) => {
   const id = req.params.id;
   const data = req.body;
@@ -26,6 +32,7 @@ export const putUpdateLicenseController = catchAsync(async (req, res) => {
   });
 });
 
+//---- get license by user
 export const getLicensesByUserController = catchAsync(async (req, res) => {
   const userId = req.params.id;
   const licenses = await getLicensesByUserService(userId);

@@ -2,6 +2,7 @@ import { License } from './license.model.js';
 import { ApiError } from "../../../handleError/apiError.js";
 import httpStatus from "http-status";
 
+//---- create license
 export const createLicenseService = async (data) => {
   try {
     const result = await License.create(data);
@@ -14,6 +15,7 @@ export const createLicenseService = async (data) => {
   }
 };
 
+//---- get license by user
 export const getLicensesByUserService = async (userId) => {
     try {
       const licences = await License.find({ user: userId }).populate('user');
@@ -24,7 +26,7 @@ export const getLicensesByUserService = async (userId) => {
     }
   }
 
-  // ------ 
+  // -------
 export const updateLicenseService = async (id, data) => {
   try {
     const isExist = await License.findOne({ _id: id});

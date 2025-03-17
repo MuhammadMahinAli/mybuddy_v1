@@ -321,6 +321,38 @@ const DekstopSidebar = ({
             ></div>
           </li>
           <li
+            onClick={handleMyTools}
+            className={`${
+              openMyTools === true ? "show-content" : "hide-content"
+            } border-b  cursor-pointer  relative ml-1 lg:-right-[7px] xl:-right-[11px] 2xl:-right-[16px] 3xl:-right-[23px]`}
+          >
+            <div
+              className={`${
+                !openMyTools && "hidden"
+              } bg-[#e4ecf7] h-5 rounded-br-[60px]`}
+            ></div>
+
+            <Link
+              to="/dashboard/my-todo"
+              className={`${
+                openMyTools === true
+                  ? "bg-[#f3f6f8] rounded-l-2xl py-2"
+                  : "bg-[#e4ecf7] border-b border-white py-3"
+              } flex relative space-x-4  items-center pl-3 `}
+            >
+              <img src="/myTool.svg" className="h-9" />
+              <p className="lg:text-[18px] xl:text-[22px] font-medium gray600">
+                My To do
+              </p>
+            </Link>
+
+            <div
+              className={`${
+                openMyTools === true ? "block" : "hidden"
+              } bg-[#e4ecf7]  h-5 rounded-tr-[50px]`}
+            ></div>
+          </li>
+          <li
             onClick={handleMeeting}
             className={`${
               openMeet === true ? "show-content" : "hide-content"

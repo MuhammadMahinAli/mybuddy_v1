@@ -6,11 +6,13 @@ import PropTypes from "prop-types";
 import { useCreateNewProjectMutation } from "../../../features/project/projectApi";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { useCreateNewTodoMutation } from "../../../features/fund/fundApi";
 
 const GeneralAddProject = ({ closeModal }) => {
   const { user } = useSelector((state) => state.auth);
   const [createNewProject, { data: responseData, error: responseError }] =
     useCreateNewProjectMutation();
+  const [createNewTodo] = useCreateNewTodoMutation();  
   const [openFirstForm, setOpenFirstForm] = useState(true);
   const [openSecondForm, setOpenSecondForm] = useState(false);
   const [openThirdForm, setOpenThirdForm] = useState(false);
@@ -18,6 +20,8 @@ const GeneralAddProject = ({ closeModal }) => {
   const [documents, setDocuments] = useState([]);
   const [pdfFiles, setPdfFiles] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [todos, setTodos] = useState([]); // Separate state for todos
+
 
   const [projectData, setProjectData] = useState({
     projectName: "",
@@ -30,6 +34,18 @@ const GeneralAddProject = ({ closeModal }) => {
     videoUrl: "",
   });
   console.log(projectData);
+
+  const [taskInput, setTaskInput] = useState({
+    title: "",
+    details: "",
+    taskType: "free",
+    coin: "0",
+    priority: "low",
+    status: "pending",
+    startDate: "",
+    endDate: "",
+    subTask: [{ todo: "Describe the sub task", status: "pending" }],
+  });
   
   const [previewImage, setPreviewImage] = useState({
     imageOne: "",
@@ -150,8 +166,21 @@ const GeneralAddProject = ({ closeModal }) => {
       pdfFiles,
       tasks,
     };
+    const dataa = {
+      projectName: projectData.projectName,
+      projectStartDate: projectData?.startDate,
+      projectEndDate: projectData?.endDate,
+      listedBy:{
+        memberId:user?._id
+      } ,
+      todos,
+      checklist: [],
+      attachments: [],
+    };
     console.log("add project data",data);
+    console.log("todo data",dataa);
     createNewProject(data);
+    createNewTodo(dataa);
   };
 
   console.log(responseData, responseError?.data);
@@ -194,6 +223,27 @@ const GeneralAddProject = ({ closeModal }) => {
     }
   };
 
+   const handleTodo = (e) => {
+    e.preventDefault();
+    const data = {
+      name: projectData.projectName,
+      projectStartDate: projectData?.startDate,
+      projectEndDate: projectData?.endDate,
+      todos: [
+        {
+          title: taskInput.title,
+          description: taskInput?.details,
+          startDate: taskInput?.startDate,
+          endDate: taskInput?.endDate,
+          status: "working",
+          timer: "",
+        },
+      ],
+      checklist: [],
+      attachments: [],
+    };
+    console.log(data);
+  };
   console.log(projectData.category);
   return (
     <div>
@@ -258,6 +308,9 @@ const GeneralAddProject = ({ closeModal }) => {
               handleThird={handleThird}
               tasks={tasks}
               setTasks={setTasks}
+              taskInput={taskInput}
+              setTaskInput={setTaskInput}
+              setTodos={setTodos}
             />
           )}
           {openThirdForm && (
@@ -277,3 +330,40 @@ export default GeneralAddProject;
 GeneralAddProject.propTypes = {
   closeModal: PropTypes.func,
 };
+// {
+//   "name": "Test Project",
+//   "projectStartDate": "2025-04-01",
+//   "projectEndDate": "2025-05-01",
+//   "todos": [
+//       {
+//           "title": "Test Task Title",
+//           "description": "Test Task Description",
+//           "startDate": "2025-04-01",
+//           "endDate": "2025-03-15",
+//           "status": "working",
+//           "timer": "",
+//           "subTask": [
+//               {
+//                   "todo": "Test Task sub task",
+//                   "status": "pending"
+//               }
+//           ]
+//       },
+//       {
+//           "title": "Test Task Title2",
+//           "description": "Test Task Description2",
+//           "startDate": "2025-04-16",
+//           "endDate": "2025-05-01",
+//           "status": "working",
+//           "timer": "",
+//           "subTask": [
+//               {
+//                   "todo": "Test Task sub task2",
+//                   "status": "pending"
+//               }
+//           ]
+//       }
+//   ],
+//   "checklist": [],
+//   "attachments": []
+// }

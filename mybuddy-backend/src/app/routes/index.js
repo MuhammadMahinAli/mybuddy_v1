@@ -24,6 +24,8 @@ import { AdminToolsRoutes } from "../modules/tools/tools.routes.js";
 import { UsersToolsRoutes } from "../modules/usersTools/usersTools.routes.js";
 import { ConferenceLinkRoutes } from "../modules/conference/conference.routes.js";
 import { TutorialsRoutes } from "../modules/tutorials/tutorials.routes.js";
+import { TodoRoutes } from "../modules/todo/todo.router.js";
+import { ProjectTodoRoutes } from "../modules/project-todo/projectTodo.router.js";
 
 const router = express.Router();
 const moduleRoutes = [
@@ -52,7 +54,8 @@ const moduleRoutes = [
     { path:"/userTools", route:UsersToolsRoutes},
     { path:"/conference", route:ConferenceLinkRoutes},
     { path:"/tutorials", route:TutorialsRoutes},
-
+    { path:"/todo", route:TodoRoutes},
+    { path:"/project-todo", route:ProjectTodoRoutes}
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

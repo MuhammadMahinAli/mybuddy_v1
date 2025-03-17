@@ -1,97 +1,111 @@
 import { catchAsync } from "../../../utils/catchAsync.js";
 import httpStatus from "http-status";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { deleteBankFundService, getAllBankTransferFundInfoService, getBankFundByProjectService, getBankFundByRequestedByService, getBankFundByRequestedToService, saveBankTransferFundInfoService, updateBankTransferFundStatusService } from "./bankTransferfund.service.js";
-
-
-
+import {
+  deleteBankFundService,
+  getAllBankTransferFundInfoService,
+  getBankFundByProjectService,
+  getBankFundByRequestedByService,
+  getBankFundByRequestedToService,
+  saveBankTransferFundInfoService,
+  updateBankTransferFundStatusService,
+} from "./bankTransferfund.service.js";
 
 //------- save Payoneer Info
 
-export const saveBankTransferFundInfoController = catchAsync(async (req, res, next) => {
+export const saveBankTransferFundInfoController = catchAsync(
+  async (req, res, next) => {
     const data = req.body;
     const newPaymentInfo = await saveBankTransferFundInfoService(data);
-  
+
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: "Bank Transfer Fund Info service saved successfully!",
       data: newPaymentInfo,
     });
-  });
+  }
+);
 
-  //------- get all payoneer fund
+//------- get all payoneer fund
 
-  export const getAllBankTransferFundInfoController = catchAsync(async (req,res)=>{
-    const getAllBankTransferFundInfo = await getAllBankTransferFundInfoService();
-  
-    sendResponse(res,{
-      statusCode:httpStatus.OK,
-      success:true,
-      message:"All Bank Transfer Fund Information retrived successfully",
-      data:getAllBankTransferFundInfo
-    })
-   }) 
-  
+export const getAllBankTransferFundInfoController = catchAsync(
+  async (req, res) => {
+    const getAllBankTransferFundInfo =
+      await getAllBankTransferFundInfoService();
 
-   //--------- update status controller
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "All Bank Transfer Fund Information retrived successfully",
+      data: getAllBankTransferFundInfo,
+    });
+  }
+);
 
-export const updateBankTransferFundStatusServiceController = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const { status } = req.body;
-  const updatedBankTransferFund = await updateBankTransferFundStatusService(id, status);
-  
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Bank Transfer Fund status updated successfully",
-    data: updatedBankTransferFund,
-  });
-});
+//--------- update status controller
+
+export const updateBankTransferFundStatusServiceController = catchAsync(
+  async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    const updatedBankTransferFund = await updateBankTransferFundStatusService(
+      id,
+      status
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Bank Transfer Fund status updated successfully",
+      data: updatedBankTransferFund,
+    });
+  }
+);
 
 // -------------  get recieve fundProposal [ requestedTo ]
 
-export const getBankFundByRequestedToController = catchAsync(async (req, res) => {
-  const {id} = req.params;
-  const recieveFundRequest = await getBankFundByRequestedToService(id);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success:true,
-    message:"All recieve fund request is retrived successfully!",
-    data: recieveFundRequest,
-
-  })
-})
+export const getBankFundByRequestedToController = catchAsync(
+  async (req, res) => {
+    const { id } = req.params;
+    const recieveFundRequest = await getBankFundByRequestedToService(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "All recieve fund request is retrived successfully!",
+      data: recieveFundRequest,
+    });
+  }
+);
 // -------------  get recieve fundProposal [ requestedBy ]
 
-export const getBankFundByRequestedByController = catchAsync(async (req, res) => {
-  const {id} = req.params;
-  const recieveFundRequest = await getBankFundByRequestedByService(id);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success:true,
-    message:"All recieve fund request is retrived successfully!",
-    data: recieveFundRequest,
-
-  })
-})
+export const getBankFundByRequestedByController = catchAsync(
+  async (req, res) => {
+    const { id } = req.params;
+    const recieveFundRequest = await getBankFundByRequestedByService(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "All recieve fund request is retrived successfully!",
+      data: recieveFundRequest,
+    });
+  }
+);
 
 // -------------  get recieve fundProposal [ requestedTo ]
 
 export const getBankFundByProjectController = catchAsync(async (req, res) => {
-  const {id} = req.params;
+  const { id } = req.params;
   const recieveFundRequest = await getBankFundByProjectService(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
-    success:true,
-    message:"All fund request of a project is retrived successfully!",
+    success: true,
+    message: "All fund request of a project is retrived successfully!",
     data: recieveFundRequest,
+  });
+});
 
-  })
-})
-
-
-  //------- get paypal link
+//------- get paypal link
 
 //  export const getPaypalLinkController = catchAsync(async (req,res)=>{
 //   const getLink = await getPaypalLinkService(req?.params?.id);
@@ -102,8 +116,7 @@ export const getBankFundByProjectController = catchAsync(async (req, res) => {
 //     message:"Users Paypal link retrived successfully",
 //     data:getLink
 //   })
-//  }) 
-
+//  })
 
 //  //------- update paypal link
 
@@ -128,9 +141,10 @@ export const getBankFundByProjectController = catchAsync(async (req, res) => {
 //   }
 // };
 
+//-------- delete paypal
 
-//-------- delete paypal 
-export const deleteBankFundController = catchAsync(async (req,res)=>{
+
+export const deleteBankFundController = catchAsync(async (req, res) => {
   const id = req.params.id;
 
   const requests = await deleteBankFundService(id);
@@ -141,6 +155,4 @@ export const deleteBankFundController = catchAsync(async (req,res)=>{
     message: "Bank Fund is deleted successfully!",
     data: requests,
   });
-})
-
-
+});

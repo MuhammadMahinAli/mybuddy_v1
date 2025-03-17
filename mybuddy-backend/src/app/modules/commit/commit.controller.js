@@ -35,6 +35,7 @@ export const getAllCommitController = catchAsync(async (req, res) => {
 });
 
 // -------------------- get commit by project id
+
 export const getCommitByProjectController = catchAsync(async (req, res) => {
   const { id } = req.params;
   const commits = await getCommitByProjectIdService(id);
@@ -45,6 +46,7 @@ export const getCommitByProjectController = catchAsync(async (req, res) => {
     data: commits,
   });
 });
+
 // -------------------- get commit by commitBy
 export const getMyAllCommitController = catchAsync(async (req, res) => {
   const { id } = req.params;

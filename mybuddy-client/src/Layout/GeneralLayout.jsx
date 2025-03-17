@@ -10,10 +10,10 @@ const GeneralLayout = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  // if (!user) {
-  //   navigate("/login");
-  //   return;
-  // }
+  if (!user) {
+    navigate("/login");
+    return;
+  }
 
   return (
     <>

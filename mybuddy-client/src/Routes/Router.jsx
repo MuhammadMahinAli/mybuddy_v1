@@ -53,6 +53,8 @@ import Help from "../Pages/Help/Help";
 import LandingLayout from "../Layout/LandingLayout";
 import AdminConference from "../Pages/Admin/AdminConference/AdminConference";
 import AdminTutorials from "../Pages/Admin/AdminTutorials/AdminTutorials";
+import Agent from "../Pages/ResearchBuddyAgent/Agent";
+import GeneralToDo from "../Pages/GeneralDashboard/GeneralToDo/GeneralToDo";
 
 
 const router = createBrowserRouter([
@@ -155,6 +157,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/all-post",
         element: <GeneralAllPost />,
+      },
+      {
+        path: "/dashboard/my-todo",
+        element: <GeneralToDo />,
       },
       {
         path: "/dashboard/meeting-schedule",
@@ -272,6 +278,10 @@ const router = createBrowserRouter([
  <Pre />
 
     </PrivateRoute>,
+  },
+  {
+    path: "/agent",
+    element: <Agent />,
   },
   {
     path: "/attendance",

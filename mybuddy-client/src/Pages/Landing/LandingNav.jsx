@@ -52,7 +52,7 @@ const LandingNav = () => {
           </Link>
           <div className="h-[25px]  flex flex-col items-start justify-start  ">
             <nav className="m-0 self-stretch flex flex-row items-center justify-between space-x-5 xl:space-x-10 ">
-              <Link
+              {/* <Link
                 to="/"
                 className={`${
                   location.pathname === "/"
@@ -61,8 +61,8 @@ const LandingNav = () => {
                 } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-bold inline-block min-w-[58px]`}
               >
                 home
-              </Link>
-              {/* <Link
+              </Link> */}
+              <Link
                 to={user ? "/feed" : "/login"}
                 className={`${
                   location.pathname === "/"
@@ -71,7 +71,7 @@ const LandingNav = () => {
                 } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-bold inline-block min-w-[58px]`}
               >
                 home
-              </Link> */}
+              </Link>
               <p
                 onClick={handleScroll}
                 className={`${
@@ -92,7 +92,7 @@ const LandingNav = () => {
               >
                 Help
               </Link>
-              <Link
+              {/* <Link
                 to="/feed"
                 className={`${
                   location.pathname === "/feed"
@@ -101,8 +101,8 @@ const LandingNav = () => {
                 } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold `}
               >
                 Feed
-              </Link>
-              {/* <Link
+              </Link> */}
+              <Link
                 to={user ? "/feed" : "/login"}
                 className={`${
                   location.pathname === "/feed"
@@ -111,7 +111,7 @@ const LandingNav = () => {
                 } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold `}
               >
                 Feed
-              </Link> */}
+              </Link>
               <p
                 className={`${
                   location.pathname === "/contact"
@@ -235,22 +235,22 @@ const LandingNav = () => {
                     </div>
                     <nav>
                       <ul className="space-y-4">
-                        <li>
+                        {/* <li>
                           <Link
                             to="/"
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Home
                           </Link>
-                        </li>
-                        {/* <li>
+                        </li> */}
+                        <li>
                           <Link
                             to={user ? "/feed" : "/login"}
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Home
                           </Link>
-                        </li> */}
+                        </li>
                         <li className="md:hidden" onClick={handleScrollMbl}>
                           <p className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
                             Features
@@ -272,22 +272,22 @@ const LandingNav = () => {
                             Help
                           </Link>
                         </li>
-                        <li>
+                        {/* <li>
                           <Link
                             to="/feed"
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Feed
                           </Link>
-                        </li>
-                        {/* <li>
+                        </li> */}
+                        <li>
                           <Link
                             to={user ? "/feed" : "/login"}
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Feed
                           </Link>
-                        </li> */}
+                        </li>
                         <li>
                           <p className="font-medium capitalize tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
                             contact

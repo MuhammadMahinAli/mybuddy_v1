@@ -5,12 +5,6 @@ import { IoIosSearch } from "react-icons/io";
 import { AiOutlineReload } from "react-icons/ai";
 import Loading from "../../Loading/Loading";
 import {
-  FaTwitter,
-  FaInstagram,
-  FaGithub,
-  FaLinkedin,
-  FaCodepen,
-  FaDev,
   FaRegArrowAltCircleRight,
   FaRegArrowAltCircleLeft,
 } from "react-icons/fa";

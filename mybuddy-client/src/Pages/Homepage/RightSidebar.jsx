@@ -345,7 +345,7 @@ const RightSidebar = ({ theme }) => {
         </div>
       </div>
 
-      <GoogleAdComponent/>
+      {/* <GoogleAdComponent/> */}
       
       {/* center */}
       <FriendSection theme={theme} active={active} />

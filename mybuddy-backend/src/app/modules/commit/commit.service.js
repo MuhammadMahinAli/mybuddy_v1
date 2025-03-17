@@ -3,6 +3,7 @@ import { ApiError } from "../../../handleError/apiError.js";
 import { Commit } from "./commit.model.js";
 import { Project } from "../project/project.model.js";
 
+//---- create commit
 export const createCommitService = async (commitData) => {
   try {
     const result = Commit.create(commitData);
@@ -29,24 +30,23 @@ export const getAllCommitService = async () => {
 export const getCommitByProjectIdService = async (id) => {
   const commits = await Commit.find({ project: id })
     .populate("commitBy", "name role profilePic")
-    .populate("project","projectName")
+    .populate("project", "projectName")
     .sort({ createdAt: -1 });
   return commits;
 };
 
 // --------------- get commit by commitby
-export const getMyAllCommitService = async (id,page , limit) => {
-  
-
+export const getMyAllCommitService = async (id, page, limit) => {
   try {
     const skip = (page - 1) * limit;
 
     // Fetch projects and populate user details
-    const commits = await Commit.find({ commitBy : id })
-    .skip(skip).limit(limit)
-    .populate("commitBy", "name role profilePic")
-    .populate("project","projectName")
-    .sort({ createdAt: -1 });
+    const commits = await Commit.find({ commitBy: id })
+      .skip(skip)
+      .limit(limit)
+      .populate("commitBy", "name role profilePic")
+      .populate("project", "projectName")
+      .sort({ createdAt: -1 });
     const totalPage = await Commit.countDocuments();
 
     return {
@@ -54,12 +54,10 @@ export const getMyAllCommitService = async (id,page , limit) => {
       totalPages: Math.ceil(totalPage / limit),
       currentPage: page,
     };
-    
   } catch (error) {
     console.error("Error fetching commit:", error);
     throw new Error("Failed to retrieve commit");
   }
-  
 };
 
 // services/commitService.js

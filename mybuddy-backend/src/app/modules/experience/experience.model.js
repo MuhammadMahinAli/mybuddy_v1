@@ -33,7 +33,16 @@ const ExperienceSchema = new Schema(
     },
     employeeType: {
       type: String,
-      enum: ["Internship","Self-Employed","Full-time Employee", "Part-time Employee", "Temporary Employee","Seasonal","Leased Employee","At-will Employee"],
+      enum: [
+        "Internship",
+        "Self-Employed",
+        "Full-time Employee",
+        "Part-time Employee",
+        "Temporary Employee",
+        "Seasonal",
+        "Leased Employee",
+        "At-will Employee",
+      ],
     },
   },
   {

@@ -61,12 +61,10 @@ export const updateConferenceLinkController = async (req, res) => {
       data: updatedInfo,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error updating Conference Link",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error updating Conference Link",
+      error: error.message,
+    });
   }
 };
 
