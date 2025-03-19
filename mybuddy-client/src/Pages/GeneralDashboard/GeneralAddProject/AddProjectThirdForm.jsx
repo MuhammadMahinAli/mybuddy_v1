@@ -43,6 +43,8 @@ const AddProjectThirdForm = ({ tasks, setTasks, setTaskInput,taskInput,setTodos 
         endDate: taskInput.endDate,
         status: "working",
         timer: "",
+        checklist: [],
+        attachments: [],
       };
     
       // Append the new todo

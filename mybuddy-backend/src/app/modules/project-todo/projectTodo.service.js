@@ -35,3 +35,30 @@ export const getSingleMemberProjectTodoService = async (id) => {
     throw new Error("Failed to fetch user's todos");
   }
 };
+
+//------------------ update project todo
+
+
+export const updateProjectTodoService = async (projectId, todoId, updatedTodoData) => {
+  if (!projectId || !todoId) {
+    throw new Error("Project ID and Todo ID are required.");
+  }
+
+  console.log("Updating Todo:", { projectId, todoId, updatedTodoData });
+
+  const updatedProject = await ProjectTodo.findOneAndUpdate(
+    { _id: projectId, "todos._id": todoId }, // Find project and specific todo
+    {
+      $set: {
+        "todos.$": updatedTodoData, // Update only the matched todo
+      },
+    },
+    { new: true } // Return the updated document
+  );
+
+  if (!updatedProject) {
+    throw new Error("Project Todo not found or could not be updated.");
+  }
+
+  return updatedProject;
+};

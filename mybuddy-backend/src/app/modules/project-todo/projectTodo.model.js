@@ -40,26 +40,27 @@ const ProjectTodoSchema = new Schema(
         timer: {
           type: Number,
         },
+        checklist: [
+          {
+            id: { type: Number, required: true },
+            text: { type: String, required: true },
+            checked: { type: Boolean, required: true },
+          },
+        ],
+    
+        attachments: [
+          {
+            id: { type: Number, required: true },
+            fileName: { type: String, required: true },
+            uploadedAt: { type: String, required: true }, // Store as string if using `toLocaleString()`
+            fileType: { type: String, required: true },
+            fileUrl: { type: String, required: true },
+          },
+        ],
       },
     ],
 
-    checklist: [
-      {
-        id: { type: Number, required: true },
-        text: { type: String, required: true },
-        checked: { type: Boolean, required: true },
-      },
-    ],
-
-    attachments: [
-      {
-        id: { type: Number, required: true },
-        fileName: { type: String, required: true },
-        uploadedAt: { type: String, required: true }, // Store as string if using `toLocaleString()`
-        fileType: { type: String, required: true },
-        fileUrl: { type: String, required: true },
-      },
-    ],
+   
   },
   {
     timestamps: true,

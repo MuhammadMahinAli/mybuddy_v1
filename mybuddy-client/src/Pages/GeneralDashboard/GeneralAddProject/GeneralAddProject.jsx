@@ -170,12 +170,8 @@ const GeneralAddProject = ({ closeModal }) => {
       projectName: projectData.projectName,
       projectStartDate: projectData?.startDate,
       projectEndDate: projectData?.endDate,
-      listedBy:{
-        memberId:user?._id
-      } ,
+      listedBy:user?._id,
       todos,
-      checklist: [],
-      attachments: [],
     };
     console.log("add project data",data);
     console.log("todo data",dataa);
@@ -223,27 +219,7 @@ const GeneralAddProject = ({ closeModal }) => {
     }
   };
 
-   const handleTodo = (e) => {
-    e.preventDefault();
-    const data = {
-      name: projectData.projectName,
-      projectStartDate: projectData?.startDate,
-      projectEndDate: projectData?.endDate,
-      todos: [
-        {
-          title: taskInput.title,
-          description: taskInput?.details,
-          startDate: taskInput?.startDate,
-          endDate: taskInput?.endDate,
-          status: "working",
-          timer: "",
-        },
-      ],
-      checklist: [],
-      attachments: [],
-    };
-    console.log(data);
-  };
+
   console.log(projectData.category);
   return (
     <div>

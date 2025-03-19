@@ -10,10 +10,11 @@ const Quill = ({  handleTodoDesciption,formData }) => {
   const theme = "snow";
 
   useEffect(() => {
-    if (formData?.description) {
-      setEditorHtml(formData.description); // Load existing description
+    if (formData?.description !== editorHtml) {
+      setEditorHtml(formData.description || ""); // Load existing description
     }
   }, [formData?.description]); // Runs when formData.description changes
+   // Runs when formData.description changes
 
   const handleChange = (html) => {
     setEditorHtml(html);
