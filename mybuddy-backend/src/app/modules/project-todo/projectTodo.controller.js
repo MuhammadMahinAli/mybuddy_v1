@@ -3,7 +3,7 @@
 import httpStatus from "http-status";
 import { catchAsync } from "../../../utils/catchAsync.js";
 import { sendResponse } from "../../../utils/sendResponse.js";
-import { getSingleMemberProjectTodoService, saveProjectTodoService, updateProjectTodoService } from "./projectTodo.service.js";
+import { addTodoToProjectTodoService, getSingleMemberProjectTodoService, saveProjectTodoService, updateProjectTodoService } from "./projectTodo.service.js";
 
 
 export const saveProjectTodoController = catchAsync(async (req, res, next) => {
@@ -71,3 +71,27 @@ export const saveProjectTodoController = catchAsync(async (req, res, next) => {
       });
     }
   };
+
+  // Controller function to add a new To-Do
+export const addTodoToProjectTodoController = async (req, res) => {
+  try {
+    const { projectId } = req.params; // Get projectId from URL
+    const todoData = req.body; // Get To-Do data from request body
+
+    if (!projectId) {
+      return res.status(400).json({ message: "Project ID is required" });
+    }
+
+
+    const updatedProject = await addTodoToProjectTodoService(projectId, todoData);
+
+    return res.status(200).json({
+      message: "To-Do added successfully",
+      project: updatedProject,
+    });
+
+  } catch (error) {
+    console.error("Error adding To-Do:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};

@@ -62,3 +62,24 @@ export const updateProjectTodoService = async (projectId, todoId, updatedTodoDat
 
   return updatedProject;
 };
+
+
+// Service function to add a new To-Do to a project
+export const addTodoToProjectTodoService = async (projectId, todoData) => {
+  try {
+    // Find project by ID and add new To-Do to the 'todos' array
+    const updatedProject = await ProjectTodo.findByIdAndUpdate(
+      projectId,
+      { $push: { todos: todoData } },
+      { new: true } // Return updated document
+    );
+
+    if (!updatedProject) {
+      throw new Error("Project not found");
+    }
+
+    return updatedProject;
+  } catch (error) {
+    throw error;
+  }
+};

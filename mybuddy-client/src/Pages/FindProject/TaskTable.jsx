@@ -4,7 +4,6 @@ import "../GeneralDashboard/GeneralAddProject/editor.css";
 import { Dialog, Transition } from "@headlessui/react";
 import ProjectIcon1 from "../../icons/ProjectIcon1";
 import PropTypes from "prop-types";
-import { LuDivideCircle } from "react-icons/lu";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const TaskTable = ({ tasks, setSelectedTasks,  selectedTasks, theme, setIsOpen, isOpen }) => {

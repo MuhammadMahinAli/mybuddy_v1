@@ -55,6 +55,7 @@ import AdminConference from "../Pages/Admin/AdminConference/AdminConference";
 import AdminTutorials from "../Pages/Admin/AdminTutorials/AdminTutorials";
 import Agent from "../Pages/ResearchBuddyAgent/Agent";
 import GeneralToDo from "../Pages/GeneralDashboard/GeneralToDo/GeneralToDo";
+import CreateTodo from "../Pages/GeneralDashboard/GeneralToDo/CreateTodo";
 
 
 const router = createBrowserRouter([
@@ -161,6 +162,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/my-todo",
         element: <GeneralToDo />,
+      },
+      {
+        path: "/dashboard/create-todo",
+        element: <CreateTodo/>,
       },
       {
         path: "/dashboard/meeting-schedule",

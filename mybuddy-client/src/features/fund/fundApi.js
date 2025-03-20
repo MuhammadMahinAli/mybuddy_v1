@@ -12,6 +12,16 @@ export const fundApi = apiSlice.injectEndpoints({
       }),
      invalidateTags: ["Fund"],
     }),
+
+    createNewIndividualTodo: builder.mutation({
+      query: (data) => ({
+        url: "/todo/add-new",
+        method: "POST",
+        body: data,
+      }),
+     invalidateTags: ["Fund"],
+    }),
+
     getAllProjectTodoByUser: builder.query({
       query: (id) => ({
         url: `/project-todo/getAllOfUser/${id}`,
@@ -28,6 +38,17 @@ export const fundApi = apiSlice.injectEndpoints({
       }),
       invalidateTags: ["Fund"],
     }),
+    addTodoInProjectTodo : builder.mutation({
+      query: ({projectId,data}) => ({
+        url: `/project-todo/${projectId}/add-todo`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidateTags: ["Fund"],
+    }),
+
+
+   
     
     createNewRequest: builder.mutation({
       query: (data) => ({
@@ -87,6 +108,6 @@ export const fundApi = apiSlice.injectEndpoints({
   }),
 });
 
- export const {useUpdateProjectTodoMutation ,useGetAllProjectTodoByUserQuery,useCreateNewTodoMutation,useUpdateStripeFundStatusMutation,useCreateNewRequestMutation, useGetAllStripeFundInfoQuery,useGetFundByRequestedToQuery ,useDeleteFundRequestMutation ,useGetFundByRequestedByQuery,useGetAllFundRequestQuery } = fundApi;
+ export const {useCreateNewIndividualTodoMutation,useAddTodoInProjectTodoMutation,useUpdateProjectTodoMutation ,useGetAllProjectTodoByUserQuery,useCreateNewTodoMutation,useUpdateStripeFundStatusMutation,useCreateNewRequestMutation, useGetAllStripeFundInfoQuery,useGetFundByRequestedToQuery ,useDeleteFundRequestMutation ,useGetFundByRequestedByQuery,useGetAllFundRequestQuery } = fundApi;
 
 // useGetAllPostQuery
