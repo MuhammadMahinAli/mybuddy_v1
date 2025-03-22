@@ -25,6 +25,8 @@ const MobileSidebar = ({
   handleMyTools,
   openMyTools,
   handleAllPost,
+  handleMyTodo,
+  openMyTodo,
   openAllPost,
   logout,
 }) => {
@@ -266,6 +268,35 @@ const MobileSidebar = ({
             <div
               className={`${
                 openMyTools === true ? "block" : "hidden"
+              } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
+            ></div>
+          </li>
+          {/* my todo*/}
+          <li
+            onClick={handleMyTodo}
+            className={`${
+              openMyTodo === true ? "show-content pl-2" : "hide-content"
+            } border-b  cursor-pointer`}
+          >
+            {openMyTodo && (
+              <div className=" bg-[#e4ecf7] h-4 rounded-br-[60px]"></div>
+            )}
+
+            <div
+              className={`${
+                openMyTodo === true
+                  ? "bg-[#f3f6f8] rounded-[20px]  py-2"
+                  : "bg-[#e4ecf7]  py-3"
+              } flex relative items-center justify-center`}
+            >
+              <Link to="/dashboard/my-tools">
+                <img src="/myTool.svg" className="h-5 lg:h-6 w-6" />
+              </Link>
+            </div>
+
+            <div
+              className={`${
+                openMyTodo === true ? "block" : "hidden"
               } bg-[#e4ecf7]  h-4 rounded-tr-[50px]`}
             ></div>
           </li>

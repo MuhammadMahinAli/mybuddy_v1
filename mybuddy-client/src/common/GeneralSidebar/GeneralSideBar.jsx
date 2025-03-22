@@ -18,6 +18,7 @@ const GeneralSideBar = () => {
   const [openSetting, setOpenSetting] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [openAllPost, setOpenAllPost] = useState(false);
+  const [openMyTodo, setOpenMyTodo] = useState(false);
   const [openRequestOption, setOpenRequestOption] = useState(false);
   const [userData, setUserData] = useState({});
   const{singleUser} = useContext(AuthContext);
@@ -48,7 +49,8 @@ setUserData(singleUser);
       setOpenProfile,
       setOpenRequestOption,
       setOpenAllPost,
-      setOpenMyTools
+      setOpenMyTools,
+      setOpenMyTodo
     ]);
   const handleProject = () =>
     toggleState(setOpenProject, [
@@ -62,7 +64,8 @@ setUserData(singleUser);
       setOpenProfile,
       setOpenRequestOption,
       setOpenAllPost,
-      setOpenMyTools
+      setOpenMyTools,
+      setOpenMyTodo
     ]);
   const handleRequest = () =>
     toggleState(setOpenRequest, [
@@ -75,7 +78,8 @@ setUserData(singleUser);
       setOpenSetting,
       setOpenProfile,
       setOpenAllPost,
-      setOpenMyTools
+      setOpenMyTools,
+      setOpenMyTodo
     ]);
   const handleCreateProject = () =>
     toggleState(setOpenCreateProject, [
@@ -89,7 +93,8 @@ setUserData(singleUser);
       setOpenProfile,
       setOpenRequestOption,
       setOpenAllPost,
-      setOpenMyTools
+      setOpenMyTools,
+      setOpenMyTodo
     ]);
   // const handleMblDashboard = () =>
   const handleFund = () =>
@@ -104,7 +109,8 @@ setUserData(singleUser);
       setOpenProfile,
       setOpenRequestOption,
       setOpenAllPost,
-      setOpenMyTools
+      setOpenMyTools,
+      setOpenMyTodo
     ]);
   const handleFriendRqst = () =>
     toggleState(setOpenFrndRqst, [
@@ -118,7 +124,8 @@ setUserData(singleUser);
       setOpenProfile,
       setOpenRequestOption,
       setOpenAllPost,
-      setOpenMyTools
+      setOpenMyTools,
+      setOpenMyTodo
     ]);
   const handleMeeting = () =>
     toggleState(setOpenMeet, [
@@ -132,7 +139,8 @@ setUserData(singleUser);
       setOpenProfile,
       setOpenRequestOption,
       setOpenAllPost,
-      setOpenMyTools
+      setOpenMyTools,
+      setOpenMyTodo
     ]);
   const handleProfile = () =>
     toggleState(setOpenProfile, [
@@ -146,7 +154,8 @@ setUserData(singleUser);
       setOpenMeet,
       setOpenRequestOption,
       setOpenAllPost,
-      setOpenMyTools
+      setOpenMyTools,
+      setOpenMyTodo
     ]);
   const handleMyTools = () =>
     toggleState( setOpenMyTools, [
@@ -160,8 +169,8 @@ setUserData(singleUser);
       setOpenMeet,
       setOpenRequestOption,
       setOpenAllPost,
-      setOpenProfile
-     
+      setOpenProfile,
+      setOpenMyTodo
     ]);
   const handleSetting = () =>
     toggleState(setOpenSetting, [
@@ -175,7 +184,8 @@ setUserData(singleUser);
       setOpenProfile,
       setOpenRequestOption,
       setOpenAllPost,
-      setOpenMyTools
+      setOpenMyTools,
+      setOpenMyTodo
     ]);
   const handleAllPost = () =>
     toggleState(setOpenAllPost, [
@@ -189,8 +199,26 @@ setUserData(singleUser);
       setOpenProfile,
       setOpenRequestOption,
       setOpenSetting,  
-      setOpenMyTools
+      setOpenMyTools,
+      setOpenMyTodo
     ]);
+
+  const handleMyTodo = () =>
+    toggleState(setOpenMyTodo, [
+      setOpenDashboard,
+      setOpenProject,
+      setOpenRequest,
+      setOpenCreateProject,
+      setOpenFrndRqst,
+      setOpenFund,
+      setOpenMeet,
+      setOpenProfile,
+      setOpenRequestOption,
+      setOpenSetting,  
+      setOpenMyTools,
+    ]);
+
+
     // logout
     const { logout: originalLogout } = useAuthCheck();
     const navigate = useNavigate()
@@ -228,6 +256,8 @@ setUserData(singleUser);
         handleSetting={handleSetting}
         handleMyTools={handleMyTools}
         handleAllPost={handleAllPost}
+        handleMyTodo={handleMyTodo}
+        openMyTodo={openMyTodo}
         openAllPost={openAllPost}
         openMyTools={openMyTools}
         openCreateProject={openCreateProject}
@@ -254,6 +284,8 @@ setUserData(singleUser);
         handleSetting={handleSetting}
         handleMyTools={handleMyTools}
         handleAllPost={handleAllPost}
+        handleMyTodo={handleMyTodo}
+        openMyTodo={openMyTodo}
         openAllPost={openAllPost}
         openMyTools={openMyTools}
         setOpenRequestOption={setOpenRequestOption}

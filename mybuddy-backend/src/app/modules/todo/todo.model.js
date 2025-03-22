@@ -6,12 +6,26 @@ const TodoSchema = new Schema(
       type: String,
     },
 
+    startDate:{
+      type: Date,
+    },
+    endDate:{
+      type: Date,
+    },
+
+
     listedBy: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Member",
     },
-
+    status: {
+      type: String,
+      enum: ["working"],
+    },
+    timer: {
+      type: Number,
+    },
     description: {
       type: String,
     },

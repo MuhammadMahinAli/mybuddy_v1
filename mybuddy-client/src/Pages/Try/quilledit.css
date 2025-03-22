@@ -1,4 +1,4 @@
-.ql-snow input {
+.reactQuill .ql-snow input {
   background-color: white;
 }
 .reactQuill
@@ -39,7 +39,7 @@ h6 {
 /* Style for Quill-generated unordered list with data-checked attribute */
 /* General styling for ordered and unordered lists */
 .reactQuill ol,
-ul {
+.reactQuill ul {
   padding-left: 35px;
   margin: 12px 0;
   font-size: 14px;
@@ -130,22 +130,22 @@ ul {
 }
 
 /* Style for indented paragraphs */
-.ql-indent-1 {
+.reactQuill .ql-indent-1 {
   padding-left: 30px;
   margin: 5px 0;
 }
 
 /* Right-to-left direction with center alignment */
-.ql-direction-rtl.ql-align-center {
+.reactQuill .ql-direction-rtl.ql-align-center {
   direction: rtl;
   text-align: center;
 }
 
 /* Right-aligned text */
-.ql-align-right {
+.reactQuill .ql-align-right {
   text-align: right;
 }
-.ql-align-center {
+.reactQuill .ql-align-center {
   text-align: center;
 }
 
@@ -174,12 +174,12 @@ ul {
     font-size: 16px;
   }
 
-  .custom-ol-list {
+  .reactQuill .custom-ol-list {
     list-style: decimal;
     padding-left: 30px;
     margin: 10px 0px;
   }
-  .custom-ul-list {
+  .reactQuill .custom-ul-list {
     list-style: disc;
     padding-left: 30px;
     margin: 10px 0px;

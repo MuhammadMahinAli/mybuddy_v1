@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useUpdateProjectTodoMutation } from '../../../features/fund/fundApi';
 import { PiShareFatLight } from "react-icons/pi";
 import { AiOutlineExpandAlt, AiOutlineFilePdf } from "react-icons/ai";
 import { GoClock } from "react-icons/go";
@@ -14,11 +13,12 @@ import {
 import "react-quill/dist/quill.snow.css"; 
 import Quill from '../../Try/Quill';
 import { rawFileUpload } from '../../../utils/cloudinaryForRaw';
+import { useUpdateTodoMutation } from '../../../features/fund/fundApi';
 
 
-const UpdateProjectTodo = ({selectedTodo,closeSlideBox,statusStyles, formData,  isExpand, setIsExpand, setFormData,elapsedTime, setElapsedTime,selectedProjectTodo}) => {
+const UpdateTodo = ({selectedIndividualTodo,closeTodoSlideBox,statusStyles, isExpand, setIsExpand, indiFormData, setIndiFormData,elapsedTime, setElapsedTime}) => {
 
-  const [updateProjectTodo] = useUpdateProjectTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
   const [isRunning, setIsRunning] = useState(false);
 
   const [timerStart, setTimerStart] = useState(null);
@@ -26,7 +26,6 @@ const UpdateProjectTodo = ({selectedTodo,closeSlideBox,statusStyles, formData,  
     const [isOpenCheckbox, setIsOpenCheckbox] = useState(false);
   const fileInputRef = useRef(null);
 
-  console.log(selectedTodo);
  //----------- get day range
   function getDateRange(startDateString, endDateString) {
     const startDate = new Date(startDateString);
@@ -56,20 +55,20 @@ const UpdateProjectTodo = ({selectedTodo,closeSlideBox,statusStyles, formData,  
   };
 
       // ---------------- sliding box
-      // const [formData, setFormData] = useState(selectedTodo || {});
+      // const [indiFormData, setIndiFormData] = useState(selectedIndividualTodo || {});
   
 
       //----------- Update title
       const handleTitleChange = (e) => {
-        setFormData((prev) => ({ ...prev, title: e.target.value }));
+        setIndiFormData((prev) => ({ ...prev, title: e.target.value }));
       };
       const handleStatusChange = (e) => {
-        setFormData((prev) => ({ ...prev, status: e.target.value }));
+        setIndiFormData((prev) => ({ ...prev, status: e.target.value }));
       };
     
       //----------- description
       const handleTodoDesciption = (description) => {
-        setFormData((prevState) => ({
+        setIndiFormData((prevState) => ({
           ...prevState,
           description: description,
         }));
@@ -81,7 +80,7 @@ const UpdateProjectTodo = ({selectedTodo,closeSlideBox,statusStyles, formData,  
       const handleAddChecklistItem = () => {
         const newItem = { id: Date.now(), text: "Add new item", checked: false };
     
-        setFormData((prev) => ({
+        setIndiFormData((prev) => ({
           ...prev,
           checklist: Array.isArray(prev.checklist)
             ? [newItem, ...prev.checklist]
@@ -91,7 +90,7 @@ const UpdateProjectTodo = ({selectedTodo,closeSlideBox,statusStyles, formData,  
     
       //----------- Toggle checklist item checked state
       const handleToggleChecklist = (id) => {
-        setFormData((prev) => ({
+        setIndiFormData((prev) => ({
           ...prev,
           checklist: prev.checklist.map((item) =>
             item.id === id ? { ...item, checked: !item.checked } : item
@@ -101,7 +100,7 @@ const UpdateProjectTodo = ({selectedTodo,closeSlideBox,statusStyles, formData,  
     
       //----------- Remove checklist item
       const handleRemoveChecklistItem = (id) => {
-        setFormData((prev) => ({
+        setIndiFormData((prev) => ({
           ...prev,
           checklist: prev.checklist.filter((item) => item.id !== id),
         }));
@@ -131,8 +130,8 @@ const UpdateProjectTodo = ({selectedTodo,closeSlideBox,statusStyles, formData,  
                 fileUrl: uploadedUrl,
               };
     
-              // Update formData with the new attachment
-              setFormData((prev) => ({
+              // Update indiFormData with the new attachment
+              setIndiFormData((prev) => ({
                 ...prev,
                 attachments: Array.isArray(prev.attachments)
                   ? [...prev.attachments, newAttachment]
@@ -149,77 +148,91 @@ const UpdateProjectTodo = ({selectedTodo,closeSlideBox,statusStyles, formData,  
     
       //----------- Remove an attachment
       const handleRemoveAttachment = (id) => {
-        setFormData((prev) => ({
+        setIndiFormData((prev) => ({
           ...prev,
           attachments: prev.attachments.filter((att) => att.id !== id),
         }));
       };
     
- //------------- Timer Logic
- useEffect(() => {
-  let timer;
-  if (isRunning) {
-    // Timer is running, update elapsedTime every second
-    timer = setInterval(() => {
-      setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
-    }, 1000);
-  } else if (!isRunning && timerStart !== null) {
-    // Stop the timer and save elapsed time
-    clearInterval(timer);
-  }
+    //   // Function to start/stop timer
+    //   const handleTimerToggle = () => {
+    //     if (isRunning) {
+    //       setIsRunning(false);
+    //     } else {
+    //       setTimerStart(Date.now() - elapsedTime * 1000); // Preserve elapsed time
+    //       setIsRunning(true);
+    //     }
+    //   };
+    
+  //------------- Timer Logic
+  useEffect(() => {
+    let timer;
+    if (isRunning) {
+      // Timer is running, update elapsedTime every second
+      timer = setInterval(() => {
+        setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
+      }, 1000);
+    } else if (!isRunning && timerStart !== null) {
+      // Stop the timer and save elapsed time
+      clearInterval(timer);
+    }
 
-  return () => {
-    clearInterval(timer); // Cleanup on component unmount
-  };
-}, [isRunning]);
+    return () => {
+      clearInterval(timer); // Cleanup on component unmount
+    };
+  }, [isRunning]);
 
+  useEffect(() => {
+    // Sync elapsed time with initial timer value when the selectedTodo changes
+    if (selectedIndividualTodo) {
+      setElapsedTime(selectedIndividualTodo?.timer || 0);
+    }
+  }, [selectedIndividualTodo]);
 
 // Function to start/stop timer
 const handleTimerToggle = () => {
-  if (isRunning) {
+    if (isRunning) {
+      setIsRunning(false);
+      const newElapsedTime = Math.floor((Date.now() - timerStart) / 1000) + elapsedTime;  // Calculate new elapsed time
+      setElapsedTime(newElapsedTime);  // Update elapsed time
+      setIndiFormData((prev) => ({
+        ...prev,
+        timer: newElapsedTime,  // Update the timer in form data
+      }));
+    } else {
+      setTimerStart(Date.now() - elapsedTime * 1000); // Preserve elapsed time when restarting
+      setIsRunning(true);
+    }
+  };
+  
+  // Reset timer
+  const handleReset = () => {
     setIsRunning(false);
-    const newElapsedTime = Math.floor((Date.now() - timerStart) / 1000) + elapsedTime;  // Calculate new elapsed time
-    setElapsedTime(newElapsedTime);  // Update elapsed time
-    setFormData((prev) => ({
+    setElapsedTime(0);  // Reset elapsed time
+    setIndiFormData((prev) => ({
       ...prev,
-      timer: newElapsedTime,  // Update the timer in form data
+      timer: 0,  // Reset timer in form data
     }));
-  } else {
-    setTimerStart(Date.now() - elapsedTime * 1000); // Preserve elapsed time when restarting
-    setIsRunning(true);
-  }
-};
+  };
+  
 
-// Reset timer
-const handleReset = () => {
-  setIsRunning(false);
-  setElapsedTime(0);  // Reset elapsed time
-  setFormData((prev) => ({
-    ...prev,
-    timer: 0,  // Reset timer in form data
-  }));
-};
-
-
-const formatTime = (seconds) => {
-  const hrs = String(Math.floor(seconds / 3600)).padStart(2, "0");
-  const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
-  const secs = String(seconds % 60).padStart(2, "0");
-  return `${hrs}:${mins}:${secs}`;
-};
+  const formatTime = (seconds) => {
+    const hrs = String(Math.floor(seconds / 3600)).padStart(2, "0");
+    const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
+    const secs = String(seconds % 60).padStart(2, "0");
+    return `${hrs}:${mins}:${secs}`;
+  };
      
       const handleSubmit = async (e) => {
         e.preventDefault();
-        const todoId = selectedTodo?._id;
-        const projectId = selectedProjectTodo;
+        const todoId = selectedIndividualTodo?._id;
   
-        console.log(projectId, todoId, selectedProjectTodo);
+        console.log( todoId)
     
         try {
-          const result = await updateProjectTodo({
+          const result = await updateTodo({
             todoId,
-            projectId,
-            data: formData,
+            data: indiFormData,
           });
     
           console.log("Updated Todo:", result);
@@ -249,9 +262,9 @@ const formatTime = (seconds) => {
       };
 
       useEffect(() => {
-        setFormData(selectedTodo);
-        setElapsedTime(selectedTodo?.timer || 0);
-      }, [selectedTodo]);
+        setIndiFormData(selectedIndividualTodo)// Log the data to check
+        setElapsedTime(selectedIndividualTodo?.timer || 0);
+      }, [selectedIndividualTodo]);
 
 
     return (
@@ -263,13 +276,13 @@ const formatTime = (seconds) => {
               <PiShareFatLight className="text-xl" />
               <p>Share</p>
             </button>
-            <button onClick={()=>setIsExpand(!isExpand)} className="hover:underline flex items-center space-x-1">
+            <button className="hover:underline flex items-center space-x-1">
               <AiOutlineExpandAlt className="text-xl" />
-              <p>{isExpand ? "Collapse":"Expand"}</p>
+              <p>Expand</p>
             </button>
           </div>
           <button
-            onClick={closeSlideBox}
+            onClick={closeTodoSlideBox}
             className="focus:outline-none text-gray-400"
           >
             ✕
@@ -277,7 +290,7 @@ const formatTime = (seconds) => {
         </div>
 
         {/* Title Input */}
-     
+        {selectedIndividualTodo && (
           <>
             <div className="flex items-center space-x-2">
               <button className="text-gray-500 focus:outline-none text-lg">
@@ -285,7 +298,7 @@ const formatTime = (seconds) => {
               </button>
               <input
                 type="text"
-                value={formData?.title}
+                value={indiFormData?.title}
                 onChange={handleTitleChange}
                 className="text-2xl font-bold text-gray-800 w-full bg-transparent focus:outline-none"
               />
@@ -295,20 +308,20 @@ const formatTime = (seconds) => {
             <div className="flex items-center space-x-2">
               {/* <button
                 className={`px-3 py-1 capitalize rounded-md focus:outline-none flex items-center space-x-1 ${
-                  statusStyles[selectedTodo.status] ||
+                  statusStyles[selectedIndividualTodo.status] ||
                   "bg-gray-300 text-gray-700 border-gray-500"
                 }`}
               >
-                <span>{selectedTodo.status}</span>
+                <span>{selectedIndividualTodo.status}</span>
                 <IoIosArrowDown />
               </button> */}
               <div className="flex items-center space-x-2">
                 <select
                   name="status"
-                  value={formData?.status}
+                  value={indiFormData?.status}
                   onChange={handleStatusChange}
                   className={`px-3 py-1 capitalize rounded-md focus:outline-none flex items-center space-x-1 ${
-                    statusStyles[selectedTodo?.status] ||
+                    statusStyles[selectedIndividualTodo?.status] ||
                     "bg-gray-300 text-gray-700 border-gray-500"
                   }`}
                 >
@@ -324,8 +337,8 @@ const formatTime = (seconds) => {
                 <GoClock className="text-xl" />
                 <span>
                   {getDateRange(
-                    selectedTodo?.startDate,
-                    selectedTodo?.endDate
+                    selectedIndividualTodo.startDate,
+                    selectedIndividualTodo.endDate
                   )}
                 </span>
               </div>
@@ -343,7 +356,7 @@ const formatTime = (seconds) => {
                 <span>{isRunning ? "Running..." : "Start Timer"}</span>
               </div>
               <div className="text-xl font-bold flex items-center space-x-4">
-                {formData?.timer > 0 && (
+                {indiFormData?.timer > 0 && (
                   <button
                     onClick={handleReset}
                     className="text-red-600 text-sm font-bold"
@@ -351,17 +364,14 @@ const formatTime = (seconds) => {
                     Reset
                   </button>
                 )}
-               <p>{formatTime(elapsedTime)}</p>
+                   <p>{formatTime(elapsedTime)}</p>
               </div>
             </div>
             {/* Description Editor */}
-         {
-          formData?.description &&
-          <Quill
-          formData={selectedTodo}
-          handleTodoDesciption={handleTodoDesciption}
-        />
-         }
+            <Quill
+            formData={selectedIndividualTodo}
+              handleTodoDesciption={handleTodoDesciption}
+            />
 
             {/* Buttons Row */}
             <div className="flex space-x-4">
@@ -393,7 +403,7 @@ const formatTime = (seconds) => {
             </div>
 
             {/* Checklist Section */}
-            {formData?.checklist?.length > 0 && (
+            {indiFormData?.checklist?.length > 0 && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
@@ -404,10 +414,10 @@ const formatTime = (seconds) => {
                     <h3 className="text-lg font-semibold text-gray-700">
                       Checklist{" "}
                       {
-                        formData?.checklist?.filter((item) => item.checked)
+                        indiFormData?.checklist?.filter((item) => item.checked)
                           .length
                       }
-                      /{formData?.checklist?.length}
+                      /{indiFormData?.checklist?.length}
                     </h3>
                   </div>
                 </div>
@@ -419,12 +429,12 @@ const formatTime = (seconds) => {
                       className="bg-blue-500 h-2 rounded absolute left-0 top-0 transition-all duration-500"
                       style={{
                         width: `${
-                          formData?.checklist?.length > 0
+                          indiFormData?.checklist?.length > 0
                             ? Math.round(
-                                (formData?.checklist?.filter(
+                                (indiFormData?.checklist?.filter(
                                   (item) => item.checked
                                 ).length /
-                                  formData?.checklist?.length) *
+                                  indiFormData?.checklist?.length) *
                                   100
                               )
                             : 0
@@ -433,12 +443,12 @@ const formatTime = (seconds) => {
                     />
                   </div>
                   <span className="text-sm text-gray-600">
-                    {formData?.checklist?.length > 0
+                    {indiFormData?.checklist?.length > 0
                       ? Math.round(
-                          (formData?.checklist?.filter(
+                          (indiFormData?.checklist?.filter(
                             (item) => item.checked
                           ).length /
-                            formData?.checklist?.length) *
+                            indiFormData?.checklist?.length) *
                             100
                         )
                       : 0}
@@ -448,7 +458,7 @@ const formatTime = (seconds) => {
 
                 {/* Checklist Items */}
                 <div className="space-y-4">
-                  {formData?.checklist?.map((item) => (
+                  {indiFormData?.checklist?.map((item) => (
                     <div
                       key={item.id}
                       className="flex items-center space-x-2 p-3 bg-[#E5E5E5] rounded-xl border"
@@ -468,7 +478,7 @@ const formatTime = (seconds) => {
                           type="text"
                           value={item.text}
                           onChange={(e) =>
-                            setFormData((prev) => ({
+                            setIndiFormData((prev) => ({
                               ...prev,
                               checklist: prev?.checklist?.map((curr) =>
                                 curr.id === item.id
@@ -500,13 +510,13 @@ const formatTime = (seconds) => {
                     </p>
                     <p className="flex-grow capitalize">Add new item</p>
                   </div>
-                  {/* <div
+                  <div
                     className="hidden md:block pb-3"
                     dangerouslySetInnerHTML={{
-                      __html: `${formData?.description}
+                      __html: `${indiFormData?.description}
                         `,
                     }}
-                  /> */}
+                  />
                 </div>
               </div>
             )}
@@ -523,8 +533,8 @@ const formatTime = (seconds) => {
               <div className="flex flex-col items-center justify-between space-y-4 bg-gray-50 p-2 rounded w-full">
                 {/* Attachment icon placeholder */}
 
-                {formData?.attachments?.length > 0 ? (
-                  formData?.attachments?.map((attachment) => (
+                {indiFormData?.attachments?.length > 0 ? (
+                  indiFormData?.attachments?.map((attachment) => (
                     <div
                       key={attachment.id}
                       className="flex items-center justify-between bg-gray-50 p-2 rounded border w-full"
@@ -554,7 +564,7 @@ const formatTime = (seconds) => {
                   ))
                 ) : (
                   <p className="text-gray-500 text-sm">
-                    No attachments uploaded
+                    No attachments uploaded...
                   </p>
                 )}
               </div>
@@ -562,16 +572,15 @@ const formatTime = (seconds) => {
 
             {/* Close Button */}
             <button
-  onClick={handleSubmit}
-  className="w-full py-2 text-xl bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md text-white font-bold"
->
-  Update
-</button>
-
+              onClick={handleSubmit}
+            className="w-full py-2 text-xl bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md text-white font-bold"
+            >
+              Update
+            </button>
           </>
-  
+        )}
       </div>
     );
 };
 
-export default UpdateProjectTodo;
+export default UpdateTodo;

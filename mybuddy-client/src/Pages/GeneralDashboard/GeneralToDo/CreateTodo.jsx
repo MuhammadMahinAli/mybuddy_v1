@@ -2,16 +2,12 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AiOutlineExpandAlt, AiOutlineFilePdf } from "react-icons/ai";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiCheckSquare, FiEdit3 } from "react-icons/fi";
-import { GoClock } from "react-icons/go";
 import { GrAttachment } from "react-icons/gr";
 import {
-  IoIosArrowBack,
   IoIosArrowDown,
   IoIosArrowDropdownCircle,
-  IoIosArrowForward,
   IoIosArrowUp,
 } from "react-icons/io";
-import { IoCalendarOutline } from "react-icons/io5";
 import { PiShareFatLight } from "react-icons/pi";
 import Quill from "../../Try/Quill";
 import DatePicker from "react-datepicker";
@@ -26,7 +22,7 @@ import {
 import { SlCalender } from "react-icons/sl";
 import Swal from "sweetalert2";
 
-const CreateTodo = ({setIsOpenAddSlider}) => {
+const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand, setIsExpand}) => {
 
  //------------------------------------------------------------------------------//
  //----------------------------     States    -----------------------------------//
@@ -74,6 +70,7 @@ const CreateTodo = ({setIsOpenAddSlider}) => {
     checklist: [], // Checklist items
     attachments: [],
     status: "working",
+    timer: 0,
     startDate: new Date(),
     endDate: new Date(),
   });
@@ -87,6 +84,7 @@ const CreateTodo = ({setIsOpenAddSlider}) => {
             status: "working",
             startDate: new Date(),
             endDate: new Date(),
+            
           });
   }
   //------------ Update title
@@ -250,10 +248,10 @@ const CreateTodo = ({setIsOpenAddSlider}) => {
         data: formData,
       });
 
-      console.log("Updated Todo:", result);
+      console.log("Updated Todo:", result?.data);
 
       // ✅ Show Success Alert
-      if (result?.data?.success) {
+      if (result?.data?.message === "To-Do added successfully") {
         Swal.fire({
           title: "Success!",
           text: "Todo added successfully.",
@@ -261,6 +259,8 @@ const CreateTodo = ({setIsOpenAddSlider}) => {
           confirmButtonText: "OK",
         });
         clearForm();
+        setProjectTodoData((prevData) => [...prevData, updatedFormData]);
+       
       } else {
         throw new Error("Update failed");
       }
@@ -311,6 +311,8 @@ const CreateTodo = ({setIsOpenAddSlider}) => {
           confirmButtonText: "OK",
         });
         clearForm();
+        console.log(result)
+        setTodoData((prevData) => [result.data.data, ...prevData]);
       } else {
         throw new Error("Update failed");
       }
@@ -339,9 +341,9 @@ const CreateTodo = ({setIsOpenAddSlider}) => {
                   <p>Share</p>
                 </button>
 
-                <button className="hover:underline flex items-center space-x-1">
+                <button onClick={()=>setIsExpand(!isExpand)} className="hover:underline flex items-center space-x-1">
                   <AiOutlineExpandAlt className="text-xl" />
-                  <p>Expand</p>
+                  <p>{isExpand ? "Collapse":"Expand"}</p>
                 </button>
               </div>
               <button
@@ -528,7 +530,7 @@ const CreateTodo = ({setIsOpenAddSlider}) => {
             </div>
 
             {/* Buttons Row */}
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 pt-5">
               <button
                 onClick={() => setIsOpenCheckbox(true)}
                 className="flex items-center space-x-2 bg-blue-100 text-blue-700 border border-blue-700 px-4 py-2 rounded-md hover:bg-blue-200"
@@ -659,13 +661,13 @@ const CreateTodo = ({setIsOpenAddSlider}) => {
                     <p className="border px-2 rounded-md border-gray-400">+</p>
                     <p className="flex-grow capitalize">Add new item</p>
                   </div>
-                  <div
+                  {/* <div
                     className="hidden md:block pb-3"
                     dangerouslySetInnerHTML={{
                       __html: `${formData?.description}
                 `,
                     }}
-                  />
+                  /> */}
                 </div>
               </div>
             )}
@@ -710,13 +712,13 @@ const CreateTodo = ({setIsOpenAddSlider}) => {
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-500 text-sm">
+                  <p className="text-gray-500 text-sm text-left">
                     No attachments uploaded
                   </p>
                 )}
               </div>
             </div>
-            <button onClick={activeTab === "project" ? handleSubmit : handleIndividualTodoSubmit }>Submit</button>
+            <button className="w-full py-2 text-xl bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md text-white font-bold" onClick={activeTab === "project" ? handleSubmit : handleIndividualTodoSubmit }>Create To do</button>
           </div>
 
    
