@@ -12,7 +12,7 @@ const HelpPopular = () => {
       const fetchTutorialInfo = async () => {
         try {
           const response = await fetch(
-            `https://test-two-22w0.onrender.com/api/v1/tutorials/getAll`,
+            `http://localhost:3000/api/v1/tutorials/getAll`,
             {
               method: "GET",
               headers: {

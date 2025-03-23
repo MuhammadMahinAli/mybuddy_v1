@@ -61,7 +61,7 @@ const GeneralProjectDetails = () => {
     }
     const fetchData = async () => {
       const res = await apiFetch(
-        `https://test-two-22w0.onrender.com/api/v1/project-join-request/Accepted/team-member/${projectId}`,
+        `http://localhost:3000/api/v1/project-join-request/Accepted/team-member/${projectId}`,
         "GET"
       );
       setTeamMembers(res?.data ?? {});

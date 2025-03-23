@@ -21,7 +21,7 @@ const generateOtp = () => {
 console.log(process.env.NODEMAIL_PASS, process.env.NODEMAIL_USER);
 // Function to generate attendance link with OTP   http://localhost:5173/    https://researchbdy.com
 const generateAttendanceLink = (otp, meetingId) => {
-  const baseUrl = "https://researchbdy.com/attendance";
+  const baseUrl = "http://localhost:5173/attendance";
   const currentDate = moment().format("YYYY-MM-DD"); // Generate today's date in 'YYYY-MM-DD' format
   return `${baseUrl}?otp=${otp}&meetingId=${meetingId}&date=${currentDate}`;
 };
@@ -108,6 +108,7 @@ export const sendAndScheduleAttendanceEmailService = async (meeting) => {
       meetingPlatform
     ) => {
       const meetingLink = meetingPlatform.link;
+      
       //const localTime = formatMeetingTime(meetingTime, user.timeZone);
       return `
         <div style="font-family: Arial, sans-serif;">
@@ -142,7 +143,6 @@ export const sendAndScheduleAttendanceEmailService = async (meeting) => {
           <p><a href="${meetingLink}" style="color: #3498db;">Join Meeting</a></p>
           <p>The OTP is also provided below. Don't forget to share with your team member during meeting. It's really important to recored their attendence. OTP will be valid for 5 minutes after meeting duration.</p>
           <p>The OTP= ${otp}</p>
-          <p>If you have any questions or need further assistance, feel free to contact us.</p>
           <p>Best regards,</p>
           <p>The Research Buddy Team</p>
         </div>

@@ -51,7 +51,7 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
     if (projectID) {
       try {
         const response = await fetch(
-          `https://test-two-22w0.onrender.com/api/v1/project-join-request/Accepted/teamMemberOf/${projectID}/${userId}`,
+          `http://localhost:3000/api/v1/project-join-request/Accepted/teamMemberOf/${projectID}/${userId}`,
           {
             method: "GET",
             headers: {
@@ -157,16 +157,16 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
     const offset = date.getTimezoneOffset() * 60000; // Offset in milliseconds
     return new Date(date.getTime() - offset).toISOString();
   };
-  
+
   useEffect(() => {
     if (formData.meetingTime) {
       const meetingTimeDate = new Date(formData.meetingTime);
-  
+
       if (isNaN(meetingTimeDate.getTime())) {
         console.error("Invalid meetingTime provided");
         return;
       }
-  
+
       if (formData.repeat === "do not repeat") {
         setFormData((prev) => ({
           ...prev,
@@ -174,8 +174,10 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
         }));
       } else {
         const calculatedEndDate = new Date(meetingTimeDate);
-        calculatedEndDate.setDate(calculatedEndDate.getDate() + formData.weeklyRepeat * 7);
-  
+        calculatedEndDate.setDate(
+          calculatedEndDate.getDate() + formData.weeklyRepeat * 7
+        );
+
         setFormData((prev) => ({
           ...prev,
           endDate: adjustToLocalTime(calculatedEndDate),
@@ -183,7 +185,6 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
       }
     }
   }, [formData.repeat, formData.meetingTime, formData.weeklyRepeat]);
-  
 
   // useEffect(() => {
   //   if (formData.meetingTime) {
@@ -217,31 +218,31 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-     // Get current time and calculate the 40-minute future time limit
-  const currentTime = dayjs();
-  const minAllowedTime = currentTime.add(40, "minute");
+    // Get current time and calculate the 40-minute future time limit
+    const currentTime = dayjs();
+    const minAllowedTime = currentTime.add(40, "minute");
 
-  // Convert meetingTime from the formData to a Day.js object
-  const meetingTime = dayjs(formData.meetingTime);
+    // Convert meetingTime from the formData to a Day.js object
+    const meetingTime = dayjs(formData.meetingTime);
 
-  // Check if meetingTime is in the past or less than 40 minutes from now
-  if (!meetingTime.isValid() || meetingTime.isBefore(currentTime)) {
-    Swal.fire({
-      icon: "error",
-      title: "Invalid Meeting Time",
-      text: "Meeting time cannot be in the past and time should be at least 40 minutes from the current time.",
-    });
-    return;
-  }
+    // Check if meetingTime is in the past or less than 40 minutes from now
+    if (!meetingTime.isValid() || meetingTime.isBefore(currentTime)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Meeting Time",
+        text: "Meeting time cannot be in the past and time should be at least 40 minutes from the current time.",
+      });
+      return;
+    }
 
-  if (meetingTime.isBefore(minAllowedTime)) {
-    Swal.fire({
-      icon: "error",
-      title: "Meeting Time Too Soon",
-      text: "Meeting time should be at least 40 minutes from the current time.",
-    });
-    return;
-  }
+    if (meetingTime.isBefore(minAllowedTime)) {
+      Swal.fire({
+        icon: "error",
+        title: "Meeting Time Too Soon",
+        text: "Meeting time should be at least 40 minutes from the current time.",
+      });
+      return;
+    }
     console.log("form", formData);
 
     const requiredFields = [
@@ -255,10 +256,10 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
       { key: "endDate", label: "End Date" },
       // {key:"weeklyRepeat", label:"Weekly Repeat"}
     ];
-  
+
     // Initial emptyFields array to track empty required fields
     const emptyFields = [];
-  
+
     // Check each required field if it's empty
     requiredFields.forEach(({ key, label }) => {
       const keys = key.split(".");
@@ -270,23 +271,23 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
         emptyFields.push(label);
       }
     });
-  
+
     // Check if meetingMembers array is empty
     if (formData.meetingMembers.length === 0) {
       emptyFields.push("Select Members");
     }
-  
+
     // Check if customDays array is empty when repeat is not "do not repeat"
     if (formData.repeat !== "dontRepeat" && formData.customDays.length === 0) {
       emptyFields.push("Select Days");
     }
-  
+
     // Show SweetAlert if there are any empty fields
     if (emptyFields.length > 0) {
       Swal.fire({
         icon: "warning",
         title: "Incomplete Form",
-        text: `Please fill in the following fields: ${emptyFields.join(", ")}`
+        text: `Please fill in the following fields: ${emptyFields.join(", ")}`,
       });
       return; // Stop the function if there are empty fields
     }
@@ -296,7 +297,7 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
     try {
       // Submit form data to the API
       const response = await fetch(
-        "https://test-two-22w0.onrender.com/api/v1/meeting/create-new",
+        "http://localhost:3000/api/v1/meeting/create-new",
         {
           method: "POST",
           headers: {
@@ -313,7 +314,6 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
       const data = await response.json();
       console.log("Meeting created successfully:", data);
 
-      
       Swal.fire({
         icon: "success",
         title: "Meeting Created!",
@@ -333,7 +333,8 @@ const MeetingForm = ({ setIsOpenMeeting, getAllProjectByUser, userId }) => {
       });
     }
   };
-console.log(formData);
+  console.log(formData);
+
   return (
     <>
       <div className="fixed top-0 left-0  flex justify-center items-center bg-black/40 bg-opacity-50 w-screen h-screen overflow-y-scroll">
@@ -358,7 +359,6 @@ console.log(formData);
                   <select
                     id="projectId"
                     name="projectId"
-        
                     onChange={handleProjectChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   >
@@ -386,7 +386,6 @@ console.log(formData);
                           onChange={handleInputChange}
                           id="title"
                           placeholder="Meeting Title"
-              
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         />
                       </>
@@ -421,7 +420,6 @@ console.log(formData);
                           name="duration"
                           value={formData.duration}
                           onChange={handleInputChange}
-              
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         >
                           <option value={60}>30 minutes</option>
@@ -463,7 +461,6 @@ console.log(formData);
                             name="platform"
                             value={formData.meetingPlatform.platform}
                             onChange={handlePlatformChange}
-                
                             className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                           >
                             <option value="">Select a platform</option>
@@ -510,7 +507,7 @@ console.log(formData);
                             onChange={(e) => {
                               const localTime = e.target.value; // This is the local time
                               const utcTime = new Date(localTime).toISOString(); // Convert to UTC
-                          
+
                               setFormData({
                                 ...formData,
                                 meetingTime: utcTime, // Save UTC time in the form data
@@ -567,7 +564,6 @@ console.log(formData);
                               })
                             }
                             min="0"
-                
                             className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                           />
                         </div>
@@ -696,9 +692,10 @@ console.log(formData);
                                   id={day}
                                   value={day}
                                   checked
-                                
                                 />
-                                <label className="pl-3" htmlFor={day}>{day}</label>
+                                <label className="pl-3" htmlFor={day}>
+                                  {day}
+                                </label>
                               </div>
                             ))}
                           </div>
@@ -743,7 +740,7 @@ export default MeetingForm;
 //     if (projectId) {
 //       // Fetch team members based on the selected project
 //       try {
-//         const response = await fetch(`https://test-two-22w0.onrender.com/api/v1/project-join-request/Accepted/teamMemberOf/${projectId}/${userId}`, {
+//         const response = await fetch(`http://localhost:3000/api/v1/project-join-request/Accepted/teamMemberOf/${projectId}/${userId}`, {
 //           method: 'GET',
 //           headers: {
 //             'Content-Type': 'application/json',
@@ -874,7 +871,7 @@ export default MeetingForm;
 // try {
 //   // Submit form data to the API
 //   const response = await fetch(
-//     "https://test-two-22w0.onrender.com/api/v1/meeting/create-new",
+//     "http://localhost:3000/api/v1/meeting/create-new",
 //     {
 //       method: "POST",
 //       headers: {
@@ -991,7 +988,7 @@ export default MeetingForm;
 //             name="platform"
 //             value={formData.meetingPlatform.platform}
 //             onChange={handlePlatformChange}
-// 
+//
 //             className="mt-1 p-2 border border-gray-300 rounded-md w-full"
 //           >
 //             <option value="">Select a platform</option>

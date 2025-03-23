@@ -214,7 +214,7 @@ const ViewPosts = ({ theme }) => {
   const updateReaction = async (postId, reactedBy, reactionType) => {
     try {
       const response = await fetch(
-        "https://test-two-22w0.onrender.com/api/v1/PostReact/update-reaction",
+        "http://localhost:3000/api/v1/PostReact/update-reaction",
         {
           method: "POST",
           headers: {
@@ -871,7 +871,7 @@ export default ViewPosts;
 //   const updateReaction = async (postId, reactedBy, reactionType) => {
 //     try {
 //       const response = await fetch(
-//         "https://test-two-22w0.onrender.com/api/v1/PostReact/update-reaction",
+//         "http://localhost:3000/api/v1/PostReact/update-reaction",
 //         {
 //           method: "POST",
 //           headers: {

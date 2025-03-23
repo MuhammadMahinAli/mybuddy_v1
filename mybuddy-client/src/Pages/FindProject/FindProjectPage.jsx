@@ -26,7 +26,7 @@ const FindProjectPage = () => {
   const fetchClientSecret = async () => {
     try {
       const response = await fetch(
-        "https://test-two-22w0.onrender.com/api/v1/payment/create-payment-intent",
+        "http://localhost:3000/api/v1/payment/create-payment-intent",
         {
           method: "POST",
           headers: {

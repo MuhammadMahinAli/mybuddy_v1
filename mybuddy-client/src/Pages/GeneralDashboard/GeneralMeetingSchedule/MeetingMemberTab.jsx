@@ -16,7 +16,7 @@ const MeetingMemberTab = () => {
     try {
       console.log(userId);
       const response = await fetch(
-        `https://test-two-22w0.onrender.com/api/v1/meeting/getMeetingByMeetingMember/${userId}?filterType=${filterType}&subFilter=${subFilter}`
+        `http://localhost:3000/api/v1/meeting/getMeetingByMeetingMember/${userId}?filterType=${filterType}&subFilter=${subFilter}`
       );
       const data = await response.json();
       if (data.success) {
@@ -194,7 +194,7 @@ MeetingMemberTab.propTypes = {
 //   const fetchMeetingData = async (selectedFilter) => {
 //     try {
 //       const response = await fetch(
-//         `https://test-two-22w0.onrender.com/api/v1/meeting/status?userId=${userId}&filter=${selectedFilter}`
+//         `http://localhost:3000/api/v1/meeting/status?userId=${userId}&filter=${selectedFilter}`
 //       );
 //       const data = await response.json();
 //       setMeetingData({

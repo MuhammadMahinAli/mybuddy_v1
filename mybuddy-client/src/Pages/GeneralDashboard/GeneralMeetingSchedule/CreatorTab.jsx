@@ -32,7 +32,7 @@ const CreatorTab = () => {
   const fetchMeetings = async () => {
     try {
       const response = await fetch(
-        `https://test-two-22w0.onrender.com/api/v1/meeting/getAllMeetingOf/${userId}?filterType=${filter}&subFilter=${subFilter}`,
+        `http://localhost:3000/api/v1/meeting/getAllMeetingOf/${userId}?filterType=${filter}&subFilter=${subFilter}`,
         {
           method: "GET",
           headers: {
@@ -190,7 +190,10 @@ const CreatorTab = () => {
       }
     });
   };
-
+  const open = ()=>{
+    setIsOpenMeeting(true)
+    console.log("button");
+  }
   return (
     <>
       <div className="bg-gray-100 md:p-6">
@@ -200,7 +203,7 @@ const CreatorTab = () => {
             YOU'VE CREATED {meetingAsMembers?.length} MEETINGS
           </h2>
           <button
-            onClick={() => setIsOpenMeeting(true)}
+            onClick={open}
             className="text-sm xl:text-lg px-2 md:px-4 py-2 text-white rounded-lg shadow [background:linear-gradient(-84.24deg,#2adba4,#76ffd4)] font-bold hover:bg-green-500 transition-colors"
           >
             Create Meeting
@@ -326,13 +329,7 @@ const CreatorTab = () => {
                       setSelectedMeeting={setSelectedMeeting}
                     />
                   )}
-                  {isOpenMeeting === true && (
-                    <MeetingForm
-                      setIsOpenMeeting={setIsOpenMeeting}
-                      getAllProjectByUser={getAllProjectByUser}
-                      userId={userId}
-                    />
-                  )}
+                 
                 </div>
               </>
             ))
@@ -344,6 +341,13 @@ const CreatorTab = () => {
             </div>
           )}
         </div>
+        {isOpenMeeting === true && (
+                    <MeetingForm
+                      setIsOpenMeeting={setIsOpenMeeting}
+                      getAllProjectByUser={getAllProjectByUser}
+                      userId={userId}
+                    />
+                  )}
         {isOpenUpdateMeeting && selectMeeting && (
           <UpdateMeeting
             meetingData={selectMeeting}

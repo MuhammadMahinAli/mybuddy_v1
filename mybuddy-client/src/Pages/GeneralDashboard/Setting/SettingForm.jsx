@@ -45,7 +45,7 @@ const SettingForm = () => {
 
     try {
       const response = await fetch(
-        "https://test-two-22w0.onrender.com/api/v1/paypal/addLink",
+        "http://localhost:3000/api/v1/paypal/addLink",
         {
           method: "POST",
           headers: {
@@ -96,7 +96,7 @@ const SettingForm = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://test-two-22w0.onrender.com/api/v1/payoneer/addLink",
+        "http://localhost:3000/api/v1/payoneer/addLink",
         {
           method: "POST",
           headers: {

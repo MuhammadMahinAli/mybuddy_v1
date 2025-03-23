@@ -48,7 +48,7 @@ const Attendence = () => {
     }
     const fetchData = async () => {
       const res = await apiFetch(
-        `https://test-two-22w0.onrender.com/api/v1/meeting/getMeetingById/${meetingId}`,
+        `http://localhost:3000/api/v1/meeting/getMeetingById/${meetingId}`,
         "GET"
       );
       setFund(res?.data ?? {});
@@ -64,7 +64,7 @@ const Attendence = () => {
     setOtp(event.target.value); // Update the OTP state as the user types
   };
   console.log("ot", fund?.attendenceLink);
-  //https://researchbdy.com/attendance?otp=384128&meetingId=66fe38de724207f81ec75cc3&date=2024-10-03
+  //http://localhost:5173/attendance?otp=384128&meetingId=66fe38de724207f81ec75cc3&date=2024-10-03
   const handleAttendClick = async () => {
     // Log meeting details for debugging
     console.log({
@@ -78,7 +78,7 @@ const Attendence = () => {
     if (fund?.attendenceLink === otp) {
       try {
         const response = await fetch(
-          "https://test-two-22w0.onrender.com/api/v1/meeting/updateAttendance",
+          "http://localhost:3000/api/v1/meeting/updateAttendance",
           {
             method: "POST",
             headers: {

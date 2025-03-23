@@ -1,3 +1,9 @@
+.reactQuill .ql-snow {
+  border: none;
+  padding-top: -70px;
+}
+
+
 .reactQuill .ql-snow input {
   background-color: white;
 }

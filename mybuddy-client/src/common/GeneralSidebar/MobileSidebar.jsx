@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Context/UserContext";
+import { SiTodoist } from "react-icons/si";
 
 const MobileSidebar = ({
   handleCreateProject,
@@ -290,7 +291,7 @@ const MobileSidebar = ({
               } flex relative items-center justify-center`}
             >
               <Link to="/dashboard/my-tools">
-                <img src="/myTool.svg" className="h-5 lg:h-6 w-6" />
+              <SiTodoist className="h-5 lg:h-6 w-6 text-gray-500" />
               </Link>
             </div>
 

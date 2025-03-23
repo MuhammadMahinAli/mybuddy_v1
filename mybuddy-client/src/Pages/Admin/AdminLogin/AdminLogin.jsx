@@ -91,7 +91,7 @@ const AdminLogin = () => {
           preConfirm: async (email) => {
             try {
               const resendResponse = await axios.post(
-                "https://test-two-22w0.onrender.com/api/v1/member/resend-verification-email",
+                "http://localhost:3000/api/v1/member/resend-verification-email",
                 { email }
               );
               return resendResponse.data.message;
@@ -148,7 +148,7 @@ const AdminLogin = () => {
       preConfirm: async (email) => {
         try {
           const response = await axios.post(
-            "https://test-two-22w0.onrender.com/api/v1/member/sendResetPasswordEmail",
+            "http://localhost:3000/api/v1/member/sendResetPasswordEmail",
             { email }
           );
           return response.data.message;

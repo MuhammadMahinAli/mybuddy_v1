@@ -31,7 +31,7 @@ const Quill = ({  handleTodoDesciption,formData }) => {
 //   };
 
   return (
-    <div className="reactQuill shadow-xl my-5 3xl:py-10 h-52  mt-2 w-56 xs:w-full">
+    <div className="reactQuill border-2 shadow-[4px_2px_14px_-1px_rgba(0,_0,_0,_0.1)] md:my-5   h-[265px] xs:h-[242px] ssm:h-[217px] md:h-[245px] lg:h-[259px]  mt-2 xs:w-full w-full">
       <ReactQuill
         theme={theme}
         name="description"

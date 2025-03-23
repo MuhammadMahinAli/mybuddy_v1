@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/UserContext";
+import { SiTodoist } from "react-icons/si";
+
 const DekstopSidebar = ({
   handleCreateProject,
   handleDashboard,
@@ -342,7 +344,7 @@ const DekstopSidebar = ({
                   : "bg-[#e4ecf7] border-b border-white py-3"
               } flex relative space-x-4  items-center pl-3 `}
             >
-              <img src="/myTool.svg" className="h-9" />
+            <SiTodoist className="h-9 text-gray-500" />
               <p className="lg:text-[18px] xl:text-[22px] font-medium gray600">
                 My To do
               </p>

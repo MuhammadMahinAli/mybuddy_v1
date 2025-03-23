@@ -89,7 +89,7 @@ export const updateAttendanceStatus = async (req, res) => {
 export const getMeetingsForMeetingMemberController = catchAsync(async (req, res) => {
   const  memberId  = req.params.id; // Extract userId from query params
   const { filterType, subFilter } = req.query; // Extract filters
-console.log("mm", memberId, filterType);
+//console.log("mm", memberId, filterType);
   if (!memberId) {
     return res.status(400).json({
       success: false,

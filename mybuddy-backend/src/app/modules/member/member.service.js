@@ -34,7 +34,7 @@ export const createMemberService = async (userInfo) => {
   console.log("result", result);
   console.log("userinfo", userInfo);
 
-  const verificationUrl = `https://researchbdy.com/verified-email/${verificationToken}`;
+  const verificationUrl = `http://localhost:5173/verified-email/${verificationToken}`;
 
   // Send verification email
   await sendEmail({
@@ -97,7 +97,7 @@ export const resendEmailService = async (email) => {
   //member.verificationToken = verificationToken;
   await member.save();
 
-  const verificationLink = `https://researchbdy.com/verified-email/${verificationToken}`;
+  const verificationLink = `http://localhost:5173/verified-email/${verificationToken}`;
   await sendEmail({
     to: email,
     subject: "Verify Your Email Address",
@@ -276,7 +276,7 @@ export const sendForgetPasswordEmailService = async (email) => {
   console.log(user?._id, resetToken, timeRemaining);
 
   // Create the reset URL with token
-  const resetUrl = `https://researchbdy.com/reset-password?id=${user._id}&token=${resetToken}&timeRemaining=${timeRemaining}`;
+  const resetUrl = `http://localhost:5173/reset-password?id=${user._id}&token=${resetToken}&timeRemaining=${timeRemaining}`;
 
   // Send email using utility function
   await sendPasswordResetEmail(user.email, user, resetUrl);

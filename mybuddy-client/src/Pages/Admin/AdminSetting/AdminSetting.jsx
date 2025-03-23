@@ -57,7 +57,7 @@ const AdminSetting = () => {
 
     try {
       const response = await fetch(
-        "https://test-two-22w0.onrender.com/api/v1/paypal/addLink",
+        "http://localhost:3000/api/v1/paypal/addLink",
         {
           method: "POST",
           headers: {
@@ -108,7 +108,7 @@ const AdminSetting = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://test-two-22w0.onrender.com/api/v1/payoneer/addLink",
+        "http://localhost:3000/api/v1/payoneer/addLink",
         {
           method: "POST",
           headers: {
@@ -320,7 +320,7 @@ const AdminSetting = () => {
     console.log(formData);
 
     try {
-      const response = await fetch("https://test-two-22w0.onrender.com/api/v1/adminBankInfo/addInfo", {
+      const response = await fetch("http://localhost:3000/api/v1/adminBankInfo/addInfo", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

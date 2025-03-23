@@ -276,10 +276,10 @@ const handleTimerToggle = () => {
               <PiShareFatLight className="text-xl" />
               <p>Share</p>
             </button>
-            <button className="hover:underline flex items-center space-x-1">
-              <AiOutlineExpandAlt className="text-xl" />
-              <p>Expand</p>
-            </button>
+            <button onClick={()=>setIsExpand(!isExpand)} className="hidden  hover:underline lg:flex items-center space-x-1">
+                  <AiOutlineExpandAlt className="text-xl" />
+                  <p>{isExpand ? "Collapse":"Expand"}</p>
+                </button>
           </div>
           <button
             onClick={closeTodoSlideBox}
@@ -294,7 +294,7 @@ const handleTimerToggle = () => {
           <>
             <div className="flex items-center space-x-2">
               <button className="text-gray-500 focus:outline-none text-lg">
-                <IoIosArrowUp />
+       
               </button>
               <input
                 type="text"
@@ -346,14 +346,14 @@ const handleTimerToggle = () => {
 
             {/* Time Spent Bar */}
             <div className="flex items-center justify-between relative bg-[linear-gradient(to_right,_#EFF4FA_0%,_#B4D9F6_8%,_#D6B6F9_90%)] rounded-md p-3 text-gray-600">
-              <div className="flex items-center space-x-2">
+            <div className="flex  items-center space-x-2">
                 <button
                   onClick={handleTimerToggle}
-                  className="text-xl text-white bg-[#D6B6F9] px-3 py-1 rounded-md"
+                  className="text-sm md:text-xl text-white bg-[#D6B6F9] px-3 py-1 rounded-md"
                 >
                   {isRunning ? "■" : "▶"} {/* Play/Stop Icon */}
                 </button>
-                <span>{isRunning ? "Running..." : "Start Timer"}</span>
+                <span>{isRunning ? "Running" : "Start"}</span>
               </div>
               <div className="text-xl font-bold flex items-center space-x-4">
                 {indiFormData?.timer > 0 && (
@@ -374,10 +374,10 @@ const handleTimerToggle = () => {
             />
 
             {/* Buttons Row */}
-            <div className="flex space-x-4">
+            <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-4 pt-1 md:pt-5">
               <button
                 onClick={() => setIsOpenCheckbox(true)}
-                className="flex items-center space-x-2 bg-blue-100 text-blue-700 border border-blue-700 px-4 py-2 rounded-md hover:bg-blue-200"
+                className="flex justify-center items-center space-x-2 bg-blue-100 text-blue-700 border border-blue-700 px-4 py-2 rounded-md hover:bg-blue-200"
               >
                 <FiCheckSquare className="text-xl" />
                 <p>Create checklist</p>
@@ -386,7 +386,7 @@ const handleTimerToggle = () => {
               <button
                 type="button"
                 onClick={handleButtonClick}
-                className="flex items-center space-x-2 bg-orange-100 text-orange-600 border border-orange-500 px-4 py-2 rounded-md hover:bg-orange-200"
+                className="flex justify-center items-center space-x-2 bg-orange-100 text-orange-600 border border-orange-500 px-4 py-2 rounded-md hover:bg-orange-200"
               >
                 <GrAttachment className="text-xl" />
                 <p>Add Attachment</p>
@@ -424,7 +424,7 @@ const handleTimerToggle = () => {
 
                 {/* Progress Bar */}
                 <div className="flex justify-between items-center">
-                  <div className="bg-blue-100 h-2 rounded relative w-11/12">
+                  <div className="bg-blue-100 h-2 rounded relative w-10/12 md:w-11/12">
                     <div
                       className="bg-blue-500 h-2 rounded absolute left-0 top-0 transition-all duration-500"
                       style={{
@@ -487,7 +487,7 @@ const handleTimerToggle = () => {
                               ),
                             }))
                           }
-                          className="bg-transparent flex-grow outline-none"
+                          className="bg-transparent flex-grow outline-none  text-sm md:text-[18px]"
                         />
                       )}
 
@@ -508,15 +508,15 @@ const handleTimerToggle = () => {
                     <p className="border px-2 rounded-md border-gray-400">
                       +
                     </p>
-                    <p className="flex-grow capitalize">Add new item</p>
+                    <p className="flex-grow capitalize text-sm md:text-[18px]">Add new item</p>
                   </div>
-                  <div
+                  {/* <div
                     className="hidden md:block pb-3"
                     dangerouslySetInnerHTML={{
                       __html: `${indiFormData?.description}
                         `,
                     }}
-                  />
+                  /> */}
                 </div>
               </div>
             )}
@@ -541,11 +541,14 @@ const handleTimerToggle = () => {
                     >
                       <div className="flex items-center space-x-2">
                         <div className="bg-blue-100 rounded-md p-2">
-                          <AiOutlineFilePdf className="text-3xl" />
+                             <AiOutlineFilePdf className="text-sm md:text-3xl" />
                         </div>
                         <div className="flex flex-col">
-                          <span className="text-sm text-gray-800">
-                            {attachment.fileName}
+                        <span className="md:hidden text-sm text-gray-800">
+                            {attachment.fileName.slice(0,9)}...pdf
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            {attachment.uploadedAt}
                           </span>
                           <span className="text-xs text-gray-500">
                             {attachment.uploadedAt}
@@ -573,7 +576,7 @@ const handleTimerToggle = () => {
             {/* Close Button */}
             <button
               onClick={handleSubmit}
-            className="w-full py-2 text-xl bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md text-white font-bold"
+            className="w-full py-2 text-lg md:text-xl bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md text-white font-bold"
             >
               Update
             </button>

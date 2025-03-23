@@ -341,7 +341,7 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
                   <p>Share</p>
                 </button>
 
-                <button onClick={()=>setIsExpand(!isExpand)} className="hover:underline flex items-center space-x-1">
+                <button onClick={()=>setIsExpand(!isExpand)} className="hidden  hover:underline lg:flex items-center space-x-1">
                   <AiOutlineExpandAlt className="text-xl" />
                   <p>{isExpand ? "Collapse":"Expand"}</p>
                 </button>
@@ -356,9 +356,9 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
 
             <div className="flex border-b">
               <button
-                className={`py-2 px-4 ${
+                className={`py-2 px-2 md:px-4 text-sm md:text-[16px] ${
                   activeTab === "project"
-                    ? "border-b-2 border-blue-500 text-blue-500"
+                    ? "border-b-2 border-blue-500 text-blue-500 "
                     : "text-gray-500"
                 }`}
                 onClick={() => setActiveTab("project")}
@@ -366,9 +366,9 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
                 Add Todo in Project
               </button>
               <button
-                className={`py-2 px-4 ${
+                className={`py-2 px-2 md:px-4 text-sm md:text-[16px] ${
                   activeTab === "individual"
-                    ? "border-b-2 border-blue-500 text-blue-500"
+                    ? "border-b-2 border-blue-500 text-blue-500 "
                     : "text-gray-500"
                 }`}
                 onClick={() => setActiveTab("individual")}
@@ -436,10 +436,7 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
 
             {/* Title Row */}
             <div className="flex items-center space-x-2">
-              <button className="text-gray-500 focus:outline-none text-lg">
-                {/* Expand/collapse arrow icon placeholder */}
-                <IoIosArrowUp />
-              </button>
+              
               <input
                 type="text"
                 value={formData?.title}
@@ -449,7 +446,7 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
             </div>
 
             {/* Status & Date Row */}
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-3 md:space-y-0">
               {/* Status Dropdown */}
               <div className="flex items-center space-x-2">
                 <select
@@ -469,6 +466,7 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
 
               {/* Start Date Picker */}
               <div className="flex items-center space-x-2">
+              <span className="text-gray-500 text-sm">Start Date</span>
                 <SlCalender className="text-xl text-gray-600" />
                 <DatePicker
                   selected={formData.startDate}
@@ -478,11 +476,12 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
                   dateFormat="yyyy-MM-dd"
                   className="border rounded px-2 py-1 text-gray-700 w-28"
                 />
-                <span className="text-gray-500 text-sm">Start Date</span>
+             
               </div>
 
               {/* End Date Picker */}
               <div className="flex items-center space-x-2">
+              <span className="text-gray-500 text-sm">End Date</span>
                 <SlCalender className="text-xl text-gray-600" />
                 <DatePicker
                   selected={formData.endDate}
@@ -490,9 +489,9 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
                     setFormData((prev) => ({ ...prev, endDate: date }))
                   }
                   dateFormat="yyyy-MM-dd"
-                  className="border rounded px-2 py-1 text-gray-700 w-28"
+                  className="border rounded px-2 py-1 text-gray-700  w-28"
                 />
-                <span className="text-gray-500 text-sm">End Date</span>
+            
               </div>
             </div>
 
@@ -501,11 +500,11 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
               <div className="flex items-center space-x-2">
                 <button
                   onClick={handleTimerToggle}
-                  className="text-xl text-white bg-[#D6B6F9] px-3 py-1 rounded-md"
+                  className="text-sm md:text-xl text-white bg-[#D6B6F9] px-3 py-1 rounded-md"
                 >
                   {isRunning ? "■" : "▶"} {/* Play/Stop Icon */}
                 </button>
-                <span>{isRunning ? "Running..." : "Start Timer"}</span>
+                <span>{isRunning ? "Running" : "Start"}</span>
               </div>
               <div className="text-xl font-bold flex items-center space-x-4">
                 {formData?.timer > 0 && (
@@ -530,10 +529,10 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
             </div>
 
             {/* Buttons Row */}
-            <div className="flex space-x-4 pt-5">
+            <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-4 pt-1 md:pt-5">
               <button
                 onClick={() => setIsOpenCheckbox(true)}
-                className="flex items-center space-x-2 bg-blue-100 text-blue-700 border border-blue-700 px-4 py-2 rounded-md hover:bg-blue-200"
+                className="flex justify-center items-center space-x-2 bg-blue-100 text-blue-700 border border-blue-700 px-4 py-2 rounded-md hover:bg-blue-200"
               >
                 <FiCheckSquare className="text-xl" />
                 <p>Create checklist</p>
@@ -542,7 +541,7 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
               <button
                 type="button"
                 onClick={handleButtonClick}
-                className="flex items-center space-x-2 bg-orange-100 text-orange-600 border border-orange-500 px-4 py-2 rounded-md hover:bg-orange-200"
+                className="flex justify-center items-center space-x-2 bg-orange-100 text-orange-600 border border-orange-500 px-4 py-2 rounded-md hover:bg-orange-200"
               >
                 <GrAttachment className="text-xl" />
                 <p>Add Attachment</p>
@@ -578,7 +577,7 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
 
                 {/* Progress Bar */}
                 <div className="flex justify-between items-center">
-                  <div className="bg-blue-100 h-2 rounded relative w-11/12">
+                  <div className="bg-blue-100 h-2 rounded relative w-10/12 md:w-11/12">
                     <div
                       className="bg-blue-500 h-2 rounded absolute left-0 top-0 transition-all duration-500"
                       style={{
@@ -623,7 +622,7 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
                         className="form-checkbox h-4 w-4 text-blue-600"
                       />
                       {item.checked ? (
-                        <del className="flex-grow text-gray-600">
+                        <del className="flex-grow text-gray-600 ">
                           {item.text}
                         </del>
                       ) : (
@@ -640,7 +639,7 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
                               ),
                             }))
                           }
-                          className="bg-transparent flex-grow outline-none"
+                          className="bg-transparent flex-grow outline-none text-sm md:text-[18px]"
                         />
                       )}
 
@@ -659,7 +658,7 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
                     className="flex items-center space-x-2 p-2 bg-[#E5E5E5] rounded-xl border cursor-pointer"
                   >
                     <p className="border px-2 rounded-md border-gray-400">+</p>
-                    <p className="flex-grow capitalize">Add new item</p>
+                    <p className="flex-grow capitalize text-sm md:text-[18px]">Add new item</p>
                   </div>
                   {/* <div
                     className="hidden md:block pb-3"
@@ -692,11 +691,14 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
                     >
                       <div className="flex items-center space-x-2">
                         <div className="bg-blue-100 rounded-md p-2">
-                          <AiOutlineFilePdf className="text-3xl" />
+                          <AiOutlineFilePdf className="text-sm md:text-3xl" />
                         </div>
                         <div className="flex flex-col">
-                          <span className="text-sm text-gray-800">
+                          <span className="hidden md:block text-sm text-gray-800">
                             {attachment.fileName}
+                          </span>
+                          <span className="md:hidden text-sm text-gray-800">
+                            {attachment.fileName.slice(0,9)}...pdf
                           </span>
                           <span className="text-xs text-gray-500">
                             {attachment.uploadedAt}
@@ -718,7 +720,7 @@ const CreateTodo = ({setIsOpenAddSlider,setTodoData,setProjectTodoData, isExpand
                 )}
               </div>
             </div>
-            <button className="w-full py-2 text-xl bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md text-white font-bold" onClick={activeTab === "project" ? handleSubmit : handleIndividualTodoSubmit }>Create To do</button>
+            <button className="w-full py-2 text-lg md:text-xl bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md text-white font-bold" onClick={activeTab === "project" ? handleSubmit : handleIndividualTodoSubmit }>Create To do</button>
           </div>
 
    

@@ -45,6 +45,8 @@ const GeneralToDo = () => {
   );
   const [todoData, setTodoData] = useState(getAllTodoByUser?.data || []);
 
+  console.log(projectTodoData?.length, todoData?.length);
+
   useEffect(() => {
     setProjectTodoData(getAllProjectTodoByUser?.data || []);
     setTodoData(getAllTodoByUser?.data || []);
@@ -254,11 +256,11 @@ const GeneralToDo = () => {
         </div> */}
 
         {/* current */}
-        <div className="flex flex-col lg:flex-row justify-between items-center lg:px-4">
+        <div className="flex flex-col md:flex-row justify-between items-center lg:px-4">
           {/* left */}
           <div
             onClick={() => setIsOpenAddSlider(true)}
-            className="bg-white rounded-lg shadow p-2 flex items-center space-x-2 w-12/12 lg:w-8/12"
+            className="bg-white rounded-lg shadow p-2 flex items-center space-x-2 w-full md:w-7/12 lg:w-8/12"
           >
             <span role="img" aria-label="pencil" className="text-gray-500">
               <FiEdit3 />
@@ -266,7 +268,7 @@ const GeneralToDo = () => {
             <input
               type="text"
               readOnly
-              placeholder="Write The Title Of Your To-Do"
+              placeholder="Write a To Do"
               className="flex-grow px-2 py-1 focus:outline-none"
             />
             <button
@@ -278,7 +280,7 @@ const GeneralToDo = () => {
           </div>
 
           {/* right */}
-          <div className="relative w-full lg:w-3/12 ">
+          <div className="relative w-full md:w-4/12  lg:w-3/12 ">
             {/* Dropdown Button */}
             <div
               onClick={() => setIsOpenProjectDropDown(!isOpenProjectDropDown)}
@@ -313,6 +315,9 @@ const GeneralToDo = () => {
             )}
           </div>
         </div>
+        {projectTodoData?.length === 0 && todoData?.length === 0 && (
+          <p className="text-lg p-4">No To Do found.</p>
+        )}
 
         {/* create todo */}
         <div
@@ -417,7 +422,7 @@ const GeneralToDo = () => {
             {/* Sliding Box (Shows Selected Todo from project todo) */}
             <div
               className={`fixed top-0 right-0 h-screen ${
-                isExpand ? "w-full" : "w-[800px]"
+                isExpand ? "w-full" : "w-full lg:w-[800px]"
               } bg-white shadow-xl border-l p-4 transition-transform duration-500 overflow-y-auto ${
                 isOpen ? "translate-x-0" : "translate-x-full"
               }`}
@@ -484,7 +489,7 @@ const GeneralToDo = () => {
             {/* Sliding Box (Shows Selected Todo from individual todo) */}
             <div
               className={`fixed top-0 right-0 h-screen ${
-                isExpand ? "w-full" : "w-[800px]"
+                isExpand ? "w-full" : "w-full lg:w-[800px]"
               } bg-white shadow-xl border-l p-4 transition-transform duration-500 overflow-y-auto ${
                 isOpen ? "translate-x-0" : "translate-x-full"
               }`}
