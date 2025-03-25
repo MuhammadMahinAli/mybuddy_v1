@@ -48,7 +48,7 @@ export const loginUserService = async (payload) => {
   const refreshToken = createToken({memberEmail, role, memberId, emailVerified}, config.jwt.refresh_secret, {expiresIn: config.jwt.refresh_expires_in});
   
   return {
-    accessToken: token,
+    researchbuddyAccessToken: token,
     refreshToken,
     user: isMemberExist,
   };
@@ -73,7 +73,7 @@ export const refreshTokenService = async (token) => {
   }
   const newAccessToken = createToken({email: isMemberExist.email, role: isMemberExist.role, memberId: isMemberExist._id}, config.jwt.secret, {expiresIn: config.jwt.expires_in});
   return {
-    accessToken: newAccessToken,
+    researchbuddyAccessToken: newAccessToken,
   };
 };
 
@@ -109,7 +109,7 @@ export const updatePasswordService = async (userId, newPassword) => {
 
   return {
     message: "Password updated successfully",
-    accessToken: token,
+    researchbuddyAccessToken: token,
     refreshToken,
   };
 };

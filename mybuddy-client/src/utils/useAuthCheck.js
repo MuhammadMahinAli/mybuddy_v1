@@ -10,7 +10,7 @@
 //   useEffect(() => {
 //     if (auth) {
 //       dispatch(
-//         userLoggedIn({ accessToken: auth?.accessToken, user: auth?.user })
+//         userLoggedIn({ researchbuddyAccessToken: auth?.researchbuddyAccessToken, user: auth?.user })
 //       );
 //     }
 
@@ -44,7 +44,7 @@ export const useAuthCheck = () => {
    // const postReact = JSON.parse(localStorage.getItem("postReact")) || {};
 
    if (auth) {
-    dispatch(userLoggedIn({ accessToken: auth?.accessToken, user: auth?.user }));
+    dispatch(userLoggedIn({ researchbuddyAccessToken: auth?.researchbuddyAccessToken, user: auth?.user }));
 
     // Load the user's postReact data from localStorage if it exists
     const savedPostReact = JSON.parse(localStorage.getItem(`postReact_${auth.user._id}`));
@@ -66,7 +66,7 @@ export const useAuthCheck = () => {
           navigate("/");
         } else {
           // If auth is updated, log in and load the user's reactions
-          dispatch(userLoggedIn({ accessToken: updatedAuth?.accessToken, user: updatedAuth?.user }));
+          dispatch(userLoggedIn({ researchbuddyAccessToken: updatedAuth?.researchbuddyAccessToken, user: updatedAuth?.user }));
           const updatedPostReact = JSON.parse(localStorage.getItem(`postReact_${updatedAuth?.user?._id}`));
           if (updatedPostReact) {
             dispatch(updatePostReact(updatedPostReact));

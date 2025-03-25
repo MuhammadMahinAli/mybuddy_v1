@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-  accessToken: undefined,
+  researchbuddyAccessToken: undefined,
   user: undefined,
   postReact: {}, // Add this line
   
@@ -11,22 +11,22 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     userLoggedIn: (state, action) => {
-      state.accessToken = action.payload.accessToken;
+      state.researchbuddyAccessToken = action.payload.researchbuddyAccessToken;
       state.user = action.payload.user;
       // state.postReact = action.payload.postReact || {}; 
 
         // Save to localStorage
-        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('researchbuddyAccessToken', action.payload.researchbuddyAccessToken);
         localStorage.setItem('user', JSON.stringify(action.payload.user));
         // localStorage.setItem('postReact', JSON.stringify(state.postReact));
       },
     userLoggedOut: (state) => {
-      state.accessToken = undefined;
+      state.researchbuddyAccessToken = undefined;
       state.user = undefined;
       state.postReact = {}; // Clear the in-memory postReact
 
       // Clear localStorage
-      localStorage.removeItem('accessToken');
+      localStorage.removeItem('researchbuddyAccessToken');
       localStorage.removeItem('user');
       // localStorage.removeItem('postReact');
     },

@@ -65,7 +65,7 @@ export const updatePassword = catchAsync(async (req, res) => {
     success: true,
     message: result.message,
     data: {
-      accessToken: result.accessToken,
+      researchbuddyAccessToken: result.researchbuddyAccessToken,
       refreshToken: result.refreshToken,
     },
   });
