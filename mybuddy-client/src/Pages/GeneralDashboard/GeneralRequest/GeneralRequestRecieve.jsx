@@ -1,7 +1,7 @@
 //import { useSelector } from "react-redux";
 import xMark from "../../../assets/xmark.png";
 import rightMark from "../../../assets/checkmark.png";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ViewTaskDetails from "./ViewTaskDetails";
 import { useUpdateJoinRequestStatusMutation } from "../../../features/projectJoinRequest/projectJoinRequestApi";
 import Swal from "sweetalert2";
@@ -17,6 +17,16 @@ const GeneralRequestRecieve = () => {
   //   useGetAllProjectByRequestedByQuery(user?._id);
   // console.log(allRequest);
   const { allRecieveRequest } = useContext(AuthContext);
+  const [recieveRequests, setRecieveRequests] = useState([]);
+
+
+  useEffect(() => {
+    if (allRecieveRequest?.data) {
+      setRecieveRequests(allRecieveRequest?.data);
+    }
+  }, [allRecieveRequest]);
+
+  
 
   function closeModal() {
     setIsOpenModal(false);
@@ -34,7 +44,7 @@ const GeneralRequestRecieve = () => {
   const handleUpdateStatusAccept = (e, index) => {
     e.preventDefault();
     setSelectedRequestIndex(index);
-    const selectedTask = allRecieveRequest?.data[index];
+    const selectedTask = recieveRequests[index];
     if (selectedTask) {
       Swal.fire({
         title: "Are you sure?",
@@ -59,9 +69,11 @@ const GeneralRequestRecieve = () => {
                 title: "Well done !",
                 text: "You have accepted the request successfully!",
               });
-              setTimeout(() => {
-                window.location.reload();
-              }, 2500);
+              setRecieveRequests((prev) => prev.filter((_, idx) => idx !== index));
+
+              // setTimeout(() => {
+              //   window.location.reload();
+              // }, 2500);
             })
             .catch((error) => {
               alert("Failed to accept the request.");
@@ -76,7 +88,7 @@ const GeneralRequestRecieve = () => {
   const handleUpdateStatusReject = (e, index) => {
     e.preventDefault();
     setSelectedRequestIndex(index);
-    const selectedTask = allRecieveRequest?.data[index];
+    const selectedTask = recieveRequests[index];
     if (selectedTask) {
       Swal.fire({
         title: "Are you sure?",
@@ -101,9 +113,7 @@ const GeneralRequestRecieve = () => {
                 title: "Well done !",
                 text: "You have rejected the request successfully!",
               });
-              setTimeout(() => {
-                window.location.reload();
-              }, 2500);
+              setRecieveRequests((prev) => prev.filter((_, idx) => idx !== index));
             })
             .catch((error) => {
               alert("Failed to reject the request.");
@@ -116,13 +126,13 @@ const GeneralRequestRecieve = () => {
     }
   };
 
-  console.log("l", allRecieveRequest?.data);
+  console.log("l", recieveRequests);
   return (
     <>
       <h1 className="gray600 text-[20px] lg:text-[28px] font-bold w-full">
         RECIEVE REQUESTS
       </h1>
-      {allRecieveRequest?.data?.length === 0 ? (
+      {recieveRequests?.length === 0 ? (
         <p className="text-gray-600 text-[16px] lg:text-[24px] pb-5 font-medium text-center lg:text-start w-12/12 md:w-[600px] pt-7">{`You've not recieved any request yet.`}</p>
       ) : (
         <div className=" gray600 space-y-6 w-12/12 md:w-full">
@@ -145,7 +155,7 @@ const GeneralRequestRecieve = () => {
             </div>
           </div>
           {/* table */}
-          {allRecieveRequest?.data?.map((request, i) => (
+          {recieveRequests?.map((request, i) => (
             <div
               key={i}
               className="w-full px-1 py-4  flex my-5 justify-between items-center  bg-[#e9f2f9] shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] backdrop-filter:blur(20px); rounded-xl"
@@ -189,7 +199,7 @@ const GeneralRequestRecieve = () => {
                 <ViewTaskDetails
                   isOpenModal={isOpenModal}
                   tasks={
-                    allRecieveRequest?.data[selectedRequestIndex]?.tasks || []
+                    recieveRequests[selectedRequestIndex]?.tasks || []
                   }
                   closeModal={closeModal}
                 />

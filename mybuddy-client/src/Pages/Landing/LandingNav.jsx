@@ -7,8 +7,8 @@ const LandingNav = () => {
   const { user } = useSelector((state) => state.auth);
   const location = useLocation(); // Get the current route
   const { singleUser } = useContext(AuthContext);
-  console.log(singleUser);
-  console.log("pi", user);
+ // console.log(singleUser);
+ // console.log("pi", user);
   const handleScroll = () => {
     window.scrollBy({
       top: 1280,

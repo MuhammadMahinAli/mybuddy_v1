@@ -56,6 +56,9 @@ import AdminTutorials from "../Pages/Admin/AdminTutorials/AdminTutorials";
 import Agent from "../Pages/ResearchBuddyAgent/Agent";
 import GeneralToDo from "../Pages/GeneralDashboard/GeneralToDo/GeneralToDo";
 import CreateTodo from "../Pages/GeneralDashboard/GeneralToDo/CreateTodo";
+import TermsCondition from "../Pages/CommonPages/TermsCondition";
+import About from "../Pages/CommonPages/About";
+import Contact from "../Pages/CommonPages/Contact";
 
 
 const router = createBrowserRouter([
@@ -309,6 +312,18 @@ const router = createBrowserRouter([
   {
     path: "/help",
     element: <Help/>,
+  },
+  {
+    path: "/terms&condition",
+    element: <TermsCondition/>,
+  },
+  {
+    path: "/about",
+    element: <About/>,
+  },
+  {
+    path: "/contact",
+    element: <Contact/>,
   },
   {
     path: "/test",

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 import { useUpdateFriendRequestStatusMutation } from "../../../features/friend/friendApi";
 import Swal from "sweetalert2";
@@ -13,7 +13,15 @@ const GeneralFriendRequest = () => {
     deleteFriendRequest,
   } = useContext(AuthContext);
   const [updateFriendRequestStatus] = useUpdateFriendRequestStatusMutation();
+  const [friendRequests, setFriendRequests] = useState(getFriendRequest?.data || []);
 
+  useEffect(() => {
+    if (getFriendRequest?.data) {
+      setFriendRequests(getFriendRequest.data);
+    }
+  }, [getFriendRequest]);
+
+  
   const handleUpdateStatusAccept = (e, index) => {
     e.preventDefault();
     const selectedTask = getFriendRequest?.data[index];
@@ -42,9 +50,11 @@ const GeneralFriendRequest = () => {
                 text: "You have accepted the request successfully!",
               });
              
-              setTimeout(() => {
-                window.location.reload();
-              }, 2500);
+           // Remove the accepted request from local state
+setFriendRequests((prev) =>
+  prev.filter((_, i) => i !== index)
+);
+
             })
             .catch((error) => {
               alert("Failed to accept the request.");
@@ -83,9 +93,12 @@ const GeneralFriendRequest = () => {
                 title: "Well done !",
                 text: "You have rejected the request successfully!",
               });
-              setTimeout(() => {
-                window.location.reload();
-              }, 2500);
+              setFriendRequests((prev) =>
+                prev.filter((_, i) => i !== index)
+              );
+              // setTimeout(() => {
+              //   window.location.reload();
+              // }, 2500);
             })
             .catch((error) => {
               alert("Failed to reject the request.");
@@ -188,7 +201,7 @@ const GeneralFriendRequest = () => {
       {isOpenRecieveRequest && (
         <RecieveFriendRequest
           getFriendRequest={getFriendRequest}
-          requests={requests}
+          requests={friendRequests}
           handleUpdateStatusAccept={handleUpdateStatusAccept}
           handleDeleteFriendRequest={handleDeleteFriendRequest}
         />

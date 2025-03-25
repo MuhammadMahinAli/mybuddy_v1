@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 const LandingFooter = () => {
   const { user } = useSelector((state) => state.auth);
   return (
-    <div className="relative ">
+    <div className="relative bg-transparent md:bg-white">
       <div className="hidden md:block absolute">
-        <img src="./footer@2x.png" className="" />
+        <img src="./footer@2x.png" className="h-full" />
       </div>
 
       <div className="py-5 z-40">

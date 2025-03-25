@@ -164,97 +164,25 @@ const GeneralToDo = () => {
     setSelectedProjectTodo(null);
   };
 
-  // Effect hook to update local state when the data changes
+  // get update instant
+  // add this in GeneralToDo.jsx
+
+
+
+const updateIndividualTodoInState = (updatedTodo) => {
+  setTodoData((prevData) =>
+    prevData.map((todo) =>
+      todo._id === updatedTodo._id ? updatedTodo : todo
+    )
+  );
+};
+
 
   return (
     <>
       <div className="relative">
         {/* Primary Content */}
-        <div className="w-full  mx-auto p-4 space-y-4 bg-blue-50">
-          {/* <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-0 border rounded-md">
-              <button
-                type="button"
-                onClick={() => changeMonth(-1)}
-                className="rounded-l-md border-r px-2 py-1 bg-white hover:bg-gray-100"
-              >
-                <IoIosArrowBack />
-              </button>
-
-        
-              <DatePicker
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                dateFormat="dd/MM/yyyy"
-                className="hidden" // Hide default input
-                id="date-picker"
-              />
-              <button
-                type="button"
-                className="border-r px-2 py-1 bg-white hover:bg-gray-100"
-                onClick={() => document.getElementById("date-picker").click()}
-              >
-                <IoCalendarOutline />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => changeMonth(1)}
-                className="rounded-r-md px-2 py-1 bg-white hover:bg-gray-100"
-              >
-                <IoIosArrowForward />
-              </button>
-            </div>
-
-         
-            <div className="text-gray-700 font-medium">{formattedDate}</div>
-
-     
-            <button
-              type="button"
-              className="text-blue-600 hover:underline"
-              onClick={() => setSelectedDate(new Date())}
-            >
-              Return To Today
-            </button>
-          </div> */}
-
-          {/* <div className="bg-white rounded-lg shadow p-3 flex items-center space-x-2">
-            <span role="img" aria-label="pencil" className="text-gray-500">
-              <FiEdit3 />
-            </span>
-            <input
-              type="text"
-              placeholder="Write The Title Of Your To-Do"
-              className="flex-grow px-2 py-1 focus:outline-none"
-            />
-            <button
-              type="button"
-              onClick={() => setIsOpenAddSlider(true)}
-              className="bg-blue-500 text-white rounded px-3 py-1 text-xl hover:bg-blue-600"
-            >
-              +
-            </button>
-          </div> */}
-        </div>
-        {/* <div
-          className={`fixed top-0 right-0 h-screen w-[800px] bg-white shadow-xl border-l p-4 transition-transform duration-500 overflow-y-auto ${
-            isOpenAddSlider ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          <CreateTodo setProjectTodoData={setProjectTodoData} setTodoData={setTodoData} setIsOpenAddSlider={setIsOpenAddSlider} />
-        </div> */}
-
-        {/* <div className="hidden md:block">
-          <ul
-            id="statusSelect"
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            <li onClick={handleToggleProjectTodo}>Project Todo</li>
-            <li onClick={handleToggleTodo}>Individual Todo</li>
-          </ul>
-        </div> */}
-
+      
         {/* current */}
         <div className="flex flex-col md:flex-row justify-between items-center lg:px-4">
           {/* left */}
@@ -335,7 +263,7 @@ const GeneralToDo = () => {
             setIsOpenAddSlider={setIsOpenAddSlider}
           />
         </div>
-
+{/* project Todo */}
         {isOpenProjectTodo && (
           <>
             <div className="w-full mx-auto p-0 lg:p-4 space-y-4 bg-blue-50 min-h-screen">
@@ -361,8 +289,8 @@ const GeneralToDo = () => {
                           title={project?.projectName}
                           className="md:hidden font-semibold text-sm text-gray-800"
                         >
-                          {project?.projectName.length > 13
-                            ? `${project?.projectName.slice(0, 13)}...`
+                          {project?.projectName?.length > 13
+                            ? `${project?.projectName?.slice(0, 13)}...`
                             : project?.projectName}
                         </span>
                         <span className="hidden md:block font-semibold text-[18px] xl:text-xl text-gray-800">
@@ -380,7 +308,7 @@ const GeneralToDo = () => {
                       <div className="mt-3 space-y-3 transition-all duration-300">
                         {project?.todos?.map((todo) => (
                           <div
-                            key={todo._id}
+                            key={todo?._id}
                             className="flex justify-between items-center px-1 md:px-5 py-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100"
                             onClick={() => handleOpenTodo(todo, project?._id)}
                           >
@@ -388,15 +316,15 @@ const GeneralToDo = () => {
                               <IoIosArrowForward className="text-gray-500" />
                               <div className="flex flex-col">
                                 <span className="md:hidden text-sm md:text-[18px] font-semibold text-gray-800">
-                                  {todo.title.length > 13
-                                    ? `${todo.title.slice(0, 13)}...`
-                                    : todo.title}
+                                  {todo?.title.length > 13
+                                    ? `${todo?.title.slice(0, 13)}...`
+                                    : todo?.title}
                                 </span>
                                 <span className="hidden md:block text-sm md:text-[17px] font-semibold text-gray-800">
-                                  {todo.title}
+                                  {todo?.title}
                                 </span>
                                 <span className="text-sm text-gray-600 pt-1">
-                                  {getDaysLeft(todo.endDate)}
+                                  {getDaysLeft(todo?.endDate)}
                                 </span>
                               </div>
                             </div>
@@ -404,11 +332,11 @@ const GeneralToDo = () => {
                             {/* Status Badge */}
                             <span
                               className={`px-4 py-1 rounded-full text-sm font-medium capitalize ${
-                                statusStyles[todo.status] ||
+                                statusStyles[todo?.status] ||
                                 "bg-gray-300 text-gray-700 border-gray-500"
                               }`}
                             >
-                              {todo.status}
+                              {todo?.status}
                             </span>
                           </div>
                         ))}
@@ -442,6 +370,7 @@ const GeneralToDo = () => {
             </div>
           </>
         )}
+        {/* individual Todo */}
         {isOpenTodo && (
           <>
             <div className="w-full mx-auto lg:p-4 space-y-4 bg-blue-50 min-h-screen">
@@ -479,7 +408,7 @@ const GeneralToDo = () => {
                           "bg-gray-300 text-gray-700 border-gray-500"
                         }`}
                       >
-                        <span>{getDaysLeft(project?.endDate)}</span>
+                        <span>{project?.status}</span>
                       </div>
                     </div>
                   </div>
@@ -495,6 +424,7 @@ const GeneralToDo = () => {
               }`}
             >
               <UpdateTodo
+              updateIndividualTodoInState={updateIndividualTodoInState}
                 isExpand={isExpand}
                 setIsExpand={setIsExpand}
                 selectedIndividualTodo={selectedIndividualTodo}

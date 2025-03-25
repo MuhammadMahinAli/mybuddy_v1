@@ -31,10 +31,14 @@ import PostHandHeartIcon from "../../icons/PostHandHeartIcon";
 import ReactComponent from "./ReactComponent";
 import { updatePostReact } from "../../features/auth/authSlice";
 import DefaultPostLike from "../../icons/DefaultPostLike";
+import { usePostContext } from "../../Context/PostContext";
 
 
 const ViewPosts = ({ theme }) => {
   // all state
+  const { allPosts,isFetchingPosts, error } = usePostContext();
+
+  console.log(allPosts);
   const [openComponent, setOpenComponent] = useState({});
   const [reactionState, setReactionState] = useState({});
   const [hoveredPostId, setHoveredPostId] = useState(null);
@@ -47,39 +51,64 @@ const ViewPosts = ({ theme }) => {
     getAcceptedFriendRequest,
   } = useContext(AuthContext);
   const requestedId = user?._id;
-  const {
-    data: allPosts,
-    isLoading: isFetchingPosts,
-    error,
-    refetch,
-  } = useGetAllPostQuery({ page });
+  // const {
+  //   data: allPosts,
+  //   isLoading: isFetchingPosts,
+  //   error,
+  //   refetch,
+  // } = useGetAllPostQuery({ page });
 
   const dispatch = useDispatch();
   console.log(allPosts?.meta);
+  // useEffect(() => {
+  //   if (allPosts && allPosts?.data) {
+  //     const initialOpenComponent = {};
+  //     const initialReactionState =
+  //       JSON.parse(localStorage.getItem(`postReact_${user?._id}`)) || {};
+  //     console.log(initialReactionState);
+  //     allPosts.data.posts.forEach((_, index, post) => {
+  //       initialOpenComponent[index] = "image";
+
+  //       if (!initialReactionState[post._id]) {
+  //         initialReactionState[post._id] = {
+  //           like: false,
+  //           love: false,
+  //           celebrate: false,
+  //           support: false,
+  //           insightful: false,
+  //         };
+  //       }
+  //     });
+
+  //     setOpenComponent(initialOpenComponent);
+  //     setReactionState(initialReactionState);
+  //   }
+  // }, [allPosts]);
+
   useEffect(() => {
-    if (allPosts && allPosts?.data) {
+    if (allPosts?.data?.posts && user?._id) {
       const initialOpenComponent = {};
-      const initialReactionState =
-        JSON.parse(localStorage.getItem(`postReact_${user?._id}`)) || {};
-      console.log(initialReactionState);
-      allPosts.data.posts.forEach((_, index, post) => {
+      const initialReactionState = {};
+  
+      allPosts.data.posts.forEach((post, index) => {
         initialOpenComponent[index] = "image";
-
-        if (!initialReactionState[post._id]) {
-          initialReactionState[post._id] = {
-            like: false,
-            love: false,
-            celebrate: false,
-            support: false,
-            insightful: false,
-          };
-        }
+        initialReactionState[post._id] = {
+          like: false,
+          love: false,
+          celebrate: false,
+          support: false,
+          insightful: false,
+        };
       });
-
+  
       setOpenComponent(initialOpenComponent);
-      setReactionState(initialReactionState);
+      setReactionState((prev) => ({
+        ...initialReactionState,
+        ...JSON.parse(localStorage.getItem(`postReact_${user?._id}`) || "{}"),
+      }));
     }
-  }, [allPosts]);
+  }, [allPosts?.data?.posts, user?._id]);
+  
 
   const toggleComponent = (index, component) => {
     setOpenComponent((prev) => ({
@@ -298,17 +327,17 @@ const ViewPosts = ({ theme }) => {
     );
   }
 
-  if (!allPosts || !allPosts.data || allPosts.data.length === 0) {
-    return (
-      <div
-        className={`${
-          theme === "light" ? "text-gray-600" : "text-white"
-        } xl:text-xl font-semibold`}
-      >
-        No posts available
-      </div>
-    );
-  }
+  // if (!allPosts || !allPosts.data || allPosts.data.length === 0) {
+  //   return (
+  //     <div
+  //       className={`${
+  //         theme === "light" ? "text-gray-600" : "text-white"
+  //       } xl:text-xl font-semibold`}
+  //     >
+  //       No posts available
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="space-y-3 xl:space-y-5 py-3">
@@ -345,7 +374,7 @@ const ViewPosts = ({ theme }) => {
                 <div className="flex items-center space-x-3">
                   <Link to={`/user/profile/${post?.postedBy?._id}`}>
                     <div className="flex flex-col justify-center items-center relative">
-                      <img
+                      <img loading="lazy" 
                         data-src={
                           post?.postedBy?.profilePic
                             ? post?.postedBy?.profilePic
@@ -354,10 +383,10 @@ const ViewPosts = ({ theme }) => {
                         className="lazy h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 rounded-full p-[6px]"
                       />
 
-                      <img
+                      <img loading="lazy" 
                         className="w-16 lg:w-32 xl:w-36 absolute"
                         src={theme === "light" ? darkBorder : whiteBorder}
-                        loading="lazy"
+                       
                         alt="dashedborder"
                       />
                     </div>
@@ -1002,7 +1031,7 @@ export default ViewPosts;
 //                 <div className="flex items-center space-x-3">
 //                   <Link to={`/user/profile/${post?.postedBy?._id}`}>
 //                     <div className="flex flex-col justify-center items-center relative">
-//                       <img
+//                       <img loading="lazy" 
 //                         data-src={
 //                           post?.postedBy?.profilePic
 //                             ? post?.postedBy?.profilePic
@@ -1011,7 +1040,7 @@ export default ViewPosts;
 //                         className="lazy h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 rounded-full p-[6px]"
 //                       />
 
-//                       <img
+//                       <img loading="lazy" 
 //                         className="w-16 lg:w-32 xl:w-36 absolute"
 //                         src={theme === "light" ? darkBorder : whiteBorder}
 //                         loading="lazy"

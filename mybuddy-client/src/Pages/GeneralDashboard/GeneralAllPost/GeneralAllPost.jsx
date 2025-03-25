@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Context/UserContext";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FaRegPenToSquare, FaRegTrashCan } from "react-icons/fa6";
@@ -25,8 +25,17 @@ const GeneralAllPost = () => {
   };
 
   const { getUserPost } = useContext(AuthContext);
+  const [postList, setPostList] = useState(getUserPost?.data || []);
+
+
+  useEffect(() => {
+    if (getUserPost?.data) {
+      setPostList(getUserPost.data);
+    }
+  }, [getUserPost]);
+  
   //console.log(getUserPost?.data);
-  const allPost = getUserPost?.data;
+  //const allPost = getUserPost?.data;
 
   const handleDeletePost = (id) => {
     console.log(id);
@@ -40,14 +49,18 @@ const GeneralAllPost = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deletePost(id)
-          .unwrap()
-          .then(() => {
-            Swal.fire("Well done!", "This post has been deleted.", "success");
-            setTimeout(() => {
-              window.location.reload();
-            }, 2500);
-          })
+        deletePost(id).unwrap()
+        .then(() => {
+          // ✅ Remove deleted post from state
+          setPostList((prev) => prev.filter((p) => p._id !== id));
+          Swal.fire("Well done!", "This post has been deleted.", "success");
+        })
+          // .then(() => {
+          //   Swal.fire("Well done!", "This post has been deleted.", "success");
+          //   // setTimeout(() => {
+          //   //   window.location.reload();
+          //   // }, 2500);
+          // })
           .catch((error) => {
             console.log(error);
             Swal.fire("Error!", "There was an issue to delete post.", "error");
@@ -62,14 +75,14 @@ const GeneralAllPost = () => {
       <h1 className=" text-[20px] lg:text-[28px] py-3 font-bold text-gray-700">
         ALL POST
       </h1>
-      {allPost?.length === 0 ? (
+      {postList?.length === 0 ? (
         <p className="text-[13px] md:text-[16px] capitalize font-medium py-8 text-center">
           {"No post available to show"}
         </p>
       ) : (
         <>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 py-5 lg:py-5 ">
-            {allPost?.map((post) => (
+            {postList?.map((post) => (
               <div
                 key={post?._id}
                 className="flex space-x-3   shadow-[-2px_-3px_6px_1px_rgba(255,_255,_255,_0.9),_4px_4px_6px_rgba(182,_182,_182,_0.6)] rounded-lg py-3 relative"
@@ -132,7 +145,7 @@ const GeneralAllPost = () => {
                         className="hover:bg-gray-100 py-2  cursor-pointer flex items-center pl-5 space-x-2"
                       >
                         {" "}
-                        <span>
+                        <span onClick={() => handleDeletePost(post?._id)}>
                           <FaRegTrashCan className="text-gray-500" />
                         </span>{" "}
                         <span className=""> Delete</span>

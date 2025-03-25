@@ -23,6 +23,8 @@ const UserProfileVM = () => {
     useContext(AuthContext);
   const requestedId = user?._id;
   const [data, setData] = useState(null);
+  const [sentFriendRequests, setSentFriendRequests] = useState([]);
+
   const { id } = useParams();
   //getting designer data
   useEffect(() => {
@@ -129,16 +131,34 @@ const UserProfileVM = () => {
   const friendId = userData?._id;
 
   // Function to get the friend request status
+  // const getFriendStatus = () => {
+  //   const friend = getAllStatusFriendRequest?.data?.find(
+  //     (frnd) =>
+  //       frnd?.requestedBy?._id === friendId || frnd?.requestedTo?._id === friendId
+  //   );
+
+  //   return friend
+  //     ? { status: friend.status, friend }
+  //     : { status: "No friend request found.", friend: null };
+  // };
+
   const getFriendStatus = () => {
     const friend = getAllStatusFriendRequest?.data?.find(
       (frnd) =>
         frnd?.requestedBy?._id === friendId || frnd?.requestedTo?._id === friendId
     );
-
-    return friend
-      ? { status: friend.status, friend }
-      : { status: "No friend request found.", friend: null };
+  
+    if (friend) {
+      return { status: friend.status, friend };
+    }
+  
+    if (sentFriendRequests.includes(friendId)) {
+      return { status: "Pending", friend: null }; // Locally tracked
+    }
+  
+    return { status: "No friend request found.", friend: null };
   };
+  
 
   const { status, friend } = getFriendStatus();
 
@@ -164,12 +184,24 @@ const UserProfileVM = () => {
       title: "Well done !",
       text: "You've sent friend request successfully.",
     });
-    setTimeout(() => {
-      window.location.reload();
-    }, 2500);
+    setSentFriendRequests((prev) => [...prev, userData?._id]);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 2500);
   };
 
-  //console.log(datas);
+  useEffect(() => {
+    if (getAllStatusFriendRequest?.data) {
+      const ids = getAllStatusFriendRequest.data.map((req) => {
+        return req?.requestedTo?._id === requestedId
+          ? req?.requestedBy?._id
+          : req?.requestedTo?._id;
+      });
+  
+      setSentFriendRequests(ids);
+    }
+  }, [getAllStatusFriendRequest]);
+  
 
   return (
     <div>

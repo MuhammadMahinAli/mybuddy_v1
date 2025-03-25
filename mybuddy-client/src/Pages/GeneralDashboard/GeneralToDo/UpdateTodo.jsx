@@ -16,7 +16,7 @@ import { rawFileUpload } from '../../../utils/cloudinaryForRaw';
 import { useUpdateTodoMutation } from '../../../features/fund/fundApi';
 
 
-const UpdateTodo = ({selectedIndividualTodo,closeTodoSlideBox,statusStyles, isExpand, setIsExpand, indiFormData, setIndiFormData,elapsedTime, setElapsedTime}) => {
+const UpdateTodo = ({updateIndividualTodoInState,selectedIndividualTodo,closeTodoSlideBox,statusStyles, isExpand, setIsExpand, indiFormData, setIndiFormData,elapsedTime, setElapsedTime}) => {
 
   const [updateTodo] = useUpdateTodoMutation();
   const [isRunning, setIsRunning] = useState(false);
@@ -244,6 +244,10 @@ const handleTimerToggle = () => {
               text: "Todo updated successfully.",
               icon: "success",
               confirmButtonText: "OK",
+            });
+            updateIndividualTodoInState({
+              ...selectedIndividualTodo,
+              ...indiFormData, // Merge new data into the existing todo
             });
           } else {
             throw new Error("Update failed");

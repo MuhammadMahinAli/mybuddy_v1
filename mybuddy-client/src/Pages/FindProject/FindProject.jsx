@@ -57,7 +57,7 @@ const FindProject = () => {
   //const { user } = useSelector((state) => state.auth);
   const theme = useSelector((state) => state.theme.theme);
   const { getAllSentProjectJoinRequest, userId } = useContext(AuthContext);
-  //const requestedId = user?._id;
+  const [joinRequests, setJoinRequests] = useState([]);
   const [openDescriptionIndex, setOpenDescriptionIndex] = useState(null);
   const [showPdfList, setShowPdfList] = useState(false);
   const [showDocuments, setShowDocuments] = useState(false);
@@ -191,6 +191,8 @@ const FindProject = () => {
         title: "Well Done !!!",
         text: "Your request has been sent successfully!",
       });
+      console.log(responseData.data);
+      setJoinRequests((prev) => [...prev, responseData.data.projectId]);
       setSelectedProject(null);
       setSelectedTasks([]);
       // setTimeout(() => {
@@ -309,6 +311,14 @@ const FindProject = () => {
 
 console.log("filter",filterProjects);
 
+useEffect(() => {
+  if (getAllSentProjectJoinRequest?.data) {
+    const sentIds = getAllSentProjectJoinRequest.data.map(
+      (item) => item.projectId._id
+    );
+    setJoinRequests(sentIds);
+  }
+}, [getAllSentProjectJoinRequest]);
 
 
 
@@ -344,15 +354,11 @@ console.log("filter",filterProjects);
         <div className="mx-3 md:mx-6 3xl:mx-20 my-5 p-3 xl:p-3 space-y-5">
           {filterProjects?.map((project, i) => {
             const { status } = getRequestStatus(project?._id);
-            //console.log(project);
+            const hasJoined = joinRequests.includes(project._id); // check locally
             const buttonText =
-              status === "Pending" ||
-                status === "Declined" ||
-                status === "Completed" ||
-                status === "Accepted" ||
-                status === "Done"
-                ? "Sent"
-                : "Join";
+  hasJoined || ["Pending", "Declined", "Completed", "Accepted", "Done"].includes(status)
+    ? "Sent"
+    : "Join";
 
             const today = new Date();
             const startDate = new Date(project.startDate);
@@ -952,7 +958,7 @@ console.log("filter",filterProjects);
           })}
         </div>
         {filterProjects?.length === 0 && loading === false && (
-        <div className="xl:text-[20px] text-center text-gray-500 pt-10 xl:pt-20 capitalize">{` No Ptoject found.`}</div>
+        <div className="xl:text-[20px] text-center text-gray-500 pt-10 xl:pt-20 capitalize">{` No Project found.`}</div>
       )}
         {projects?.length > 10&& loading === false && (
           <div className="space-x-2 pagination flex items-center justify-center mt-5">

@@ -232,6 +232,7 @@ const formatTime = (seconds) => {
               icon: "success",
               confirmButtonText: "OK",
             });
+            
           } else {
             throw new Error("Update failed");
           }
