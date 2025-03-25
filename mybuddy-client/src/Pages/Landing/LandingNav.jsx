@@ -112,6 +112,7 @@ const LandingNav = () => {
               >
                 Feed
               </Link>
+              <Link to="/contact">
               <p
                 className={`${
                   location.pathname === "/contact"
@@ -121,6 +122,7 @@ const LandingNav = () => {
               >
                 contact
               </p>
+              </Link>
             </nav>
           </div>
           {/* [background:linear-gradient(-86.36deg,_#aec4fc,_#f1f5fe)] */}
@@ -138,7 +140,7 @@ const LandingNav = () => {
       <div className="absolute top-1 left-0 w-full bg-gray-900 lg:hidden">
         <div className="px-2 py-1  md:px-4 lg:px-8">
           <div className="relative flex flex-row md:flex-row-reverse items-center justify-between">
-            <button className="hidden md:block rounded-xl cursor-pointer [border:none] py-2 px-5 text-lg capitalize bg-[transparent] shadow-[1px_2px_5px_rgba(113,_157,_255,_0.15)]  [background:linear-gradient(-86.36deg,_#aec4fc,_#f1f5fe)] flex flex-row items-center justify-center">
+            <button className="text- hidden md:block rounded-xl cursor-pointer [border:none] py-2 px-5 text-lg capitalize bg-[transparent] shadow-[1px_2px_5px_rgba(113,_157,_255,_0.15)]  [background:linear-gradient(-86.36deg,_#aec4fc,_#f1f5fe)] flex flex-row items-center justify-center">
               <Link to="/sign-up">sign up</Link>
             </button>
             <Link to="/" className="flex flex-row items-center justify-start">
@@ -165,7 +167,7 @@ const LandingNav = () => {
               <li>
                 <Link
                   to="/sign-up"
-                  className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                  className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-gray-600 transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
                 >
                   sign up
                 </Link>
@@ -289,9 +291,11 @@ const LandingNav = () => {
                           </Link>
                         </li>
                         <li>
+                        <Link to="/contact">
                           <p className="font-medium capitalize tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
                             contact
                           </p>
+                          </Link>
                         </li>
                         <li>
                           <button className=" md:hidden rounded-xl cursor-pointer [border:none] py-2 w-full text-lg font-bold capitalize bg-[transparent] shadow-[1px_2px_5px_rgba(113,_157,_255,_0.15)]  [background:linear-gradient(-86.36deg,_#aec4fc,_#f1f5fe)] flex flex-row items-center justify-center">
