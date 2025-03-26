@@ -28,10 +28,10 @@
 //     const fetchAllFunds = async () => {
 //       try {
 //         const urls = [
-//           `http://localhost:3000/api/v1/paypalFund/getFundByProject/${projectId}`,
-//           `http://localhost:3000/api/v1/payoneerFund/getFundByProject/${projectId}`,
-//           `http://localhost:3000/api/v1/bankTransferFund/getFundByProject/${projectId}`,
-//           `http://localhost:3000/api/v1/fund/getAll/${projectId}`,
+//           `https://test-two-22w0.onrender.com/api/v1/paypalFund/getFundByProject/${projectId}`,
+//           `https://test-two-22w0.onrender.com/api/v1/payoneerFund/getFundByProject/${projectId}`,
+//           `https://test-two-22w0.onrender.com/api/v1/bankTransferFund/getFundByProject/${projectId}`,
+//           `https://test-two-22w0.onrender.com/api/v1/fund/getAll/${projectId}`,
 //         ];
 
 //         const [paypalRes, payoneerRes, bankRes, stripeRes] = await Promise.all(
@@ -60,7 +60,7 @@
 //     }
 //     const fetchData = async () => {
 //       const res = await apiFetch(
-//         `http://localhost:3000/api/v1/fund/getAll/${projectId}`,
+//         `https://test-two-22w0.onrender.com/api/v1/fund/getAll/${projectId}`,
 //         "GET"
 //       );
 //       setStripeFund(res?.data ?? {});
@@ -185,10 +185,10 @@ const FundSlider = ({ projectId, theme }) => {
     const fetchAllFunds = async () => {
       try {
         const urls = [
-          `http://localhost:3000/api/v1/paypalFund/getFundByProject/${projectId}`,
-          `http://localhost:3000/api/v1/payoneerFund/getFundByProject/${projectId}`,
-          `http://localhost:3000/api/v1/bankTransferFund/getFundByProject/${projectId}`,
-          `http://localhost:3000/api/v1/fund/getAll/${projectId}`,
+          `https://test-two-22w0.onrender.com/api/v1/paypalFund/getFundByProject/${projectId}`,
+          `https://test-two-22w0.onrender.com/api/v1/payoneerFund/getFundByProject/${projectId}`,
+          `https://test-two-22w0.onrender.com/api/v1/bankTransferFund/getFundByProject/${projectId}`,
+          `https://test-two-22w0.onrender.com/api/v1/fund/getAll/${projectId}`,
         ];
 
         const responses = await Promise.all(

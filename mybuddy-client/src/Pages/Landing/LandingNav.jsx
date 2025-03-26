@@ -7,8 +7,8 @@ const LandingNav = () => {
   const { user } = useSelector((state) => state.auth);
   const location = useLocation(); // Get the current route
   const { singleUser } = useContext(AuthContext);
- // console.log(singleUser);
- // console.log("pi", user);
+  // console.log(singleUser);
+  // console.log("pi", user);
   const handleScroll = () => {
     window.scrollBy({
       top: 1280,
@@ -73,14 +73,9 @@ const LandingNav = () => {
                 home
               </Link>
               <p
-                onClick={handleScroll}
-                className={`${
-                  location.pathname === "/feature"
-                    ? "text-blue-500"
-                    : "text-cornflowerblue-100"
-                } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold  inline-block min-w-[82px]`}
+                className={`hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold  inline-block min-w-[82px]`}
               >
-                Features
+                <Link to="/about-us">About us</Link>
               </p>
               <Link
                 to="/help"
@@ -113,15 +108,15 @@ const LandingNav = () => {
                 Feed
               </Link>
               <Link to="/contact">
-              <p
-                className={`${
-                  location.pathname === "/contact"
-                    ? "text-blue-500"
-                    : "text-cornflowerblue-100"
-                } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold `}
-              >
-                contact
-              </p>
+                <p
+                  className={`${
+                    location.pathname === "/contact"
+                      ? "text-blue-500"
+                      : "text-cornflowerblue-100"
+                  } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold `}
+                >
+                  contact
+                </p>
               </Link>
             </nav>
           </div>
@@ -253,19 +248,15 @@ const LandingNav = () => {
                             Home
                           </Link>
                         </li>
-                        <li className="md:hidden" onClick={handleScrollMbl}>
-                          <p className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
-                            Features
-                          </p>
+                        <li>
+                          <Link
+                            to="/about-us"
+                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                          >
+                            About us
+                          </Link>
                         </li>
-                        <li
-                          className="hidden md:block"
-                          onClick={handleScrollTab}
-                        >
-                          <p className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
-                            Features
-                          </p>
-                        </li>
+
                         <li>
                           <Link
                             to="/help"
@@ -291,10 +282,10 @@ const LandingNav = () => {
                           </Link>
                         </li>
                         <li>
-                        <Link to="/contact">
-                          <p className="font-medium capitalize tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
-                            contact
-                          </p>
+                          <Link to="/contact">
+                            <p className="font-medium capitalize tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
+                              contact
+                            </p>
                           </Link>
                         </li>
                         <li>

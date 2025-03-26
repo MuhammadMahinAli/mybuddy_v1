@@ -20,7 +20,7 @@ const PaymentSuccess = () => {
   const confirmPayment = async (sessionId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/fund/confirm-payment?session_id=${sessionId}`,
+        `https://test-two-22w0.onrender.com/api/v1/fund/confirm-payment?session_id=${sessionId}`,
         {
           method: "GET",
         }

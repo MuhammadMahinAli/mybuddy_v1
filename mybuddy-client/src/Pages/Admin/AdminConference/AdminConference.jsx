@@ -29,7 +29,7 @@ const AdminConference = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/conference/addLink",
+        "https://test-two-22w0.onrender.com/api/v1/conference/addLink",
         {
           method: "POST",
           headers: {

@@ -22,7 +22,7 @@ const Pre = () => {
     const fetchData = async () => {
       try {
         const res = await apiFetch(
-          `http://localhost:3000/api/v1/meeting/getMeetingById/${meeting}`,
+          `https://test-two-22w0.onrender.com/api/v1/meeting/getMeetingById/${meeting}`,
           "GET"
         );
         setMeetingInfo(res?.data ?? {});

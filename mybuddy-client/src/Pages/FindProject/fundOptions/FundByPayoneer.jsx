@@ -108,7 +108,7 @@ const FundByPayoneer = ({
     const fetchAdminInfo = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/payoneer/getLink/${adminId}`,
+          `https://test-two-22w0.onrender.com/api/v1/payoneer/getLink/${adminId}`,
           {
             method: "GET",
             headers: {

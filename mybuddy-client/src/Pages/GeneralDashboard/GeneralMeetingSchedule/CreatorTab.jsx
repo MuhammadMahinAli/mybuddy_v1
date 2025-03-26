@@ -32,7 +32,7 @@ const CreatorTab = () => {
   const fetchMeetings = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/meeting/getAllMeetingOf/${userId}?filterType=${filter}&subFilter=${subFilter}`,
+        `https://test-two-22w0.onrender.com/api/v1/meeting/getAllMeetingOf/${userId}?filterType=${filter}&subFilter=${subFilter}`,
         {
           method: "GET",
           headers: {

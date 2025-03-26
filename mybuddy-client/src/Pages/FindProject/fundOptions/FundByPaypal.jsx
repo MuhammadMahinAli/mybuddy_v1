@@ -107,7 +107,7 @@ const FundByPaypal = ({
     const fetchAdminInfo = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/paypal/getLink/${adminId}`,
+          `https://test-two-22w0.onrender.com/api/v1/paypal/getLink/${adminId}`,
           {
             method: "GET",
             headers: {

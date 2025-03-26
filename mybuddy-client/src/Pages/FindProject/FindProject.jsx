@@ -109,7 +109,7 @@ const FindProject = () => {
     setLoading(true); // Set loading to true when fetching data
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/project/getAll`,
+        `https://test-two-22w0.onrender.com/api/v1/project/getAll`,
         {
           params: {
             page,
@@ -276,7 +276,7 @@ const FindProject = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/project/getAllProjectByCategory`,
+        `https://test-two-22w0.onrender.com/api/v1/project/getAllProjectByCategory`,
         {
           params: {
             page,

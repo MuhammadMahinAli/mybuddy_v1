@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import RightSidebar from "../Pages/Homepage/RightSidebar";
 import BottomNavbar from "../common/BottomNavbar/BottomNavbar";
 import Loading from "../Pages/Loading/Loading";
+import ScrollToTop from "./ScrollToTop";
 
 const HomepageLayout = () => {
 
@@ -65,7 +66,7 @@ const HomepageLayout = () => {
   }
 
   return (
-    <>
+    <ScrollToTop>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -125,7 +126,7 @@ const HomepageLayout = () => {
           </div>
         </Dialog>
       </Transition>
-    </>
+    </ScrollToTop>
   );
 };
 

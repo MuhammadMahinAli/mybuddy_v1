@@ -28,7 +28,7 @@ const AdminAllUser = () => {
     setLoading(true); // Set loading to true when fetching data
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/member/getAllMember`,
+        `https://test-two-22w0.onrender.com/api/v1/member/getAllMember`,
         {
           params: {
             page,

@@ -82,9 +82,14 @@ const LandingFooter = () => {
               >
                 Help
               </Link>
-              <div className="self-stretch relative hover:text-blue-500  cursor-pointer capitalize">
+              <Link
+                to="/contact" className="self-stretch relative hover:text-blue-500  cursor-pointer capitalize">
                 Contact
-              </div>
+              </Link>
+              <Link
+                to="/terms&conditions" className="self-stretch relative hover:text-blue-500  cursor-pointer capitalize">
+       Terms & Conditions
+              </Link>
             </div>
             <div className="w-[118px] flex flex-col items-start justify-start py-0 pl-0 pr-0.5 box-border gap-[9px]">
               <b className="self-stretch relative text-mid capitalize text-dimgray-200">

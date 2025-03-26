@@ -7,6 +7,7 @@ import Loading from "../Pages/Loading/Loading";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import BottomNavbar from "../common/BottomNavbar/BottomNavbar";
+import ScrollToTop from "./ScrollToTop";
 
 const UserProfileLayout = () => {
   const authChecked = useAuthCheck();
@@ -36,7 +37,7 @@ const UserProfileLayout = () => {
     return;
   }
   return (
-    <>
+    <ScrollToTop>
       {!authChecked ? (
         <div>Checking Authentication....</div>
       ) : (
@@ -105,7 +106,7 @@ const UserProfileLayout = () => {
           )}
         </>
       )}
-    </>
+    </ScrollToTop>
   );
 };
 

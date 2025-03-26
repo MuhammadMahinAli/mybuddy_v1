@@ -3,12 +3,22 @@ import { useAuthCheck } from "../utils/useAuthCheck";
 import { useSelector } from "react-redux";
 import AdminNavbar from "../common/Navbar/AdminNavbar";
 import AdminSideBar from "../common/AdminSidebar/AdminSideBar";
+import ScrollToTop from "./ScrollToTop";
 
 const AdminLayout = () => {
   const authChecked = useAuthCheck();
 
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+
+  // if (!user?._id) {
+  //   navigate("/only-for-admin-login-route");
+  //   return;
+  // }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   if (!user?._id) {
     navigate("/only-for-admin-login-route");
@@ -18,7 +28,7 @@ const AdminLayout = () => {
   console.log('uu', user);
 
   return (
-    <>
+    <ScrollToTop>
     { 
     user?.email === 'researchbdy@gmail.com' &&
     <>
@@ -37,7 +47,7 @@ const AdminLayout = () => {
       )}
     </>
     }
-    </>
+    </ScrollToTop>
   );
 };
 

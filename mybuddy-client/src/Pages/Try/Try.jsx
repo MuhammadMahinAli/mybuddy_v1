@@ -855,7 +855,7 @@ export default Try;
 //     setLoading(true);
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:3000/api/v1/member/getAll`,
+//         `https://test-two-22w0.onrender.com/api/v1/member/getAll`,
 //         {
 //           params: {
 //             page,
@@ -924,7 +924,7 @@ export default Try;
 //       switch (tab) {
 //         case "description":
 //           data = await apiFetch(
-//             `http://localhost:3000/api/v1/member/getUserById/${userId}`,
+//             `https://test-two-22w0.onrender.com/api/v1/member/getUserById/${userId}`,
 //             "GET"
 //           );
 //           setUserData((prevState) => ({
@@ -937,7 +937,7 @@ export default Try;
 //           break;
 //         case "skill":
 //           data = await apiFetch(
-//             `http://localhost:3000/api/v1/skill/getUserSkillById/${userId}`,
+//             `https://test-two-22w0.onrender.com/api/v1/skill/getUserSkillById/${userId}`,
 //             "GET"
 //           );
 //           setUserData((prevState) => ({
@@ -950,7 +950,7 @@ export default Try;
 //           break;
 //         case "project":
 //           data = await apiFetch(
-//             `http://localhost:3000/api/v1/project/getUserProjectById/${userId}`,
+//             `https://test-two-22w0.onrender.com/api/v1/project/getUserProjectById/${userId}`,
 //             "GET"
 //           );
 //           setUserData((prevState) => ({
@@ -963,7 +963,7 @@ export default Try;
 //           break;
 //         case "social":
 //           data = await apiFetch(
-//             `http://localhost:3000/api/v1/socialInfo/getSocialInfoByUser/${userId}`,
+//             `https://test-two-22w0.onrender.com/api/v1/socialInfo/getSocialInfoByUser/${userId}`,
 //             "GET"
 //           );
 //           setUserData((prevState) => ({
@@ -1383,7 +1383,7 @@ export default Try;
 //     setLoading(true);
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:3000/api/v1/member/getAll`,
+//         `https://test-two-22w0.onrender.com/api/v1/member/getAll`,
 //         {
 //           params: {
 //             page,
@@ -3127,7 +3127,7 @@ export default Try;
 //     // try {
 //     //   // Submit form data to the API
 //     //   const response = await fetch(
-//     //     "http://localhost:3000/api/v1/meeting/create-new",
+//     //     "https://test-two-22w0.onrender.com/api/v1/meeting/create-new",
 //     //     {
 //     //       method: "POST",
 //     //       headers: {
@@ -4126,7 +4126,7 @@ export default Try;
 //     setLoading(true); // Set loading to true when fetching data
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:3000/api/v1/member/getAllMember`,
+//         `https://test-two-22w0.onrender.com/api/v1/member/getAllMember`,
 //         {
 //           params: {
 //             page,
@@ -4316,7 +4316,7 @@ export default Try;
 //     setLoading(true); // Set loading to true when fetching data
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:3000/api/v1/project/getAllProject`,
+//         `https://test-two-22w0.onrender.com/api/v1/project/getAllProject`,
 //         {
 //           params: {
 //             page,

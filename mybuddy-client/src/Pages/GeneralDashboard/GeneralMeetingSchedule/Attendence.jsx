@@ -48,7 +48,7 @@ const Attendence = () => {
     }
     const fetchData = async () => {
       const res = await apiFetch(
-        `http://localhost:3000/api/v1/meeting/getMeetingById/${meetingId}`,
+        `https://test-two-22w0.onrender.com/api/v1/meeting/getMeetingById/${meetingId}`,
         "GET"
       );
       setFund(res?.data ?? {});
@@ -78,7 +78,7 @@ const Attendence = () => {
     if (fund?.attendenceLink === otp) {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/v1/meeting/updateAttendance",
+          "https://test-two-22w0.onrender.com/api/v1/meeting/updateAttendance",
           {
             method: "POST",
             headers: {

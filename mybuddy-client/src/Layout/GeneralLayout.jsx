@@ -3,6 +3,7 @@ import GeneralSideBar from "../common/GeneralSidebar/GeneralSideBar";
 import GeneralDashboardNavbar from "../common/Navbar/GeneralDashboardNavbar";
 import { useAuthCheck } from "../utils/useAuthCheck";
 import { useSelector } from "react-redux";
+import ScrollToTop from "./ScrollToTop";
 
 const GeneralLayout = () => {
   const authChecked = useAuthCheck();
@@ -16,7 +17,7 @@ const GeneralLayout = () => {
   }
 
   return (
-    <>
+    <ScrollToTop>
       {!authChecked ? (
         <div>Checking Authentication....</div>
       ) : (
@@ -30,7 +31,7 @@ const GeneralLayout = () => {
           </div>
         </div>
       )}
-    </>
+    </ScrollToTop>
   );
 };
 

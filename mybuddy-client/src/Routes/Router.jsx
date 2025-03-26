@@ -70,7 +70,22 @@ const router = createBrowserRouter([
         path: "/",
         element: <LandingPage /> ,
       },
-
+      {
+        path: "/help",
+        element: <Help/>,
+      },
+      {
+        path: "/terms&conditions",
+        element: <TermsCondition/>,
+      },
+      {
+        path: "/about-us",
+        element: <About/>,
+      },
+      {
+        path: "/contact",
+        element: <Contact/>,
+      },
       
     ],
   },
@@ -193,7 +208,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/details/:id",
         element: <GeneralProjectDetails />,
-        loader: ({ params }) => fetch(`http://localhost:3000/api/v1/project/getProjectById/${params.id}`)
+        loader: ({ params }) => fetch(`https://test-two-22w0.onrender.com/api/v1/project/getProjectById/${params.id}`)
       },
       {
         path: "/dashboard/test",
@@ -228,7 +243,7 @@ const router = createBrowserRouter([
       {
         path: "/admin/:id/project-details/:id",
         element: <GeneralProjectDetails />,
-        loader: ({ params }) => fetch(`http://localhost:3000/api/v1/project/getProjectById/${params.id}`)
+        loader: ({ params }) => fetch(`https://test-two-22w0.onrender.com/api/v1/project/getProjectById/${params.id}`)
       },
       {
         path: "/admin/:id/setting",
@@ -250,7 +265,7 @@ const router = createBrowserRouter([
       // {
       //   path: "/dashboard/details/:id",
       //   element: <GeneralProjectDetails />,
-      //   loader: ({ params }) => fetch(`http://localhost:3000/api/v1/project/getProjectById/${params.id}`)
+      //   loader: ({ params }) => fetch(`https://test-two-22w0.onrender.com/api/v1/project/getProjectById/${params.id}`)
       // },
      
     ],
@@ -309,22 +324,7 @@ const router = createBrowserRouter([
     element: <Try />,
   },
 
-  {
-    path: "/help",
-    element: <Help/>,
-  },
-  {
-    path: "/terms&condition",
-    element: <TermsCondition/>,
-  },
-  {
-    path: "/about",
-    element: <About/>,
-  },
-  {
-    path: "/contact",
-    element: <Contact/>,
-  },
+  
   {
     path: "/test",
     element: <AddTaskForm />,
