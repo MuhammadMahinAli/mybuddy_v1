@@ -18,7 +18,6 @@ import { Meeting } from "./meeting.model.js";
 const generateOtp = () => {
   return crypto.randomInt(100000, 999999);
 };
-console.log(process.env.NODEMAIL_PASS, process.env.NODEMAIL_USER);
 // Function to generate attendance link with OTP   https://researchbdy.com/    https://researchbdy.com
 const generateAttendanceLink = (otp, meetingId) => {
   const baseUrl = "https://researchbdy.com/attendance";
@@ -93,7 +92,7 @@ export const sendAndScheduleAttendanceEmailService = async (meeting) => {
     // Function to send email
     const sendEmail = async (to, subject, html) => {
       await transporter.sendMail({
-        from: process.env.NODEMAIL_USER,
+        from: `"Research Buddy" <${process.env.NODEMAIL_USER}>`,
         to,
         subject,
         html,

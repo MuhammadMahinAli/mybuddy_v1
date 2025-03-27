@@ -12,7 +12,7 @@ export const sendPasswordResetEmail = async (email, user, resetUrl) => {
   });
 
   const mailOptions = {
-    from: process.env.NODEMAIL_USER,
+    from: `"Research Buddy" <${process.env.NODEMAIL_USER}>`,
     to: email,
     subject: "Research Buddy - Password Reset Request",
     html: `
