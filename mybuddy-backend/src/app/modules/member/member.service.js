@@ -25,14 +25,14 @@ export const createMemberService = async (userInfo) => {
   userInfo.verificationToken = verificationToken;
   userInfo.uniqueId = generateUniqueId();
 
-  console.log("user", userInfo);
+  //console.log("user", userInfo);
   const result = (await Member.create(userInfo)).toObject();
   if (!result) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create user");
   }
   const { password, ...newUser } = result;
-  console.log("result", result);
-  console.log("userinfo", userInfo);
+ // console.log("result", result);
+ // console.log("userinfo", userInfo);
 
   const verificationUrl = `https://researchbdy.com/verified-email/${verificationToken}`;
 
