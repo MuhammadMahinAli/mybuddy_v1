@@ -29,7 +29,7 @@ const LandingPage = () => {
             <LandingHero />
 
             {/* Google Ads - Load only one on landing */}
-            <GoogleAdComponent />
+            {/* <GoogleAdComponent /> */}
 
             <Suspense fallback={<Loading />}>
               <LandingCollaboration />

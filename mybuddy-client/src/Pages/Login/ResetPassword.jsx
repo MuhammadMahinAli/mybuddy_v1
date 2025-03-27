@@ -116,7 +116,7 @@ const ResetPassword = () => {
           icon: "success",
           text: "Password has been reset successfully!",
         });
-        // navigate("/login");
+    navigate("/login");
       })
       .catch((error) => {
         setIsLoading(false);
@@ -242,8 +242,6 @@ const ResetPassword = () => {
                     character & must be 8 characters or longer.
                   </span>
                 )}
-
-<GoogleAdComponent />
                 <button
                   type="submit"
                   className="w-full py-2 mt-4 text-white bg-[#49a133] hover:bg-[#2dc70a] rounded"
