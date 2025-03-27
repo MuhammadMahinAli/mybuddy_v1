@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LandingNav from "../Landing/LandingNav";
 import { PiTelegramLogo } from "react-icons/pi";
 import { lazy, Suspense } from "react";
@@ -6,7 +6,11 @@ import Loading from "../Loading/Loading";
 
 const LandingFooter = lazy(() => import("../Landing/LandingFooter"));
 
+
 const Contact = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   return (
     <div className="relative">
       <div

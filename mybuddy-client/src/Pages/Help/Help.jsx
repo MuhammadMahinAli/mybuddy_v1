@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import LandingFooter from "../Landing/LandingFooter";
 import HelpHero from "./HelpHero";
 import HelpMore from "./HelpMore";
 import HelpPopular from "./HelpPopular";
 
+
 const Help = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   return (
     <div className="bg-[#d0e3ec]">
       <div className="w-full relative bg-[#d0e3ec]  overflow-hidden flex flex-row items-start justify-start leading-[normal] tracking-[normal]">

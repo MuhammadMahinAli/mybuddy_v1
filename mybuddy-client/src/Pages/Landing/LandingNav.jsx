@@ -63,7 +63,7 @@ const LandingNav = () => {
                 home
               </Link> */}
               <Link
-                to={user ? "/feed" : "/login"}
+                to="/"
                 className={`${
                   location.pathname === "/"
                     ? "text-blue-500"
@@ -73,7 +73,11 @@ const LandingNav = () => {
                 home
               </Link>
               <p
-                className={`hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold  inline-block min-w-[82px]`}
+                className={`${
+                  location.pathname === "/about-us"
+                    ? "text-blue-500"
+                    : "text-cornflowerblue-100"
+                } hover:text-blue-500 cursor-pointer [text-decoration:none] relative capitalize text-lg font-semibold  inline-block min-w-[82px]`}
               >
                 <Link to="/about-us">About us</Link>
               </p>
@@ -242,7 +246,7 @@ const LandingNav = () => {
                         </li> */}
                         <li>
                           <Link
-                            to={user ? "/feed" : "/login"}
+                            to="/"
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Home

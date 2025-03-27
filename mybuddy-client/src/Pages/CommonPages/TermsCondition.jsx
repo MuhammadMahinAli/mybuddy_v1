@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LandingNav from "../Landing/LandingNav";
 import {  lazy,Suspense } from "react";
 import Loading from "../Loading/Loading";
 
 const LandingFooter = lazy(() => import("../Landing/LandingFooter"));
 const TermsCondition = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   const termsContent = [
     {
       title: "1. DEFINITIONS",

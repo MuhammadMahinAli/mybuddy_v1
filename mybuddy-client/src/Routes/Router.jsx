@@ -70,22 +70,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <LandingPage /> ,
       },
-      {
-        path: "/help",
-        element: <Help/>,
-      },
-      {
-        path: "/terms&conditions",
-        element: <TermsCondition/>,
-      },
-      {
-        path: "/about-us",
-        element: <About/>,
-      },
-      {
-        path: "/contact",
-        element: <Contact/>,
-      },
+   
       
     ],
   },
@@ -323,7 +308,22 @@ const router = createBrowserRouter([
     path: "/try",
     element: <Try />,
   },
-
+  {
+    path: "/help",
+    element: <Help/>,
+  },
+  {
+    path: "/terms&conditions",
+    element: <TermsCondition/>,
+  },
+  {
+    path: "/about-us",
+    element: <About/>,
+  },
+  {
+    path: "/contact",
+    element: <Contact/>,
+  },
   
   {
     path: "/test",

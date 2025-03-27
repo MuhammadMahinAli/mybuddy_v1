@@ -71,7 +71,7 @@ const LandingFooter = () => {
                 home
               </Link>
               <Link
-                to={user ? "/feed" : "/find/project"}
+                to={user ?  "/find/project" : "/login"}
                 className="[text-decoration:none] hover:text-blue-500  cursor-pointer self-stretch relative capitalize text-[inherit]"
               >
                 Project
