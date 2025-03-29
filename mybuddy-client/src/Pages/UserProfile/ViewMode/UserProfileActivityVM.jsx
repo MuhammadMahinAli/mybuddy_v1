@@ -31,7 +31,7 @@ const UserProfileActivityVM = ({ allPost }) => {
         >
           <div>
             <p className="text-lg md:text-2xl font-semibold">Activity</p>
-            <p className="text-sm pt-1">422 Followers</p>
+        
           </div>
         </div>
         {allPost?.length === 0 ? (

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import AdminNavbar from "../common/Navbar/AdminNavbar";
 import AdminSideBar from "../common/AdminSidebar/AdminSideBar";
 import ScrollToTop from "./ScrollToTop";
+import { useEffect } from "react";
 
 const AdminLayout = () => {
   const authChecked = useAuthCheck();

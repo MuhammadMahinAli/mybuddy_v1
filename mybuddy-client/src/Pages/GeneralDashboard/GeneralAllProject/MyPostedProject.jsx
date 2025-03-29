@@ -43,7 +43,7 @@ const MyPostedProject = () => {
                   </div>
 
                   <div className="px-2 pt-0 ssm:pt-1 lg:pt-3 xl:pt-3 3xl:pt-3 xl:p-3  md:px-5 lg:py-3 space-y-1 lg:space-y-1">
-                    <p className="2xl:hidden text-xl 3xl:text-[22px] font-bold pt-2 ssm:py-0">
+                    <p className="capitalize 2xl:hidden text-xl 3xl:text-[22px] font-bold pt-2 ssm:py-0">
                       {p?.projectName.length > 15
                         ? `${p.projectName.slice(0, 7)}...`
                         : p.projectName}

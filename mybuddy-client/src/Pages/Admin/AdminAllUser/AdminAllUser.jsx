@@ -39,6 +39,8 @@ const AdminAllUser = () => {
       );
       const data = response.data.data;
 
+      console.log(response?.data.data.currentPage, response.data.data.totalPages );
+
       setUsers(data.users || []);
       setCurrentPage(data.currentPage || 1);
       setTotalPages(data.totalPages || 1);
@@ -60,6 +62,7 @@ const AdminAllUser = () => {
   // Initial fetch of users
   useEffect(() => {
     fetchUsers(currentPage);
+    window.scrollTo(0, 0);
   }, [currentPage]);
 
   // Handle uniqueId filter
@@ -74,7 +77,9 @@ const AdminAllUser = () => {
     fetchUsers(1); // Fetch initial 6 users
   };
 
-  console.log("dd", users);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [location.pathname]);
 
   return (
     <div>
@@ -104,16 +109,16 @@ const AdminAllUser = () => {
           <Loading />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {users.length > 0 ? (
-              users.map((p, i) => (
+            {users?.length > 0 ? (
+              users?.map((p, i) => (
                 <div key={i}>
                   <div className="my-10 bg-white rounded-2xl shadow-lg p-6  text-center relative h-[300px]">
                     {/* Profile Image */}
                     <div className="relative md:w-24 h-16 w-16 md:h-24 mx-auto rounded-full overflow-hidden border-4 border-blue-500 -mt-16">
                       <img
                         src={
-                          p.profilePic
-                            ? p.profilePic
+                          p?.profilePic
+                            ? p?.profilePic
                             : "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg"
                         } // Replace this URL with the actual image URL
                         alt="Profile"
@@ -122,20 +127,20 @@ const AdminAllUser = () => {
                     </div>
 
                     {/* Name and Role */}
-                    <h2 className="text-2xl font-semibold mt-4">
-                      {p.name.firstName} {p.name.lastName}
+                    <h2 className="text-2xl font-semibold mt-4 capitalize">
+                      {p?.name?.firstName} {p?.name?.lastName}
                     </h2>
-                    <p className="text-blue-600 font-medium">{p.role}</p>
-                    <p className="text-gray-600 font-medium">{p.email}</p>
+                    <p className="text-blue-600 font-medium capitalize">{p?.role}</p>
+                    <p className="text-gray-600 font-medium">{p?.email}</p>
                     {/* Bio */}
                     <p className="text-gray-600 mt-2">
-                      {p.about
-                        ? p.about.slice(0, 30) + "..."
-                        : `Nothing to show about ${p.name.firstName} ${p.name.lastName}`}
+                      {p?.about
+                        ? p?.about.slice(0, 30) + "..."
+                        : `Nothing to show about ${p?.name.firstName} ${p?.name.lastName}`}
                     </p>
 
                     <p className="text-gray-600 mt-2 text-sm">
-                      <span>User ID:</span> {p.uniqueId ? p.uniqueId : `ID`}
+                      <span>User ID:</span> {p?.uniqueId ? p?.uniqueId : `ID`}
                     </p>
 
                     {/* Email Button */}
@@ -164,7 +169,7 @@ const AdminAllUser = () => {
           </div>
         )}
 
-        {isFiltered && loading === false && (
+        {loading === false && (
           <div className="py-3 pagination flex items-center justify-center lg:mt-4">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

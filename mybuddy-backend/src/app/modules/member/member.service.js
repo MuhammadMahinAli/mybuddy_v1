@@ -124,28 +124,56 @@ export const resendEmailService = async (email) => {
 //   const users = await Member.find({ email: { $ne: "researchbdy@gmail.com" } }); // Exclude "researchbdy@gmail.com"
 //   return users;
 // };
+// export const getAllMemberService = async (filter, page = 1) => {
+//   const pageSize = 10; // 10 members per page
+//   const skip = (page - 1) * pageSize;
+
+//   const query = {
+//     email: { $ne: "researchbdy@gmail.com" }, // Exclude "researchbdy@gmail.com"
+//     ...filter, // Add dynamic filtering based on the request
+//   };
+
+//   const members = await Member.find(query)
+//     .skip(skip)
+//     .limit(pageSize);
+
+//   const totalMembers = await Member.countDocuments(query);
+
+//   return {
+//     members,
+//     totalMembers,
+//     totalPages: Math.ceil(totalMembers / pageSize),
+//     currentPage: page,
+//   };
+// };
+
+
+
 export const getAllMemberService = async (filter, page = 1) => {
-  const pageSize = 10; // 10 members per page
+  const pageSize = 10;
   const skip = (page - 1) * pageSize;
 
   const query = {
-    email: { $ne: "researchbdy@gmail.com" }, // Exclude "researchbdy@gmail.com"
-    ...filter, // Add dynamic filtering based on the request
+    email: { $ne: "researchbdy@gmail.com" },
+    ...filter,
   };
 
   const members = await Member.find(query)
     .skip(skip)
-    .limit(pageSize);
+    .limit(pageSize)
+    .lean(); // Optional for better performance if you don’t need full Mongoose documents
 
   const totalMembers = await Member.countDocuments(query);
+  const totalPages = Math.ceil(totalMembers / pageSize);
 
   return {
     members,
     totalMembers,
-    totalPages: Math.ceil(totalMembers / pageSize),
+    totalPages,
     currentPage: page,
   };
 };
+
 
 
 export const getSingleMember = async (id) => {

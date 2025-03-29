@@ -62,7 +62,7 @@ export const deleteTaskFromProjectController = catchAsync(async (req, res) => {
 
 export const getAllProjects = catchAsync(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 5;
+  const limit = parseInt(req.query.limit) || 6;
 
   const result = await getProjectsService(page, limit);
 
@@ -224,6 +224,32 @@ export const updateProjetRequestStatusController = async (req, res) => {
 
 
 // // Controller function to handle pagination and uniqueId filter
+// export const getAllProjectController = catchAsync(async (req, res) => {
+//   const page = parseInt(req.query.page) || 1;
+//   const limit = parseInt(req.query.limit) || 6;
+//   const uniqueId = req.query.uniqueId || null;
+
+//   const result = await getAllProjectService(page, limit, uniqueId);
+
+//   if (result.message) {
+//     return sendResponse(res, {
+//       statusCode: httpStatus.NOT_FOUND,
+//       success: false,
+//       message: result.message,
+//       data: [],
+//     });
+//   }
+
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Members retrieved successfully!",
+//     data: result,
+//   });
+// });
+
+
+
 export const getAllProjectController = catchAsync(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 6;
@@ -236,17 +262,28 @@ export const getAllProjectController = catchAsync(async (req, res) => {
       statusCode: httpStatus.NOT_FOUND,
       success: false,
       message: result.message,
-      data: [],
+      data: {
+        projects: [],
+        totalProjects: 0,
+        currentPage: page,
+        totalPages: 1,
+      },
     });
   }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Members retrieved successfully!",
-    data: result,
+    message: "Projects retrieved successfully!",
+    data: {
+      projects: result.projects,
+      totalProjects: result.totalProjects,
+      currentPage: result.currentPage,
+      totalPages: result.totalPages,
+    },
   });
 });
+
 
 //project by category
 export const getAllProjectByCategoryController = catchAsync(async (req, res) => {
@@ -267,7 +304,7 @@ export const getAllProjectByCategoryController = catchAsync(async (req, res) => 
     success: true,
     message: "Project By Category retrieved successfully!",
     data: result.projects,
-    pagination: {
+    meta: {
       totalProjects: result.totalProjects,
       totalPages: result.totalPages,
       currentPage: result.currentPage,

@@ -34,7 +34,7 @@ const UserProfileActivityEM = () => {
         >
           <div>
             <p className="text-lg md:text-2xl font-semibold">Activity</p>
-            <p className="text-sm pt-1">422 Followers</p>
+         
           </div>
           <Link to="/feed">
             {theme === "light" ? (

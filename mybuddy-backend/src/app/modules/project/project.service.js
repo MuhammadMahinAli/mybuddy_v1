@@ -33,16 +33,18 @@ export const createProject = async (postData) => {
 
 
 export const getProjectsService = async (page, limit) => {
-  try {
+  try { 
     const skip = (page - 1) * limit;
 
     // Fetch projects and populate user details
     const projects = await Project.find().sort({ createdAt: -1 }).skip(skip).limit(limit).populate('user', "name email profilePic country");
-    const totalPage = await Project.countDocuments();
+    const totalProjects = await Project.countDocuments();
+    const totalPages = Math.ceil(totalProjects / limit)
 
     return {
       projects,
-      totalPages: Math.ceil(totalPage / limit),
+      totalProjects,
+      totalPages,
       currentPage: page,
     };
     
@@ -246,32 +248,67 @@ export const updateProjetRequestStatusService = async (projectId, isChecked) => 
 };
 
 // Modified service function to get members with pagination and uniqueId filter
+// export const getAllProjectService = async (page, limit, uniqueId) => {
+//   const skip = (page - 1) * limit;
+
+//   // If uniqueId is provided, search for that specific project/member
+//   if (uniqueId) {
+//     const project = await Project.findOne({ uniqueId });
+//     if (!project) {
+//       return { message: "No project matched with the provided uniqueId." };
+//     }
+//     return { projects: [project], totalPages: 1, currentPage: page };
+//   } 
+
+//   // If no uniqueId, fetch paginated results
+//   const projects = await Project.find().skip(skip).limit(limit).populate('user');
+//   const totalMembers = await Project.countDocuments();
+
+//   return {
+//     projects,
+//     totalPages: Math.ceil(totalMembers / limit),
+//     currentPage: page,
+//   };
+// };
+
 export const getAllProjectService = async (page, limit, uniqueId) => {
   const skip = (page - 1) * limit;
 
-  // If uniqueId is provided, search for that specific project/member
+  // If uniqueId is provided, search for that specific project
   if (uniqueId) {
-    const project = await Project.findOne({ uniqueId });
+    const project = await Project.findOne({ uniqueId }).populate('user');
     if (!project) {
       return { message: "No project matched with the provided uniqueId." };
     }
-    return { projects: [project], totalPages: 1, currentPage: page };
-  } 
+
+    return {
+      projects: [project],
+      totalProjects: 1,
+      currentPage: 1,
+      totalPages: 1,
+    };
+  }
 
   // If no uniqueId, fetch paginated results
-  const projects = await Project.find().skip(skip).limit(limit).populate('user');
-  const totalMembers = await Project.countDocuments();
+  const projects = await Project.find()
+    .skip(skip)
+    .limit(limit)
+    .populate('user');
+
+  const totalProjects = await Project.countDocuments();
 
   return {
     projects,
-    totalPages: Math.ceil(totalMembers / limit),
+    totalProjects,
     currentPage: page,
+    totalPages: Math.ceil(totalProjects / limit),
   };
 };
 
+
 // PROJECT FILTER BY CATEGORY
 export const getAllProjectByCategoryService = async (filter, page = 1) => {
-  const pageSize = 10; // 10 projects per page
+  const pageSize = 6; // 10 projects per page
   const skip = (page - 1) * pageSize;
 
   const query = {  ...filter };

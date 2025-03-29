@@ -127,29 +127,121 @@ export const resendVerificationEmail = catchAsync(async (req, res) => {
 //   });
 // });
 
+// export const getAllMembers = catchAsync(async (req, res) => {
+//   const { id, role, page } = req.query; // Extract query parameters
+
+//   const filter = {};
+//   if (id) {
+//     filter._id = id; // Search by ID
+//   }
+//   if (role) {
+//     filter.role = role; // Search by role
+//   }
+
+//   const result = await getAllMemberService(filter, Number(page) || 1);
+
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Members retrieved successfully!",
+//     data: result.members,
+//   meta: {
+//       totalMembers: result.totalMembers,
+//       totalPages: result.totalPages,
+//       currentPage: result.currentPage,
+//     },
+//   });
+// });
+// export const getAllMembers = catchAsync(async (req, res) => {
+//   const { id, role, page } = req.query; // Extract query parameters
+
+//   const filter = {};
+//   if (id) {
+//     filter._id = id; // Search by ID
+//   }
+//   if (role) {
+//     filter.role = role; // Search by role
+//   }
+
+//   // Call the service to get members and pagination info
+//   const result = await getAllMemberService(filter, Number(page) || 1);
+
+//   // Check if the result has pagination information
+//   const paginationMeta = (result.totalMembers !== undefined && result.totalPages !== undefined) ? {
+//     totalMembers: result.totalMembers,
+//     totalPages: result.totalPages,
+//     currentPage: result.currentPage,
+//     pageSize: 10,
+//   } : null;
+  
+
+//   // Send the response with 'meta' and 'data'
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Members retrieved successfully!",
+//     data: result.members, // List of members
+//     meta: paginationMeta, // Pagination info
+//   });
+// });
+
+// export const getAllMembers = catchAsync(async (req, res) => {
+//   const { id, role, page } = req.query; // Extract query parameters
+
+//   const filter = {};
+//   if (id) {
+//     filter._id = id; // Search by ID
+//   }
+//   if (role) {
+//     filter.role = role; // Search by role
+//   }
+
+//   const result = await getAllMemberService(filter, Number(page) || 1);
+
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Members retrieved successfully!",
+//     data: result.members,
+//     meta: {
+//       totalMembers: result.totalMembers,
+//       totalPages: result.totalPages,
+//       currentPage: result.currentPage,
+//       pageSize: 10, // Explicitly specify page size
+//     },
+//   });
+// });
+
 export const getAllMembers = catchAsync(async (req, res) => {
-  const { id, role, page } = req.query; // Extract query parameters
+  const { id, role, page } = req.query;
 
   const filter = {};
   if (id) {
-    filter._id = id; // Search by ID
+    filter._id = id;
   }
   if (role) {
-    filter.role = role; // Search by role
+    filter.role = role;
   }
 
   const result = await getAllMemberService(filter, Number(page) || 1);
+
+  // Log for debugging (optional)
+  // console.log("Service Result:", result);
+
+  // Always return meta, even if values are 0
+  const paginationMeta = {
+    totalMembers: result.totalMembers ?? 0,
+    totalPages: result.totalPages ?? 0,
+    currentPage: result.currentPage ?? 1,
+    pageSize: 10,
+  };
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Members retrieved successfully!",
     data: result.members,
-    pagination: {
-      totalMembers: result.totalMembers,
-      totalPages: result.totalPages,
-      currentPage: result.currentPage,
-    },
+    meta: paginationMeta,
   });
 });
 

@@ -104,6 +104,9 @@ const FindProject = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [totalProjects, setTotalProjects] = useState(0);
+  const [filteredPage, setFilteredPage] = useState(1);     // filtered
+const [filteredTotalPages, setFilteredTotalPages] = useState(1); // filtered
 
   const fetchProjects = async (page = 1) => {
     setLoading(true); // Set loading to true when fetching data
@@ -113,17 +116,19 @@ const FindProject = () => {
         {
           params: {
             page,
-            limit: 5,
+            limit: 6,
           },
         }
       );
-      const data = response.data.data;
+      const datas = response.data.data;
+      const { projects, currentPage, totalPages, totalProjects } = response.data.data;
 
-  //    console.log("dd", data);
+      setAllProjects(projects || []); 
+setCurrentPage(currentPage || 1);
+setTotalPages(totalPages || 1);
+setTotalProjects(totalProjects || 0);
 
-      setAllProjects(data.projects || []);
-      setCurrentPage(data.currentPage || 1);
-      setTotalPages(data.totalPages || 1);
+      console.log(projects,currentPage,totalPages,totalProjects);
 
       // Set isFiltered to true if uniqueIdFilter is applied, else false
     } catch (error) {
@@ -139,13 +144,11 @@ const FindProject = () => {
     // Set loading to false when data is fetched
   };
 
-  const projects = allProjects
-    ?.slice()
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   // Initial fetch of projects
   useEffect(() => {
     fetchProjects(currentPage);
+    window.scrollTo(0, 0);
   }, [currentPage]);
 
   const handlePaymentSelection = (payment) => {
@@ -280,19 +283,19 @@ const FindProject = () => {
         {
           params: {
             page,
-            limit: 10,
+            limit: 6,
             category: categoryFilter,
           },
         }
       );
 
       const data = response.data.data;
-
-      //console.log("data", data, categoryFilter);
+      const meta = response.data.meta;
+  console.log("datan", response.data.meta, categoryFilter);
 
       setFilterProjects(data || []);
-      setCurrentPage(response.data?.data?.currentPage || 1);
-      setTotalPages(response.data?.data?.totalPages || 1);
+      setFilteredPage(meta?.currentPage || 1);
+      setFilteredTotalPages(meta?.totalPages || 1);
 
       setIsFiltered(!!categoryFilter);
     } catch (error) {
@@ -303,8 +306,9 @@ const FindProject = () => {
   };
 
   useEffect(() => {
-    fetchUsers(currentPage, selectedRole);
-  }, [currentPage, selectedRole]);
+    fetchUsers(filteredPage, selectedRole);
+    window.scrollTo(0, 0);
+  }, [filteredPage, selectedRole]);
 
 
 
@@ -321,6 +325,17 @@ useEffect(() => {
 }, [getAllSentProjectJoinRequest]);
 
 
+const projects = allProjects
+  ?.slice()
+  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+// 2. Sort filtered projects
+const sortedFilterProjects = filterProjects
+  ?.slice()
+  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+// 3. Choose the active project list
+const activeProjects = isFiltered ? sortedFilterProjects : projects;
 
 
 
@@ -352,7 +367,7 @@ useEffect(() => {
     </div>
 
         <div className="mx-3 md:mx-6 3xl:mx-20 my-5 p-3 xl:p-3 space-y-5">
-          {filterProjects?.map((project, i) => {
+          {activeProjects?.map((project, i) => {
             const { status } = getRequestStatus(project?._id);
             const hasJoined = joinRequests.includes(project._id); // check locally
             const buttonText =
@@ -957,37 +972,69 @@ useEffect(() => {
             );
           })}
         </div>
-        {filterProjects?.length === 0 && loading === false && (
-        <div className="xl:text-[20px] text-center text-gray-500 pt-10 xl:pt-20 capitalize">{` No Project found.`}</div>
-      )}
-        {projects?.length > 10&& loading === false && (
-          <div className="space-x-2 pagination flex items-center justify-center mt-5">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className={`${theme === "light" ? "text-gray-600" : "text-white"
-                } py-2 rounded-lg mx-2`}
-            >
-              <FaRegArrowAltCircleLeft className="text-2xl" />
-            </button>
-            <span
-              className={`${theme === "light" ? "text-gray-600" : "text-white"
-                }`}
-            >
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-              className={`${theme === "light" ? "text-gray-600" : "text-white"
-                } py-2 rounded-lg mx-2`}
-            >
-              <FaRegArrowAltCircleRight className="text-2xl" />
-            </button>
-          </div>
-        )}
+        {!loading && (
+  <>
+    {!isFiltered && allProjects?.length === 0 && (
+      <div className="xl:text-[20px] text-center text-gray-500 pt-10 xl:pt-20 capitalize">
+        No Project found.
+      </div>
+    )}
+    {isFiltered && filterProjects?.length === 0 && (
+      <div className="xl:text-[20px] text-center text-gray-500 pt-10 xl:pt-20 capitalize">
+        No project matched your selected category.
+      </div>
+    )}
+  </>
+)}
+
+      {!loading && (
+  <>
+    {!isFiltered && totalPages > 1 && (
+      <div className="pagination flex items-center justify-center mt-5 space-x-2">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className={`${theme === "light" ? "text-gray-600" : "text-white"} py-2 rounded-lg mx-2`}
+        >
+          <FaRegArrowAltCircleLeft className="text-2xl" />
+        </button>
+        <span className={`${theme === "light" ? "text-gray-600" : "text-white"}`}>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+          className={`${theme === "light" ? "text-gray-600" : "text-white"} py-2 rounded-lg mx-2`}
+        >
+          <FaRegArrowAltCircleRight className="text-2xl" />
+        </button>
+      </div>
+    )}
+
+    {isFiltered && filteredTotalPages > 1 && (
+      <div className="pagination flex items-center justify-center mt-5 space-x-2">
+        <button
+          onClick={() => setFilteredPage((prev) => Math.max(prev - 1, 1))}
+          disabled={filteredPage === 1}
+          className={`${theme === "light" ? "text-gray-600" : "text-white"} py-2 rounded-lg mx-2`}
+        >
+          <FaRegArrowAltCircleLeft className="text-2xl" />
+        </button>
+        <span className={`${theme === "light" ? "text-gray-600" : "text-white"}`}>
+          Page {filteredPage} of {filteredTotalPages}
+        </span>
+        <button
+          onClick={() => setFilteredPage((prev) => Math.min(prev + 1, filteredTotalPages))}
+          disabled={filteredPage === filteredTotalPages}
+          className={`${theme === "light" ? "text-gray-600" : "text-white"} py-2 rounded-lg mx-2`}
+        >
+          <FaRegArrowAltCircleRight className="text-2xl" />
+        </button>
+      </div>
+    )}
+  </>
+)}
+
       </div>
     </>
   );
