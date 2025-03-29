@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useGetUsersPayoneerLinkQuery } from "../../../features/payoneer/payoneerApi";
 
 const PayoneerFund = () => {
   const { data: getAllPayoneerFundInfo } = useGetAllPayoneerFundInfoQuery();
@@ -17,6 +18,13 @@ const PayoneerFund = () => {
   const [fundStatuses, setFundStatuses] = useState({}); // Start with an empty object
   const [openDetails, setOpenDetails] = useState(false);
   const [fundRequest, setFundRequest] = useState(null);
+  const {
+    data: getUsersPayoneerLink,
+    isLoading: linkLoading,
+    error: payoneerLinkError,
+  } = useGetUsersPayoneerLinkQuery(
+    fundRequest?.requestedTo?._id,
+    { skip: !fundRequest?.requestedTo?._id })
 
   const handleOpenDetails = (fund) => {
     setFundRequest(fund);
@@ -265,18 +273,18 @@ const PayoneerFund = () => {
 
             <div className="mb-4">
               <h3 className="text-lg font-semibold text-gray-800">Project </h3>
-              <p className="text-gray-600 pl-4">
+              <p className="text-gray-600 pl-4  capitalize">
                 <strong>Name :</strong> {fundRequest?.projectName}
               </p>
               <p className="text-gray-600 pl-4">
-                <strong>ID:</strong> {fundRequest?.projectId}
+                <strong>ID:</strong> {fundRequest?.fundingProject?.uniqueId}
               </p>
             </div>
 
             <div className="mb-4">
               <h3 className="text-lg font-semibold text-gray-800">Requester</h3>
               <p className="text-gray-600">
-                <span className="font-medium pl-4">
+                <span className="font-medium pl-4 capitalize">
                   <strong>Name:</strong>
                 </span>{" "}
                 {fundRequest?.requestedBy?.name?.firstName}{" "}
@@ -295,7 +303,7 @@ const PayoneerFund = () => {
             <div className="mb-4">
               <h3 className="text-lg font-semibold text-gray-800">Recipient</h3>
               <p className="text-gray-600">
-                <span className="font-medium pl-4">
+                <span className="font-medium pl-4  capitalize">
                   <strong>Name:</strong>
                 </span>{" "}
                 {fundRequest?.requestedTo?.name?.firstName}{" "}
@@ -309,6 +317,16 @@ const PayoneerFund = () => {
                   ? fundRequest?.requestedTo?.uniqueId
                   : "Id"}
               </p>
+              <p className="text-gray-600">
+  <span className="font-medium pl-4">
+    <strong>Payoneer:</strong>
+  </span>{" "}
+  {linkLoading
+    ? "Loading..."
+    : payoneerLinkError
+    ? "Error loading link"
+    : getUsersPayoneerLink?.payoneerLink || "Not available"}
+</p>
             </div>
 
             <div className="mb-4 space-y-1">

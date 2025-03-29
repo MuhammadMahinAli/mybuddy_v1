@@ -7,10 +7,13 @@ import {
 } from "../../../features/paypalfund/paypalFundApi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useGetUsersPaypalLinkQuery } from "../../../features/paypal/paypalApi";
 
 const PaypalFund = () => {
   const [updatePaypalFundStatus] = useUpdatePaypalFundStatusMutation();
   const [deletePaypalFundRequest] = useDeletePaypalFundRequestMutation();
+
+  
   const { data: getAllPaypalFundInfo, isLoading } =
     useGetAllPaypalFundInfoQuery();
   const paypals = getAllPaypalFundInfo?.data;
@@ -19,6 +22,15 @@ const PaypalFund = () => {
   const [openDetails, setOpenDetails] = useState(false);
   const [fundRequest, setFundRequest] = useState(null);
 
+  const {
+    data: getUsersPaypalLink,
+    isLoading: paypalLinkLoading,
+    error: paypalLinkError,
+  } = useGetUsersPaypalLinkQuery(
+    fundRequest?.requestedTo?._id,
+    { skip: !fundRequest?.requestedTo?._id }
+  );
+console.log(getUsersPaypalLink?.paypalLink,fundRequest?.requestedTo?._id );
   const handleOpenDetails = (fund) => {
     setFundRequest(fund);
     setOpenDetails(true);
@@ -123,7 +135,7 @@ const PaypalFund = () => {
       }
     });
   };
-
+  console.log("pp",paypals);
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -216,19 +228,7 @@ const PaypalFund = () => {
                   </div>
                 )}
               </div>
-              {/* <div className="flex justify-center space-x-3 items-center text-[16px] md:text-lg  text-start e w-2/12 md:w-2/12 lg:w-2/12">
-              {fundStatuses[p?._id] === "Pending" ? (
-                  <FaRegTrashCan
-                    title="Status is still pending"
-                    className="cursor-not-allowed h-5 md:h-7 text-red-400"
-                  />
-                ) : (
-                  <FaRegTrashCan
-                    onClick={() => handleDeleteFundRequest(p?._id)}
-                    className="h-5 md:h-7 cursor-pointer text-red-600"
-                  />
-                )}
-                   </div> */}
+             
                 {openDetails && fundRequest && (
                   <div className="fixed top-0 left-0  flex justify-center items-center bg-black/25 bg-opacity-50 w-screen h-screen overflow-y-scroll">
                     <div className="w-full   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all md:w-[600px] 3xl:w-[800px] cursor-pointer">
@@ -244,11 +244,11 @@ const PaypalFund = () => {
                         <h3 className="text-lg font-semibold text-gray-800">
                           Project{" "}
                         </h3>
-                        <p className="text-gray-600 pl-4">
+                        <p className="text-gray-600 pl-4  capitalize">
                           <strong>Name :</strong> {fundRequest?.projectName}
                         </p>
                         <p className="text-gray-600 pl-4">
-                          <strong>ID:</strong> {fundRequest?.projectId}
+                          <strong>ID:</strong> {fundRequest?.fundingProject?.uniqueId}
                         </p>
                       </div>
 
@@ -257,7 +257,7 @@ const PaypalFund = () => {
                           Requester
                         </h3>
                         <p className="text-gray-600">
-                          <span className="font-medium pl-4">
+                          <span className="font-medium pl-4  capitalize">
                             <strong>Name:</strong>
                           </span>{" "}
                           {fundRequest?.requestedBy?.name?.firstName}{" "}
@@ -278,7 +278,7 @@ const PaypalFund = () => {
                           Recipient
                         </h3>
                         <p className="text-gray-600">
-                          <span className="font-medium pl-4">
+                          <span className="font-medium pl-4  capitalize">
                             <strong>Name:</strong>
                           </span>{" "}
                           {fundRequest?.requestedTo?.name?.firstName}{" "}
@@ -292,40 +292,21 @@ const PaypalFund = () => {
                             ? fundRequest?.requestedTo?.uniqueId
                             : "Id"}
                         </p>
+                        <p className="text-gray-600">
+  <span className="font-medium pl-4">
+    <strong>Paypal:</strong>
+  </span>{" "}
+  {paypalLinkLoading
+    ? "Loading..."
+    : paypalLinkError
+    ? "Error loading link"
+    : getUsersPaypalLink?.paypalLink || "Not available"}
+</p>
+
+                        
                       </div>
 
-                      {/* <div className="mb-4 space-y-1">
-                        <h3 className="text-lg font-semibold text-gray-700">
-                          Request Details
-                        </h3>
-                      
-                        <p className="text-gray-600">
-                          <span className="font-medium pl-4">
-                            <strong>Payment Platform:</strong>
-                          </span>{" "}
-                          Stripe
-                        </p>
-                        <p className="text-gray-600">
-                          <span className="font-medium pl-4">
-                            <strong>Amount:</strong>
-                          </span>{" "}
-                          ${fundRequest?.amount}
-                        </p>
-                        <p className="text-gray-600">
-                          <span className="font-medium pl-4">
-                            <strong>Status:</strong>
-                          </span>{" "}
-                          {fundRequest?.status}
-                        </p>
-                        <p className="text-gray-600">
-                          <span className="font-medium pl-4">
-                            <strong>Request Date:</strong>
-                          </span>{" "}
-                          {new Date(
-                            fundRequest?.createdAt
-                          ).toLocaleDateString()}
-                        </p>
-                      </div> */}
+                    
                          <div className="mb-4 space-y-1">
               <h3 className="text-lg font-semibold text-gray-700">
                 Request Details

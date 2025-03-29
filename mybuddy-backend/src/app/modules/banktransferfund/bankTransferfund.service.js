@@ -21,7 +21,11 @@ export const saveBankTransferFundInfoService = async (formData) => {
 //------------ get all
 
 export const getAllBankTransferFundInfoService = async () => {
-  const getAllBankTransferFundInfo = await BankTransferFund.find({}).sort({
+  const getAllBankTransferFundInfo = await BankTransferFund.find({})
+  .populate("requestedBy", "name   uniqueId")
+  .populate("requestedTo", "name   uniqueId")
+  .populate("fundingProject", " projectName   uniqueId")
+  .sort({
     createdAt: -1,
   });
   return getAllBankTransferFundInfo;
@@ -47,6 +51,7 @@ export const getBankFundByRequestedToService = async (id) => {
   const recieveFundRequests = await BankTransferFund.find({ requestedTo: id })
   .populate("requestedBy")
   .populate("requestedTo")
+  .populate("fundingProject")
   .sort(
     { createdAt: -1 }
   );
@@ -59,6 +64,7 @@ export const getBankFundByRequestedByService = async (id) => {
   const recieveFundRequests = await BankTransferFund.find({ requestedBy: id })
   .populate("requestedBy")
   .populate("requestedTo")
+  .populate("fundingProject")
   .sort(
     { createdAt: -1 }
   );
@@ -69,6 +75,7 @@ export const getBankFundByProjectService = async (id) => {
   const recieveFundRequests = await BankTransferFund.find({ fundingProject: id })
   .populate("requestedBy")
   .populate("requestedTo")
+  .populate("fundingProject")
   .sort(
     { createdAt: -1 }
   );

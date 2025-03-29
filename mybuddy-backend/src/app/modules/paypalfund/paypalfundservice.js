@@ -23,7 +23,9 @@ export const savePaypalFundInfoService = async (formData) => {
 
    export const getAllPaypalFundInfoService = async() => {
     const getAllPaypalFundInfo = await PaypalFund.find({})
-    .populate("requestedBy")
+    .populate("requestedBy", "name   uniqueId")
+    .populate("requestedTo", "name   uniqueId")
+    .populate("fundingProject", " projectName   uniqueId")
     .sort({createdAt:-1});
     return getAllPaypalFundInfo;
   }
@@ -48,6 +50,7 @@ export const getPaypalFundByRequestedByService = async (id) => {
   const sentFundRequests = await PaypalFund.find({ requestedBy: id })
   .populate("requestedBy")
   .populate("requestedTo")
+  .populate("fundingProject", " projectName   uniqueId")
   .sort(
     { createdAt: -1 }
   );
@@ -60,6 +63,7 @@ export const getPaypalFundByRequestedToService = async (id) => {
   const sentFundRequests = await PaypalFund.find({ requestedTo: id })
   .populate("requestedBy")
   .populate("requestedTo")
+  .populate("fundingProject", " projectName   uniqueId")
   .sort(
     { createdAt: -1 }
   );

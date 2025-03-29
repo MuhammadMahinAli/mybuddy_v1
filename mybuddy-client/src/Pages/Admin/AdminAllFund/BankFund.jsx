@@ -255,11 +255,11 @@ const BankFund = () => {
                   <h3 className="text-lg font-semibold text-gray-800">
                     Project{" "}
                   </h3>
-                  <p className="text-gray-600 pl-4">
+                  <p className="text-gray-600 pl-4  capitalize">
                     <strong>Name :</strong> {fundRequest?.projectName}
                   </p>
                   <p className="text-gray-600 pl-4">
-                    <strong>ID:</strong> {fundRequest?.projectId}
+                    <strong>ID:</strong> {fundRequest?.fundingProject?.uniqueId}
                   </p>
                 </div>
 
@@ -268,7 +268,7 @@ const BankFund = () => {
                     Requester
                   </h3>
                   <p className="text-gray-600">
-                    <span className="font-medium pl-4">
+                    <span className="font-medium pl-4  capitalize">
                       <strong>Name:</strong>
                     </span>{" "}
                     {fundRequest?.requestedBy?.name?.firstName}{" "}
@@ -289,7 +289,7 @@ const BankFund = () => {
                     Recipient
                   </h3>
                   <p className="text-gray-600">
-                    <span className="font-medium pl-4">
+                    <span className="font-medium pl-4  capitalize">
                       <strong>Name:</strong>
                     </span>{" "}
                     {fundRequest?.requestedTo?.name?.firstName}{" "}

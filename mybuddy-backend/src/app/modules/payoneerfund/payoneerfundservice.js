@@ -22,6 +22,9 @@ export const savePayoneerFundInfoService = async (formData) => {
 
     export const getAllPayoneerFundInfoService = async() => {
     const getAllPayoneerFundInfo = await PayoneerFund.find({})
+    .populate("requestedBy", "name   uniqueId")
+    .populate("requestedTo", "name   uniqueId")
+    .populate("fundingProject", " projectName   uniqueId")
     .sort({createdAt:-1});
     return getAllPayoneerFundInfo;
   }
@@ -46,6 +49,7 @@ export const getPayoneerFundByRequestedToService = async (id) => {
   const recieveFundRequests = await PayoneerFund.find({ requestedTo: id })
   .populate("requestedBy")
   .populate("requestedTo")
+  .populate("fundingProject")
   .sort(
     { createdAt: -1 }
   );
@@ -57,6 +61,7 @@ export const getPayoneerFundByRequestedByService = async (id) => {
   const recieveFundRequests = await PayoneerFund.find({ requestedBy: id })
   .populate("requestedBy")
   .populate("requestedTo")
+  .populate("fundingProject")
   .sort(
     { createdAt: -1 }
   );
@@ -68,6 +73,7 @@ export const getPayoneerFundByProjectService = async (id) => {
   const recieveFundRequests = await PayoneerFund.find({ fundingProject : id })
   .populate("requestedBy")
   .populate("requestedTo")
+  .populate("fundingProject")
   .sort(
     { createdAt: -1 }
   );

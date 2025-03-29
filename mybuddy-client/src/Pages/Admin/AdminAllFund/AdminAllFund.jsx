@@ -95,3 +95,40 @@ const AdminAllFund = () => {
 };
 
 export default AdminAllFund;
+// {
+//   "_id": "67e79a62f1306722d8965a92",
+//   "projectName": "ai agent test",
+//   "fundingProject": "67e52bfa5d7ff55aa3b266c3",
+//   "requestedTo": "67626e1a5088216c5cd83408",
+//   "requestedBy": {
+//       "_id": "67e5324d5d7ff55aa3b2692c",
+//       "email": "maahinnnn@gmail.com",
+//       "name": {
+//           "firstName": "Test",
+//           "lastName": "Buddy",
+//           "_id": "67e5324d5d7ff55aa3b2692d"
+//       },
+//       "uniqueId": "464687",
+//       "phoneNumber": "3465345654",
+//       "phoneNumberPrivacy": false,
+//       "address": "",
+//       "addressPrivacy": false,
+//       "country": "",
+//       "role": "",
+//       "profilePic": "",
+//       "coverPic": "",
+//       "about": "",
+//       "emailVerified": true,
+//       "createdAt": "2025-03-27T11:11:09.348Z",
+//       "updatedAt": "2025-03-27T11:12:57.176Z",
+//       "__v": 0
+//   },
+//   "status": "Done",
+//   "transactionId": "Ddd",
+//   "paypalEmail": "dddddddd@gmail.com",
+//   "amount": "588",
+//   "date": "2025-03-31",
+//   "createdAt": "2025-03-29T06:59:46.253Z",
+//   "updatedAt": "2025-03-29T07:01:16.545Z",
+//   "__v": 0
+// }
